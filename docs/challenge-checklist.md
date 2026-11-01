@@ -1,0 +1,11 @@
+# Challenge checklist (Field Shift)
+- [ ] >=3 rotation strategies incl. the existing one
+- [ ] Per strategy: why, evidence, benefits, information gaps, risks needing local review
+- [ ] Farmer priorities input drives ranking
+- [ ] Uncertainty/confidence explained
+- [ ] NASA data panel with honest status per product
+- [ ] Glossary
+- [ ] "Support, not replace" disclaimer visible
+- [ ] Scenario slider (optional) and bare-field timeline (optional)
+- [ ] English + Arabic RTL, light/dark, mobile
+- [ ] AI-use disclosure in submission

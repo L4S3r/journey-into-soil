@@ -1,0 +1,15 @@
+# Starting suggestions. The team should confirm each point on the map and replace freely.
+# A demo site = a pre-chosen location where all NASA data is fetched ahead of time (data/packs/demo_sites/<id>.json)
+# and the input preset is tuned, so the live demo never depends on a network call.
+version: 1
+sites:
+  - { id: kafr_el_sheikh, name_en: "Kafr El-Sheikh (northern Delta)", name_ar: "كفر الشيخ (شمال الدلتا)", lat: 31.11, lon: 30.94, region: delta,
+      preset: { texture: clay_loam, irrigation: flood, water_ec: 2.2, ph: 8.0, pest: none, history: [{crop: wheat, season: winter}, {crop: rice, season: summer}, {crop: wheat, season: winter}] } }
+  - { id: gharbia, name_en: "Gharbia (central Delta)", name_ar: "الغربية (وسط الدلتا)", lat: 30.79, lon: 31.0, region: delta,
+      preset: { texture: loam, irrigation: flood, water_ec: 0.8, ph: 7.9, pest: nematodes, history: [{crop: tomato, season: summer}, {crop: wheat, season: winter}, {crop: tomato, season: summer}] } }
+  - { id: nubaria, name_en: "West Nubaria (new lands)", name_ar: "النوبارية الغربية (أراضٍ جديدة)", lat: 30.75, lon: 30.15, region: new_lands,
+      preset: { texture: sandy_loam, irrigation: sprinkler, water_ec: 1.5, ph: 8.2, pest: none, water_availability: limited, history: [{crop: maize, season: summer}, {crop: wheat, season: winter}, {crop: maize, season: summer}] } }
+  - { id: minya, name_en: "Minya (Upper Egypt)", name_ar: "المنيا (صعيد مصر)", lat: 28.11, lon: 30.75, region: upper_egypt,
+      preset: { texture: silt_loam, irrigation: flood, water_ec: 0.9, ph: 7.8, pest: none, history: [{crop: sugar_beet, season: winter}, {crop: maize, season: summer}, {crop: berseem, season: winter}] } }
+  - { id: fayoum, name_en: "Fayoum (saline depression)", name_ar: "الفيوم (منخفض ملحي)", lat: 29.31, lon: 30.84, region: upper_egypt,
+      preset: { texture: clay, irrigation: flood, water_ec: 3.2, ph: 8.1, soil_ec: 5.5, pest: none, history: [{crop: cotton, season: summer}, {crop: wheat, season: winter}, {crop: cotton, season: summer}] } }

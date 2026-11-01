@@ -1,0 +1,26 @@
+name: journey-soil
+services:
+  api:
+    build:
+      context: .
+      dockerfile: api/Dockerfile
+    env_file: .env
+    volumes:
+      - soil_data:/srv/data
+      - ./data/packs:/srv/packs:ro
+    environment:
+      PACKS_DIR: /srv/packs
+    restart: unless-stopped
+    expose:
+      - "8000"
+  web:
+    build:
+      context: .
+      dockerfile: web/Dockerfile
+    depends_on:
+      - api
+    ports:
+      - "127.0.0.1:8080:80"   # bind to localhost; reverse proxy (Caddy/nginx) terminates HTTPS
+    restart: unless-stopped
+volumes:
+  soil_data:
