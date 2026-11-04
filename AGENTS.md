@@ -18,7 +18,7 @@ Deadline: **14 Nov 2026**. NASA data arrives ~2 days before the hackathon. Owner
 - `web/` React + Vite + TS + Babylon.js + MapLibre. `pipelines/` offline NASA data fetch + pack builders. `infra/` reverse proxy. `docs/` plans, tasks, pitch.
 
 ## Commands
-`bash scripts/bootstrap.sh` | `make dev-api` | `make dev-web` | `make test` | `make lint` | `make mock` | `python scripts/check_i18n.py` | `docker compose up -d --build`
+`bash scripts/bootstrap.sh` (or on Windows: `powershell -ExecutionPolicy Bypass -File scripts/bootstrap.ps1` / `scripts\bootstrap.bat`) | `make dev-api` | `make dev-web` | `make test` | `make lint` | `make mock` | `python scripts/check_i18n.py` | `docker compose up -d --build`
 
 ## Definition of done (every task)
 API: `pytest -q` and `ruff check .` green. Web: `npm run typecheck && npm run build` green. `check_i18n.py` green. Schema validated (`tests/test_contract.py`). Docs/backlog updated.

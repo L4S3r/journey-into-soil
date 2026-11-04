@@ -8,10 +8,19 @@ strategies (including the existing one) are compared, and a Babylon.js scene div
 
 ## Quick start
 
+Linux / macOS / WSL / Git Bash:
+
 ```bash
 bash scripts/bootstrap.sh      # checks tools, creates .env, installs API + web, runs tests, builds the mock result
 make dev-api                   # terminal 1: FastAPI on :8000  (docs at /docs)
 make dev-web                   # terminal 2: Vite on :5173
+```
+
+Windows PowerShell / Command Prompt:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts/bootstrap.ps1
+# or run in CMD: scripts\bootstrap.bat
 ```
 
 Docker (production-like, e.g. on the OCI Ampere instance, linux/arm64):
