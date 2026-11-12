@@ -112,23 +112,10 @@
     .gov-marker:hover .pin-dot,
     .gov-marker.active .pin-dot,
     .gov-marker:focus-visible .pin-dot {
-      transform: scale(1.4);
-      background-color: #ff3333;
+      transform: scale(1.5);
+      background-color: #ef4444;
       border-color: #ffd54a;
-      box-shadow: 0 0 14px rgba(255, 213, 74, 0.9), 0 0 6px #ff3333;
-    }
-    .gov-marker:hover .pin-badge,
-    .gov-marker.active .pin-badge,
-    .gov-marker:focus-visible .pin-badge {
-      background-color: #b91c1c;
-      border-color: #ffd54a;
-      transform: translateY(-50%) scale(1.1);
-      box-shadow: 0 0 12px rgba(255, 213, 74, 0.8), 0 4px 10px rgba(0, 0, 0, 0.5);
-    }
-    .gov-marker:hover .pin-badge.align-top,
-    .gov-marker.active .pin-badge.align-top,
-    .gov-marker:focus-visible .pin-badge.align-top {
-      transform: translate(-50%, -100%) scale(1.1);
+      box-shadow: 0 0 16px rgba(255, 213, 74, 0.95), 0 0 8px #ef4444;
     }
 
     ::-webkit-scrollbar {
@@ -519,33 +506,33 @@
        2. EGYPTIAN GOVERNORATES DATA (27 Regions)
        ========================================================================== */
     const governorates = [
-      { id: "alexandria", name_en: "Alexandria", name_ar: "الإسكندرية", x: 37.5, y: 14.2, align: "left" },
-      { id: "beheira", name_en: "Beheira", name_ar: "البحيرة", x: 40.8, y: 16.5, align: "left" },
-      { id: "nubaria", name_en: "Nubaria", name_ar: "النوبارية", x: 38.0, y: 20.5, align: "left" },
-      { id: "kafr_el_sheikh", name_en: "Kafr El Sheikh", name_ar: "كفر الشيخ", x: 45.2, y: 12.8, align: "top" },
-      { id: "gharbia", name_en: "Gharbia", name_ar: "الغربية", x: 46.5, y: 17.5, align: "top" },
-      { id: "damietta", name_en: "Damietta", name_ar: "دمياط", x: 51.5, y: 11.5, align: "top" },
-      { id: "dakahlia", name_en: "Dakahlia", name_ar: "الدقهلية", x: 50.5, y: 15.2, align: "right" },
-      { id: "port_said", name_en: "Port Said", name_ar: "بورسعيد", x: 58.0, y: 13.5, align: "right" },
-      { id: "sharqia", name_en: "Sharqia", name_ar: "الشرقية", x: 52.8, y: 19.8, align: "right" },
-      { id: "ismailia", name_en: "Ismailia", name_ar: "الإسماعيلية", x: 57.5, y: 21.0, align: "right" },
-      { id: "qalyubia", name_en: "Qalyubia", name_ar: "القليوبية", x: 47.8, y: 22.5, align: "left" },
-      { id: "cairo", name_en: "Cairo", name_ar: "القاهرة", x: 49.5, y: 25.2, align: "right" },
-      { id: "giza", name_en: "Giza", name_ar: "الجيزة", x: 45.8, y: 26.2, align: "left" },
-      { id: "suez", name_en: "Suez", name_ar: "السويس", x: 59.2, y: 27.5, align: "right" },
-      { id: "fayoum", name_en: "Fayoum", name_ar: "الفيوم", x: 43.5, y: 30.5, align: "left" },
-      { id: "beni_suef", name_en: "Beni Suef", name_ar: "بني سويف", x: 46.2, y: 32.5, align: "right" },
-      { id: "minya", name_en: "Minya", name_ar: "المنيا", x: 43.8, y: 38.5, align: "right" },
-      { id: "asyut", name_en: "Asyut", name_ar: "أسيوط", x: 42.5, y: 45.5, align: "right" },
-      { id: "sohag", name_en: "Sohag", name_ar: "سوهاج", x: 45.5, y: 51.8, align: "right" },
-      { id: "qena", name_en: "Qena", name_ar: "قنا", x: 53.0, y: 59.5, align: "left" },
-      { id: "luxor", name_en: "Luxor", name_ar: "الأقصر", x: 54.5, y: 63.5, align: "left" },
-      { id: "aswan", name_en: "Aswan", name_ar: "أسوان", x: 56.5, y: 75.5, align: "right" },
-      { id: "matrouh", name_en: "Matrouh", name_ar: "مطروح", x: 24.5, y: 20.0, align: "top" },
-      { id: "new_valley", name_en: "New Valley", name_ar: "الوادي الجديد", x: 32.0, y: 63.0, align: "top" },
-      { id: "north_sinai", name_en: "North Sinai", name_ar: "شمال سيناء", x: 69.5, y: 19.0, align: "right" },
-      { id: "south_sinai", name_en: "South Sinai", name_ar: "جنوب سيناء", x: 69.0, y: 38.0, align: "right" },
-      { id: "red_sea", name_en: "Red Sea", name_ar: "البحر الأحمر", x: 78.0, y: 52.0, align: "right" }
+      { id: "alexandria", name_en: "Alexandria", name_ar: "الإسكندرية", x: 27.5, y: 13.0 },
+      { id: "beheira", name_en: "Beheira", name_ar: "البحيرة", x: 35.0, y: 16.5 },
+      { id: "nubaria", name_en: "Nubaria", name_ar: "النوبارية", x: 32.0, y: 19.0 },
+      { id: "kafr_el_sheikh", name_en: "Kafr El Sheikh", name_ar: "كفر الشيخ", x: 37.5, y: 13.0 },
+      { id: "gharbia", name_en: "Gharbia", name_ar: "الغربية", x: 43.0, y: 17.5 },
+      { id: "damietta", name_en: "Damietta", name_ar: "دمياط", x: 55.5, y: 10.0 },
+      { id: "dakahlia", name_en: "Dakahlia", name_ar: "الدقهلية", x: 52.8, y: 16.5 },
+      { id: "port_said", name_en: "Port Said", name_ar: "بورسعيد", x: 60.5, y: 13.5 },
+      { id: "sharqia", name_en: "Sharqia", name_ar: "الشرقية", x: 53.8, y: 22.0 },
+      { id: "ismailia", name_en: "Ismailia", name_ar: "الإسماعيلية", x: 53.5, y: 19.5 },
+      { id: "qalyubia", name_en: "Qalyubia", name_ar: "القليوبية", x: 36.5, y: 23.0 },
+      { id: "cairo", name_en: "Cairo", name_ar: "القاهرة", x: 52.0, y: 25.5 },
+      { id: "giza", name_en: "Giza", name_ar: "الجيزة", x: 39.8, y: 26.5 },
+      { id: "suez", name_en: "Suez", name_ar: "السويس", x: 58.0, y: 28.0 },
+      { id: "fayoum", name_en: "Fayoum", name_ar: "الفيوم", x: 34.5, y: 31.5 },
+      { id: "beni_suef", name_en: "Beni Suef", name_ar: "بني سويف", x: 54.0, y: 33.5 },
+      { id: "minya", name_en: "Minya", name_ar: "المنيا", x: 35.0, y: 41.0 },
+      { id: "asyut", name_en: "Asyut", name_ar: "أسيوط", x: 37.5, y: 49.0 },
+      { id: "sohag", name_en: "Sohag", name_ar: "سوهاج", x: 41.5, y: 56.0 },
+      { id: "qena", name_en: "Qena", name_ar: "قنا", x: 62.2, y: 61.5 },
+      { id: "luxor", name_en: "Luxor", name_ar: "الأقصر", x: 62.8, y: 64.5 },
+      { id: "aswan", name_en: "Aswan", name_ar: "أسوان", x: 58.0, y: 74.5 },
+      { id: "matrouh", name_en: "Matrouh", name_ar: "مطروح", x: 13.5, y: 23.3 },
+      { id: "new_valley", name_en: "New Valley", name_ar: "الوادي الجديد", x: 19.5, y: 64.5 },
+      { id: "north_sinai", name_en: "North Sinai", name_ar: "شمال سيناء", x: 66.5, y: 24.5 },
+      { id: "south_sinai", name_en: "South Sinai", name_ar: "جنوب سيناء", x: 66.5, y: 34.5 },
+      { id: "red_sea", name_en: "Red Sea", name_ar: "البحر الأحمر", x: 78.5, y: 59.5 }
     ];
 
     /* ==========================================================================
@@ -634,20 +621,13 @@
         marker.setAttribute("data-id", gov.id);
         const govName = currentLang === "ar" ? gov.name_ar : gov.name_en;
         marker.setAttribute("aria-label", govName);
-
-        // Align positioning classes
-        let alignClass = "start-5 top-1/2 -translate-y-1/2";
-        if (gov.align === "left") alignClass = "end-5 top-1/2 -translate-y-1/2";
-        if (gov.align === "top") alignClass = "start-1/2 -translate-x-1/2 -top-5 align-top";
+        marker.setAttribute("title", govName);
 
         marker.innerHTML = `
           <div class="relative w-5 h-5 flex items-center justify-center">
             <div class="pin-pulse-wave absolute inset-0 rounded-full bg-red-500 opacity-60"></div>
             <div class="pin-dot relative z-10 w-2.5 h-2.5 rounded-full bg-red-600 border-2 border-white shadow-md transition-all"></div>
           </div>
-          <span class="pin-badge absolute ${alignClass} px-2 py-0.5 rounded-md text-[10px] sm:text-[11px] font-bold bg-red-600/90 text-white border border-white/50 shadow-md backdrop-blur-sm whitespace-nowrap transition-all select-none">
-            ${govName}
-          </span>
         `;
 
         marker.addEventListener("mouseenter", () => highlightGovernorate(gov.id));
