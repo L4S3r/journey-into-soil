@@ -3,8 +3,8 @@
 ## P0 - must ship
 - [ ] B1 (data-pipelines) POWER fetcher: daily T2M_MAX/MIN, PRECTOTCORR, ALLSKY_SFC_SW_DWN, RH2M, WS2M for each demo site, 2000-2025, no login. Output raw to `data/raw/power/`.
 - [ ] B2 (data-pipelines) `pipelines/earthdata/check_access.py`: verify token works, list granules for SPL3SMP_E and GPM_3IMERGDF over a demo site. See `docs/earthdata-setup.md`.
-- [ ] B3 (data-pipelines) `build_demo_packs.py`: merge raw into `data/packs/demo_sites/<id>.json` (schema in `docs/data-sources.md`); engine already loads packs via `api/app/services/climate.py` (analog-year lookup). Add a test with a fixture.
-- [ ] B4 (rotation-engine) When a pack is present: status "pack" per product in `nasa_data`, higher confidence, remove `gap.synthetic_climate`.
+- [x] B3 (data-pipelines) `pipelines/build_demo_packs.py` (done 12 Nov: 27 packs from POWER 2000-2025, 13 tests; run `make packs`). Original text: `build_demo_packs.py`: merge raw into `data/packs/demo_sites/<id>.json` (schema in `docs/data-sources.md`); engine already loads packs via `api/app/services/climate.py` (analog-year lookup). Add a test with a fixture.
+- [x] B4 (rotation-engine) (already in the engine; covered by api/tests/engine/test_demo_sites_and_packs.py) When a pack is present: status "pack" per product in `nasa_data`, higher confidence, remove `gap.synthetic_climate`.
 - [ ] B5 (rotation-engine + experts) Replace `reviewed:false` crop params after expert review (`docs/expert-review.md`). Add a source per value.
 - [ ] B6 (frontend) Shareable link route `/a/:id`, copy button, load via GET /analyses/{id}.
 - [ ] B7 (frontend) Demo-site picker on landing (from /demo-sites) + "use my own field" map click.
