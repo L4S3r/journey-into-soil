@@ -112,10 +112,20 @@
     .gov-marker:hover .pin-dot,
     .gov-marker.active .pin-dot,
     .gov-marker:focus-visible .pin-dot {
-      transform: scale(1.5);
+      transform: scale(1.4);
       background-color: #ef4444;
       border-color: #ffd54a;
       box-shadow: 0 0 16px rgba(255, 213, 74, 0.95), 0 0 8px #ef4444;
+    }
+    .gov-marker .pin-badge {
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .gov-marker:hover .pin-badge,
+    .gov-marker.active .pin-badge,
+    .gov-marker:focus-visible .pin-badge {
+      background-color: #991b1b;
+      border-color: #ffd54a;
+      box-shadow: 0 0 14px rgba(255, 213, 74, 0.85), 0 4px 12px rgba(0, 0, 0, 0.6);
     }
 
     ::-webkit-scrollbar {
@@ -368,7 +378,7 @@
           <div class="map-lock-ltr relative w-full rounded-2xl overflow-hidden border border-earth-300 dark:border-earth-800 bg-earth-950 shadow-inner">
             <div class="relative w-full max-w-[1100px] mx-auto aspect-[1451/1084]">
               <!-- Base Map Image -->
-              <img src="Egypt 's Map.png" onerror="this.src='egypt_map.png'" alt="Agroclimatology Map of Egypt" class="w-full h-full block object-cover select-none pointer-events-none" />
+              <img src="Unlabeled Relief Map of Egypt.png" onerror="this.src='egypt_map.png'" alt="Agroclimatology Relief Map of Egypt" class="w-full h-full block object-cover select-none pointer-events-none" />
               
               <!-- Red Pins & Labels Layer -->
               <div id="mapPinsLayer" class="absolute inset-0 pointer-events-none" role="region" aria-label="Egyptian Governorates Pins">
@@ -506,33 +516,33 @@
        2. EGYPTIAN GOVERNORATES DATA (27 Regions)
        ========================================================================== */
     const governorates = [
-      { id: "alexandria", name_en: "Alexandria", name_ar: "الإسكندرية", x: 27.5, y: 13.0 },
-      { id: "beheira", name_en: "Beheira", name_ar: "البحيرة", x: 35.0, y: 16.5 },
-      { id: "nubaria", name_en: "Nubaria", name_ar: "النوبارية", x: 32.0, y: 19.0 },
-      { id: "kafr_el_sheikh", name_en: "Kafr El Sheikh", name_ar: "كفر الشيخ", x: 37.5, y: 13.0 },
-      { id: "gharbia", name_en: "Gharbia", name_ar: "الغربية", x: 43.0, y: 17.5 },
-      { id: "damietta", name_en: "Damietta", name_ar: "دمياط", x: 55.5, y: 10.0 },
-      { id: "dakahlia", name_en: "Dakahlia", name_ar: "الدقهلية", x: 52.8, y: 16.5 },
-      { id: "port_said", name_en: "Port Said", name_ar: "بورسعيد", x: 60.5, y: 13.5 },
-      { id: "sharqia", name_en: "Sharqia", name_ar: "الشرقية", x: 53.8, y: 22.0 },
-      { id: "ismailia", name_en: "Ismailia", name_ar: "الإسماعيلية", x: 53.5, y: 19.5 },
-      { id: "qalyubia", name_en: "Qalyubia", name_ar: "القليوبية", x: 36.5, y: 23.0 },
-      { id: "cairo", name_en: "Cairo", name_ar: "القاهرة", x: 52.0, y: 25.5 },
-      { id: "giza", name_en: "Giza", name_ar: "الجيزة", x: 39.8, y: 26.5 },
-      { id: "suez", name_en: "Suez", name_ar: "السويس", x: 58.0, y: 28.0 },
-      { id: "fayoum", name_en: "Fayoum", name_ar: "الفيوم", x: 34.5, y: 31.5 },
-      { id: "beni_suef", name_en: "Beni Suef", name_ar: "بني سويف", x: 54.0, y: 33.5 },
-      { id: "minya", name_en: "Minya", name_ar: "المنيا", x: 35.0, y: 41.0 },
-      { id: "asyut", name_en: "Asyut", name_ar: "أسيوط", x: 37.5, y: 49.0 },
-      { id: "sohag", name_en: "Sohag", name_ar: "سوهاج", x: 41.5, y: 56.0 },
-      { id: "qena", name_en: "Qena", name_ar: "قنا", x: 62.2, y: 61.5 },
-      { id: "luxor", name_en: "Luxor", name_ar: "الأقصر", x: 62.8, y: 64.5 },
-      { id: "aswan", name_en: "Aswan", name_ar: "أسوان", x: 58.0, y: 74.5 },
-      { id: "matrouh", name_en: "Matrouh", name_ar: "مطروح", x: 13.5, y: 23.3 },
-      { id: "new_valley", name_en: "New Valley", name_ar: "الوادي الجديد", x: 19.5, y: 64.5 },
-      { id: "north_sinai", name_en: "North Sinai", name_ar: "شمال سيناء", x: 66.5, y: 24.5 },
-      { id: "south_sinai", name_en: "South Sinai", name_ar: "جنوب سيناء", x: 66.5, y: 34.5 },
-      { id: "red_sea", name_en: "Red Sea", name_ar: "البحر الأحمر", x: 78.5, y: 59.5 }
+      { id: "alexandria", name_en: "Alexandria", name_ar: "الإسكندرية", x: 37.0, y: 15.4, align: "left" },
+      { id: "matrouh", name_en: "Matrouh", name_ar: "مطروح", x: 12.9, y: 13.9, align: "right" },
+      { id: "beheira", name_en: "Beheira", name_ar: "البحيرة", x: 41.9, y: 17.0, align: "left" },
+      { id: "nubaria", name_en: "Nubaria", name_ar: "النوبارية", x: 38.3, y: 20.5, align: "left" },
+      { id: "kafr_el_sheikh", name_en: "Kafr El Sheikh", name_ar: "كفر الشيخ", x: 46.1, y: 16.3, align: "top" },
+      { id: "gharbia", name_en: "Gharbia", name_ar: "الغربية", x: 46.6, y: 19.3, align: "right" },
+      { id: "damietta", name_en: "Damietta", name_ar: "دمياط", x: 54.2, y: 13.4, align: "top" },
+      { id: "dakahlia", name_en: "Dakahlia", name_ar: "الدقهلية", x: 50.3, y: 17.0, align: "right" },
+      { id: "port_said", name_en: "Port Said", name_ar: "بورسعيد", x: 58.7, y: 14.8, align: "right" },
+      { id: "sharqia", name_en: "Sharqia", name_ar: "الشرقية", x: 51.4, y: 21.3, align: "bottom" },
+      { id: "ismailia", name_en: "Ismailia", name_ar: "الإسماعيلية", x: 58.5, y: 21.2, align: "right" },
+      { id: "qalyubia", name_en: "Qalyubia", name_ar: "القليوبية", x: 48.2, y: 22.8, align: "left" },
+      { id: "cairo", name_en: "Cairo", name_ar: "القاهرة", x: 48.9, y: 26.3, align: "right" },
+      { id: "giza", name_en: "Giza", name_ar: "الجيزة", x: 48.0, y: 26.9, align: "left" },
+      { id: "suez", name_en: "Suez", name_ar: "السويس", x: 61.0, y: 27.1, align: "right" },
+      { id: "fayoum", name_en: "Fayoum", name_ar: "الفيوم", x: 45.2, y: 33.3, align: "left" },
+      { id: "beni_suef", name_en: "Beni Suef", name_ar: "بني سويف", x: 47.5, y: 35.5, align: "right" },
+      { id: "minya", name_en: "Minya", name_ar: "المنيا", x: 44.4, y: 44.9, align: "left" },
+      { id: "asyut", name_en: "Asyut", name_ar: "أسيوط", x: 48.2, y: 53.6, align: "left" },
+      { id: "sohag", name_en: "Sohag", name_ar: "سوهاج", x: 52.8, y: 59.5, align: "left" },
+      { id: "qena", name_en: "Qena", name_ar: "قنا", x: 62.4, y: 63.3, align: "right" },
+      { id: "luxor", name_en: "Luxor", name_ar: "الأقصر", x: 61.7, y: 67.8, align: "right" },
+      { id: "aswan", name_en: "Aswan", name_ar: "أسوان", x: 64.1, y: 83.0, align: "right" },
+      { id: "new_valley", name_en: "New Valley", name_ar: "الوادي الجديد", x: 42.4, y: 70.0, align: "left" },
+      { id: "north_sinai", name_en: "North Sinai", name_ar: "شمال سيناء", x: 70.5, y: 22.0, align: "right" },
+      { id: "south_sinai", name_en: "South Sinai", name_ar: "جنوب سيناء", x: 72.3, y: 41.0, align: "right" },
+      { id: "red_sea", name_en: "Red Sea", name_ar: "البحر الأحمر", x: 74.3, y: 57.3, align: "right" }
     ];
 
     /* ==========================================================================
@@ -623,11 +633,20 @@
         marker.setAttribute("aria-label", govName);
         marker.setAttribute("title", govName);
 
+        // Positioning class for label relative to dot
+        let alignClass = "start-full ms-1.5 top-1/2 -translate-y-1/2";
+        if (gov.align === "left") alignClass = "end-full me-1.5 top-1/2 -translate-y-1/2";
+        if (gov.align === "top") alignClass = "start-1/2 -translate-x-1/2 bottom-full mb-1.5 align-top";
+        if (gov.align === "bottom") alignClass = "start-1/2 -translate-x-1/2 top-full mt-1.5 align-bottom";
+
         marker.innerHTML = `
-          <div class="relative w-5 h-5 flex items-center justify-center">
+          <div class="relative w-4 h-4 sm:w-5 sm:h-5 flex items-center justify-center">
             <div class="pin-pulse-wave absolute inset-0 rounded-full bg-red-500 opacity-60"></div>
-            <div class="pin-dot relative z-10 w-2.5 h-2.5 rounded-full bg-red-600 border-2 border-white shadow-md transition-all"></div>
+            <div class="pin-dot relative z-10 w-2 sm:w-2.5 h-2 sm:h-2.5 rounded-full bg-red-600 border-2 border-white shadow-md transition-all"></div>
           </div>
+          <span class="pin-badge absolute ${alignClass} px-1.5 py-0.5 rounded-md text-[9px] sm:text-[10px] md:text-[11px] font-bold bg-red-600/90 text-white border border-white/60 shadow-md backdrop-blur-sm whitespace-nowrap select-none" dir="${currentLang === 'ar' ? 'rtl' : 'ltr'}">
+            ${govName}
+          </span>
         `;
 
         marker.addEventListener("mouseenter", () => highlightGovernorate(gov.id));
