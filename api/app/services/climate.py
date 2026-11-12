@@ -32,6 +32,7 @@ class Climate:
     pack_id: str | None = None
     resolution_km: float | None = None
     notes: list[str] = field(default_factory=list)
+    products: list[str] = field(default_factory=list)
 
 
 def _seasonal(doy: int) -> float:
@@ -104,9 +105,11 @@ def get_climate(lat: float, lon: float, dates: list[date], d_t: float = 0.0, d_p
     notes = []
     if source == "synthetic":
         notes.append("synthetic_climate")
+    products = list((pack or {}).get("meta", {}).get("products", ["power"])) if source == "pack" else []
     return Climate(
         dates=[d.isoformat() for d in dates], tmin=tmin, tmax=tmax, rain=rain, et0=et0, source=source,
         pack_id=(pack or {}).get("meta", {}).get("id") if source == "pack" else None,
         resolution_km=(pack or {}).get("meta", {}).get("resolution_km") if source == "pack" else None,
         notes=notes,
+        products=products,
     )

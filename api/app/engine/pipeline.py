@@ -88,13 +88,21 @@ def _strategy_json(item: dict, cand: Cand, ctx: Ctx, existing: Cand, climate, in
 
 
 def _nasa_panel(climate) -> list[dict]:
-    pack = climate.source == "pack"
+    pack_products = set(getattr(climate, "products", []))
+    if climate.source == "pack" and not pack_products:
+        pack_products = {"power"}
     return [
-        {"id": "power", "name_key": "nasa.power", "role_key": "nasa.power_role", "status": "pack" if pack else "placeholder", "resolution_km": 50},
-        {"id": "gpm", "name_key": "nasa.gpm", "role_key": "nasa.gpm_role", "status": "planned", "resolution_km": 10},
-        {"id": "smap", "name_key": "nasa.smap", "role_key": "nasa.smap_role", "status": "planned", "resolution_km": 9},
-        {"id": "ndvi", "name_key": "nasa.ndvi", "role_key": "nasa.ndvi_role", "status": "planned", "resolution_km": 0.03},
-        {"id": "soilgrids", "name_key": "nasa.soilgrids", "role_key": "nasa.soilgrids_role", "status": "planned", "resolution_km": 0.25},
+        {"id": "power", "name_key": "nasa.power", "role_key": "nasa.power_role",
+         "status": "pack" if "power" in pack_products else ("placeholder" if climate.source == "synthetic" else "planned"),
+         "resolution_km": 50},
+        {"id": "gpm", "name_key": "nasa.gpm", "role_key": "nasa.gpm_role",
+         "status": "pack" if "gpm" in pack_products else "planned", "resolution_km": 10},
+        {"id": "smap", "name_key": "nasa.smap", "role_key": "nasa.smap_role",
+         "status": "pack" if "smap" in pack_products else "planned", "resolution_km": 9},
+        {"id": "ndvi", "name_key": "nasa.ndvi", "role_key": "nasa.ndvi_role",
+         "status": "pack" if "ndvi" in pack_products else "planned", "resolution_km": 0.03},
+        {"id": "soilgrids", "name_key": "nasa.soilgrids", "role_key": "nasa.soilgrids_role",
+         "status": "pack" if "soilgrids" in pack_products else "planned", "resolution_km": 0.25},
     ]
 
 

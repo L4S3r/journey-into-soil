@@ -1,10 +1,10 @@
 import json
-from datetime import date
+from datetime import date, timedelta
 
 import pytest
 
 from app import knowledge
-from app.config import ROOT
+from app.config import ROOT, get_settings
 from app.engine import plan as planner
 from app.engine import rotation
 from app.engine.pipeline import run
@@ -180,3 +180,57 @@ def test_every_message_key_has_english_and_arabic():
             if s["label_key"] not in en:
                 missing.add(s["label_key"])
     assert not missing, sorted(missing)
+
+
+def test_pack_climate_elevates_confidence_and_removes_synthetic_labels(tmp_path, monkeypatch):
+    dates = []
+    base_d = date(2024, 1, 1)
+    for i in range(366):
+        d = base_d + timedelta(days=i)
+        dates.append(d.isoformat())
+    n = len(dates)
+    fixture_pack = {
+        "meta": {
+            "id": "gharbia",
+            "lat": 30.79,
+            "lon": 31.0,
+            "source": "NASA POWER",
+            "resolution_km": 50.0,
+            "products": ["power"],
+            "period": "2024",
+        },
+        "daily": {
+            "date": dates,
+            "tmax": [25.0] * n,
+            "tmin": [15.0] * n,
+            "rh": [60.0] * n,
+            "u2": [2.0] * n,
+            "rs": [18.0] * n,
+            "rain": [0.0] * n,
+        },
+    }
+    demo_dir = tmp_path / "demo_sites"
+    demo_dir.mkdir(parents=True)
+    (demo_dir / "gharbia.json").write_text(json.dumps(fixture_pack), encoding="utf-8")
+
+    monkeypatch.setattr(get_settings(), "packs_dir", tmp_path)
+
+    res = run(req(lat=30.79, lon=31.0))
+
+    assert res["climate"]["source"] == "pack"
+    assert res["climate"]["pack_id"] == "gharbia"
+    assert "disclaimer.preview_data" not in res["disclaimers"]
+
+    nasa_power = next(item for item in res["nasa_data"] if item["id"] == "power")
+    assert nasa_power["status"] == "pack"
+
+    for s in res["strategies"]:
+        gap_keys = [g["key"] for g in s["gaps"]]
+        assert "gap.synthetic_climate" not in gap_keys
+        assert "gap.nasa_not_loaded" not in gap_keys
+
+        conf_factor_keys = [f["key"] for f in s["confidence"]["factors"]]
+        assert "conf.synthetic_climate" not in conf_factor_keys
+        assert s["confidence"]["level"] in ("medium", "high")
+        assert s["confidence"]["score"] >= 0.50
+
