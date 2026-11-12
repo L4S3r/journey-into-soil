@@ -22,5 +22,14 @@ services:
     ports:
       - "127.0.0.1:8080:80"   # bind to localhost; reverse proxy (Caddy/nginx) terminates HTTPS
     restart: unless-stopped
+  tunnel:
+    image: cloudflare/cloudflared:latest
+    container_name: journey-soil-tunnel
+    restart: unless-stopped
+    command: tunnel --no-autoupdate run
+    environment:
+      - TUNNEL_TOKEN=${CLOUDFLARE_TUNNEL_TOKEN}
+    depends_on:
+      - web
 volumes:
   soil_data:
