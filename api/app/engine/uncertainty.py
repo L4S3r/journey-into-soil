@@ -1,11 +1,47 @@
-"""Step 7: explain uncertainty. Confidence is derived from data provenance, not from model fit."""
+"""Step 7: explain uncertainty. Confidence is derived from data provenance and historical climate variance."""
 from __future__ import annotations
+
+import math
+from typing import Sequence
 
 from .filters import msg
 
 
-def confidence(cand, climate_source: str, resolution_km: float | None, input_status: dict[str, str], outside_delta: bool,
-               history_len: int) -> dict:
+def percentile(values: Sequence[float], p: float) -> float:
+    """Empirical percentile (0..100) using linear interpolation."""
+    if not values:
+        return 0.0
+    s = sorted(values)
+    if len(s) == 1:
+        return round(float(s[0]), 3)
+    k = (len(s) - 1) * (p / 100.0)
+    f = math.floor(k)
+    c = math.ceil(k)
+    if f == c:
+        return round(float(s[int(k)]), 3)
+    d = k - f
+    return round(float(s[f] * (1.0 - d) + s[c] * d), 3)
+
+
+def summarize_metric_distribution(yearly_records: list[dict[str, float]]) -> dict[str, dict[str, float]]:
+    """Compute p10, p50, p90 for irrigation_mm, water_stress, salinity_stress, heat_days, total_score."""
+    keys = ("irrigation_mm", "water_stress", "salinity_stress", "heat_days", "total_score")
+    by_key = {k: [rec[k] for rec in yearly_records] for k in keys}
+    return {
+        pct: {k: percentile(by_key[k], p) for k in keys}
+        for pct, p in (("p10", 10.0), ("p50", 50.0), ("p90", 90.0))
+    }
+
+
+def confidence(
+    cand,
+    climate_source: str,
+    resolution_km: float | None,
+    input_status: dict[str, str],
+    outside_delta: bool,
+    history_len: int,
+    uncertainty: dict | None = None,
+) -> dict:
     score = 1.0
     factors: list[dict] = []
 
@@ -32,6 +68,12 @@ def confidence(cand, climate_source: str, resolution_km: float | None, input_sta
         hit(0.10, "conf.outside_delta")
     if any(s != "ok" for s in cand.soil_status):
         hit(0.05, "conf.soil_flags")
+
+    if uncertainty:
+        spread = round(uncertainty["p90"]["total_score"] - uncertainty["p10"]["total_score"], 2)
+        stability = uncertainty["rank_stability"]
+        if spread >= 0.20 or stability < 0.60:
+            hit(0.10, "conf.high_climate_variance", spread=spread, stability=int(round(stability * 100)))
 
     score = max(0.05, round(score, 2))
     level = "high" if score >= 0.7 else "medium" if score >= 0.5 else "low"

@@ -7,6 +7,7 @@
  "benefit.low_water": "{{crop}} احتياجه المائي منخفض نسبيًا.",
  "conf.coarse_resolution": "بيانات المناخ خشنة (نحو {{km}} كم) مقارنة بحقل واحد.",
  "conf.ec_estimated": "ملوحة التربة مقدّرة وغير مقاسة.",
+ "conf.high_climate_variance": "يتفاوت الأداء عبر السنوات المناخية التاريخية (تفاوت {{spread}}، استقرار الترتيب {{stability}}٪).",
  "conf.history_short": "سجل أقل من ثلاثة مواسم.",
  "conf.outside_delta": "الموقع خارج نطاق بيانات دلتا النيل.",
  "conf.soil_estimated": "المادة العضوية أو pH مقدّرة.",

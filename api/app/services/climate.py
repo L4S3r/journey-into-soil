@@ -19,6 +19,9 @@ from datetime import date
 
 from ..config import get_settings
 from ..sim.et0 import extraterrestrial_radiation, fao56_et0
+from ..sim.types import DayInput
+
+HISTORICAL_YEARS = list(range(2011, 2026))
 
 
 @dataclass
@@ -110,3 +113,74 @@ def get_climate(lat: float, lon: float, dates: list[date], d_t: float = 0.0, d_p
         resolution_km=(pack or {}).get("meta", {}).get("resolution_km") if source == "pack" else None,
         notes=notes,
     )
+
+
+def _is_leap_year(year: int) -> bool:
+    return year % 4 == 0 and (year % 100 != 0 or year % 400 == 0)
+
+
+def get_historical_climate_series(
+    lat: float,
+    lon: float,
+    dates: list[date],
+    d_t: float = 0.0,
+    d_p: float = 0.0,
+    years: list[int] | None = None,
+) -> tuple[Climate, list[list[DayInput]], list[int]]:
+    if years is None:
+        years = HISTORICAL_YEARS
+    pack = _find_pack(lat, lon)
+    baseline = get_climate(lat, lon, dates, d_t, d_p)
+    baseline_days = [
+        DayInput(d, e, r, t)
+        for d, e, r, t in zip(baseline.dates, baseline.et0, baseline.rain, baseline.tmax)
+    ]
+    if not pack or baseline.source != "pack":
+        return baseline, [baseline_days for _ in years], list(years)
+
+    daily = pack["daily"]
+    date_to_idx = {iso: i for i, iso in enumerate(daily["date"])}
+    table = _analog_lookup(pack)
+    d0 = dates[0]
+
+    all_series: list[list[DayInput]] = []
+    evaluated_years: list[int] = []
+
+    for anchor_year in years:
+        year_days: list[DayInput] = []
+        for d in dates:
+            delta_years = d.year - d0.year
+            target_year = anchor_year + delta_years
+            if target_year > 2025:
+                wrap_span = max(1, years[-1] - years[0] + 1)
+                target_year = years[0] + (target_year - 2026) % wrap_span
+            elif target_year < 2000:
+                target_year = years[0]
+
+            m = d.month
+            day_num = d.day
+            if m == 2 and day_num == 29:
+                if _is_leap_year(target_year) and f"{target_year:04d}-02-29" in date_to_idx:
+                    lookup_iso = f"{target_year:04d}-02-29"
+                else:
+                    lookup_iso = f"{target_year:04d}-02-28"
+            else:
+                lookup_iso = f"{target_year:04d}-{m:02d}-{day_num:02d}"
+
+            idx = date_to_idx.get(lookup_iso)
+            if idx is not None:
+                r = {k: daily[k][idx] for k in ("tmax", "tmin", "rh", "u2", "rs", "rain")}
+            else:
+                r = table.get(d.isoformat()[5:]) or synthetic_day(lat, d)
+
+            t_min = r["tmin"] + d_t
+            t_max = r["tmax"] + d_t
+            rain = max(0.0, r["rain"] * (1 + d_p / 100.0))
+            doy = d.timetuple().tm_yday
+            et0_val = round(fao56_et0(t_min, t_max, r["rh"], r["u2"], r["rs"], lat, doy), 2)
+            year_days.append(DayInput(d.isoformat(), et0_val, round(rain, 1), round(t_max, 1)))
+
+        all_series.append(year_days)
+        evaluated_years.append(anchor_year)
+
+    return baseline, all_series, evaluated_years

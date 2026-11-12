@@ -1,4 +1,4 @@
-// Mirrors contracts/result.schema.json (schema_version 1.0.0). Change the schema first, then this file.
+// Mirrors contracts/result.schema.json (schema_version 1.1.0). Change the schema first, then this file.
 export type Season = "winter" | "summer" | "nili";
 export type StrategyId = "existing" | "primary" | "contrast";
 export type Priority = "water" | "soil_health" | "income" | "risk";
@@ -53,6 +53,20 @@ export interface Sim {
   irrigation_mm: number[];
   crop_idx: number[]; // index into non-fallow seasons, -1 when bare
 }
+export interface UncertaintyMetrics {
+  irrigation_mm: number;
+  water_stress: number;
+  salinity_stress: number;
+  heat_days: number;
+  total_score: number;
+}
+export interface StrategyUncertainty {
+  rank_stability: number;
+  years_evaluated: number;
+  p10: UncertaintyMetrics;
+  p50: UncertaintyMetrics;
+  p90: UncertaintyMetrics;
+}
 export interface Strategy {
   id: StrategyId;
   label_key: string;
@@ -67,6 +81,7 @@ export interface Strategy {
   gaps: Msg[];
   risks: Msg[];
   confidence: { level: "low" | "medium" | "high"; score: number; factors: Msg[] };
+  uncertainty: StrategyUncertainty;
   sim: Sim;
 }
 export interface NasaItem {
