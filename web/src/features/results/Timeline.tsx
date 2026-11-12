@@ -31,11 +31,54 @@ export function Timeline({ result, strategy }: { result: AnalysisResult; strateg
     setDayT(Math.max(0, Math.min(1, (e.clientX - r.left) / r.width)));
   };
 
+  const handleKeyDown = (e: React.KeyboardEvent) => {
+    if (n <= 1) return;
+    const step = 1 / (n - 1);
+    if (e.key === "ArrowRight" || e.key === "ArrowUp") {
+      e.preventDefault();
+      setDayT(Math.min(1, dayT + step));
+    } else if (e.key === "ArrowLeft" || e.key === "ArrowDown") {
+      e.preventDefault();
+      setDayT(Math.max(0, dayT - step));
+    } else if (e.key === "PageDown") {
+      e.preventDefault();
+      setDayT(Math.min(1, dayT + step * 10));
+    } else if (e.key === "PageUp") {
+      e.preventDefault();
+      setDayT(Math.max(0, dayT - step * 10));
+    } else if (e.key === "Home") {
+      e.preventDefault();
+      setDayT(0);
+    } else if (e.key === "End") {
+      e.preventDefault();
+      setDayT(1);
+    }
+  };
+
   const day = Math.round(dayT * (n - 1));
+  const currentDate = result.climate.dates[day] || "";
+  const currentTmax = result.climate.tmax[day] ?? 0;
+  const currentRain = result.climate.rain[day] ?? 0;
+
   return (
     <div className="timeline" dir="ltr">
-      <svg ref={ref} viewBox={`0 0 ${W} ${H}`} role="img" aria-label={t("ui.timeline_label")}
-        onPointerDown={(e) => { e.currentTarget.setPointerCapture(e.pointerId); scrub(e); }} onPointerMove={scrub}>
+      <svg
+        ref={ref}
+        viewBox={`0 0 ${W} ${H}`}
+        role="slider"
+        tabIndex={0}
+        aria-label={t("ui.timeline_label")}
+        aria-valuenow={day + 1}
+        aria-valuemin={1}
+        aria-valuemax={n}
+        aria-valuetext={`${currentDate}: ${t("ui.tmax")} ${currentTmax}°C, ${t("ui.rain")} ${currentRain} mm`}
+        onKeyDown={handleKeyDown}
+        onPointerDown={(e) => {
+          e.currentTarget.setPointerCapture(e.pointerId);
+          scrub(e);
+        }}
+        onPointerMove={scrub}
+      >
         <defs>
           <pattern id="bare" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
             <rect width="6" height="6" fill="var(--bare-bg)" />
@@ -75,7 +118,7 @@ export function Timeline({ result, strategy }: { result: AnalysisResult; strateg
         <li><i className="hatch" />{t("ui.leg_bare")}</li>
       </ul>
       <p className="day-readout">
-        {result.climate.dates[day]} · {t("ui.tmax")} {result.climate.tmax[day]}°C · {t("ui.rain")} {result.climate.rain[day]} mm
+        {currentDate} · {t("ui.tmax")} {currentTmax}°C · {t("ui.rain")} {currentRain} mm
         {strategy.sim.irrigation_mm[day] > 0 && <> · {t("ui.irrigated")} {strategy.sim.irrigation_mm[day]} mm</>}
       </p>
     </div>
