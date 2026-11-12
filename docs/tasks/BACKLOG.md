@@ -1,7 +1,7 @@
 # Backlog (status: [ ] todo, [~] doing, [x] done). Deadline 14 Nov 2026; NASA data ~12 Nov.
 
 ## P0 - must ship
-- [ ] B1 (data-pipelines) POWER fetcher: daily T2M_MAX/MIN, PRECTOTCORR, ALLSKY_SFC_SW_DWN, RH2M, WS2M for each demo site, 2000-2025, no login. Output raw to `data/raw/power/`.
+- [x] B1 (data-pipelines) POWER fetcher: daily T2M_MAX/MIN, PRECTOTCORR, ALLSKY_SFC_SW_DWN, RH2M, WS2M for each demo site, 2000-2025, no login. Output raw to `data/raw/power/`.
 - [ ] B2 (data-pipelines) `pipelines/earthdata/check_access.py`: verify token works, list granules for SPL3SMP_E and GPM_3IMERGDF over a demo site. See `docs/earthdata-setup.md`.
 - [ ] B3 (data-pipelines) `build_demo_packs.py`: merge raw into `data/packs/demo_sites/<id>.json` (schema in `docs/data-sources.md`); engine already loads packs via `api/app/services/climate.py` (analog-year lookup). Add a test with a fixture.
 - [ ] B4 (rotation-engine) When a pack is present: status "pack" per product in `nasa_data`, higher confidence, remove `gap.synthetic_climate`.
