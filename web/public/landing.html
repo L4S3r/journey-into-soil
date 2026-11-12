@@ -1,600 +1,85 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr" data-theme="light">
+<html lang="en" dir="ltr" class="scroll-smooth">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-  <title>The Shifters - Journey into the Soil</title>
-  
-  <!-- Google Fonts: Plus Jakarta Sans for English, Cairo for Arabic -->
+  <title>The Shifter - Journey into the Soil</title>
+
+  <!-- Google Fonts: Inter, Cairo (Arabic), JetBrains Mono -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'Cairo', 'sans-serif'],
+            arabic: ['Cairo', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          },
+          colors: {
+            earth: {
+              50: '#fbf8f3',
+              100: '#f4ece1',
+              200: '#e8dfcc',
+              300: '#d5c4a6',
+              400: '#cbb99b',
+              500: '#a8916d',
+              600: '#87704f',
+              700: '#645137',
+              800: '#3e3122',
+              900: '#2a2017',
+              950: '#17130e',
+            },
+            leaf: {
+              300: '#c8ee9e',
+              400: '#b0ea76',
+              500: '#a6d996',
+              600: '#629e4d',
+              700: '#3f7a3a',
+            },
+            accentOrange: '#ffb27d',
+            accentGold: '#ffd54a',
+          }
+        }
+      }
+    };
+  </script>
 
   <style>
-    /* ==========================================================================
-       COLOR PALETTE & CSS VARIABLES
-       Extracted directly from journey_into_the_soil_landing_page.html:
-       - Earth: #fbf8f3 (50), #f4ece1 (100), #e8dfcc (200), #d5c4a6 (300),
-                #645137 (700), #3e3122 (800), #2a2017 (900), #17130e (950)
-       - Leaf: #b0ea76 (400), #a6d996 (500), #629e4d (600), #3f7a3a (700)
-       - Accents: #ffb27d (Orange), #ffd54a (Gold)
-       ========================================================================== */
-    :root {
-      /* Earth Palette Light */
-      --bg: #fbf8f3;             /* earth-50 */
-      --surface: #ffffff;
-      --surface-alt: #f4ece1;     /* earth-100 */
-      --surface-card: #ffffff;
-      --border: #d5c4a6;          /* earth-300 */
-      --border-subtle: #e8dfcc;   /* earth-200 */
-      --text: #2a2017;            /* earth-900 */
-      --text-muted: #645137;      /* earth-700 */
-      --text-subtle: #87704f;     /* earth-600 */
-      
-      /* Leaf Green Accents */
-      --primary: #629e4d;         /* leaf-600 */
-      --primary-hover: #3f7a3a;   /* leaf-700 */
-      --primary-light: #e8f5e3;
-      --primary-glow: rgba(98, 158, 77, 0.35);
-
-      /* Accents */
-      --accent-orange: #ffb27d;
-      --accent-gold: #ffd54a;
-
-      /* Step Cards (Shape from how does it work.png) */
-      --step-circle-bg: #2a2017;  /* earth-900 */
-      --step-circle-text: #fbf8f3;
-      --step-line: #d5c4a6;       /* earth-300 */
-      
-      /* Tags */
-      --tag-bg: #f4ece1;          /* earth-100 */
-      --tag-text: #3e3122;         /* earth-800 */
-      --tag-border: #d5c4a6;
-      --tag-hover-bg: #e8dfcc;    /* earth-200 */
-      --tag-active-bg: #629e4d;   /* leaf-600 */
-      --tag-active-text: #ffffff;
-      
-      /* Shadows & Radii */
-      --shadow-sm: 0 2px 8px rgba(42, 32, 23, 0.06);
-      --shadow-md: 0 8px 24px rgba(42, 32, 23, 0.08);
-      --shadow-lg: 0 16px 36px rgba(42, 32, 23, 0.12);
-      --radius-sm: 8px;
-      --radius-md: 14px;
-      --radius-lg: 20px;
-
-      /* Red Pin Markers */
-      --pin-red: #dc2626;
-      --pin-red-glow: rgba(220, 38, 38, 0.85);
-
-      --font-en: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
-      --font-ar: 'Cairo', system-ui, Tahoma, sans-serif;
-      --font-mono: 'JetBrains Mono', monospace;
-
-      color-scheme: light;
+    /* Custom Grain and Soil Aesthetics */
+    .bg-grain {
+      background-image: radial-gradient(rgba(0,0,0,0.06) 1px, transparent 0);
+      background-size: 24px 24px;
     }
-
-    :root[data-theme="dark"] {
-      /* Earth Palette Dark */
-      --bg: #17130e;             /* earth-950 */
-      --surface: #2a2017;         /* earth-900 */
-      --surface-alt: #3e3122;     /* earth-800 */
-      --surface-card: #201811;
-      --border: #645137;          /* earth-700 */
-      --border-subtle: #3e3122;   /* earth-800 */
-      --text: #fbf8f3;            /* earth-50 */
-      --text-muted: #d5c4a6;      /* earth-300 */
-      --text-subtle: #cbb99b;     /* earth-400 */
-
-      /* Leaf Green Accents */
-      --primary: #a6d996;         /* leaf-500 */
-      --primary-hover: #b0ea76;   /* leaf-400 */
-      --primary-light: #23341e;
-      --primary-glow: rgba(166, 217, 150, 0.3);
-
-      /* Step Cards */
-      --step-circle-bg: #3e3122;  /* earth-800 */
-      --step-circle-text: #fbf8f3;
-      --step-line: #645137;
-
-      /* Tags */
-      --tag-bg: #2a2017;
-      --tag-text: #fbf8f3;
-      --tag-border: #645137;
-      --tag-hover-bg: #3e3122;
-      --tag-active-bg: #a6d996;
-      --tag-active-text: #17130e;
-
-      --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.4);
-      --shadow-md: 0 8px 24px rgba(0, 0, 0, 0.5);
-      --shadow-lg: 0 16px 36px rgba(0, 0, 0, 0.6);
-
-      color-scheme: dark;
-    }
-
-    /* Reset & Base Styles */
-    *, *::before, *::after {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    html {
-      scroll-behavior: smooth;
-      font-size: 16px;
-    }
-
-    body {
-      background-color: var(--bg);
-      color: var(--text);
-      font-family: var(--font-en);
-      line-height: 1.65;
-      overflow-x: hidden;
-      transition: background-color 0.3s ease, color 0.3s ease;
-      background-image: radial-gradient(rgba(0, 0, 0, 0.05) 1px, transparent 0);
+    .dark .bg-grain {
+      background-image: radial-gradient(rgba(255,255,255,0.04) 1px, transparent 0);
       background-size: 24px 24px;
     }
 
-    :root[data-theme="dark"] body {
-      background-image: radial-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 0);
+    /* Pulse Glow for Hero & Accent Elements */
+    @keyframes pulseGlow {
+      0%, 100% { box-shadow: 0 0 15px rgba(166, 217, 150, 0.45), 0 0 35px rgba(87, 162, 75, 0.2); }
+      50% { box-shadow: 0 0 28px rgba(166, 217, 150, 0.8), 0 0 50px rgba(87, 162, 75, 0.4); }
+    }
+    .btn-pulse-glow {
+      animation: pulseGlow 2.5s infinite ease-in-out;
     }
 
-    html[lang="ar"] body {
-      font-family: var(--font-ar);
-    }
-
-    a {
-      color: inherit;
-      text-decoration: none;
-    }
-
-    button {
-      font-family: inherit;
-      cursor: pointer;
-      border: none;
-      background: none;
-    }
-
-    /* Container */
-    .container {
-      width: 100%;
-      max-width: 1180px;
-      margin-inline: auto;
-      padding-inline: 1.5rem;
-    }
-
-    /* ==========================================================================
-       HEADER & BRAND
-       - Team name: "The Shifter" / "The Shifters" (large)
-       - Logo: Gemini_Generated_Image_42gudn42gudn42gu.svg beside team name
-       - Subtitle: "Journey into the Soil"
-       ========================================================================== */
-    header.site-header {
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-      background: color-mix(in srgb, var(--surface) 88%, transparent);
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
-      border-bottom: 1px solid var(--border-subtle);
-      transition: background-color 0.3s ease, border-color 0.3s ease;
-    }
-
-    .header-inner {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 1.25rem;
-      padding-block: 0.85rem;
-    }
-
-    .brand-group {
-      display: flex;
-      align-items: center;
-      gap: 0.9rem;
-    }
-
-    .brand-logo {
-      height: 48px;
-      width: auto;
-      max-width: 64px;
-      object-fit: contain;
-      border-radius: 10px;
-      border: 1px solid var(--border);
-      background: var(--surface-alt);
-      box-shadow: var(--shadow-sm);
-      transition: transform 0.25s ease;
-    }
-
-    .brand-group:hover .brand-logo {
-      transform: scale(1.06);
-    }
-
-    .brand-text {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-    }
-
-    html[dir="rtl"] .brand-text {
-      align-items: flex-start;
-    }
-
-    .team-name {
-      font-size: 1.65rem;
-      font-weight: 800;
-      letter-spacing: -0.025em;
-      color: var(--text);
-      line-height: 1.15;
-    }
-
-    .project-name {
-      font-size: 0.88rem;
-      font-weight: 700;
-      color: var(--primary);
-      letter-spacing: 0.02em;
-      margin-top: 0.15rem;
-    }
-
-    .header-controls {
-      display: flex;
-      align-items: center;
-      gap: 0.65rem;
-    }
-
-    .ctrl-btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.45rem;
-      padding: 0.5rem 0.85rem;
-      min-height: 40px;
-      font-size: 0.88rem;
-      font-weight: 600;
-      border-radius: var(--radius-sm);
-      border: 1px solid var(--border);
-      background-color: var(--surface);
-      color: var(--text);
-      box-shadow: var(--shadow-sm);
-      transition: all 0.2s ease;
-    }
-
-    .ctrl-btn:hover {
-      background-color: var(--surface-alt);
-      border-color: var(--primary);
-    }
-
-    .ctrl-btn:focus-visible {
-      outline: 3px solid var(--primary);
-      outline-offset: 2px;
-    }
-
-    /* Common Section Styles */
-    section {
-      padding-block: 4.8rem;
-      border-bottom: 1px solid var(--border-subtle);
-    }
-
-    .section-eyebrow {
-      display: inline-block;
-      font-size: 0.82rem;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: var(--primary);
-      margin-bottom: 0.6rem;
-    }
-
-    .section-title {
-      font-size: 2.2rem;
-      font-weight: 800;
-      line-height: 1.25;
-      letter-spacing: -0.02em;
-      margin-bottom: 1.2rem;
-      color: var(--text);
-    }
-
-    .lead-text {
-      font-size: 1.12rem;
-      line-height: 1.75;
-      color: var(--text-muted);
-      max-width: 820px;
-    }
-
-    /* ==========================================================================
-       1. HERO SECTION
-       - Headline
-       - Why choose Journey into the Soil? with short paragraph
-       ========================================================================== */
-    .hero-section {
-      padding-block: 5.5rem 5rem;
-      background: radial-gradient(circle at 50% 15%, color-mix(in srgb, var(--primary) 8%, transparent), transparent 70%);
-    }
-
-    .hero-content {
-      max-width: 900px;
-      margin-inline: auto;
-      text-align: center;
-    }
-
-    .hero-headline {
-      font-size: clamp(2.1rem, 4.2vw, 3.25rem);
-      font-weight: 800;
-      line-height: 1.2;
-      letter-spacing: -0.03em;
-      color: var(--text);
-      margin-bottom: 2.2rem;
-    }
-
-    .hero-card {
-      margin-top: 2.5rem;
-      padding: 2.25rem 2rem;
-      background-color: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      box-shadow: var(--shadow-md);
-      text-align: start;
-      position: relative;
-    }
-
-    .hero-card::before {
-      content: "";
-      position: absolute;
-      inset-inline-start: 0;
-      inset-block: 18px;
-      width: 5px;
-      background-color: var(--primary);
-      border-radius: 4px;
-    }
-
-    .hero-card-heading {
-      font-size: 1.5rem;
-      font-weight: 800;
-      margin-bottom: 0.85rem;
-      color: var(--text);
-    }
-
-    .hero-card-text {
-      font-size: 1.08rem;
-      line-height: 1.8;
-      color: var(--text-muted);
-    }
-
-    /* ==========================================================================
-       2. THE HIDDEN BATTLEFIELD IN THE SOIL AND HOW TO DEFEAT IT
-       ========================================================================== */
-    .battlefield-section {
-      background-color: var(--surface);
-    }
-
-    .battlefield-box {
-      max-width: 880px;
-      margin-inline: auto;
-    }
-
-    .battlefield-box p {
-      font-size: 1.1rem;
-      line-height: 1.85;
-      color: var(--text-muted);
-      margin-bottom: 1.35rem;
-    }
-
-    /* ==========================================================================
-       3. HOW DOES IT WORK? (Shape of how does it work.png)
-       - Numbered, step-by-step list of simulation process
-       - 4 cards connected with horizontal dashed line and circular badge numbers
-       - Text only (NO extra illustrations or diagrams)
-       ========================================================================== */
-    .how-it-works-section {
-      background-color: var(--bg);
-    }
-
-    .how-header {
-      margin-bottom: 3.5rem;
-      text-align: start;
-    }
-
-    .how-steps-wrapper {
-      position: relative;
-      margin-top: 2rem;
-    }
-
-    /* Horizontal dashed line connecting step centers */
-    .how-steps-line {
-      position: absolute;
-      top: 28px;
-      inset-inline: 4%;
-      height: 2px;
-      border-top: 2px dashed var(--step-line);
-      z-index: 1;
-    }
-
-    .how-steps-grid {
-      position: relative;
-      z-index: 2;
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 1.5rem;
-    }
-
-    .how-step-card {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      padding: 1.75rem 1.4rem;
-      background-color: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-md);
-      box-shadow: var(--shadow-sm);
-      transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
-    }
-
-    .how-step-card:hover {
-      transform: translateY(-4px);
-      box-shadow: var(--shadow-md);
-      border-color: var(--primary);
-    }
-
-    .step-badge {
-      width: 54px;
-      height: 54px;
-      border-radius: 50%;
-      background-color: var(--step-circle-bg);
-      color: var(--step-circle-text);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.35rem;
-      font-weight: 800;
-      margin-bottom: 1.5rem;
-      border: 3px solid var(--surface);
-      box-shadow: 0 0 0 2px var(--border);
-      transition: background-color 0.25s ease, color 0.25s ease;
-    }
-
-    .how-step-card:hover .step-badge {
-      background-color: var(--primary);
-      color: #ffffff;
-      box-shadow: 0 0 0 3px var(--primary-glow);
-    }
-
-    .step-title {
-      font-size: 1.2rem;
-      font-weight: 800;
-      color: var(--text);
-      margin-bottom: 0.65rem;
-      line-height: 1.3;
-    }
-
-    .step-desc {
-      font-size: 0.95rem;
-      color: var(--text-muted);
-      line-height: 1.65;
-    }
-
-    /* ==========================================================================
-       4. CROP TALK: PLANT A QUESTION, GROW AN ANSWER
-       - Text only (NO chat mockup or chatbot UI shapes)
-       ========================================================================== */
-    .crop-talk-section {
-      background-color: var(--surface);
-    }
-
-    .crop-talk-box {
-      max-width: 880px;
-      margin-inline: auto;
-    }
-
-    .crop-talk-box p {
-      font-size: 1.1rem;
-      line-height: 1.85;
-      color: var(--text-muted);
-      margin-bottom: 1.35rem;
-    }
-
-    /* ==========================================================================
-       5. MAP OF EGYPT (Section 5)
-       - Uses Egypt 's Map.png directly (NO external API needed)
-       - Interactive red pins and red label badges for 27 governorates
-       - Hovering/tapping pin highlights it and updates info card + tags below
-       - Geographic orientation preserved in RTL mode (dir="ltr !important")
-       ========================================================================== */
-    .map-section {
-      background-color: var(--bg);
-    }
-
-    .map-header {
-      margin-bottom: 2.25rem;
-    }
-
-    .map-outer-card {
-      background-color: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: var(--radius-lg);
-      padding: 1.25rem;
-      box-shadow: var(--shadow-md);
-    }
-
-    /* Map container strictly dir="ltr" so Egypt is never geographically flipped */
-    .map-view-wrapper {
-      direction: ltr !important;
-      position: relative;
-      width: 100%;
-      border-radius: var(--radius-md);
-      overflow: hidden;
-      border: 1px solid var(--border);
-      background-color: #0b1e36;
-      box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.4);
-    }
-
-    .map-inner-canvas {
-      position: relative;
-      width: 100%;
-      aspect-ratio: 1451 / 1084;
-      max-width: 1100px;
-      margin-inline: auto;
-    }
-
-    .map-satellite-img {
-      display: block;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      pointer-events: none;
-      user-select: none;
-    }
-
-    /* Layer overlaying the map containing the 27 red pins & labels */
-    .map-pins-layer {
-      position: absolute;
-      inset: 0;
-      pointer-events: none;
-    }
-
-    /* Governorate Marker Container */
-    .gov-marker {
-      position: absolute;
-      pointer-events: auto;
-      cursor: pointer;
-      z-index: 10;
-      transform: translate(-50%, -50%);
-      transition: z-index 0.2s ease;
-    }
-
-    .gov-marker:hover,
-    .gov-marker.active,
-    .gov-marker:focus-visible {
-      z-index: 50;
-    }
-
-    .gov-marker:focus-visible {
-      outline: none;
-    }
-
-    /* Red Beacon Pin */
-    .pin-beacon-wrapper {
-      position: relative;
-      width: 22px;
-      height: 22px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .pin-pulse-wave {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      border-radius: 50%;
-      background-color: var(--pin-red);
-      opacity: 0.6;
-      animation: pinBeaconPulse 2.4s infinite ease-out;
-      pointer-events: none;
-    }
-
+    /* Red Beacon Pin Animation */
     @keyframes pinBeaconPulse {
       0% {
         transform: scale(0.6);
-        opacity: 0.9;
+        opacity: 0.95;
       }
       70% {
         transform: scale(2.2);
@@ -605,519 +90,433 @@
         opacity: 0;
       }
     }
-
-    .pin-center-dot {
-      position: relative;
-      z-index: 2;
-      width: 11px;
-      height: 11px;
-      border-radius: 50%;
-      background-color: var(--pin-red);
-      border: 2px solid #ffffff;
-      box-shadow: 0 0 8px var(--pin-red-glow), 0 2px 4px rgba(0, 0, 0, 0.5);
-      transition: transform 0.2s ease, background-color 0.2s ease, box-shadow 0.2s ease;
+    .pin-pulse-wave {
+      animation: pinBeaconPulse 2.4s infinite ease-out;
     }
 
-    .gov-marker:hover .pin-center-dot,
-    .gov-marker.active .pin-center-dot,
-    .gov-marker:focus-visible .pin-center-dot {
-      transform: scale(1.45);
+    /* Map container strictly dir="ltr" to maintain correct geographic orientation */
+    .map-lock-ltr {
+      direction: ltr !important;
+    }
+
+    /* Marker hover & active states */
+    .gov-marker {
+      transform: translate(-50%, -50%);
+      transition: z-index 0.2s ease;
+    }
+    .gov-marker:hover,
+    .gov-marker.active,
+    .gov-marker:focus-visible {
+      z-index: 50;
+    }
+    .gov-marker:hover .pin-dot,
+    .gov-marker.active .pin-dot,
+    .gov-marker:focus-visible .pin-dot {
+      transform: scale(1.4);
       background-color: #ff3333;
       border-color: #ffd54a;
       box-shadow: 0 0 14px rgba(255, 213, 74, 0.9), 0 0 6px #ff3333;
     }
-
-    /* Red Label Badge */
-    .pin-label-badge {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      background: rgba(220, 38, 38, 0.92);
-      color: #ffffff;
-      padding: 2px 7px;
-      border-radius: 5px;
-      font-size: clamp(10px, 0.95vw, 12px);
-      font-weight: 700;
-      white-space: nowrap;
-      border: 1px solid rgba(255, 255, 255, 0.65);
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.45);
-      backdrop-filter: blur(4px);
-      -webkit-backdrop-filter: blur(4px);
-      pointer-events: auto;
-      transition: all 0.2s ease;
-      user-select: none;
-    }
-
-    /* Label Placement Variants */
-    .pin-label-badge.align-right {
-      left: 18px;
-    }
-    .pin-label-badge.align-left {
-      right: 18px;
-    }
-    .pin-label-badge.align-top {
-      top: -16px;
-      left: 50%;
-      transform: translate(-50%, -100%);
-    }
-
-    .gov-marker:hover .pin-label-badge,
-    .gov-marker.active .pin-label-badge,
-    .gov-marker:focus-visible .pin-label-badge {
-      background: #b91c1c;
-      color: #ffffff;
+    .gov-marker:hover .pin-badge,
+    .gov-marker.active .pin-badge,
+    .gov-marker:focus-visible .pin-badge {
+      background-color: #b91c1c;
       border-color: #ffd54a;
-      transform: translateY(-50%) scale(1.12);
+      transform: translateY(-50%) scale(1.1);
       box-shadow: 0 0 12px rgba(255, 213, 74, 0.8), 0 4px 10px rgba(0, 0, 0, 0.5);
     }
-
-    .gov-marker:hover .pin-label-badge.align-top,
-    .gov-marker.active .pin-label-badge.align-top,
-    .gov-marker:focus-visible .pin-label-badge.align-top {
-      transform: translate(-50%, -100%) scale(1.12);
+    .gov-marker:hover .pin-badge.align-top,
+    .gov-marker.active .pin-badge.align-top,
+    .gov-marker:focus-visible .pin-badge.align-top {
+      transform: translate(-50%, -100%) scale(1.1);
     }
 
-    /* Floating Status Card over Map */
-    .map-status-banner {
-      position: absolute;
-      bottom: 12px;
-      inset-inline-start: 12px;
-      background: rgba(23, 19, 14, 0.88);
-      color: #fbf8f3;
-      padding: 8px 14px;
-      border-radius: var(--radius-sm);
-      border: 1px solid rgba(213, 196, 166, 0.35);
-      backdrop-filter: blur(8px);
-      font-size: 0.82rem;
-      z-index: 60;
-      max-width: 320px;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
-      pointer-events: none;
-    }
-
-    .map-status-header {
-      font-size: 0.72rem;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      color: var(--accent-gold);
-      font-weight: 700;
-      margin-bottom: 2px;
-    }
-
-    .map-status-gov {
-      font-size: 0.98rem;
-      font-weight: 800;
-      color: #ffffff;
-    }
-
-    /* Governorate Tags Beneath the Map */
-    .tags-panel {
-      margin-top: 1.75rem;
-      padding-top: 1.5rem;
-      border-top: 1px solid var(--border-subtle);
-    }
-
-    .tags-label {
-      font-size: 0.9rem;
-      font-weight: 800;
-      color: var(--text-muted);
-      margin-bottom: 0.85rem;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-    }
-
-    .gov-tags-list {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-      list-style: none;
-    }
-
-    .gov-tag {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.4rem;
-      padding: 0.4rem 0.85rem;
-      font-size: 0.86rem;
-      font-weight: 600;
-      border-radius: 999px;
-      background-color: var(--tag-bg);
-      color: var(--tag-text);
-      border: 1px solid var(--tag-border);
-      cursor: pointer;
-      transition: all 0.2s ease;
-      user-select: none;
-    }
-
-    .gov-tag::before {
-      content: "";
-      display: inline-block;
+    ::-webkit-scrollbar {
       width: 7px;
       height: 7px;
-      border-radius: 50%;
-      background-color: var(--pin-red);
     }
-
-    .gov-tag:hover {
-      background-color: var(--tag-hover-bg);
-      border-color: var(--primary);
-      transform: translateY(-1px);
+    ::-webkit-scrollbar-track {
+      background: #17130e;
     }
-
-    .gov-tag.active {
-      background-color: var(--tag-active-bg);
-      color: var(--tag-active-text);
-      border-color: var(--primary-hover);
-      box-shadow: 0 2px 8px var(--primary-glow);
-    }
-
-    .gov-tag.active::before {
-      background-color: var(--accent-gold);
-    }
-
-    /* Footer */
-    footer.site-footer {
-      padding-block: 2.8rem;
-      background-color: var(--surface);
-      border-top: 1px solid var(--border-subtle);
-      text-align: center;
-      font-size: 0.9rem;
-      color: var(--text-muted);
-    }
-
-    .footer-brand {
-      font-weight: 700;
-      color: var(--text);
-      margin-bottom: 0.35rem;
-    }
-
-    .footer-disclaimer {
-      max-width: 720px;
-      margin-inline: auto;
-      font-size: 0.82rem;
-      line-height: 1.65;
-      margin-top: 0.6rem;
-    }
-
-    /* Responsive Adjustments */
-    @media (max-width: 960px) {
-      .section-title {
-        font-size: 1.85rem;
-      }
-      .how-steps-line {
-        display: none;
-      }
-      .how-steps-grid {
-        grid-template-columns: 1fr;
-        gap: 1.75rem;
-        position: relative;
-        padding-inline-start: 1rem;
-      }
-      .how-steps-grid::before {
-        content: "";
-        position: absolute;
-        top: 25px;
-        bottom: 35px;
-        inset-inline-start: 36px;
-        width: 2px;
-        border-inline-start: 2px dashed var(--step-line);
-        z-index: 1;
-      }
-      .how-step-card {
-        flex-direction: row;
-        align-items: flex-start;
-        gap: 1.25rem;
-      }
-      .step-badge {
-        flex-shrink: 0;
-        margin-bottom: 0;
-      }
-      .pin-label-badge {
-        font-size: 9px;
-        padding: 1px 4px;
-      }
-    }
-
-    @media (max-width: 600px) {
-      .header-inner {
-        flex-wrap: wrap;
-      }
-      .team-name {
-        font-size: 1.35rem;
-      }
-      .project-name {
-        font-size: 0.78rem;
-      }
-      .ctrl-btn {
-        padding: 0.4rem 0.65rem;
-        font-size: 0.8rem;
-      }
-      .pin-pulse-wave {
-        display: none;
-      }
+    ::-webkit-scrollbar-thumb {
+      background: #645137;
+      border-radius: 4px;
     }
   </style>
 </head>
-<body>
+<body class="bg-earth-50 text-earth-900 dark:bg-earth-950 dark:text-earth-100 transition-colors duration-300 font-sans selection:bg-leaf-600 selection:text-white bg-grain min-h-screen">
 
-  <!-- ================= HEADER & BRAND ================= -->
-  <header class="site-header">
-    <div class="container header-inner">
-      <div class="brand-group">
-        <img src="Gemini_Generated_Image_42gudn42gudn42gu.svg" alt="The Shifters Logo" class="brand-logo" />
-        <div class="brand-text">
-          <h1 class="team-name" data-i18n="brand.team">The Shifter</h1>
-          <span class="project-name" data-i18n="brand.project">Journey into the Soil</span>
+  <!-- ================= TOP NAVIGATION / BRAND ================= -->
+  <header class="sticky top-0 z-40 border-b border-earth-300/60 dark:border-earth-900/80 bg-earth-50/85 dark:bg-earth-950/85 backdrop-blur-md transition-colors duration-300">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+      
+      <!-- Logo / The Shifter / Journey into the Soil -->
+      <a href="#" class="flex items-center gap-3.5 group text-start">
+        <div class="w-12 h-12 rounded-2xl bg-earth-200/90 dark:bg-earth-900 border border-earth-300 dark:border-earth-800 p-1 flex items-center justify-center shadow-md group-hover:scale-105 transition-transform overflow-hidden">
+          <img src="Gemini_Generated_Image_42gudn42gudn42gu.svg" alt="The Shifters Logo" class="w-full h-full object-contain" />
         </div>
-      </div>
-      <div class="header-controls">
-        <button id="themeToggle" class="ctrl-btn" type="button" aria-label="Toggle theme">
-          <span id="themeIcon">🌙</span>
-          <span id="themeText" data-i18n="ctrl.dark">Dark Mode</span>
+        <div class="flex flex-col">
+          <div class="flex items-center gap-2">
+            <h1 class="font-black text-xl sm:text-2xl tracking-tight text-earth-950 dark:text-earth-50" data-i18n="brandTitle">
+              The Shifter
+            </h1>
+            <span class="text-[10px] px-2 py-0.5 rounded-full font-mono font-bold bg-leaf-500/20 text-leaf-700 dark:text-leaf-400 border border-leaf-500/30">
+              NASA 2026
+            </span>
+          </div>
+          <span class="text-xs sm:text-sm text-leaf-700 dark:text-leaf-400 font-bold" data-i18n="brandSubtitle">
+            Journey into the Soil
+          </span>
+        </div>
+      </a>
+
+      <!-- Right Header Actions (Language & Theme Toggles) -->
+      <div class="flex items-center gap-2.5 sm:gap-3">
+        <!-- Language Switcher -->
+        <button id="langToggle" aria-label="Toggle Language" class="px-3 py-2 text-xs font-bold rounded-xl border border-earth-300 dark:border-earth-800 bg-earth-100/80 dark:bg-earth-900/80 hover:bg-earth-200 dark:hover:bg-earth-800 transition flex items-center gap-2 text-earth-900 dark:text-earth-100 shadow-sm">
+          <i data-lucide="languages" class="w-4 h-4 text-leaf-600 dark:text-leaf-400"></i>
+          <span id="langLabel">العربية</span>
         </button>
-        <button id="langToggle" class="ctrl-btn" type="button" aria-label="Toggle language">
-          <span>🌐</span>
-          <span id="langText">العربية</span>
+
+        <!-- Theme Switcher -->
+        <button id="themeToggle" aria-label="Toggle Dark/Light Mode" class="p-2.5 rounded-xl border border-earth-300 dark:border-earth-800 bg-earth-100/80 dark:bg-earth-900/80 hover:bg-earth-200 dark:hover:bg-earth-800 transition shadow-sm text-earth-800 dark:text-earth-200">
+          <i id="themeIcon" data-lucide="moon" class="w-4 h-4"></i>
         </button>
       </div>
+
     </div>
   </header>
 
   <main>
     <!-- ================= 1. HERO SECTION ================= -->
-    <section class="hero-section" id="hero">
-      <div class="container hero-content">
-        <h2 class="hero-headline" data-i18n="hero.headline">
-          Sensing the Earth Beneath Our Feet: Precision Soil Intelligence for Resilient Egyptian Agriculture
-        </h2>
-        <div class="hero-card">
-          <h3 class="hero-card-heading" data-i18n="hero.why_heading">
-            Why choose Journey into the Soil?
-          </h3>
-          <p class="hero-card-text" data-i18n="hero.why_text">
+    <section class="relative overflow-hidden pt-12 pb-20 lg:pt-20 lg:pb-28">
+      <div class="absolute -top-32 start-1/2 -translate-x-1/2 w-[720px] h-[480px] bg-leaf-500/10 dark:bg-leaf-500/15 rounded-full blur-3xl pointer-events-none"></div>
+
+      <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        
+        <!-- Tag / Eyebrow Badge -->
+        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold bg-earth-200/80 dark:bg-earth-900 text-earth-800 dark:text-earth-200 border border-earth-300 dark:border-earth-800 shadow-sm mb-6">
+          <span class="w-2 h-2 rounded-full bg-leaf-600 animate-ping"></span>
+          <span data-i18n="heroBadge">Precision Soil Intelligence • NASA Earth Data</span>
+        </div>
+
+        <!-- Main Catchy Headline -->
+        <h1 class="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-[1.2] text-earth-950 dark:text-earth-50 mb-8" data-i18n="heroTitle">
+          Sensing the Earth Beneath Our Feet: <br>
+          <span class="bg-gradient-to-r from-leaf-700 via-leaf-600 to-accentOrange dark:from-leaf-400 dark:via-accentGold dark:to-leaf-400 bg-clip-text text-transparent">
+            Precision Soil Intelligence for Resilient Egyptian Agriculture
+          </span>
+        </h1>
+
+        <!-- Why choose Journey into the Soil? Card -->
+        <div class="mt-8 text-start rounded-3xl border border-earth-300/80 dark:border-earth-800 bg-white/85 dark:bg-earth-900/85 backdrop-blur-md p-6 sm:p-9 shadow-xl relative overflow-hidden">
+          <div class="absolute top-0 start-0 w-2 h-full bg-gradient-to-b from-leaf-600 via-leaf-500 to-accentGold"></div>
+          <div class="flex items-center gap-3 mb-4">
+            <div class="w-10 h-10 rounded-xl bg-leaf-500/15 text-leaf-700 dark:text-leaf-400 flex items-center justify-center font-bold">
+              <i data-lucide="help-circle" class="w-5 h-5"></i>
+            </div>
+            <h2 class="text-2xl sm:text-3xl font-extrabold text-earth-950 dark:text-earth-50" data-i18n="whyHeading">
+              Why choose Journey into the Soil?
+            </h2>
+          </div>
+          <p class="text-base sm:text-lg text-earth-700 dark:text-earth-300 leading-relaxed" data-i18n="whyText">
             Because resilient farming begins deep within the root zone. By bridging NASA Earth observations—including soil moisture, rainfall anomalies, and solar irradiance—with local soil physics and agronomic science, our platform guides farmers toward balanced, water-smart crop rotations that restore soil vitality without guesswork or unrealistic promises.
           </p>
         </div>
+
       </div>
     </section>
 
-    <!-- ================= 2. THE HIDDEN BATTLEFIELD ================= -->
-    <section class="battlefield-section" id="battlefield">
-      <div class="container battlefield-box">
-        <span class="section-eyebrow" data-i18n="battlefield.eyebrow">Underground Realities</span>
-        <h2 class="section-title" data-i18n="battlefield.title">
+    <!-- ================= 2. THE HIDDEN BATTLEFIELD IN THE SOIL ================= -->
+    <section id="battlefield" class="py-16 sm:py-24 border-t border-earth-300/60 dark:border-earth-900 bg-earth-100/50 dark:bg-earth-900/30 relative">
+      <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full text-xs font-semibold bg-amber-500/15 text-amber-700 dark:text-amber-400 border border-amber-500/30 mb-4">
+          <i data-lucide="shield-alert" class="w-3.5 h-3.5"></i>
+          <span data-i18n="battlefieldEyebrow">Underground Realities</span>
+        </div>
+
+        <h2 class="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-earth-950 dark:text-earth-50 mb-8 leading-tight" data-i18n="battlefieldTitle">
           The Hidden Battlefield in the Soil and How to Defeat It
         </h2>
-        <p data-i18n="battlefield.p1">
-          Beneath every thriving crop lies a continuous struggle: invisible salinity creeping up through irrigation water, silent nutrient depletion stripping fertility across back-to-back harvests, and hidden moisture stress restricting root expansion long before drought signs appear on the leaves. When rotation decisions are made in the dark, severe soil compaction and secondary salinization threaten entire agricultural livelihoods.
-        </p>
-        <p data-i18n="battlefield.p2">
-          Journey into the Soil transforms this invisible underground dynamic into clear, science-backed guidance. By simulating multi-layer soil hydrology, root salt tolerance thresholds, and daily water balances alongside NASA satellite data, we empower farmers to defeat soil degradation, optimize every drop of irrigation, and secure land fertility for generations to come.
-        </p>
+
+        <div class="rounded-3xl border border-earth-300/80 dark:border-earth-800 bg-white/80 dark:bg-earth-900/80 backdrop-blur-md p-6 sm:p-9 shadow-md space-y-6">
+          <p class="text-base sm:text-lg text-earth-700 dark:text-earth-300 leading-relaxed" data-i18n="battlefieldP1">
+            Beneath every thriving crop lies a continuous struggle: invisible salinity creeping up through irrigation water, silent nutrient depletion stripping fertility across back-to-back harvests, and hidden moisture stress restricting root expansion long before drought signs appear on the leaves. When rotation decisions are made in the dark, severe soil compaction and secondary salinization threaten entire agricultural livelihoods.
+          </p>
+          <p class="text-base sm:text-lg text-earth-700 dark:text-earth-300 leading-relaxed" data-i18n="battlefieldP2">
+            Journey into the Soil transforms this invisible underground dynamic into clear, science-backed guidance. By simulating multi-layer soil hydrology, root salt tolerance thresholds, and daily water balances alongside NASA satellite data, we empower farmers to defeat soil degradation, optimize every drop of irrigation, and secure land fertility for generations to come.
+          </p>
+        </div>
+
       </div>
     </section>
 
     <!-- ================= 3. HOW DOES IT WORK? (Shape of how does it work.png) ================= -->
-    <section class="how-it-works-section" id="how-it-works">
-      <div class="container">
-        <div class="how-header">
-          <span class="section-eyebrow" data-i18n="how.eyebrow">HOW IT WORKS</span>
-          <h2 class="section-title" data-i18n="how.title">How does it work?</h2>
-          <p class="lead-text" data-i18n="how.lead">
+    <section id="how-it-works" class="py-16 sm:py-24 border-t border-earth-300/60 dark:border-earth-900 relative">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div class="text-center max-w-3xl mx-auto mb-16">
+          <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full text-xs font-semibold bg-leaf-500/15 text-leaf-700 dark:text-leaf-400 border border-leaf-500/30 mb-4">
+            <i data-lucide="git-commit" class="w-3.5 h-3.5"></i>
+            <span data-i18n="howEyebrow">HOW IT WORKS</span>
+          </div>
+          <h2 class="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-earth-950 dark:text-earth-50 mb-4" data-i18n="howTitle">
+            How does it work?
+          </h2>
+          <p class="text-base sm:text-lg text-earth-700 dark:text-earth-300 leading-relaxed" data-i18n="howLead">
             From field sample inputs to resilient rotation plans through physics-based simulation.
           </p>
         </div>
 
-        <div class="how-steps-wrapper">
-          <div class="how-steps-line" aria-hidden="true"></div>
-          <div class="how-steps-grid">
+        <!-- 4-Step Cards matching how does it work.png layout -->
+        <div class="relative mt-8">
+          <!-- Connecting dashed line across desktop -->
+          <div class="hidden lg:block absolute top-7 inset-x-12 h-0.5 border-t-2 border-dashed border-earth-300 dark:border-earth-700 z-0" aria-hidden="true"></div>
+
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 relative z-10">
             
             <!-- Step 1 -->
-            <div class="how-step-card">
-              <div class="step-badge">1</div>
-              <h3 class="step-title" data-i18n="how.step1_title">Collect Field Data</h3>
-              <p class="step-desc" data-i18n="how.step1_desc">
+            <div class="group rounded-3xl border border-earth-300/80 dark:border-earth-800 bg-white/85 dark:bg-earth-900/80 backdrop-blur-sm p-6 sm:p-7 shadow-sm hover:shadow-lg hover:border-leaf-600 transition-all flex flex-col items-start">
+              <div class="w-14 h-14 rounded-2xl bg-earth-900 text-earth-50 dark:bg-earth-800 dark:text-leaf-400 border-2 border-earth-300 dark:border-earth-700 flex items-center justify-center font-black text-xl mb-6 shadow-md group-hover:scale-105 group-hover:bg-leaf-600 group-hover:text-white transition-all">
+                1
+              </div>
+              <h3 class="text-xl font-bold text-earth-950 dark:text-earth-50 mb-3" data-i18n="howStep1Title">
+                Collect Field Data
+              </h3>
+              <p class="text-sm text-earth-700 dark:text-earth-300 leading-relaxed" data-i18n="howStep1Desc">
                 Input field location, soil texture by feel, water salinity, irrigation method, and recent crop rotation history.
               </p>
             </div>
 
             <!-- Step 2 -->
-            <div class="how-step-card">
-              <div class="step-badge">2</div>
-              <h3 class="step-title" data-i18n="how.step2_title">Integrate NASA Observations</h3>
-              <p class="step-desc" data-i18n="how.step2_desc">
+            <div class="group rounded-3xl border border-earth-300/80 dark:border-earth-800 bg-white/85 dark:bg-earth-900/80 backdrop-blur-sm p-6 sm:p-7 shadow-sm hover:shadow-lg hover:border-leaf-600 transition-all flex flex-col items-start">
+              <div class="w-14 h-14 rounded-2xl bg-earth-900 text-earth-50 dark:bg-earth-800 dark:text-leaf-400 border-2 border-earth-300 dark:border-earth-700 flex items-center justify-center font-black text-xl mb-6 shadow-md group-hover:scale-105 group-hover:bg-leaf-600 group-hover:text-white transition-all">
+                2
+              </div>
+              <h3 class="text-xl font-bold text-earth-950 dark:text-earth-50 mb-3" data-i18n="howStep2Title">
+                Integrate NASA Observations
+              </h3>
+              <p class="text-sm text-earth-700 dark:text-earth-300 leading-relaxed" data-i18n="howStep2Desc">
                 Aggregate daily solar radiation, ambient temperature, precipitation, and soil moisture from NASA POWER and Earth science models.
               </p>
             </div>
 
             <!-- Step 3 -->
-            <div class="how-step-card">
-              <div class="step-badge">3</div>
-              <h3 class="step-title" data-i18n="how.step3_title">Simulate Soil Physics</h3>
-              <p class="step-desc" data-i18n="how.step3_desc">
+            <div class="group rounded-3xl border border-earth-300/80 dark:border-earth-800 bg-white/85 dark:bg-earth-900/80 backdrop-blur-sm p-6 sm:p-7 shadow-sm hover:shadow-lg hover:border-leaf-600 transition-all flex flex-col items-start">
+              <div class="w-14 h-14 rounded-2xl bg-earth-900 text-earth-50 dark:bg-earth-800 dark:text-leaf-400 border-2 border-earth-300 dark:border-earth-700 flex items-center justify-center font-black text-xl mb-6 shadow-md group-hover:scale-105 group-hover:bg-leaf-600 group-hover:text-white transition-all">
+                3
+              </div>
+              <h3 class="text-xl font-bold text-earth-950 dark:text-earth-50 mb-3" data-i18n="howStep3Title">
+                Simulate Soil Physics
+              </h3>
+              <p class="text-sm text-earth-700 dark:text-earth-300 leading-relaxed" data-i18n="howStep3Desc">
                 Compute FAO-56 reference evapotranspiration, multi-layer water infiltration, drainage, and root salt accumulation dynamics.
               </p>
             </div>
 
             <!-- Step 4 -->
-            <div class="how-step-card">
-              <div class="step-badge">4</div>
-              <h3 class="step-title" data-i18n="how.step4_title">Deliver Recommendations</h3>
-              <p class="step-desc" data-i18n="how.step4_desc">
+            <div class="group rounded-3xl border border-earth-300/80 dark:border-earth-800 bg-white/85 dark:bg-earth-900/80 backdrop-blur-sm p-6 sm:p-7 shadow-sm hover:shadow-lg hover:border-leaf-600 transition-all flex flex-col items-start">
+              <div class="w-14 h-14 rounded-2xl bg-earth-900 text-earth-50 dark:bg-earth-800 dark:text-leaf-400 border-2 border-earth-300 dark:border-earth-700 flex items-center justify-center font-black text-xl mb-6 shadow-md group-hover:scale-105 group-hover:bg-leaf-600 group-hover:text-white transition-all">
+                4
+              </div>
+              <h3 class="text-xl font-bold text-earth-950 dark:text-earth-50 mb-3" data-i18n="howStep4Title">
+                Deliver Recommendations
+              </h3>
+              <p class="text-sm text-earth-700 dark:text-earth-300 leading-relaxed" data-i18n="howStep4Desc">
                 Generate ranked crop rotation strategies matching farmer priorities for water saving, soil health, and risk mitigation.
               </p>
             </div>
 
           </div>
         </div>
+
       </div>
     </section>
 
-    <!-- ================= 4. CROP TALK ================= -->
-    <section class="crop-talk-section" id="crop-talk">
-      <div class="container crop-talk-box">
-        <span class="section-eyebrow" data-i18n="croptalk.eyebrow">Interactive Advisory</span>
-        <h2 class="section-title" data-i18n="croptalk.title">
+    <!-- ================= 4. CROP TALK: PLANT A QUESTION, GROW AN ANSWER ================= -->
+    <section id="crop-talk" class="py-16 sm:py-24 border-t border-earth-300/60 dark:border-earth-900 bg-earth-100/50 dark:bg-earth-900/30 relative">
+      <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full text-xs font-semibold bg-leaf-500/15 text-leaf-700 dark:text-leaf-400 border border-leaf-500/30 mb-4">
+          <i data-lucide="message-square" class="w-3.5 h-3.5"></i>
+          <span data-i18n="cropTalkEyebrow">Interactive Advisory</span>
+        </div>
+
+        <h2 class="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-earth-950 dark:text-earth-50 mb-8 leading-tight" data-i18n="cropTalkTitle">
           Crop Talk: Plant a Question, Grow an Answer
         </h2>
-        <p data-i18n="croptalk.p1">
-          Farming decisions inevitably raise vital questions: Why was a specific legume recommended after wheat? How will canal water salinity affect next season's tomato roots? What does reference evapotranspiration mean for your irrigation scheduling? Crop Talk is our dedicated agronomic companion, ready around the clock to converse directly with farmers and extension workers whenever they want to understand a recommendation or explore field possibilities.
-        </p>
-        <p data-i18n="croptalk.p2">
-          Whenever you want to clarify a simulation outcome, test what-if scenarios, or demystify satellite data terminology, simply ask. Crop Talk translates complex multi-layer soil physics and NASA observations into plain, actionable advice tailored to your exact Egyptian region without confusing technical barriers.
-        </p>
+
+        <div class="rounded-3xl border border-earth-300/80 dark:border-earth-800 bg-white/80 dark:bg-earth-900/80 backdrop-blur-md p-6 sm:p-9 shadow-md space-y-6">
+          <p class="text-base sm:text-lg text-earth-700 dark:text-earth-300 leading-relaxed" data-i18n="cropTalkP1">
+            Farming decisions inevitably raise vital questions: Why was a specific legume recommended after wheat? How will canal water salinity affect next season's tomato roots? What does reference evapotranspiration mean for your irrigation scheduling? Crop Talk is our dedicated agronomic companion, ready around the clock to converse directly with farmers and extension workers whenever they want to understand a recommendation or explore field possibilities.
+          </p>
+          <p class="text-base sm:text-lg text-earth-700 dark:text-earth-300 leading-relaxed" data-i18n="cropTalkP2">
+            Whenever you want to clarify a simulation outcome, test what-if scenarios, or demystify satellite data terminology, simply ask. Crop Talk translates complex multi-layer soil physics and NASA observations into plain, actionable advice tailored to your exact Egyptian region without confusing technical barriers.
+          </p>
+        </div>
+
       </div>
     </section>
 
     <!-- ================= 5. MAP OF EGYPT (Section 5) ================= -->
-    <section class="map-section" id="map-section">
-      <div class="container">
-        <div class="map-header">
-          <span class="section-eyebrow" data-i18n="map.eyebrow">National Coverage</span>
-          <h2 class="section-title" data-i18n="map.title">Agroclimatology Map of Egypt</h2>
-          <p class="lead-text" data-i18n="map.caption">
+    <section id="map-section" class="py-16 sm:py-24 border-t border-earth-300/60 dark:border-earth-900 relative">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div class="text-center max-w-3xl mx-auto mb-14">
+          <div class="inline-flex items-center gap-2 px-3.5 py-1 rounded-full text-xs font-semibold bg-red-500/15 text-red-700 dark:text-red-400 border border-red-500/30 mb-4">
+            <i data-lucide="map-pin" class="w-3.5 h-3.5"></i>
+            <span data-i18n="mapEyebrow">National Coverage</span>
+          </div>
+          <h2 class="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-earth-950 dark:text-earth-50 mb-4" data-i18n="mapTitle">
+            Agroclimatology Map of Egypt
+          </h2>
+          <p class="text-base sm:text-lg text-earth-700 dark:text-earth-300 leading-relaxed" data-i18n="mapCaption">
             An interactive map of Egypt highlighting the governorates and agricultural regions where our NASA agroclimatology and soil data are calibrated. Hover or tap any location to view details.
           </p>
         </div>
 
-        <div class="map-outer-card">
-          <!-- Map Canvas (strictly dir="ltr" to keep correct geographic orientation) -->
-          <div class="map-view-wrapper" aria-label="Interactive Map of Egyptian Governorates">
-            <div class="map-inner-canvas">
-              <img src="Egypt 's Map.png" onerror="this.src='egypt_map.png'" alt="Egypt Agroclimatology Map" class="map-satellite-img" id="egyptMapImg" />
-              <div class="map-pins-layer" id="mapPinsLayer" role="region" aria-label="Governorate pins layer">
-                <!-- 27 Governorates Red Pins and Labels rendered dynamically -->
+        <div class="rounded-3xl border border-earth-300/80 dark:border-earth-800 bg-white/80 dark:bg-earth-900/60 backdrop-blur-md p-4 sm:p-7 shadow-xl">
+          <!-- Interactive Map Container (Locked to LTR so Egypt geography is never flipped) -->
+          <div class="map-lock-ltr relative w-full rounded-2xl overflow-hidden border border-earth-300 dark:border-earth-800 bg-earth-950 shadow-inner">
+            <div class="relative w-full max-w-[1100px] mx-auto aspect-[1451/1084]">
+              <!-- Base Map Image -->
+              <img src="Egypt 's Map.png" onerror="this.src='egypt_map.png'" alt="Agroclimatology Map of Egypt" class="w-full h-full block object-cover select-none pointer-events-none" />
+              
+              <!-- Red Pins & Labels Layer -->
+              <div id="mapPinsLayer" class="absolute inset-0 pointer-events-none" role="region" aria-label="Egyptian Governorates Pins">
+                <!-- 27 Governorates dynamically rendered here -->
               </div>
             </div>
-            <!-- Floating Hover / Active Status Card -->
-            <div class="map-status-banner" id="mapStatusBanner">
-              <div class="map-status-header" data-i18n="map.data_station">NASA Climate & Soil Data Node</div>
-              <div class="map-status-gov" id="mapStatusGov">Egypt Agroclimatology Network</div>
+
+            <!-- Floating Status Badge -->
+            <div id="mapStatusBanner" class="absolute bottom-4 start-4 z-30 p-3.5 rounded-2xl bg-earth-950/90 backdrop-blur-md border border-earth-700/60 text-white shadow-xl max-w-xs pointer-events-none">
+              <div class="flex items-center gap-2 text-[11px] font-bold text-accentGold uppercase tracking-wider mb-0.5">
+                <i data-lucide="satellite" class="w-3.5 h-3.5"></i>
+                <span data-i18n="mapDataStation">NASA Climate & Soil Data Node</span>
+              </div>
+              <div id="mapStatusGov" class="text-sm font-extrabold text-white">
+                Egypt Agroclimatology Network
+              </div>
             </div>
           </div>
 
-          <!-- List of Governorates as Interactive Tags Beneath Map -->
-          <div class="tags-panel">
-            <h4 class="tags-label" data-i18n="map.tags_label">Calibrated Governorates & Agricultural Zones</h4>
-            <ul class="gov-tags-list" id="govTagsList" role="list">
-              <!-- Dynamically rendered tags -->
+          <!-- Governorates Tags List Beneath Map -->
+          <div class="mt-8 pt-6 border-t border-earth-200 dark:border-earth-800">
+            <div class="flex items-center justify-between mb-4">
+              <h4 class="text-xs sm:text-sm font-bold uppercase tracking-wider text-earth-600 dark:text-earth-400" data-i18n="mapTagsLabel">
+                Calibrated Governorates & Agricultural Zones
+              </h4>
+              <span class="text-xs font-mono font-semibold text-leaf-600 dark:text-leaf-400">
+                27 Governorates
+              </span>
+            </div>
+            <ul id="govTagsList" class="flex flex-wrap gap-2.5 list-none" role="list">
+              <!-- Dynamically populated tags -->
             </ul>
           </div>
         </div>
+
       </div>
     </section>
   </main>
 
   <!-- ================= FOOTER ================= -->
-  <footer class="site-footer">
-    <div class="container">
-      <p class="footer-brand">
-        <span data-i18n="brand.team">The Shifter</span> · <span data-i18n="brand.project">Journey into the Soil</span>
-      </p>
-      <p class="footer-disclaimer" data-i18n="footer.disclaimer">
-        Developed for NASA Space Apps Challenge 2026. Decision-support advisory system only. Does not replace local soil laboratory testing or agronomic expert judgment.
+  <footer class="border-t border-earth-300 dark:border-earth-900 bg-earth-100 dark:bg-earth-950 py-12 transition-colors duration-300">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-4">
+      <div class="flex items-center justify-center gap-3">
+        <img src="Gemini_Generated_Image_42gudn42gudn42gu.svg" alt="The Shifters Logo" class="w-7 h-7 object-contain" />
+        <span class="font-extrabold text-earth-900 dark:text-earth-50 text-base" data-i18n="brandTitle">The Shifter</span>
+        <span class="text-earth-400 dark:text-earth-600">·</span>
+        <span class="font-medium text-earth-700 dark:text-earth-300 text-sm" data-i18n="brandSubtitle">Journey into the Soil</span>
+      </div>
+      <p class="text-xs sm:text-sm text-earth-600 dark:text-earth-400 max-w-2xl mx-auto leading-relaxed" data-i18n="footerDisclaimer">
+        Developed for NASA Space Apps Challenge 2026 (Field Shift: Adapting Farms with NASA Data). Decision-support advisory system only. Does not replace local soil laboratory testing or agronomic expert judgment.
       </p>
     </div>
   </footer>
 
+  <!-- Toast Notification Container -->
+  <div id="toast" class="fixed bottom-6 end-6 z-50 flex items-center gap-3 px-4 py-3 rounded-2xl bg-earth-950/90 text-earth-100 border border-earth-700 shadow-2xl backdrop-blur-md transition-all duration-300 transform translate-y-24 opacity-0 pointer-events-none">
+    <i data-lucide="info" class="w-4 h-4 text-leaf-400"></i>
+    <span id="toastMsg" class="text-xs sm:text-sm font-medium">Notification</span>
+  </div>
+
   <script>
     /* ==========================================================================
-       1. TRANSLATION DICTIONARY (English & Complete Natural Arabic)
+       1. TRANSLATION DICTIONARY (Complete Natural English & Arabic)
        ========================================================================== */
     const translations = {
       en: {
-        "brand.team": "The Shifter",
-        "brand.project": "Journey into the Soil",
-        "ctrl.dark": "Dark Mode",
-        "ctrl.light": "Light Mode",
-        "hero.headline": "Sensing the Earth Beneath Our Feet: Precision Soil Intelligence for Resilient Egyptian Agriculture",
-        "hero.why_heading": "Why choose Journey into the Soil?",
-        "hero.why_text": "Because resilient farming begins deep within the root zone. By bridging NASA Earth observations—including soil moisture, rainfall anomalies, and solar irradiance—with local soil physics and agronomic science, our platform guides farmers toward balanced, water-smart crop rotations that restore soil vitality without guesswork or unrealistic promises.",
-        "battlefield.eyebrow": "Underground Realities",
-        "battlefield.title": "The Hidden Battlefield in the Soil and How to Defeat It",
-        "battlefield.p1": "Beneath every thriving crop lies a continuous struggle: invisible salinity creeping up through irrigation water, silent nutrient depletion stripping fertility across back-to-back harvests, and hidden moisture stress restricting root expansion long before drought signs appear on the leaves. When rotation decisions are made in the dark, severe soil compaction and secondary salinization threaten entire agricultural livelihoods.",
-        "battlefield.p2": "Journey into the Soil transforms this invisible underground dynamic into clear, science-backed guidance. By simulating multi-layer soil hydrology, root salt tolerance thresholds, and daily water balances alongside NASA satellite data, we empower farmers to defeat soil degradation, optimize every drop of irrigation, and secure land fertility for generations to come.",
-        "how.eyebrow": "HOW IT WORKS",
-        "how.title": "How does it work?",
-        "how.lead": "From field sample inputs to resilient rotation plans through physics-based simulation.",
-        "how.step1_title": "Collect Field Data",
-        "how.step1_desc": "Input field location, soil texture by feel, water salinity, irrigation method, and recent crop rotation history.",
-        "how.step2_title": "Integrate NASA Observations",
-        "how.step2_desc": "Aggregate daily solar radiation, ambient temperature, precipitation, and soil moisture from NASA POWER and Earth science models.",
-        "how.step3_title": "Simulate Soil Physics",
-        "how.step3_desc": "Compute FAO-56 reference evapotranspiration, multi-layer water infiltration, drainage, and root salt accumulation dynamics.",
-        "how.step4_title": "Deliver Recommendations",
-        "how.step4_desc": "Generate ranked crop rotation strategies matching farmer priorities for water saving, soil health, and risk mitigation.",
-        "croptalk.eyebrow": "Interactive Advisory",
-        "croptalk.title": "Crop Talk: Plant a Question, Grow an Answer",
-        "croptalk.p1": "Farming decisions inevitably raise vital questions: Why was a specific legume recommended after wheat? How will canal water salinity affect next season's tomato roots? What does reference evapotranspiration mean for your irrigation scheduling? Crop Talk is our dedicated agronomic companion, ready around the clock to converse directly with farmers and extension workers whenever they want to understand a recommendation or explore field possibilities.",
-        "croptalk.p2": "Whenever you want to clarify a simulation outcome, test what-if scenarios, or demystify satellite data terminology, simply ask. Crop Talk translates complex multi-layer soil physics and NASA observations into plain, actionable advice tailored to your exact Egyptian region without confusing technical barriers.",
-        "map.eyebrow": "National Coverage",
-        "map.title": "Agroclimatology Map of Egypt",
-        "map.caption": "An interactive map of Egypt highlighting the governorates and agricultural regions where our NASA agroclimatology and soil data are calibrated. Hover or tap any location to view details.",
-        "map.tags_label": "Calibrated Governorates & Agricultural Zones",
-        "map.data_station": "NASA Climate & Soil Data Node",
-        "footer.disclaimer": "Developed for NASA Space Apps Challenge 2026. Decision-support advisory system only. Does not replace local soil laboratory testing or agronomic expert judgment."
+        brandTitle: "The Shifter",
+        brandSubtitle: "Journey into the Soil",
+        heroBadge: "Precision Soil Intelligence • NASA Earth Data",
+        heroTitle: "Sensing the Earth Beneath Our Feet: Precision Soil Intelligence for Resilient Egyptian Agriculture",
+        whyHeading: "Why choose Journey into the Soil?",
+        whyText: "Because resilient farming begins deep within the root zone. By bridging NASA Earth observations—including soil moisture, rainfall anomalies, and solar irradiance—with local soil physics and agronomic science, our platform guides farmers toward balanced, water-smart crop rotations that restore soil vitality without guesswork or unrealistic promises.",
+        battlefieldEyebrow: "Underground Realities",
+        battlefieldTitle: "The Hidden Battlefield in the Soil and How to Defeat It",
+        battlefieldP1: "Beneath every thriving crop lies a continuous struggle: invisible salinity creeping up through irrigation water, silent nutrient depletion stripping fertility across back-to-back harvests, and hidden moisture stress restricting root expansion long before drought signs appear on the leaves. When rotation decisions are made in the dark, severe soil compaction and secondary salinization threaten entire agricultural livelihoods.",
+        battlefieldP2: "Journey into the Soil transforms this invisible underground dynamic into clear, science-backed guidance. By simulating multi-layer soil hydrology, root salt tolerance thresholds, and daily water balances alongside NASA satellite data, we empower farmers to defeat soil degradation, optimize every drop of irrigation, and secure land fertility for generations to come.",
+        howEyebrow: "HOW IT WORKS",
+        howTitle: "How does it work?",
+        howLead: "From field sample inputs to resilient rotation plans through physics-based simulation.",
+        howStep1Title: "Collect Field Data",
+        howStep1Desc: "Input field location, soil texture by feel, water salinity, irrigation method, and recent crop rotation history.",
+        howStep2Title: "Integrate NASA Observations",
+        howStep2Desc: "Aggregate daily solar radiation, ambient temperature, precipitation, and soil moisture from NASA POWER and Earth science models.",
+        howStep3Title: "Simulate Soil Physics",
+        howStep3Desc: "Compute FAO-56 reference evapotranspiration, multi-layer water infiltration, drainage, and root salt accumulation dynamics.",
+        howStep4Title: "Deliver Recommendations",
+        howStep4Desc: "Generate ranked crop rotation strategies matching farmer priorities for water saving, soil health, and risk mitigation.",
+        cropTalkEyebrow: "Interactive Advisory",
+        cropTalkTitle: "Crop Talk: Plant a Question, Grow an Answer",
+        cropTalkP1: "Farming decisions inevitably raise vital questions: Why was a specific legume recommended after wheat? How will canal water salinity affect next season's tomato roots? What does reference evapotranspiration mean for your irrigation scheduling? Crop Talk is our dedicated agronomic companion, ready around the clock to converse directly with farmers and extension workers whenever they want to understand a recommendation or explore field possibilities.",
+        cropTalkP2: "Whenever you want to clarify a simulation outcome, test what-if scenarios, or demystify satellite data terminology, simply ask. Crop Talk translates complex multi-layer soil physics and NASA observations into plain, actionable advice tailored to your exact Egyptian region without confusing technical barriers.",
+        mapEyebrow: "National Coverage",
+        mapTitle: "Agroclimatology Map of Egypt",
+        mapCaption: "An interactive map of Egypt highlighting the governorates and agricultural regions where our NASA agroclimatology and soil data are calibrated. Hover or tap any location to view details.",
+        mapDataStation: "NASA Climate & Soil Data Node",
+        mapTagsLabel: "Calibrated Governorates & Agricultural Zones",
+        footerDisclaimer: "Developed for NASA Space Apps Challenge 2026 (Field Shift: Adapting Farms with NASA Data). Decision-support advisory system only. Does not replace local soil laboratory testing or agronomic expert judgment."
       },
       ar: {
-        "brand.team": "The Shifter",
-        "brand.project": "رحلة في أعماق التربة",
-        "ctrl.dark": "الوضع الداكن",
-        "ctrl.light": "الوضع الفاتح",
-        "hero.headline": "استشعار الأرض من تحت أقدامنا: ذكاء التربة الدقيق لزراعة مصرية قادرة على الصمود",
-        "hero.why_heading": "لماذا تختار رحلة في أعماق التربة؟",
-        "hero.why_text": "لأن الزراعة الصامدة تبدأ من أعماق منطقة الجذور. من خلال ربط أرصاد وكالة ناسا للأرض—بما في ذلك رطوبة التربة، وتقلبات الأمطار، والإشعاع الشمسي—مع فيزياء التربة المحلية والعلوم الزراعية، تُرشد منصتنا المزارعين نحو دورات زراعية متوازنة وموفرة للمياه تستعيد حيوية التربة دون تكهنات أو وعود غير واقعية.",
-        "battlefield.eyebrow": "حقائق باطن الأرض",
-        "battlefield.title": "المعركة الخفية في باطن التربة وكيف تنتصر فيها",
-        "battlefield.p1": "تحت كل محصول مزدهر تدور معركة مستمرة: ملوحة خفية تتصاعد تدريجياً مع مياه الري، واستنزاف صامت للعناصر الغذائية يجهد الخصوبة عبر المواسم المتتالية، وإجهاد مائي غير مرئي يقيّد نمو الجذور قبل أن تظهر علامات الجفاف على الأوراق. وحين تُتخذ قرارات الدورة الزراعية دون رؤية واضحة، يتسبب انضغاط التربة وتملحها الثانوي في تهديد المحاصيل ومصادر الرزق بأكملها.",
-        "battlefield.p2": "تحول 'رحلة في أعماق التربة' هذه الديناميكيات الخفية إلى رؤية علمية واضحة وموثوقة. من خلال محاكاة حركة المياه عبر طبقات التربة، وتحديد عتبات تحمل الجذور للملوحة، وحساب الميزان المائي اليومي بالتكامل مع أقمار ناسا، نساعد المزارعين على التغلب على تدهور التربة، واستثمار كل قطرة مياه، وحماية خصوبة أرضهم لأجيال قادمة.",
-        "how.eyebrow": "آلية العمل",
-        "how.title": "كيف يعمل النظام؟",
-        "how.lead": "من عينات وبيانات الحقل إلى خطط دورات زراعية مرنة عبر المحاكاة الفيزيائية.",
-        "how.step1_title": "جمع بيانات الحقل",
-        "how.step1_desc": "إدخال موقع الحقل، وقوام التربة بالملمس، وملوحة مياه الري، ونوع نظام الري، وتاريخ المحاصيل في المواسم السابقة.",
-        "how.step2_title": "دمج أرصاد وكالة ناسا",
-        "how.step2_desc": "تجميع الإشعاع الشمسي اليومي، ودرجات الحرارة، ومعدلات الأمطار، ورطوبة التربة من منصة NASA POWER والنماذج الفضائية.",
-        "how.step3_title": "محاكاة فيزياء التربة",
-        "how.step3_desc": "حساب التبخر-نتح المرجعي (FAO-56)، وحركة رشح المياه في الطبقات، والصرف، وتراكم الأملاح حول الجذور.",
-        "how.step4_title": "تقديم التوصيات الاسترشادية",
-        "how.step4_desc": "إنشاء استراتيجيات تتابع محصولي مرتبة وفق أولويات المزارع في توفير المياه، وصحة التربة، والحد من المخاطر.",
-        "croptalk.eyebrow": "الإرشاد التفاعلي",
-        "croptalk.title": "حديث المحصول: ازرع سؤالاً، تحصد إجابة",
-        "croptalk.p1": "تثير القرارات الزراعية تساؤلات حيوية لا حصر لها: لماذا رُشح محصول بقولي بعد القمح؟ كيف ستؤثر ملوحة مياه الترعة على جذور الطماطم في الموسم القادم؟ وماذا يعني التبخر-نتح لجدول الري الخاص بك؟ 'حديث المحصول' هو رفيقك الزراعي المخصص، المتواجد دائماً للتحاور المباشر مع المزارعين والمرشدين الزراعيين لفهم مخرجات التوصيات واستكشاف خيارات الحقل.",
-        "croptalk.p2": "كلما أردت توضيح نتيجة محاكاة، أو تجربة سيناريوهات افتراضية، أو فهم مصطلحات الأقمار الصناعية، ما عليك سوى طرح سؤالك. يشرح 'حديث المحصول' فيزياء طبقات التربة المعقدة وأرصاد ناسا بلغة بسيطة وعملية مفصلة خصصاً لمحافظتك المصرية دون حواجز تقنية معقدة.",
-        "map.eyebrow": "تغطية شاملة",
-        "map.title": "خريطة المناخ الزراعي في مصر",
-        "map.caption": "خريطة تفاعلية لجمهورية مصر العربية تُبرز المحافظات والمناطق الزراعية التي تمت معايرة بيانات ناسا المناخية وفيزياء التربة فيها. مرر المؤشر أو اضغط على أي موقع لعرض التفاصيل.",
-        "map.tags_label": "المحافظات والمناطق الزراعية المشمولة بالمعايرة",
-        "map.data_station": "محطة بيانات المناخ والتربة (ناسا)",
-        "footer.disclaimer": "تم التطوير لتحدي ناسا لتطبيقات الفضاء 2026 (NASA Space Apps). نظام دعم قرارات استرشادي فقط، ولا يغني عن التحليل المعملي للتربة أو استشارة المهندس الزراعي المختص."
+        brandTitle: "The Shifter",
+        brandSubtitle: "رحلة في أعماق التربة",
+        heroBadge: "ذكاء التربة الدقيق • أرصاد وكالة ناسا للأرض",
+        heroTitle: "استشعار الأرض من تحت أقدامنا: ذكاء التربة الدقيق لزراعة مصرية قادرة على الصمود",
+        whyHeading: "لماذا تختار رحلة في أعماق التربة؟",
+        whyText: "لأن الزراعة الصامدة تبدأ من أعماق منطقة الجذور. من خلال ربط أرصاد وكالة ناسا للأرض—بما في ذلك رطوبة التربة، وتقلبات الأمطار، والإشعاع الشمسي—مع فيزياء التربة المحلية والعلوم الزراعية، تُرشد منصتنا المزارعين نحو دورات زراعية متوازنة وموفرة للمياه تستعيد حيوية التربة دون تكهنات أو وعود غير واقعية.",
+        battlefieldEyebrow: "حقائق باطن الأرض",
+        battlefieldTitle: "المعركة الخفية في باطن التربة وكيف تنتصر فيها",
+        battlefieldP1: "تحت كل محصول مزدهر تدور معركة مستمرة: ملوحة خفية تتصاعد تدريجياً مع مياه الري، واستنزاف صامت للعناصر الغذائية يجهد الخصوبة عبر المواسم المتتالية، وإجهاد مائي غير مرئي يقيّد نمو الجذور قبل أن تظهر علامات الجفاف على الأوراق. وحين تُتخذ قرارات الدورة الزراعية دون رؤية واضحة، يتسبب انضغاط التربة وتملحها الثانوي في تهديد المحاصيل ومصادر الرزق بأكملها.",
+        battlefieldP2: "تحول 'رحلة في أعماق التربة' هذه الديناميكيات الخفية إلى رؤية علمية واضحة وموثوقة. من خلال محاكاة حركة المياه عبر طبقات التربة، وتحديد عتبات تحمل الجذور للملوحة، وحساب الميزان المائي اليومي بالتكامل مع أقمار ناسا، نساعد المزارعين على التغلب على تدهور التربة، واستثمار كل قطرة مياه، وحماية خصوبة أرضهم لأجيال قادمة.",
+        howEyebrow: "آلية العمل",
+        howTitle: "كيف يعمل النظام؟",
+        howLead: "من عينات وبيانات الحقل إلى خطط دورات زراعية مرنة عبر المحاكاة الفيزيائية.",
+        howStep1Title: "جمع بيانات الحقل",
+        howStep1Desc: "إدخال موقع الحقل، وقوام التربة بالملمس، وملوحة مياه الري، ونوع نظام الري، وتاريخ المحاصيل في المواسم السابقة.",
+        howStep2Title: "دمج أرصاد وكالة ناسا",
+        howStep2Desc: "تجميع الإشعاع الشمسي اليومي، ودرجات الحرارة، ومعدلات الأمطار، ورطوبة التربة من منصة NASA POWER والنماذج الفضائية.",
+        howStep3Title: "محاكاة فيزياء التربة",
+        howStep3Desc: "حساب التبخر-نتح المرجعي (FAO-56)، وحركة رشح المياه في الطبقات، والصرف، وتراكم الأملاح حول الجذور.",
+        howStep4Title: "تقديم التوصيات الاسترشادية",
+        howStep4Desc: "إنشاء استراتيجيات تتابع محصولي مرتبة وفق أولويات المزارع في توفير المياه، وصحة التربة، والحد من المخاطر.",
+        cropTalkEyebrow: "الإرشاد التفاعلي",
+        cropTalkTitle: "حديث المحصول: ازرع سؤالاً، تحصد إجابة",
+        cropTalkP1: "تثير القرارات الزراعية تساؤلات حيوية لا حصر لها: لماذا رُشح محصول بقولي بعد القمح؟ كيف ستؤثر ملوحة مياه الترعة على جذور الطماطم في الموسم القادم؟ وماذا يعني التبخر-نتح لجدول الري الخاص بك؟ 'حديث المحصول' هو رفيقك الزراعي المخصص، المتواجد دائماً للتحاور المباشر مع المزارعين والمرشدين الزراعيين لفهم مخرجات التوصيات واستكشاف خيارات الحقل.",
+        cropTalkP2: "كلما أردت توضيح نتيجة محاكاة، أو تجربة سيناريوهات افتراضية، أو فهم مصطلحات الأقمار الصناعية، ما عليك سوى طرح سؤالك. يشرح 'حديث المحصول' فيزياء طبقات التربة المعقدة وأرصاد ناسا بلغة بسيطة وعملية مفصلة خصيصاً لمحافظتك المصرية دون حواجز تقنية معقدة.",
+        mapEyebrow: "تغطية شاملة",
+        mapTitle: "خريطة المناخ الزراعي في مصر",
+        mapCaption: "خريطة تفاعلية لجمهورية مصر العربية تُبرز المحافظات والمناطق الزراعية التي تمت معايرة بيانات ناسا المناخية وفيزياء التربة فيها. مرر المؤشر أو اضغط على أي موقع لعرض التفاصيل.",
+        mapDataStation: "محطة بيانات المناخ والتربة (ناسا)",
+        mapTagsLabel: "المحافظات والمناطق الزراعية المشمولة بالمعايرة",
+        footerDisclaimer: "تم التطوير لتحدي ناسا لتطبيقات الفضاء 2026 (Field Shift: Adapting Farms with NASA Data). نظام دعم قرارات استرشادي فقط، ولا يغني عن التحليل المعملي للتربة أو استشارة المهندس الزراعي المختص."
       }
     };
 
     /* ==========================================================================
-       2. EGYPTIAN GOVERNORATES DATA (27 Calibrated Regions)
-       Overlay coordinates calibrated directly against Egypt 's Map.png
+       2. EGYPTIAN GOVERNORATES DATA (27 Regions)
        ========================================================================== */
     const governorates = [
       { id: "alexandria", name_en: "Alexandria", name_ar: "الإسكندرية", x: 37.5, y: 14.2, align: "left" },
@@ -1159,43 +558,45 @@
 
     function applyTheme(theme) {
       currentTheme = theme;
-      document.documentElement.setAttribute("data-theme", theme);
       localStorage.setItem("shifter_theme", theme);
-
+      const htmlEl = document.documentElement;
       const themeIcon = document.getElementById("themeIcon");
-      const themeText = document.getElementById("themeText");
+
       if (theme === "dark") {
-        themeIcon.textContent = "☀️";
-        themeText.setAttribute("data-i18n", "ctrl.light");
-        themeText.textContent = translations[currentLang]["ctrl.light"];
+        htmlEl.classList.add("dark");
+        themeIcon.setAttribute("data-lucide", "sun");
       } else {
-        themeIcon.textContent = "🌙";
-        themeText.setAttribute("data-i18n", "ctrl.dark");
-        themeText.textContent = translations[currentLang]["ctrl.dark"];
+        htmlEl.classList.remove("dark");
+        themeIcon.setAttribute("data-lucide", "moon");
       }
+      lucide.createIcons();
     }
 
     function toggleTheme() {
       const newTheme = currentTheme === "light" ? "dark" : "light";
       applyTheme(newTheme);
+      showToast(newTheme === "dark" 
+        ? (currentLang === "ar" ? "تم تفعيل الوضع الداكن" : "Switched to Dark Mode")
+        : (currentLang === "ar" ? "تم تفعيل الوضع الفاتح" : "Switched to Light Mode")
+      );
     }
 
     function applyLanguage(lang) {
       currentLang = lang;
       localStorage.setItem("shifter_lang", lang);
-
       const htmlEl = document.documentElement;
+
       if (lang === "ar") {
         htmlEl.setAttribute("dir", "rtl");
         htmlEl.setAttribute("lang", "ar");
-        document.getElementById("langText").textContent = "English";
+        document.getElementById("langLabel").textContent = "English";
       } else {
         htmlEl.setAttribute("dir", "ltr");
         htmlEl.setAttribute("lang", "en");
-        document.getElementById("langText").textContent = "العربية";
+        document.getElementById("langLabel").textContent = "العربية";
       }
 
-      // Update all data-i18n elements
+      // Update text in data-i18n elements
       document.querySelectorAll("[data-i18n]").forEach(el => {
         const key = el.getAttribute("data-i18n");
         if (translations[lang] && translations[lang][key]) {
@@ -1203,20 +604,16 @@
         }
       });
 
-      // Update theme toggle button label
-      const themeText = document.getElementById("themeText");
-      const themeKey = currentTheme === "dark" ? "ctrl.light" : "ctrl.dark";
-      themeText.textContent = translations[lang][themeKey];
-
-      // Refresh Governorates Pins & Tags
       renderMapPins();
       renderGovernoratesTags();
       updateStatusBanner(activeGovId);
+      lucide.createIcons();
     }
 
     function toggleLanguage() {
       const newLang = currentLang === "en" ? "ar" : "en";
       applyLanguage(newLang);
+      showToast(newLang === "ar" ? "تم تحويل اللغة إلى العربية" : "Switched to English");
     }
 
     /* ==========================================================================
@@ -1229,7 +626,7 @@
 
       governorates.forEach(gov => {
         const marker = document.createElement("div");
-        marker.className = `gov-marker ${gov.id === activeGovId ? 'active' : ''}`;
+        marker.className = `gov-marker absolute cursor-pointer pointer-events-auto z-10 ${gov.id === activeGovId ? 'active' : ''}`;
         marker.style.left = `${gov.x}%`;
         marker.style.top = `${gov.y}%`;
         marker.setAttribute("tabindex", "0");
@@ -1238,12 +635,19 @@
         const govName = currentLang === "ar" ? gov.name_ar : gov.name_en;
         marker.setAttribute("aria-label", govName);
 
+        // Align positioning classes
+        let alignClass = "start-5 top-1/2 -translate-y-1/2";
+        if (gov.align === "left") alignClass = "end-5 top-1/2 -translate-y-1/2";
+        if (gov.align === "top") alignClass = "start-1/2 -translate-x-1/2 -top-5 align-top";
+
         marker.innerHTML = `
-          <div class="pin-beacon-wrapper">
-            <div class="pin-pulse-wave"></div>
-            <div class="pin-center-dot"></div>
+          <div class="relative w-5 h-5 flex items-center justify-center">
+            <div class="pin-pulse-wave absolute inset-0 rounded-full bg-red-500 opacity-60"></div>
+            <div class="pin-dot relative z-10 w-2.5 h-2.5 rounded-full bg-red-600 border-2 border-white shadow-md transition-all"></div>
           </div>
-          <span class="pin-label-badge align-${gov.align}">${govName}</span>
+          <span class="pin-badge absolute ${alignClass} px-2 py-0.5 rounded-md text-[10px] sm:text-[11px] font-bold bg-red-600/90 text-white border border-white/50 shadow-md backdrop-blur-sm whitespace-nowrap transition-all select-none">
+            ${govName}
+          </span>
         `;
 
         marker.addEventListener("mouseenter", () => highlightGovernorate(gov.id));
@@ -1266,17 +670,26 @@
         const li = document.createElement("li");
         const btn = document.createElement("button");
         btn.type = "button";
-        btn.className = `gov-tag ${gov.id === activeGovId ? 'active' : ''}`;
         btn.setAttribute("data-id", gov.id);
-        btn.textContent = currentLang === "ar" ? gov.name_ar : gov.name_en;
+        const isActive = gov.id === activeGovId;
+        
+        btn.className = `gov-tag px-3 py-1.5 rounded-full text-xs font-semibold border transition-all flex items-center gap-2 select-none ${
+          isActive 
+            ? 'bg-leaf-600 text-white border-leaf-600 shadow-md'
+            : 'bg-earth-200/80 dark:bg-earth-900 text-earth-800 dark:text-earth-200 border-earth-300 dark:border-earth-700 hover:border-leaf-600 hover:bg-earth-300 dark:hover:bg-earth-800'
+        }`;
 
-        btn.addEventListener("click", () => {
-          highlightGovernorate(gov.id);
-        });
+        const dot = document.createElement("span");
+        dot.className = `w-1.5 h-1.5 rounded-full ${isActive ? 'bg-accentGold' : 'bg-red-500'}`;
 
-        btn.addEventListener("mouseenter", () => {
-          highlightGovernorate(gov.id);
-        });
+        const text = document.createElement("span");
+        text.textContent = currentLang === "ar" ? gov.name_ar : gov.name_en;
+
+        btn.appendChild(dot);
+        btn.appendChild(text);
+
+        btn.addEventListener("click", () => highlightGovernorate(gov.id));
+        btn.addEventListener("mouseenter", () => highlightGovernorate(gov.id));
 
         li.appendChild(btn);
         listEl.appendChild(li);
@@ -1297,10 +710,13 @@
 
       // Update tags
       document.querySelectorAll(".gov-tag").forEach(tag => {
+        const dot = tag.querySelector("span:first-child");
         if (tag.getAttribute("data-id") === id) {
-          tag.classList.add("active");
+          tag.className = "gov-tag px-3 py-1.5 rounded-full text-xs font-semibold border transition-all flex items-center gap-2 select-none bg-leaf-600 text-white border-leaf-600 shadow-md";
+          if (dot) dot.className = "w-1.5 h-1.5 rounded-full bg-accentGold";
         } else {
-          tag.classList.remove("active");
+          tag.className = "gov-tag px-3 py-1.5 rounded-full text-xs font-semibold border transition-all flex items-center gap-2 select-none bg-earth-200/80 dark:bg-earth-900 text-earth-800 dark:text-earth-200 border-earth-300 dark:border-earth-700 hover:border-leaf-600 hover:bg-earth-300 dark:hover:bg-earth-800";
+          if (dot) dot.className = "w-1.5 h-1.5 rounded-full bg-red-500";
         }
       });
 
@@ -1326,7 +742,26 @@
     }
 
     /* ==========================================================================
-       5. INITIALIZATION
+       5. TOAST NOTIFICATIONS
+       ========================================================================== */
+    const toast = document.getElementById("toast");
+    const toastMsg = document.getElementById("toastMsg");
+    let toastTimeout = null;
+
+    function showToast(message) {
+      if (!toast || !toastMsg) return;
+      toastMsg.textContent = message;
+      toast.classList.remove("translate-y-24", "opacity-0", "pointer-events-none");
+      toast.classList.add("translate-y-0", "opacity-100");
+      if (toastTimeout) clearTimeout(toastTimeout);
+      toastTimeout = setTimeout(() => {
+        toast.classList.remove("translate-y-0", "opacity-100");
+        toast.classList.add("translate-y-24", "opacity-0", "pointer-events-none");
+      }, 3000);
+    }
+
+    /* ==========================================================================
+       6. INITIALIZATION
        ========================================================================== */
     document.addEventListener("DOMContentLoaded", () => {
       // 1. Setup Theme
@@ -1341,7 +776,10 @@
       renderMapPins();
       renderGovernoratesTags();
 
-      // Listen for system theme changes if user hasn't explicitly set preference
+      // 4. Lucide Icons
+      lucide.createIcons();
+
+      // Listen for system theme changes if user hasn't set custom preference
       window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", e => {
         if (!localStorage.getItem("shifter_theme")) {
           applyTheme(e.matches ? "dark" : "light");
