@@ -17,7 +17,7 @@
 - [ ] B12 (data-pipelines) NDVI (HLS or MOD13Q1, else AppEEARS) per site; show bare-field vs crop timeline check.
 - [ ] B13 (data-pipelines) SoilGrids lookup cached into pack for demo sites; `services/soil.py` already parses it.
 - [ ] B14 (frontend) Native Arabic review pass with a speaker; fix strings in `contracts/i18n/ar.json` + `web/src/i18n/ui.ar.json`.
-- [ ] B15 (scene-3d) Lazy-load Babylon, measure FPS on a mid phone, tune tiers.
+- [x] B15 (scene-3d) Lazy-load Babylon, measure FPS on a mid phone, tune tiers.
 - [ ] B16 (frontend) Accessibility pass (focus order, contrast, aria for timeline).
 
 ## P2 - nice
