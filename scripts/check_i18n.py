@@ -23,6 +23,18 @@ for path in (root / "web/src").rglob("*.ts*"):
     for m in re.finditer(r"\bt\(\s*`([\w.]*)\$\{", src):
         if not any(k.startswith(m.group(1)) for k in keys):
             errors.append(f"{path.relative_to(root)}: no keys with prefix {m.group(1)}")
+# Explicit dynamic enum keys check:
+dynamic_enum_checks = {
+    "ui.scene_moisture_": ["dry", "stress", "optimal", "saturated"],
+    "ui.scene_salinity_": ["low", "moderate", "high"],
+    "ui.scene_view_": ["3d", "cutaway", "canopy"],
+}
+for prefix, variants in dynamic_enum_checks.items():
+    for variant in variants:
+        full_key = f"{prefix}{variant}"
+        if full_key not in keys:
+            errors.append(f"dynamic key check: missing expected key {full_key}")
+
 if errors:
     print("\n".join(errors))
     sys.exit(1)

@@ -10,6 +10,8 @@ import { Mesh } from "@babylonjs/core/Meshes/mesh";
 import { MeshBuilder } from "@babylonjs/core/Meshes/meshBuilder";
 import { TransformNode } from "@babylonjs/core/Meshes/transformNode";
 import "@babylonjs/core/Meshes/thinInstanceMesh";
+import "@babylonjs/core/Culling/ray";
+import { PointerEventTypes } from "@babylonjs/core/Events/pointerEvents";
 import { Scene } from "@babylonjs/core/scene";
 import type {
   AnalysisResult,
@@ -158,6 +160,7 @@ export class SceneController {
   private onDay?: (day: number) => void;
   private onInspect?: (data: LayerInspectData | null) => void;
   private onTelemetry?: (data: SceneTelemetry) => void;
+  private inspectedLayerIdx: number | null = null;
 
   constructor(
     canvas: HTMLCanvasElement,
@@ -211,13 +214,20 @@ export class SceneController {
       this.introT = 1;
     }
 
-    // Pointer picking for interactive layer inspection
-    this.scene.onPointerDown = (_evt, pick) => {
-      if (pick && pick.hit && pick.pickedMesh && pick.pickedMesh.name.startsWith("layer")) {
-        const idx = parseInt(pick.pickedMesh.name.replace("layer", ""), 10);
-        if (!isNaN(idx)) this.inspectLayer(idx);
+    // Tap detection for layer inspection (differentiates tap from orbit/drag, ignores roots/blades)
+    this.scene.onPointerObservable.add((pointerInfo) => {
+      if (pointerInfo.type === PointerEventTypes.POINTERTAP) {
+        const pick = this.scene.pick(
+          this.scene.pointerX,
+          this.scene.pointerY,
+          (mesh) => mesh.name.startsWith("layer")
+        );
+        if (pick && pick.hit && pick.pickedMesh) {
+          const idx = parseInt(pick.pickedMesh.name.replace("layer", ""), 10);
+          if (!isNaN(idx)) this.inspectLayer(idx);
+        }
       }
-    };
+    });
 
     this.scene.onBeforeRenderObservable.add(() => this.tick(this.engine.getDeltaTime() / 1000));
     this.engine.runRenderLoop(() => {
@@ -269,12 +279,14 @@ export class SceneController {
       this.clearInspection();
       return;
     }
+    this.inspectedLayerIdx = idx;
     const l = this.result.layers[idx];
     const sim = this.strategy.sim;
     const m = sim.moisture[idx]?.[this.dayIdx] ?? 0.5;
     const ece = sim.ece[idx]?.[this.dayIdx] ?? 0;
 
-    const moisturePercent = Math.round(m * 100);
+    // Available water share: 0 at wilting point, 1.0 (100%) at field capacity
+    const availableWaterPct = Math.round(m * 100);
     const moistureStatus =
       m < 0.25 ? "dry" : m < 0.5 ? "stress" : m <= 1.05 ? "optimal" : "saturated";
     const salinityDsm = Number(ece.toFixed(1));
@@ -290,8 +302,10 @@ export class SceneController {
       nameKey: l.name_key,
       topCm: l.top_cm,
       bottomCm: l.bottom_cm,
-      texture: `${l.sand}% sand, ${l.silt}% silt, ${l.clay}% clay`,
-      moisturePercent,
+      sand: l.sand,
+      silt: l.silt,
+      clay: l.clay,
+      availableWaterPct,
       moistureStatus,
       salinityDsm,
       salinityStatus,
@@ -300,6 +314,7 @@ export class SceneController {
   }
 
   clearInspection(): void {
+    this.inspectedLayerIdx = null;
     this.layerMats.forEach((mat) => {
       mat.emissiveColor = Color3.Black();
     });
@@ -800,9 +815,15 @@ export class SceneController {
       this.rainMesh.setEnabled(rain > 2.0 && this.tier !== "low");
     }
 
+    // Keep inspected layer updated live with daily simulation data
+    if (this.inspectedLayerIdx !== null) {
+      this.inspectLayer(this.inspectedLayerIdx);
+    }
+
     // Emit live telemetry
     if (this.onTelemetry) {
       const activeSeason = cropIdx >= 0 ? s.seasons[cropIdx]?.season ?? null : null;
+      const date = res.climate.dates[day] ?? "";
       this.onTelemetry({
         cropId,
         season: activeSeason,
@@ -811,6 +832,8 @@ export class SceneController {
         et0Mm: Number((res.climate.et0[day] ?? 0).toFixed(1)),
         rainMm: Number(rain.toFixed(1)),
         tempC: Math.round(tmax),
+        date,
+        isSynthetic: res.climate.source === "synthetic",
       });
     }
 

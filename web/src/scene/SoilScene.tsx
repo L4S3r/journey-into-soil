@@ -16,6 +16,10 @@ export function SoilScene() {
   const [isExploded, setIsExploded] = useState(false);
   const [inspectedLayer, setInspectedLayer] = useState<LayerInspectData | null>(null);
   const [telemetry, setTelemetry] = useState<SceneTelemetry | null>(null);
+  const [telemetryExpanded, setTelemetryExpanded] = useState(false);
+
+  const inspectorRef = useRef<HTMLDivElement>(null);
+  const openerRef = useRef<HTMLElement | null>(null);
 
   const { result, strategyId, dayT, theme, quality } = useStore();
 
@@ -28,7 +32,9 @@ export function SoilScene() {
         if (disposed || !canvasRef.current) return;
         try {
           const controller = new SceneController(canvasRef.current);
-          controller.setOnInspect((data) => setInspectedLayer(data));
+          controller.setOnInspect((data) => {
+            setInspectedLayer(data);
+          });
           controller.setOnTelemetry((data) => setTelemetry(data));
           ctrl.current = controller;
           setReady(true);
@@ -61,6 +67,30 @@ export function SoilScene() {
   useEffect(() => ctrl.current?.setTheme(theme), [theme, ready]);
   useEffect(() => ctrl.current?.setQuality(quality), [quality, ready]);
 
+  // Focus management for inspector dialog & Esc key handling
+  useEffect(() => {
+    if (inspectedLayer) {
+      if (document.activeElement instanceof HTMLElement && !inspectorRef.current?.contains(document.activeElement)) {
+        openerRef.current = document.activeElement;
+      }
+      inspectorRef.current?.focus();
+    }
+  }, [inspectedLayer?.layerIndex]);
+
+  useEffect(() => {
+    if (!inspectedLayer) return;
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        e.preventDefault();
+        ctrl.current?.clearInspection();
+        setInspectedLayer(null);
+        openerRef.current?.focus();
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [inspectedLayer]);
+
   const handlePreset = (preset: CameraPreset) => {
     setActivePreset(preset);
     ctrl.current?.setCameraPreset(preset);
@@ -77,13 +107,20 @@ export function SoilScene() {
     ctrl.current?.replay();
   };
 
-  const handleSelectDepth = (layerIndex: number) => {
+  const handleSelectDepth = (layerIndex: number, e: React.MouseEvent<HTMLButtonElement>) => {
+    openerRef.current = e.currentTarget;
     ctrl.current?.inspectLayer(layerIndex);
   };
 
+  const handleCloseInspector = () => {
+    ctrl.current?.clearInspection();
+    setInspectedLayer(null);
+    openerRef.current?.focus();
+  };
+
   return (
-    <div className="scene-container" role="img" aria-label={t("ui.scene_label")}>
-      <canvas ref={canvasRef} />
+    <div className="scene-container">
+      <canvas ref={canvasRef} role="img" aria-label={t("ui.scene_label")} />
       {failed && <p className="scene-fallback">{t("ui.no_webgl")}</p>}
 
       {ready && (
@@ -91,7 +128,12 @@ export function SoilScene() {
           {/* Top Bar: Live Telemetry & Control Buttons */}
           <div className="scene-top-bar">
             {telemetry && (
-              <div className="scene-telemetry scene-glass">
+              <div
+                className={`scene-telemetry scene-glass ${telemetryExpanded ? "expanded" : "collapsed"}`}
+                onClick={() => setTelemetryExpanded((prev) => !prev)}
+                role="region"
+                aria-label={t("ui.data")}
+              >
                 <span className="scene-telemetry-item">
                   <span className="scene-telemetry-badge">
                     <svg className="scene-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
@@ -103,54 +145,91 @@ export function SoilScene() {
                     <span>{telemetry.cropId ? t(`crop.${telemetry.cropId}`, telemetry.cropId) : t("ui.scene_telemetry_fallow")}</span>
                   </span>
                 </span>
+
                 <span className="scene-telemetry-item">
-                  {t("ui.scene_telemetry_root")}: <b>{telemetry.rootCm} cm</b>
+                  {t("ui.scene_telemetry_root")}: <b><bdi dir="ltr">{t("ui.unit_cm", { val: telemetry.rootCm })}</bdi></b>
                 </span>
-                <span className="scene-telemetry-item">
-                  {t("ui.scene_telemetry_canopy")}: <b>{telemetry.canopyPct}%</b>
-                </span>
-                <span className="scene-telemetry-item">
-                  <svg className="scene-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
-                    <path d="M14 14.76V3.5a2.5 2.5 0 0 0-5 0v11.26a4.5 4.5 0 1 0 5 0z" />
-                  </svg>
-                  <span>{telemetry.tempC}°C</span>
-                </span>
-                <span className="scene-telemetry-item">
-                  {telemetry.rainMm > 0 ? (
-                    <>
-                      <svg className="scene-icon scene-icon-rain" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
-                        <path d="M20 16.58A5 5 0 0 0 18 7h-1.26A8 8 0 1 0 4 15.25" />
-                        <line x1="8" y1="19" x2="8" y2="21" />
-                        <line x1="12" y1="17" x2="12" y2="21" />
-                        <line x1="16" y1="19" x2="16" y2="21" />
-                      </svg>
-                      <span>{telemetry.rainMm} mm</span>
-                    </>
-                  ) : (
-                    <>
-                      <svg className="scene-icon scene-icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
-                        <circle cx="12" cy="12" r="5" />
-                        <line x1="12" y1="1" x2="12" y2="3" />
-                        <line x1="12" y1="21" x2="12" y2="23" />
-                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
-                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
-                        <line x1="1" y1="12" x2="3" y2="12" />
-                        <line x1="21" y1="12" x2="23" y2="12" />
-                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
-                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
-                      </svg>
-                      <span>{telemetry.et0Mm} mm ET₀</span>
-                    </>
+
+                {/* Additional telemetry items: visible always on desktop, toggleable on mobile */}
+                <div className="scene-telemetry-details">
+                  <span className="scene-telemetry-item">
+                    {t("ui.scene_telemetry_canopy")}: <b><bdi dir="ltr">{telemetry.canopyPct}%</bdi></b>
+                  </span>
+
+                  <span className="scene-telemetry-item">
+                    <svg className="scene-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+                      <path d="M14 14.76V3.5a2.5 2.5 0 0 0-5 0v11.26a4.5 4.5 0 1 0 5 0z" />
+                    </svg>
+                    <span><bdi dir="ltr">{telemetry.tempC}°C</bdi></span>
+                  </span>
+
+                  <span className="scene-telemetry-item">
+                    {telemetry.rainMm > 0 ? (
+                      <>
+                        <svg className="scene-icon scene-icon-rain" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+                          <path d="M20 16.58A5 5 0 0 0 18 7h-1.26A8 8 0 1 0 4 15.25" />
+                          <line x1="8" y1="19" x2="8" y2="21" />
+                          <line x1="12" y1="17" x2="12" y2="21" />
+                          <line x1="16" y1="19" x2="16" y2="21" />
+                        </svg>
+                        <span><bdi dir="ltr">{telemetry.rainMm} mm</bdi></span>
+                      </>
+                    ) : (
+                      <>
+                        <svg className="scene-icon scene-icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+                          <circle cx="12" cy="12" r="5" />
+                          <line x1="12" y1="1" x2="12" y2="3" />
+                          <line x1="12" y1="21" x2="12" y2="23" />
+                          <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+                          <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+                          <line x1="1" y1="12" x2="3" y2="12" />
+                          <line x1="21" y1="12" x2="23" y2="12" />
+                          <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+                          <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+                        </svg>
+                        <span><bdi dir="ltr">{t("ui.et0_val", { val: telemetry.et0Mm })}</bdi></span>
+                      </>
+                    )}
+                  </span>
+
+                  {telemetry.date && (
+                    <span className="scene-telemetry-item scene-telemetry-date">
+                      <bdi dir="ltr">{telemetry.date}</bdi>
+                    </span>
                   )}
-                </span>
+
+                  {telemetry.isSynthetic && (
+                    <span className="badge warn scene-synthetic-badge">
+                      {t("ui.placeholder_climate")}
+                    </span>
+                  )}
+                </div>
+
+                <button
+                  type="button"
+                  className="scene-telemetry-toggle"
+                  aria-label={t(telemetryExpanded ? "ui.collapse" : "ui.expand")}
+                >
+                  <svg
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    className={`scene-toggle-arrow ${telemetryExpanded ? "rotated" : ""}`}
+                    aria-hidden="true"
+                  >
+                    <polyline points="6 9 12 15 18 9" />
+                  </svg>
+                </button>
               </div>
             )}
 
-            <div className="scene-toolbar">
+            <div className="scene-toolbar" role="toolbar" aria-label={t("ui.scene_label")}>
               <button
                 type="button"
                 className={`scene-btn ${activePreset === "perspective" ? "active" : ""}`}
                 onClick={() => handlePreset("perspective")}
+                aria-pressed={activePreset === "perspective"}
                 title={t("ui.scene_view_3d")}
               >
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
@@ -165,6 +244,7 @@ export function SoilScene() {
                 type="button"
                 className={`scene-btn ${activePreset === "cutaway" ? "active" : ""}`}
                 onClick={() => handlePreset("cutaway")}
+                aria-pressed={activePreset === "cutaway"}
                 title={t("ui.scene_view_cutaway")}
               >
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
@@ -179,6 +259,7 @@ export function SoilScene() {
                 type="button"
                 className={`scene-btn ${activePreset === "canopy" ? "active" : ""}`}
                 onClick={() => handlePreset("canopy")}
+                aria-pressed={activePreset === "canopy"}
                 title={t("ui.scene_view_canopy")}
               >
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
@@ -194,6 +275,7 @@ export function SoilScene() {
                 type="button"
                 className={`scene-btn ${isExploded ? "active" : ""}`}
                 onClick={handleExplode}
+                aria-pressed={isExploded}
                 title={isExploded ? t("ui.scene_compact") : t("ui.scene_explode")}
               >
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
@@ -221,37 +303,42 @@ export function SoilScene() {
 
           {/* Left Depth Ruler */}
           <div className="scene-depth-ruler scene-glass">
-            <button type="button" className="scene-depth-tick" onClick={() => handleSelectDepth(0)}>
-              <i></i> 0 cm
+            <button type="button" className="scene-depth-tick" onClick={(e) => handleSelectDepth(0, e)}>
+              <i></i> <bdi dir="ltr">{t("ui.unit_cm", { val: 0 })}</bdi>
             </button>
-            <button type="button" className="scene-depth-tick" onClick={() => handleSelectDepth(0)}>
-              <i></i> 20 cm
+            <button type="button" className="scene-depth-tick" onClick={(e) => handleSelectDepth(0, e)}>
+              <i></i> <bdi dir="ltr">{t("ui.unit_cm", { val: 20 })}</bdi>
             </button>
-            <button type="button" className="scene-depth-tick" onClick={() => handleSelectDepth(1)}>
-              <i></i> 50 cm
+            <button type="button" className="scene-depth-tick" onClick={(e) => handleSelectDepth(1, e)}>
+              <i></i> <bdi dir="ltr">{t("ui.unit_cm", { val: 50 })}</bdi>
             </button>
-            <button type="button" className="scene-depth-tick" onClick={() => handleSelectDepth(2)}>
-              <i></i> 90 cm
+            <button type="button" className="scene-depth-tick" onClick={(e) => handleSelectDepth(2, e)}>
+              <i></i> <bdi dir="ltr">{t("ui.unit_cm", { val: 90 })}</bdi>
             </button>
-            <button type="button" className="scene-depth-tick" onClick={() => handleSelectDepth(3)}>
-              <i></i> 150 cm
+            <button type="button" className="scene-depth-tick" onClick={(e) => handleSelectDepth(3, e)}>
+              <i></i> <bdi dir="ltr">{t("ui.unit_cm", { val: 150 })}</bdi>
             </button>
           </div>
 
-          {/* Layer Inspector Card */}
+          {/* Layer Inspector Card / Bottom Sheet */}
           {inspectedLayer && (
-            <div className="scene-inspector scene-glass" role="dialog" aria-labelledby="inspector-title">
+            <div
+              ref={inspectorRef}
+              tabIndex={-1}
+              className="scene-inspector scene-glass"
+              role="dialog"
+              aria-labelledby="inspector-title"
+              aria-modal="false"
+            >
               <div className="scene-inspector-header">
                 <span id="inspector-title" className="scene-inspector-title">
-                  {t(inspectedLayer.nameKey, `Layer ${inspectedLayer.layerIndex + 1}`)} ({inspectedLayer.topCm}–{inspectedLayer.bottomCm} cm)
+                  {t(inspectedLayer.nameKey, t("ui.layer_fallback", { n: inspectedLayer.layerIndex + 1 }))} (
+                  <bdi dir="ltr">{t("ui.unit_cm", { val: `${inspectedLayer.topCm}–${inspectedLayer.bottomCm}` })}</bdi>)
                 </span>
                 <button
                   type="button"
                   className="scene-inspector-close"
-                  onClick={() => {
-                    ctrl.current?.clearInspection();
-                    setInspectedLayer(null);
-                  }}
+                  onClick={handleCloseInspector}
                   aria-label={t("ui.scene_inspect_close")}
                 >
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
@@ -262,27 +349,33 @@ export function SoilScene() {
               </div>
 
               <div className="scene-inspector-row">
-                <span className="scene-inspector-label">{t("ui.gl_wb")}:</span>
+                <span className="scene-inspector-label">{t("ui.scene_available_water")}:</span>
                 <span className={`scene-status-pill scene-status-${inspectedLayer.moistureStatus}`}>
-                  {inspectedLayer.moisturePercent}% ({t(`ui.scene_moisture_${inspectedLayer.moistureStatus}`)})
+                  <bdi dir="ltr">{inspectedLayer.availableWaterPct}%</bdi> ({t(`ui.scene_moisture_${inspectedLayer.moistureStatus}`)})
                 </span>
               </div>
 
               <div className="scene-inspector-row">
                 <span className="scene-inspector-label">{t("ui.ece")}:</span>
                 <span className={`scene-status-pill scene-status-${inspectedLayer.salinityStatus}`}>
-                  {inspectedLayer.salinityDsm} dS/m ({t(`ui.scene_salinity_${inspectedLayer.salinityStatus}`)})
+                  <bdi dir="ltr">{inspectedLayer.salinityDsm} dS/m</bdi> ({t(`ui.scene_salinity_${inspectedLayer.salinityStatus}`)})
                 </span>
               </div>
 
               <div className="scene-inspector-row">
                 <span className="scene-inspector-label">{t("ui.layer_texture")}:</span>
-                <span>{inspectedLayer.texture}</span>
+                <span>
+                  {t("ui.texture_proportions", {
+                    sand: inspectedLayer.sand,
+                    silt: inspectedLayer.silt,
+                    clay: inspectedLayer.clay,
+                  })}
+                </span>
               </div>
 
               <div className="scene-inspector-row">
-                <span className="scene-inspector-label">OM:</span>
-                <span>{inspectedLayer.organicMatter}%</span>
+                <span className="scene-inspector-label">{t("ui.om_label")}:</span>
+                <span><bdi dir="ltr">{inspectedLayer.organicMatter}%</bdi></span>
               </div>
             </div>
           )}

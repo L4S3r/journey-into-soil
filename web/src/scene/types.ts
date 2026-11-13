@@ -152,8 +152,10 @@ export interface LayerInspectData {
   nameKey: string;
   topCm: number;
   bottomCm: number;
-  texture: string;
-  moisturePercent: number; // e.g. 78 (% of Field Capacity)
+  sand: number;
+  silt: number;
+  clay: number;
+  availableWaterPct: number; // Share of plant-available water (0 at wilting point, 100 at field capacity)
   moistureStatus: "dry" | "stress" | "optimal" | "saturated";
   salinityDsm: number; // e.g. 2.1 dS/m
   salinityStatus: "low" | "moderate" | "high";
@@ -168,5 +170,7 @@ export interface SceneTelemetry {
   et0Mm: number;
   rainMm: number;
   tempC: number;
+  date: string;
+  isSynthetic: boolean;
 }
 

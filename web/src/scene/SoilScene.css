@@ -58,11 +58,40 @@
 .scene-telemetry {
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 8px;
   padding: 6px 12px;
-  font-size: 0.82rem;
+  font-size: 0.8rem;
   font-weight: 500;
   flex-wrap: wrap;
+  cursor: pointer;
+  user-select: none;
+}
+
+.scene-telemetry-details {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.scene-telemetry-toggle {
+  display: none;
+  background: none;
+  border: none;
+  padding: 2px;
+  min-block-size: auto;
+  cursor: pointer;
+  color: var(--muted);
+}
+
+.scene-toggle-arrow {
+  inline-size: 13px;
+  block-size: 13px;
+  transition: transform 160ms ease;
+}
+
+.scene-toggle-arrow.rotated {
+  transform: rotate(180deg);
 }
 
 .scene-telemetry-item {
@@ -80,6 +109,16 @@
   background: var(--bg);
   border: 1px solid var(--line);
   font-weight: 600;
+}
+
+.scene-telemetry-date {
+  font-variant-numeric: tabular-nums;
+  color: var(--muted);
+}
+
+.scene-synthetic-badge {
+  font-size: 0.72rem;
+  padding: 1px 6px;
 }
 
 .scene-icon {
@@ -130,7 +169,8 @@
   transform: scale(0.97);
 }
 
-.scene-btn.active {
+.scene-btn.active,
+.scene-btn[aria-pressed="true"] {
   background: var(--accent);
   color: var(--accent-ink);
   border-color: var(--accent);
@@ -182,7 +222,7 @@
   background: var(--muted);
 }
 
-/* Layer Inspector Popup Card */
+/* Layer Inspector Popup Card / Bottom Sheet */
 .scene-inspector {
   position: absolute;
   inset-inline-end: 12px;
@@ -195,6 +235,7 @@
   font-size: 0.82rem;
   z-index: 10;
   animation: scene-fade-in 180ms cubic-bezier(0.16, 1, 0.3, 1);
+  outline: none;
 }
 
 @keyframes scene-fade-in {
@@ -296,27 +337,65 @@
   background: var(--surface);
 }
 
-/* Mobile Responsiveness */
+/* Mobile Responsiveness (390px phone and smaller) */
 @media (max-width: 640px) {
   .scene-container {
-    block-size: 400px;
+    block-size: 420px;
   }
   .scene-top-bar {
     flex-direction: column;
     align-items: stretch;
+    gap: 6px;
   }
   .scene-telemetry {
-    font-size: 0.75rem;
+    font-size: 0.74rem;
     padding: 4px 8px;
+    justify-content: space-between;
+  }
+  .scene-telemetry-toggle {
+    display: inline-flex;
+    align-items: center;
+  }
+  .scene-telemetry.collapsed .scene-telemetry-details {
+    display: none;
+  }
+  .scene-telemetry.expanded .scene-telemetry-details {
+    display: flex;
+    inline-size: 100%;
+    margin-block-start: 4px;
+    padding-block-start: 4px;
+    border-block-start: 1px dashed var(--line);
   }
   .scene-toolbar {
     justify-content: flex-end;
+    gap: 4px;
   }
   .scene-btn {
-    padding: 4px 8px;
-    font-size: 0.76rem;
+    padding: 4px 6px;
+    font-size: 0.74rem;
+    min-block-size: 34px;
+  }
+  .scene-btn span {
+    display: none; /* Icon-only on very compact mobile so it never overflows or wraps awkwardly */
   }
   .scene-depth-ruler {
-    display: none; /* hide on very small phones to prevent screen crowding */
+    display: none; /* hidden on small mobile */
+  }
+  /* Mobile Inspector Bottom Sheet */
+  .scene-inspector {
+    position: absolute;
+    inset-inline: 0;
+    inset-block-end: 0;
+    inset-block-start: auto;
+    inline-size: 100%;
+    max-inline-size: 100%;
+    max-block-size: 40%;
+    border-radius: var(--radius) var(--radius) 0 0;
+    border-block-end: none;
+    border-inline: none;
+    overflow-y: auto;
+    box-shadow: 0 -4px 18px rgba(0, 0, 0, 0.25);
+    z-index: 20;
+    padding: 10px 14px 14px;
   }
 }

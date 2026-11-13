@@ -18,6 +18,7 @@
 - [ ] B13 (data-pipelines) SoilGrids lookup cached into pack for demo sites; `services/soil.py` already parses it.
 - [ ] B14 (frontend) Native Arabic review pass with a speaker; fix strings in `contracts/i18n/ar.json` + `web/src/i18n/ui.ar.json`.
 - [x] B15 (scene-3d) Lazy-load Babylon, measure FPS on a mid phone, tune tiers.
+- [x] B21 (scene-3d) P0 Scene Polish: i18n dynamic keys, live-updating inspector, a11y focus/Esc, tap picking, 390px bottom sheet, honesty badges.
 - [ ] B16 (frontend) Accessibility pass (focus order, contrast, aria for timeline).
 
 ## P2 - nice
