@@ -1,15 +1,17 @@
 import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useStore } from "../state/store";
-import type { SceneController } from "./SceneController";
+import { SceneController } from "./SceneController";
+import { THM, LAYER_NAMES, LAYER_DEPTHS, LAYER_COLORS, ALT } from "./textures";
 import type { CameraPreset, DiveStage, LayerInspectData, SceneTelemetry } from "./types";
 import "./SoilScene.css";
 
 export function SoilScene() {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const ctrl = useRef<SceneController | null>(null);
   const prevKey = useRef<string>("");
+
   const [failed, setFailed] = useState(false);
   const [ready, setReady] = useState(false);
   const [activePreset, setActivePreset] = useState<CameraPreset>("perspective");
@@ -21,8 +23,20 @@ export function SoilScene() {
   const [telemetry, setTelemetry] = useState<SceneTelemetry | null>(null);
   const [telemetryExpanded, setTelemetryExpanded] = useState(false);
 
-  const inspectorRef = useRef<HTMLDivElement>(null);
-  const openerRef = useRef<HTMLElement | null>(null);
+  // Drawer & Tab state
+  const [drawerOpen, setDrawerOpen] = useState(false);
+  const [activeTab, setActiveTab] = useState<"recommendations" | "charts" | null>(null);
+
+  // 3D projected coordinates for SVG connector arrows
+  const [projectedCoords, setProjectedCoords] = useState<[number, number][]>([
+    [0, 0],
+    [0, 0],
+    [0, 0],
+    [0, 0],
+  ]);
+
+  const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
+  const isRtl = i18n.dir() === "rtl";
 
   const { result, strategyId, dayT, theme, quality, focusedLayer, setFocusedLayer } = useStore();
 
@@ -30,35 +44,27 @@ export function SoilScene() {
     if (!canvasRef.current) return;
     let disposed = false;
 
-    import("./SceneController")
-      .then(({ SceneController }) => {
-        if (disposed || !canvasRef.current) return;
-        try {
-          const controller = new SceneController(canvasRef.current);
-          controller.setOnInspect((data) => {
-            setInspectedLayer(data);
-          });
-          controller.setOnTelemetry((data) => setTelemetry(data));
-          controller.setOnStageChange((stage) => {
-            setDiveStage(stage);
-            setIsExploded(stage === "layers");
-          });
-          controller.setOnLayerFocusChange((idx) => {
-            setFocusedLayer(idx);
-          });
-          controller.setOnDiveProgress((key, canSkip) => {
-            setDiveCaptionKey(key);
-            setCanSkipDive(canSkip);
-          });
-          ctrl.current = controller;
-          setReady(true);
-        } catch {
-          setFailed(true);
-        }
-      })
-      .catch(() => {
-        if (!disposed) setFailed(true);
+    try {
+      const controller = new SceneController(canvasRef.current);
+      controller.setOnInspect((data) => setInspectedLayer(data));
+      controller.setOnTelemetry((data) => setTelemetry(data));
+      controller.setOnStageChange((stage) => {
+        setDiveStage(stage);
+        setIsExploded(stage === "layers");
       });
+      controller.setOnLayerFocusChange((idx) => {
+        setFocusedLayer(idx);
+      });
+      controller.setOnDiveProgress((key, canSkip) => {
+        setDiveCaptionKey(key);
+        setCanSkipDive(canSkip);
+      });
+
+      ctrl.current = controller;
+      setReady(true);
+    } catch {
+      if (!disposed) setFailed(true);
+    }
 
     return () => {
       disposed = true;
@@ -67,7 +73,7 @@ export function SoilScene() {
       prevKey.current = "";
       setReady(false);
     };
-  }, []);
+  }, [setFocusedLayer]);
 
   useEffect(() => {
     if (!result || !ctrl.current || !ready) return;
@@ -80,6 +86,7 @@ export function SoilScene() {
   useEffect(() => ctrl.current?.setSeasonTime(dayT), [dayT, result, strategyId, ready]);
   useEffect(() => ctrl.current?.setTheme(theme), [theme, ready]);
   useEffect(() => ctrl.current?.setQuality(quality), [quality, ready]);
+
   useEffect(() => {
     if (!ctrl.current || !ready) return;
     if (ctrl.current.getFocusedLayer() !== focusedLayer) {
@@ -87,30 +94,26 @@ export function SoilScene() {
     }
   }, [focusedLayer, ready]);
 
-  // Focus management for inspector dialog & Esc key handling
+  // Update SVG arrows tracking projected 3D positions
   useEffect(() => {
-    if (inspectedLayer) {
-      if (document.activeElement instanceof HTMLElement && !inspectorRef.current?.contains(document.activeElement)) {
-        openerRef.current = document.activeElement;
-      }
-      inspectorRef.current?.focus();
-    }
-  }, [inspectedLayer?.layerIndex]);
+    if (!ready || !ctrl.current) return;
+    let animId: number;
 
-  useEffect(() => {
-    if (!inspectedLayer) return;
-    const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape") {
-        e.preventDefault();
-        setFocusedLayer(null);
-        ctrl.current?.clearFocus();
-        setInspectedLayer(null);
-        openerRef.current?.focus();
+    const updateArrows = () => {
+      if (ctrl.current && diveStage !== "field") {
+        setProjectedCoords([
+          ctrl.current.project(0),
+          ctrl.current.project(1),
+          ctrl.current.project(2),
+          ctrl.current.project(3),
+        ]);
       }
+      animId = requestAnimationFrame(updateArrows);
     };
-    window.addEventListener("keydown", handleKeyDown);
-    return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [inspectedLayer, setFocusedLayer]);
+
+    animId = requestAnimationFrame(updateArrows);
+    return () => cancelAnimationFrame(animId);
+  }, [ready, diveStage]);
 
   const handlePreset = (preset: CameraPreset) => {
     ctrl.current?.clearDiveTimeouts();
@@ -123,6 +126,9 @@ export function SoilScene() {
       setIsExploded(true);
     } else if (preset === "cutaway") {
       setDiveStage("underground");
+      setIsExploded(false);
+    } else if (preset === "canopy") {
+      setDiveStage("field");
       setIsExploded(false);
     }
   };
@@ -159,30 +165,72 @@ export function SoilScene() {
     ctrl.current?.replay();
   };
 
-  const handleSelectDepth = (layerIndex: number, e: React.MouseEvent<HTMLButtonElement>) => {
-    ctrl.current?.clearDiveTimeouts();
-    setDiveCaptionKey(null);
-    setCanSkipDive(false);
-    openerRef.current = e.currentTarget;
-    setFocusedLayer(layerIndex);
-    ctrl.current?.focusLayer(layerIndex);
+  const handleSelectLayer = (idx: number) => {
+    if (focusedLayer === idx) {
+      setFocusedLayer(null);
+      ctrl.current?.clearFocus();
+    } else {
+      setFocusedLayer(idx);
+      ctrl.current?.focusLayer(idx);
+    }
   };
 
-  const handleCloseInspector = () => {
-    setFocusedLayer(null);
-    ctrl.current?.clearFocus();
-    setInspectedLayer(null);
-    openerRef.current?.focus();
+  const handleTabToggle = (tab: "recommendations" | "charts") => {
+    if (drawerOpen && activeTab === tab) {
+      setDrawerOpen(false);
+      setActiveTab(null);
+    } else {
+      setDrawerOpen(true);
+      setActiveTab(tab);
+    }
   };
+
+  // Extract layer data from result or fallbacks
+  const layers = [0, 1, 2, 3].map((i) => {
+    const l = result?.layers?.[i];
+    return {
+      name: LAYER_NAMES[i],
+      depth: LAYER_DEPTHS[i],
+      color: LAYER_COLORS[i],
+      alt: ALT[i],
+      sand: l ? Math.round(l.sand) : [40, 30, 20, 80][i],
+      silt: l ? Math.round(l.silt) : [40, 35, 25, 12][i],
+      clay: l ? Math.round(l.clay) : [20, 35, 55, 8][i],
+      om: l ? Number(l.om.toFixed(1)) : [3.0, 1.4, 0.6, 0.2][i],
+      moist: l ? Math.round(l.fc * 100) : [24, 28, 32, 14][i],
+      ph: l ? Number(l.ph.toFixed(1)) : [7.6, 7.8, 8.0, 8.2][i],
+      ec: l ? Number(l.ec.toFixed(1)) : [1.4, 1.8, 2.4, 3.1][i],
+    };
+  });
+
+  // Calculate ternary points for USDA triangle SVG
+  const getTernaryPoint = (sand: number, silt: number, clay: number): [number, number] => {
+    return [
+      (sand * 286 + silt * 14 + clay * 150) / 100,
+      (sand * 250 + silt * 250 + clay * 14) / 100,
+    ];
+  };
+
+  const activeStrat =
+    result?.strategies?.find((s) => s.id === strategyId) || result?.strategies?.[0];
 
   return (
-    <div className="scene-container" data-stage={diveStage} data-theme={theme}>
+    <div className="scene-container" data-stage={diveStage} data-theme={theme} dir={isRtl ? "rtl" : "ltr"}>
+      {/* Horizon Sun & Sky Atmospheric Backdrop */}
+      <div
+        className="scene-bg-gradient"
+        style={{
+          opacity: diveStage === "field" ? 1 : 0,
+        }}
+        aria-hidden="true"
+      />
+
       <canvas ref={canvasRef} role="img" aria-label={t("ui.scene_label")} />
       {failed && <p className="scene-fallback">{t("ui.no_webgl")}</p>}
 
       {ready && (
         <div className="scene-overlay">
-          {/* Top Bar: Live Telemetry & Control Buttons */}
+          {/* Top Bar: Live Telemetry & Control Toolbar */}
           <div className="scene-top-bar">
             {telemetry && (
               <div
@@ -207,7 +255,6 @@ export function SoilScene() {
                   {t("ui.scene_telemetry_root")}: <b><bdi dir="ltr">{t("ui.unit_cm", { val: telemetry.rootCm })}</bdi></b>
                 </span>
 
-                {/* Additional telemetry items: visible always on desktop, toggleable on mobile */}
                 <div className="scene-telemetry-details">
                   <span className="scene-telemetry-item">
                     {t("ui.scene_telemetry_canopy")}: <b><bdi dir="ltr">{telemetry.canopyPct}%</bdi></b>
@@ -239,10 +286,6 @@ export function SoilScene() {
                           <line x1="12" y1="21" x2="12" y2="23" />
                           <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
                           <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
-                          <line x1="1" y1="12" x2="3" y2="12" />
-                          <line x1="21" y1="12" x2="23" y2="12" />
-                          <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
-                          <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
                         </svg>
                         <span><bdi dir="ltr">{t("ui.et0_val", { val: telemetry.et0Mm })}</bdi></span>
                       </>
@@ -252,12 +295,6 @@ export function SoilScene() {
                   {telemetry.date && (
                     <span className="scene-telemetry-item scene-telemetry-date">
                       <bdi dir="ltr">{telemetry.date}</bdi>
-                    </span>
-                  )}
-
-                  {telemetry.isSynthetic && (
-                    <span className="badge warn scene-synthetic-badge">
-                      {t("ui.placeholder_climate")}
                     </span>
                   )}
                 </div>
@@ -281,6 +318,7 @@ export function SoilScene() {
               </div>
             )}
 
+            {/* Camera and View Controls */}
             <div className="scene-toolbar" role="toolbar" aria-label={t("ui.scene_label")}>
               <button
                 type="button"
@@ -314,22 +352,6 @@ export function SoilScene() {
 
               <button
                 type="button"
-                className={`scene-btn ${activePreset === "canopy" ? "active" : ""}`}
-                onClick={() => handlePreset("canopy")}
-                aria-pressed={activePreset === "canopy"}
-                title={t("ui.scene_view_canopy")}
-              >
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
-                  <path d="M12 2a9 9 0 0 1 9 9c0 4.97-4.03 9-9 9s-9-4.03-9-9a9 9 0 0 1 9-9z" />
-                  <path d="M12 6v14" />
-                  <path d="M8 10c2-2 4-2 4 0" />
-                  <path d="M12 14c2-2 4-2 4 0" />
-                </svg>
-                <span>{t("ui.scene_view_canopy")}</span>
-              </button>
-
-              <button
-                type="button"
                 className={`scene-btn ${isExploded ? "active" : ""}`}
                 onClick={handleExplode}
                 aria-pressed={isExploded}
@@ -355,135 +377,334 @@ export function SoilScene() {
                 </svg>
                 <span>{t("ui.replay")}</span>
               </button>
-
-              {focusedLayer !== null && (
-                <button
-                  type="button"
-                  className="scene-btn scene-btn-reset-focus"
-                  onClick={() => {
-                    setFocusedLayer(null);
-                    ctrl.current?.clearFocus();
-                  }}
-                  title={t("ui.reset_focus")}
-                >
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                    <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" />
-                    <path d="M3 3v5h5" />
-                  </svg>
-                  <span>{t("ui.reset_focus")}</span>
-                </button>
-              )}
             </div>
           </div>
 
-          {/* Left Depth Ruler */}
+          {/* Depth Ruler on Left */}
           {diveStage !== "field" && (
-            <div className="scene-depth-ruler scene-glass">
-              <button type="button" className="scene-depth-tick" onClick={(e) => handleSelectDepth(0, e)}>
-                <i></i> <bdi dir="ltr">{t("ui.unit_cm", { val: 0 })}</bdi>
-              </button>
-              <button type="button" className="scene-depth-tick" onClick={(e) => handleSelectDepth(0, e)}>
-                <i></i> <bdi dir="ltr">{t("ui.unit_cm", { val: 20 })}</bdi>
-              </button>
-              <button type="button" className="scene-depth-tick" onClick={(e) => handleSelectDepth(1, e)}>
-                <i></i> <bdi dir="ltr">{t("ui.unit_cm", { val: 50 })}</bdi>
-              </button>
-              <button type="button" className="scene-depth-tick" onClick={(e) => handleSelectDepth(2, e)}>
-                <i></i> <bdi dir="ltr">{t("ui.unit_cm", { val: 90 })}</bdi>
-              </button>
-              <button type="button" className="scene-depth-tick" onClick={(e) => handleSelectDepth(3, e)}>
-                <i></i> <bdi dir="ltr">{t("ui.unit_cm", { val: 150 })}</bdi>
-              </button>
-            </div>
-          )}
-
-          {/* Layer Inspector Card / Bottom Sheet */}
-          {inspectedLayer && (
-            <div
-              ref={inspectorRef}
-              tabIndex={-1}
-              className="scene-inspector scene-glass"
-              role="dialog"
-              aria-labelledby="inspector-title"
-              aria-modal="false"
-            >
-              <div className="scene-inspector-header">
-                <span id="inspector-title" className="scene-inspector-title">
-                  {t(inspectedLayer.nameKey, t("ui.layer_fallback", { n: inspectedLayer.layerIndex + 1 }))} (
-                  <bdi dir="ltr">{t("ui.unit_cm", { val: `${inspectedLayer.topCm}–${inspectedLayer.bottomCm}` })}</bdi>)
-                </span>
-                <button
-                  type="button"
-                  className="scene-inspector-close"
-                  onClick={handleCloseInspector}
-                  aria-label={t("ui.scene_inspect_close")}
-                >
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
-                    <line x1="18" y1="6" x2="6" y2="18" />
-                    <line x1="6" y1="6" x2="18" y2="18" />
-                  </svg>
-                </button>
-              </div>
-
-              <div className="scene-inspector-row">
-                <span className="scene-inspector-label">{t("ui.scene_available_water")}:</span>
-                <span className={`scene-status-pill scene-status-${inspectedLayer.moistureStatus}`}>
-                  <bdi dir="ltr">{inspectedLayer.availableWaterPct}%</bdi> ({t(`ui.scene_moisture_${inspectedLayer.moistureStatus}`)})
-                </span>
-              </div>
-
-              <div className="scene-inspector-row">
-                <span className="scene-inspector-label">{t("ui.ece")}:</span>
-                <span className={`scene-status-pill scene-status-${inspectedLayer.salinityStatus}`}>
-                  <bdi dir="ltr">{inspectedLayer.salinityDsm} dS/m</bdi> ({t(`ui.scene_salinity_${inspectedLayer.salinityStatus}`)})
-                </span>
-              </div>
-
-              <div className="scene-inspector-row">
-                <span className="scene-inspector-label">{t("ui.layer_texture")}:</span>
-                <span>
-                  {t("ui.texture_proportions", {
-                    sand: inspectedLayer.sand,
-                    silt: inspectedLayer.silt,
-                    clay: inspectedLayer.clay,
-                  })}
-                </span>
-              </div>
-
-              <div className="scene-inspector-texture-box">
+            <div className="scene-ruler-wrap" role="region" aria-label={t("ui.depth_ruler")}>
+              <div className="scene-ruler-bar">
                 <div
-                  className="scene-inspector-donut"
+                  className="scene-ruler-marker"
                   style={{
-                    background: `conic-gradient(#e3cf9a 0 ${inspectedLayer.sand}%, #a89578 ${inspectedLayer.sand}% ${inspectedLayer.sand + inspectedLayer.silt}%, #c97a55 ${inspectedLayer.sand + inspectedLayer.silt}% 100%)`,
+                    top: diveStage === "underground" ? "35%" : "85%",
                   }}
-                  role="img"
-                  aria-label={`${t("ui.layer_texture")}: ${inspectedLayer.sand}% ${t("ui.texture_sand")}, ${inspectedLayer.silt}% ${t("ui.texture_silt")}, ${inspectedLayer.clay}% ${t("ui.texture_clay")}`}
-                />
-                <div className="scene-inspector-texture-details">
-                  <div className="scene-inspector-texture-line">
-                    <span className="scene-texture-swatch" style={{ background: "#e3cf9a" }} />
-                    <span className="scene-texture-name">{t("ui.texture_sand")}</span>
-                    <b><bdi dir="ltr">{inspectedLayer.sand}%</bdi></b>
-                  </div>
-                  <div className="scene-inspector-texture-line">
-                    <span className="scene-texture-swatch" style={{ background: "#a89578" }} />
-                    <span className="scene-texture-name">{t("ui.texture_silt")}</span>
-                    <b><bdi dir="ltr">{inspectedLayer.silt}%</bdi></b>
-                  </div>
-                  <div className="scene-inspector-texture-line">
-                    <span className="scene-texture-swatch" style={{ background: "#c97a55" }} />
-                    <span className="scene-texture-name">{t("ui.texture_clay")}</span>
-                    <b><bdi dir="ltr">{inspectedLayer.clay}%</bdi></b>
-                  </div>
+                >
+                  <span>{diveStage === "underground" ? "50 cm" : "150 cm"}</span>
                 </div>
               </div>
-
-              <div className="scene-inspector-row">
-                <span className="scene-inspector-label">{t("ui.om_label")}:</span>
-                <span><bdi dir="ltr">{inspectedLayer.organicMatter}%</bdi></span>
-              </div>
             </div>
           )}
+
+          {/* SVG Connecting Curved Arrows */}
+          {diveStage !== "field" && (
+            <svg className="scene-svg-arrows" aria-hidden="true">
+              <defs>
+                <marker id="arrowhead" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+                  <path d="M0,0 L10,5 L0,10z" fill="#ffd54a" />
+                </marker>
+              </defs>
+              <g>
+                {layers.map((_, i) => {
+                  const [ax, ay] = projectedCoords[i] || [0, 0];
+                  const cardEl = cardRefs.current[i];
+                  if (!cardEl || ax <= 0 || ay <= 0) return null;
+
+                  const rect = cardEl.getBoundingClientRect();
+                  const containerRect = cardEl.closest(".scene-container")?.getBoundingClientRect() || {
+                    left: 0,
+                    top: 0,
+                  };
+
+                  const cx = isRtl
+                    ? rect.right - containerRect.left
+                    : rect.left - containerRect.left;
+                  const cy = rect.top - containerRect.top + rect.height / 2;
+
+                  const ctrlX1 = isRtl ? cx + 80 : cx - 80;
+                  const ctrlX2 = isRtl ? ax - 90 : ax + 90;
+
+                  return (
+                    <path
+                      key={i}
+                      d={`M ${cx} ${cy} C ${ctrlX1} ${cy}, ${ctrlX2} ${ay}, ${ax} ${ay}`}
+                      fill="none"
+                      stroke="#ffd54a"
+                      strokeWidth="2.2"
+                      strokeLinecap="round"
+                      markerEnd="url(#arrowhead)"
+                      className="scene-connector-arrow"
+                      style={{
+                        animationDelay: `${i * 0.2 + 0.3}s`,
+                      }}
+                    />
+                  );
+                })}
+              </g>
+            </svg>
+          )}
+
+          {/* Floating Layer Callout Cards */}
+          {diveStage !== "field" && (
+            <div className="scene-callouts" role="region" aria-label={t("ui.layers_title")}>
+              {layers.map((l, i) => {
+                const isSelected = focusedLayer === i;
+                return (
+                  <div
+                    key={i}
+                    ref={(el) => { cardRefs.current[i] = el; }}
+                    className={`scene-layer-card scene-glass ${isSelected ? "selected" : ""}`}
+                    style={{
+                      borderInlineStartColor: l.color,
+                      animationDelay: `${i * 0.2}s`,
+                    }}
+                    onClick={() => handleSelectLayer(i)}
+                    role="button"
+                    tabIndex={0}
+                    aria-pressed={isSelected}
+                    aria-label={`${t("ui.layer_n", { n: i + 1 })}: ${l.name}`}
+                  >
+                    <div className="scene-card-header">
+                      <img className="scene-card-thumb" src={THM[i]} alt={l.alt} title={l.alt} />
+                      <div className="scene-card-title">
+                        <b>{i + 1}. {t(`ui.layer_${i}`, l.name)}</b>
+                        <span className="scene-card-depth"><bdi dir="ltr">{l.depth}</bdi></span>
+                      </div>
+                      {isSelected && inspectedLayer && (
+                        <span className={`scene-status-pill scene-status-${inspectedLayer.moistureStatus}`}>
+                          {t(`ui.scene_moisture_${inspectedLayer.moistureStatus}`)}
+                        </span>
+                      )}
+                    </div>
+
+                    <div className="scene-card-body">
+                      {/* Sand/Silt/Clay Donut */}
+                      <div
+                        className="scene-card-donut"
+                        style={{
+                          background: `conic-gradient(#e3cf9a 0 ${l.sand}%, #a89578 ${l.sand}% ${l.sand + l.silt}%, #9a5a3c ${l.sand + l.silt}% 100%)`,
+                        }}
+                        aria-hidden="true"
+                      />
+                      <div className="scene-card-props">
+                        <div className="scene-prop-row">
+                          <span><i style={{ color: "#e3cf9a" }}>●</i> {t("ui.texture_sand")}</span>
+                          <b><bdi dir="ltr">{l.sand}%</bdi></b>
+                        </div>
+                        <div className="scene-prop-row">
+                          <span><i style={{ color: "#a89578" }}>●</i> {t("ui.texture_silt")}</span>
+                          <b><bdi dir="ltr">{l.silt}%</bdi></b>
+                        </div>
+                        <div className="scene-prop-row">
+                          <span><i style={{ color: "#9a5a3c" }}>●</i> {t("ui.texture_clay")}</span>
+                          <b><bdi dir="ltr">{l.clay}%</bdi></b>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="scene-card-footer">
+                      <span>OM <bdi dir="ltr">{l.om}%</bdi></span>
+                      <span>·</span>
+                      <span>{t("ui.scene_available_water")} <bdi dir="ltr">{l.moist}%</bdi></span>
+                      <span>·</span>
+                      <span>pH <bdi dir="ltr">{l.ph}</bdi></span>
+                      <span>·</span>
+                      <span>EC <bdi dir="ltr">{l.ec}</bdi></span>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          )}
+
+          {/* Bottom Dock & Expandable Drawer */}
+          <div className={`scene-dock ${diveStage === "layers" ? "visible" : ""}`} role="region">
+            <div className={`scene-drawer ${drawerOpen ? "open" : ""}`} role="region" aria-live="polite">
+              {activeTab === "recommendations" && (
+                <div className="scene-drawer-content">
+                  <div className="scene-drawer-header">
+                    <h3>{t("ui.tab_recommendations")}</h3>
+                    <p className="scene-drawer-sub">
+                      {activeStrat?.label_key ? t(activeStrat.label_key) : t("strategy.primary")} · {result?.field.area_feddan ?? 5} feddan
+                    </p>
+                  </div>
+                  <div className="scene-recommendation-grid">
+                    {result?.strategies.map((strat, sIdx) => {
+                      const score = Math.round(strat.scores.total || 85);
+                      return (
+                        <div key={strat.id} className="scene-pick-card scene-glass">
+                          <div className="scene-pick-head">
+                            <span>
+                              <b>{sIdx + 1}. {t(strat.label_key, strat.id)}</b>
+                            </span>
+                            <div className="scene-score-ring">
+                              <span>{score}</span>
+                            </div>
+                          </div>
+                          <ul className="scene-pick-reasons">
+                            {strat.benefits.slice(0, 2).map((b, bIdx) => (
+                              <li key={bIdx}>{t(b.key, b.params)}</li>
+                            ))}
+                            {strat.risks.slice(0, 1).map((r, rIdx) => (
+                              <li key={rIdx} className="scene-risk-item">{t(r.key, r.params)}</li>
+                            ))}
+                          </ul>
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
+              )}
+
+              {activeTab === "charts" && (
+                <div className="scene-drawer-content">
+                  <div className="scene-drawer-header">
+                    <h3>{t("ui.tab_charts")}</h3>
+                  </div>
+                  <div className="scene-charts-grid">
+                    {/* USDA Soil Texture Triangle */}
+                    <div className="scene-chart-card scene-glass">
+                      <b>{t("ui.usda_triangle_title")}</b>
+                      <p className="scene-chart-sub">{t("ui.usda_triangle_sub")}</p>
+                      <svg viewBox="0 0 300 275" width="100%" className="scene-usda-triangle" role="img" aria-label={t("ui.usda_triangle_title")}>
+                        <polygon points="150,14 14,250 286,250" fill="rgba(255,255,255,.06)" stroke="rgba(255,255,255,.4)" />
+                        {[20, 40, 60, 80].map((k) => (
+                          <g key={k} opacity="0.3">
+                            <line x1={getTernaryPoint(100 - k, 0, k)[0]} y1={getTernaryPoint(100 - k, 0, k)[1]} x2={getTernaryPoint(0, 100 - k, k)[0]} y2={getTernaryPoint(0, 100 - k, k)[1]} stroke="#fff" />
+                            <line x1={getTernaryPoint(k, 100 - k, 0)[0]} y1={getTernaryPoint(k, 100 - k, 0)[1]} x2={getTernaryPoint(k, 0, 100 - k)[0]} y2={getTernaryPoint(k, 0, 100 - k)[1]} stroke="#fff" />
+                            <line x1={getTernaryPoint(100 - k, k, 0)[0]} y1={getTernaryPoint(100 - k, k, 0)[1]} x2={getTernaryPoint(0, k, 100 - k)[0]} y2={getTernaryPoint(0, k, 100 - k)[1]} stroke="#fff" />
+                          </g>
+                        ))}
+                        <text x="150" y="10" fill="#fff" fontSize="11" textAnchor="middle">{t("ui.texture_clay")} 100%</text>
+                        <text x="10" y="265" fill="#fff" fontSize="11">{t("ui.texture_silt")}</text>
+                        <text x="290" y="265" fill="#fff" fontSize="11" textAnchor="end">{t("ui.texture_sand")}</text>
+
+                        {/* Textural progression polyline */}
+                        <polyline
+                          points={layers.map((l) => getTernaryPoint(l.sand, l.silt, l.clay).join(",")).join(" ")}
+                          fill="none"
+                          stroke="#ffd54a"
+                          strokeWidth="2"
+                          strokeDasharray="4 3"
+                        />
+                        {layers.map((l, i) => {
+                          const [px, py] = getTernaryPoint(l.sand, l.silt, l.clay);
+                          return (
+                            <g key={i}>
+                              <circle cx={px} cy={py} r="10" fill={l.color} stroke="#fff" strokeWidth="2" />
+                              <text x={px} y={py + 4} fill="#fff" fontSize="11" fontWeight="700" textAnchor="middle">{i + 1}</text>
+                            </g>
+                          );
+                        })}
+                      </svg>
+                    </div>
+
+                    {/* Property Heatmap */}
+                    <div className="scene-chart-card scene-glass">
+                      <b>{t("ui.heatmap_title")}</b>
+                      <p className="scene-chart-sub">{t("ui.heatmap_sub")}</p>
+                      <div className="scene-heatmap-table">
+                        <div className="scene-hm-row scene-hm-head">
+                          <span className="scene-hm-label"></span>
+                          {layers.map((_, i) => (
+                            <span key={i} className="scene-hm-col">{t("ui.layer_n", { n: i + 1 })}</span>
+                          ))}
+                        </div>
+
+                        <div className="scene-hm-row">
+                          <span className="scene-hm-label">{t("ui.om_label")}</span>
+                          {layers.map((l, i) => (
+                            <span
+                              key={i}
+                              className="scene-hm-cell"
+                              style={{ background: `rgba(166,217,150, ${0.15 + (l.om / 4) * 0.65})` }}
+                            >
+                              <bdi dir="ltr">{l.om}%</bdi>
+                            </span>
+                          ))}
+                        </div>
+
+                        <div className="scene-hm-row">
+                          <span className="scene-hm-label">{t("ui.scene_available_water")}</span>
+                          {layers.map((l, i) => (
+                            <span
+                              key={i}
+                              className="scene-hm-cell"
+                              style={{ background: `rgba(111,166,212, ${0.15 + (l.moist / 40) * 0.65})` }}
+                            >
+                              <bdi dir="ltr">{l.moist}%</bdi>
+                            </span>
+                          ))}
+                        </div>
+
+                        <div className="scene-hm-row">
+                          <span className="scene-hm-label">pH</span>
+                          {layers.map((l, i) => (
+                            <span
+                              key={i}
+                              className="scene-hm-cell"
+                              style={{ background: `rgba(235,170,110, ${0.15 + Math.abs(l.ph - 7) * 0.4})` }}
+                            >
+                              <bdi dir="ltr">{l.ph}</bdi>
+                            </span>
+                          ))}
+                        </div>
+
+                        <div className="scene-hm-row">
+                          <span className="scene-hm-label">{t("ui.ece")}</span>
+                          {layers.map((l, i) => (
+                            <span
+                              key={i}
+                              className="scene-hm-cell"
+                              style={{ background: `rgba(255,178,125, ${0.15 + (l.ec / 6) * 0.65})` }}
+                            >
+                              <bdi dir="ltr">{l.ec}</bdi>
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* Bottom Dock Control Bar */}
+            <div className="scene-dock-bar">
+              <button
+                type="button"
+                className={`scene-dock-tab ${drawerOpen && activeTab === "recommendations" ? "active" : ""}`}
+                onClick={() => handleTabToggle("recommendations")}
+                aria-expanded={drawerOpen && activeTab === "recommendations"}
+              >
+                <span>{t("ui.tab_recommendations")}</span>
+                <span className="scene-dock-arrow">{drawerOpen && activeTab === "recommendations" ? "▼" : "▲"}</span>
+              </button>
+
+              <button
+                type="button"
+                className={`scene-dock-tab ${drawerOpen && activeTab === "charts" ? "active" : ""}`}
+                onClick={() => handleTabToggle("charts")}
+                aria-expanded={drawerOpen && activeTab === "charts"}
+              >
+                <span>{t("ui.tab_charts")}</span>
+                <span className="scene-dock-arrow">{drawerOpen && activeTab === "charts" ? "▼" : "▲"}</span>
+              </button>
+
+              {activeStrat && (
+                <span className="scene-dock-topk">
+                  {t("ui.top_pick", {
+                    name: t(activeStrat.label_key, activeStrat.id),
+                    score: Math.round(activeStrat.scores.total || 85),
+                  })}
+                </span>
+              )}
+
+              <button type="button" className="scene-dock-ghost" onClick={handleReplay}>
+                {t("ui.replay")}
+              </button>
+            </div>
+          </div>
 
           {/* Bottom Bar: Narrative Dive Caption & 3-Stage Excavation Stepper */}
           <div className="scene-bottom-bar">
