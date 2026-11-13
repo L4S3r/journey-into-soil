@@ -12,18 +12,18 @@
 }
 
 /* Atmospheric Sun & Sky Horizon Gradient */
-/* Atmospheric Crisp Clear Sky Horizon (No Yellow Glare) */
+/* Atmospheric Crisp Pure Sky Horizon (Zero Fog, Zero Yellow Glare) */
 .scene-bg-gradient {
   position: absolute;
   inset: 0;
   pointer-events: none;
   background: linear-gradient(
     180deg,
-    #357bb9 0%,
-    #5ea3db 22%,
-    #8bc3ec 45%,
-    #c3e3f8 72%,
-    #ddf0fc 100%
+    #155e9c 0%,
+    #1d75bd 20%,
+    #2c8fd6 42%,
+    #4ea5e4 68%,
+    #7bbfe9 100%
   );
   transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1);
   will-change: opacity;
@@ -33,10 +33,10 @@
 .scene-container[data-theme="dark"] .scene-bg-gradient {
   background: linear-gradient(
     180deg,
-    #0b1424 0%,
-    #132238 32%,
-    #1b2d46 64%,
-    #233a58 100%
+    #08101e 0%,
+    #0f1c30 32%,
+    #162840 64%,
+    #1e3450 100%
   );
 }
 

@@ -17,8 +17,6 @@ const GAP = 1.3;
 const SW = 60;
 const DEP = 60;
 const DUR = 9.6;
-const HAZE = [0.84, 0.92, 0.98]; // clean clear sky blue mist (#d6ebfa)
-const DARK = [0.05, 0.035, 0.02];
 
 const sm = (x: number) => {
   const c = Math.min(1, Math.max(0, x));
@@ -98,20 +96,20 @@ export class SceneController {
     this.renderer.setPixelRatio(Math.min(2, window.devicePixelRatio || 1));
 
     this.scene = new THREE.Scene();
-    this.scene.fog = new THREE.Fog(0xd6ebfa, 35, 115);
+    this.scene.fog = null; // Zero fog in field mode: crystal-clear sky and crisp landscape silhouettes
 
     this.cam = new THREE.PerspectiveCamera(38, 1, 0.1, 120);
 
-    // Lighting (clean daylight without yellow glare)
-    const amb = new THREE.AmbientLight(0xffffff, 0.92);
+    // Natural daylight lighting (pure crisp daylight, zero yellow glare)
+    const amb = new THREE.AmbientLight(0xf0f7ff, 0.82);
     this.scene.add(amb);
 
-    const dl = new THREE.DirectionalLight(0xffffff, 0.98);
+    const dl = new THREE.DirectionalLight(0xffffff, 0.94);
     dl.position.set(-5, 9, 8);
     this.scene.add(dl);
 
     // Cool sky-fill bounce light
-    const rim = new THREE.PointLight(0x98cbf8, 0.55, 35);
+    const rim = new THREE.PointLight(0x7dc0f5, 0.45, 35);
     rim.position.set(6, -2, 6);
     this.scene.add(rim);
 
@@ -745,15 +743,13 @@ export class SceneController {
     if (!this.drag) this.rotT *= 0.992;
     this.grp.rotation.y += ((this.rotT + Math.sin(tt * 0.35) * 0.03 * fl) - this.grp.rotation.y) * 0.08;
 
-    // Atmospheric Fog
-    const f = sm((ts - 3) / 2.4);
-    if (this.scene.fog && this.scene.fog instanceof THREE.Fog) {
-      const fc = this.scene.fog.color;
-      fc.setRGB(
-        HAZE[0] + (DARK[0] - HAZE[0]) * f,
-        HAZE[1] + (DARK[1] - HAZE[1]) * f,
-        HAZE[2] + (DARK[2] - HAZE[2]) * f
-      );
+    // Atmospheric Fog: zero fog in field mode for crystal-clear pure sky; subtle cavern depth underground
+    if (ts < 3.2) {
+      if (this.scene.fog) this.scene.fog = null;
+    } else {
+      if (!this.scene.fog) {
+        this.scene.fog = new THREE.Fog(0x1a120c, 22, 60);
+      }
     }
 
     // Dust motes upward drift
@@ -865,9 +861,9 @@ export class SceneController {
     this.theme = theme;
     if (this.scene.fog && this.scene.fog instanceof THREE.Fog) {
       if (this.theme === "dark") {
-        this.scene.fog.color.setRGB(0.08, 0.08, 0.1);
+        this.scene.fog.color.setRGB(0.06, 0.05, 0.04);
       } else {
-        this.scene.fog.color.setRGB(HAZE[0], HAZE[1], HAZE[2]);
+        this.scene.fog.color.setRGB(0.10, 0.07, 0.05);
       }
     }
   }
@@ -898,16 +894,19 @@ export class SceneController {
       this.finished = false;
       this.fieldGroup.visible = true;
       this.profileGroup.visible = false;
+      this.scene.fog = null;
     } else if (stage === "underground") {
       this.t0 = performance.now() - 3500;
       this.finished = false;
       this.fieldGroup.visible = false;
       this.profileGroup.visible = true;
+      this.scene.fog = new THREE.Fog(0x1a120c, 22, 60);
     } else if (stage === "layers") {
       this.t0 = performance.now() - DUR * 1000;
       this.finished = true;
       this.fieldGroup.visible = false;
       this.profileGroup.visible = true;
+      this.scene.fog = new THREE.Fog(0x1a120c, 22, 60);
       this.onDiveProgressCb?.(null, false);
       this.updateInspectData();
     }
@@ -922,6 +921,7 @@ export class SceneController {
     this.finished = true;
     this.fieldGroup.visible = false;
     this.profileGroup.visible = true;
+    this.scene.fog = new THREE.Fog(0x1a120c, 22, 60);
     this.onDiveProgressCb?.(null, false);
     this.updateInspectData();
   }
@@ -934,6 +934,7 @@ export class SceneController {
     this.last = performance.now();
     this.fieldGroup.visible = true;
     this.profileGroup.visible = false;
+    this.scene.fog = null;
   }
 
   public focusLayer(idx: number | null): void {
