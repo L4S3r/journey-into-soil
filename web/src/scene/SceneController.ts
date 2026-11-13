@@ -3,9 +3,10 @@ import { Engine } from "@babylonjs/core/Engines/engine";
 import { DirectionalLight } from "@babylonjs/core/Lights/directionalLight";
 import { HemisphericLight } from "@babylonjs/core/Lights/hemisphericLight";
 import { DynamicTexture } from "@babylonjs/core/Materials/Textures/dynamicTexture";
+import { Texture } from "@babylonjs/core/Materials/Textures/texture";
 import { StandardMaterial } from "@babylonjs/core/Materials/standardMaterial";
 import { Color3, Color4 } from "@babylonjs/core/Maths/math.color";
-import { Matrix, Quaternion, Vector3 } from "@babylonjs/core/Maths/math.vector";
+import { Matrix, Quaternion, Vector3, Vector4 } from "@babylonjs/core/Maths/math.vector";
 import { Mesh } from "@babylonjs/core/Meshes/mesh";
 import { MeshBuilder } from "@babylonjs/core/Meshes/meshBuilder";
 import { TransformNode } from "@babylonjs/core/Meshes/transformNode";
@@ -102,15 +103,17 @@ function rng(seed: number) {
   };
 }
 
-function baseColor(layer: Layer): Color3 {
-  const sand = layer.sand / 100;
-  const silt = layer.silt / 100;
-  const clay = layer.clay / 100;
-  const r = 0.78 * sand + 0.55 * silt + 0.62 * clay;
-  const g = 0.66 * sand + 0.45 * silt + 0.33 * clay;
-  const b = 0.45 * sand + 0.35 * silt + 0.2 * clay;
-  const dark = 1 - Math.min(0.5, layer.om * 0.12);
-  return new Color3(r * dark, g * dark, b * dark);
+const LAYER_PALETTE = [
+  Color3.FromHexString("#241911"), // Layer 0: Dark humus topsoil (0-20 cm)
+  Color3.FromHexString("#45311f"), // Layer 1: Warm earthy subsoil (20-50 cm)
+  Color3.FromHexString("#60291b"), // Layer 2: Reddish clay loam (50-90 cm)
+  Color3.FromHexString("#5d5647"), // Layer 3: Mineral gravel substratum (90-150 cm)
+];
+
+function baseColor(layer: Layer, layerIdx: number): Color3 {
+  const palette = LAYER_PALETTE[layerIdx] ?? LAYER_PALETTE[0];
+  const omDark = 1 - Math.min(0.25, (layer.om ?? 1.5) * 0.05);
+  return new Color3(palette.r * omDark, palette.g * omDark, palette.b * omDark);
 }
 
 export class SceneController {
@@ -380,56 +383,12 @@ export class SceneController {
   }
 
   // ------------------------------------------------------------------ construction
-  private specklePair(seed: number, textureStr = "loam", om = 1.5): { soil: DynamicTexture; salt: DynamicTexture } {
-    const r = rng(seed);
+  private createSaltTexture(seed: number): DynamicTexture {
     const size = 512;
-    const soil = new DynamicTexture(`soilTex${seed}`, { width: size, height: size }, this.scene, true);
-    const ctx = soil.getContext();
-
-    // 1. Natural horizontal strata base gradient
-    ctx.fillStyle = "#dfd8cc";
-    ctx.fillRect(0, 0, size, size);
-
-    for (let b = 0; b < 10; b++) {
-      const y = (b / 10) * size;
-      const bandH = (size / 10) * (0.8 + r() * 0.4);
-      const v = Math.floor(180 + (r() - 0.5) * 50);
-      ctx.fillStyle = `rgba(${v}, ${Math.floor(v * 0.92)}, ${Math.floor(v * 0.82)}, 0.45)`;
-      ctx.fillRect(0, y, size, bandH);
-    }
-
-    // 2. Micro-pores & aggregate crumb clusters
-    const isClay = textureStr.includes("clay");
-    const isSand = textureStr.includes("sand");
-    const particleCount = isSand ? 4600 : isClay ? 2200 : 3400;
-
-    for (let i = 0; i < particleCount; i++) {
-      const px = r() * size;
-      const py = r() * size;
-      const pSize = isSand ? 1.5 + r() * 3.2 : isClay ? 1.0 + r() * 1.8 : 1.2 + r() * 2.5;
-      const darkness = Math.floor(130 + r() * 110);
-      ctx.fillStyle = `rgb(${darkness}, ${Math.floor(darkness * 0.93)}, ${Math.floor(darkness * 0.85)})`;
-      ctx.beginPath();
-      ctx.arc(px, py, pSize, 0, Math.PI * 2);
-      ctx.fill();
-    }
-
-    // 3. Organic matter humus specks
-    const omSpecks = Math.floor(clamp(om, 0.5, 4.0) * 400);
-    for (let i = 0; i < omSpecks; i++) {
-      const px = r() * size;
-      const py = r() * size;
-      const s = 1.0 + r() * 2.5;
-      const shade = Math.floor(40 + r() * 45);
-      ctx.fillStyle = `rgba(${shade}, ${Math.floor(shade * 0.8)}, ${Math.floor(shade * 0.6)}, ${0.6 + r() * 0.35})`;
-      ctx.fillRect(px, py, s, s);
-    }
-    soil.update();
-
-    // Salt efflorescence: dendritic crystalline clusters
     const salt = new DynamicTexture(`saltTex${seed}`, { width: size, height: size }, this.scene, true);
     const sctx = salt.getContext();
     sctx.clearRect(0, 0, size, size);
+    const r = rng(seed);
 
     for (let i = 0; i < 900; i++) {
       const sx = r() * size;
@@ -447,20 +406,33 @@ export class SceneController {
     }
     salt.hasAlpha = true;
     salt.update();
-
-    return { soil, salt };
+    return salt;
   }
 
   private buildLayers(): void {
     let top = 0;
+    const uRepeat = 2.0;
+    const faceUV = [
+      new Vector4(0, 0, uRepeat, 1), // 0: back (+z)
+      new Vector4(0, 0, uRepeat, 1), // 1: front (-z, cutaway)
+      new Vector4(0, 0, 1, 1),       // 2: right (+x)
+      new Vector4(0, 0, 1, 1),       // 3: left (-x)
+      new Vector4(0, 0, uRepeat, 1), // 4: top (+y)
+      new Vector4(0, 0, uRepeat, 1), // 5: bottom (-y)
+    ];
+
     LAYER_H.forEach((h, i) => {
-      const box = MeshBuilder.CreateBox(`layer${i}`, { width: W, height: h, depth: D }, this.scene);
-      const { soil, salt } = this.specklePair(11 + i);
+      const box = MeshBuilder.CreateBox(`layer${i}`, { width: W, height: h, depth: D, faceUV }, this.scene);
+      const tex = new Texture(`/textures/soil/layer_${i}.jpg`, this.scene);
+      tex.wrapU = Texture.MIRROR_ADDRESSMODE;
+      tex.wrapV = Texture.CLAMP_ADDRESSMODE;
+
       const mat = new StandardMaterial(`layerMat${i}`, this.scene);
-      mat.diffuseTexture = soil;
+      mat.diffuseTexture = tex;
       mat.specularPower = 28;
       box.material = mat;
 
+      const salt = this.createSaltTexture(11 + i);
       const plane = MeshBuilder.CreatePlane(`salt${i}`, { width: W, height: h }, this.scene);
       const smat = new StandardMaterial(`saltMat${i}`, this.scene);
       smat.diffuseTexture = salt;
@@ -475,7 +447,7 @@ export class SceneController {
       this.layerMats.push(mat);
       this.saltPlanes.push(plane);
       this.saltMats.push(smat);
-      this.layerBase.push(new Color3(0.45, 0.32, 0.2));
+      this.layerBase.push(LAYER_PALETTE[i] || new Color3(0.45, 0.32, 0.2));
       box.metadata = { top, h };
       top += h;
     });
@@ -558,7 +530,7 @@ export class SceneController {
   private rebuildLayersFromResult(): void {
     if (!this.result) return;
     this.result.layers.forEach((l, i) => {
-      this.layerBase[i] = baseColor(l);
+      this.layerBase[i] = baseColor(l, i);
     });
   }
 
@@ -760,9 +732,8 @@ export class SceneController {
     for (let i = 0; i < this.layerMats.length; i++) {
       const m = sim.moisture[i]?.[day] ?? 0.5;
       const wet = clamp(m / 1.1);
-      const base = this.layerBase[i];
-      const k = 1 - 0.48 * wet;
-      this.layerMats[i].diffuseColor = new Color3(base.r * k, base.g * k, base.b * k);
+      const k = 1 - 0.42 * wet;
+      this.layerMats[i].diffuseColor = new Color3(k, k, k);
 
       // Specular sheen on damp soil
       const wetSheen = 0.04 + 0.32 * Math.pow(wet, 2);

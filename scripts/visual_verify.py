@@ -47,7 +47,7 @@ def run():
             page = context.new_page()
 
             # Set localStorage before loading page
-            page.goto("http://localhost:4173")
+            page.goto("http://localhost:5173")
             page.evaluate(f"""() => {{
                 localStorage.setItem("lang", "{lang}");
                 localStorage.setItem("theme", "{theme}");
