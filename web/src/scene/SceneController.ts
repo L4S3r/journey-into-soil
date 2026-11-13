@@ -1,4 +1,6 @@
 import * as THREE from "three";
+import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
+import * as SkeletonUtils from "three/examples/jsm/utils/SkeletonUtils.js";
 import { TEX } from "./textures";
 import type {
   AnalysisResult,
@@ -36,7 +38,8 @@ export class SceneController {
   private burstV!: Float32Array;
   private bst = -1;
   private swayU = { value: 0 };
-  private cows: { group: THREE.Group; head: THREE.Group; tail: THREE.Group; phase: number }[] = [];
+  private cowMixers: { mixer: THREE.AnimationMixer; group: THREE.Object3D }[] = [];
+  private palms: { crown: THREE.Group; phase: number }[] = [];
   private t0 = 0;
   private last = 0;
   private raf = 0;
@@ -184,11 +187,11 @@ export class SceneController {
       z1: 12,
     });
 
-    // Pine tree windbreak shelterbelts (conservation windbreaks along borders & horizon)
-    this.plantPineTrees();
+    // Date Palm tree windbreaks (authentic Egyptian Nile Delta farm shelterbelts)
+    this.plantDatePalms();
 
-    // Grazing cattle herd (procedural low-poly Three.js cows with grazing animation)
-    this.plantCows();
+    // Grazing cattle herd (official animated low-poly Cow model from three.js ecosystem)
+    this.loadAnimatedCows();
 
     // Dust motes particles
     const N = 180;
@@ -334,333 +337,287 @@ export class SceneController {
     }
   }
 
-  private createPineTree(scale = 1): THREE.Group {
-    const tree = new THREE.Group();
-
-    // Wood trunk
-    const trunkGeo = new THREE.CylinderGeometry(0.14 * scale, 0.24 * scale, 1.8 * scale, 6);
-    trunkGeo.translate(0, 0.9 * scale, 0);
-    const trunkMat = new THREE.MeshStandardMaterial({
-      color: 0x3d2714,
-      roughness: 0.9,
-    });
-    const trunk = new THREE.Mesh(trunkGeo, trunkMat);
-    tree.add(trunk);
-
-    // Foliage tiers (coniferous evergreen needle canopies)
-    const folMat1 = new THREE.MeshStandardMaterial({
-      color: 0x1b3c20,
-      roughness: 0.85,
-      flatShading: true,
-    });
-    const folMat2 = new THREE.MeshStandardMaterial({
-      color: 0x244c29,
-      roughness: 0.85,
-      flatShading: true,
-    });
-    const folMat3 = new THREE.MeshStandardMaterial({
-      color: 0x2e5c33,
-      roughness: 0.85,
-      flatShading: true,
-    });
-
-    // Tier 1 (bottom canopy)
-    const tier1Geo = new THREE.ConeGeometry(1.6 * scale, 2.2 * scale, 7);
-    tier1Geo.translate(0, 1.9 * scale, 0);
-    const tier1 = new THREE.Mesh(tier1Geo, folMat1);
-    tree.add(tier1);
-
-    // Tier 2 (middle canopy)
-    const tier2Geo = new THREE.ConeGeometry(1.22 * scale, 1.9 * scale, 7);
-    tier2Geo.translate(0, 2.9 * scale, 0);
-    const tier2 = new THREE.Mesh(tier2Geo, folMat2);
-    tree.add(tier2);
-
-    // Tier 3 (top tip)
-    const tier3Geo = new THREE.ConeGeometry(0.82 * scale, 1.6 * scale, 7);
-    tier3Geo.translate(0, 3.8 * scale, 0);
-    const tier3 = new THREE.Mesh(tier3Geo, folMat3);
-    tree.add(tier3);
-
-    return tree;
-  }
-
-  private plantPineTrees(): void {
-    // Left boundary windbreak shelterbelt along main field (slabs[0])
-    for (let z = -50; z <= -4; z += 5.2) {
-      const s = 0.9 + Math.random() * 0.45;
-      const tree = this.createPineTree(s);
-      const jx = (Math.random() - 0.5) * 1.2;
-      const jz = (Math.random() - 0.5) * 1.0;
-      tree.position.set(-26.2 + jx, HT[0] / 2, z + jz);
-      tree.rotation.y = Math.random() * Math.PI * 2;
-      tree.rotation.z = (Math.random() - 0.5) * 0.04;
-      this.slabs[0].g.add(tree);
-    }
-
-    // Right boundary windbreak shelterbelt along main field (slabs[0])
-    for (let z = -50; z <= -4; z += 5.2) {
-      const s = 0.9 + Math.random() * 0.45;
-      const tree = this.createPineTree(s);
-      const jx = (Math.random() - 0.5) * 1.2;
-      const jz = (Math.random() - 0.5) * 1.0;
-      tree.position.set(26.2 + jx, HT[0] / 2, z + jz);
-      tree.rotation.y = Math.random() * Math.PI * 2;
-      tree.rotation.z = (Math.random() - 0.5) * 0.04;
-      this.slabs[0].g.add(tree);
-    }
-
-    // Horizon windbreak ridge along the rear edge of the field
-    for (let x = -26; x <= 26; x += 3.8) {
-      const s = 1.05 + Math.random() * 0.5;
-      const tree = this.createPineTree(s);
-      const jx = (Math.random() - 0.5) * 1.0;
-      const jz = (Math.random() - 0.5) * 1.4;
-      tree.position.set(x + jx, HT[0] / 2, -53 + jz);
-      tree.rotation.y = Math.random() * Math.PI * 2;
-      this.slabs[0].g.add(tree);
-    }
-
-    // Foreground shelterbelts on frontG framing Act 1 camera view
-    for (let z = 3; z <= 14; z += 4.5) {
-      // Left foreground
-      const sL = 0.95 + Math.random() * 0.35;
-      const treeL = this.createPineTree(sL);
-      treeL.position.set(-25.5 + (Math.random() - 0.5) * 1.0, 0, z);
-      treeL.rotation.y = Math.random() * Math.PI * 2;
-      this.frontG.add(treeL);
-
-      // Right foreground
-      const sR = 0.95 + Math.random() * 0.35;
-      const treeR = this.createPineTree(sR);
-      treeR.position.set(25.5 + (Math.random() - 0.5) * 1.0, 0, z);
-      treeR.rotation.y = Math.random() * Math.PI * 2;
-      this.frontG.add(treeR);
-    }
-  }
-
-  private createCow(
-    scale = 1,
-    breed: "holstein" | "jersey" = "holstein"
-  ): { group: THREE.Group; head: THREE.Group; tail: THREE.Group; phase: number } {
+  private createDatePalmTree(scale = 1): { group: THREE.Group; crown: THREE.Group; phase: number } {
     const group = new THREE.Group();
 
-    const isHolstein = breed === "holstein";
-    const bodyColor = isHolstein ? 0xf5f5f3 : 0xa66f42;
-    const spotColor = isHolstein ? 0x1a1a1a : 0x543217;
-    const snoutColor = 0xdf9d9b;
-    const hornColor = 0xe4dec8;
-    const hoofColor = 0x222222;
+    // 1. Weathered fibrous trunk with subtle organic curvature
+    const trunkH = 7.5 * scale;
+    const trunkGeo = new THREE.CylinderGeometry(0.24 * scale, 0.42 * scale, trunkH, 8, 5);
+    trunkGeo.translate(0, trunkH / 2, 0);
 
-    const bodyMat = new THREE.MeshStandardMaterial({
-      color: bodyColor,
-      roughness: 0.82,
+    const barkMat = new THREE.MeshStandardMaterial({
+      color: 0x564332,
+      roughness: 0.92,
+      flatShading: true,
     });
-    const spotMat = new THREE.MeshStandardMaterial({
-      color: spotColor,
-      roughness: 0.82,
+    const trunk = new THREE.Mesh(trunkGeo, barkMat);
+    trunk.rotation.z = (Math.random() - 0.5) * 0.07;
+    trunk.rotation.x = (Math.random() - 0.5) * 0.07;
+    group.add(trunk);
+
+    // Ring collars representing pruned frond bases (iconic Egyptian date palm rings)
+    const ringMat = new THREE.MeshStandardMaterial({
+      color: 0x473626,
+      roughness: 0.95,
     });
-    const snoutMat = new THREE.MeshStandardMaterial({
-      color: snoutColor,
-      roughness: 0.7,
+    const numRings = 9;
+    for (let r = 1; r <= numRings; r++) {
+      const ry = (r / (numRings + 1)) * trunkH;
+      const rad = (0.42 - (0.42 - 0.24) * (r / (numRings + 1))) * scale + 0.03 * scale;
+      const ringGeo = new THREE.CylinderGeometry(rad, rad, 0.12 * scale, 8);
+      const ring = new THREE.Mesh(ringGeo, ringMat);
+      ring.position.y = ry;
+      trunk.add(ring);
+    }
+
+    // 2. Crown Group (sways organically in breeze)
+    const crown = new THREE.Group();
+    crown.position.set(0, trunkH, 0);
+    trunk.add(crown);
+
+    // Frond materials: deep mature green, rich mid canopy, and fresh spear green
+    const matFrondLow = new THREE.MeshStandardMaterial({
+      color: 0x244619,
+      roughness: 0.8,
+      side: THREE.DoubleSide,
     });
-    const hornMat = new THREE.MeshStandardMaterial({
-      color: hornColor,
-      roughness: 0.6,
+    const matFrondMid = new THREE.MeshStandardMaterial({
+      color: 0x345e22,
+      roughness: 0.8,
+      side: THREE.DoubleSide,
     });
-    const hoofMat = new THREE.MeshStandardMaterial({
-      color: hoofColor,
-      roughness: 0.85,
-    });
-    const eyeMat = new THREE.MeshStandardMaterial({
-      color: 0x111111,
-      roughness: 0.3,
-    });
-
-    // 1. Torso
-    const torsoGeo = new THREE.BoxGeometry(0.95 * scale, 1.05 * scale, 1.95 * scale);
-    const torso = new THREE.Mesh(torsoGeo, bodyMat);
-    torso.position.y = 1.25 * scale;
-    group.add(torso);
-
-    // Flank patches
-    const spot1 = new THREE.Mesh(
-      new THREE.BoxGeometry(0.97 * scale, 0.55 * scale, 0.75 * scale),
-      spotMat
-    );
-    spot1.position.set(0.01 * scale, 1.32 * scale, -0.2 * scale);
-    group.add(spot1);
-
-    const spot2 = new THREE.Mesh(
-      new THREE.BoxGeometry(0.7 * scale, 0.05 * scale, 0.7 * scale),
-      spotMat
-    );
-    spot2.position.set(-0.1 * scale, 1.78 * scale, 0.35 * scale);
-    group.add(spot2);
-
-    const spot3 = new THREE.Mesh(
-      new THREE.BoxGeometry(0.97 * scale, 0.45 * scale, 0.5 * scale),
-      spotMat
-    );
-    spot3.position.set(-0.01 * scale, 1.15 * scale, 0.5 * scale);
-    group.add(spot3);
-
-    // Udder
-    const udderMat = new THREE.MeshStandardMaterial({ color: 0xefa7a1, roughness: 0.75 });
-    const udder = new THREE.Mesh(
-      new THREE.BoxGeometry(0.45 * scale, 0.28 * scale, 0.45 * scale),
-      udderMat
-    );
-    udder.position.set(0, 0.68 * scale, 0.4 * scale);
-    group.add(udder);
-
-    // 2. Four Legs & Hooves
-    const legW = 0.22 * scale;
-    const legH = 0.8 * scale;
-    const legOffsets: [number, number, boolean][] = [
-      [-0.34 * scale, -0.6 * scale, false],
-      [0.34 * scale, -0.6 * scale, true],
-      [-0.34 * scale, 0.6 * scale, true],
-      [0.34 * scale, 0.6 * scale, false],
-    ];
-
-    legOffsets.forEach(([lx, lz, hasSpot]) => {
-      const legGeo = new THREE.BoxGeometry(legW, legH, legW);
-      const legMesh = new THREE.Mesh(legGeo, hasSpot ? spotMat : bodyMat);
-      legMesh.position.set(lx, 0.42 * scale, lz);
-      group.add(legMesh);
-
-      const hoofGeo = new THREE.BoxGeometry(legW * 1.05, 0.12 * scale, legW * 1.05);
-      const hoofMesh = new THREE.Mesh(hoofGeo, hoofMat);
-      hoofMesh.position.set(lx, 0.06 * scale, lz);
-      group.add(hoofMesh);
+    const matFrondHigh = new THREE.MeshStandardMaterial({
+      color: 0x48792c,
+      roughness: 0.8,
+      side: THREE.DoubleSide,
     });
 
-    // 3. Articulated Grazing Head & Neck
-    const head = new THREE.Group();
-    head.position.set(0, 1.48 * scale, -0.85 * scale);
-    group.add(head);
+    const createFrond = (len: number, pitchDown: number, mat: THREE.Material): THREE.Group => {
+      const frond = new THREE.Group();
 
-    // Neck
-    const neckGeo = new THREE.BoxGeometry(0.52 * scale, 0.6 * scale, 0.55 * scale);
-    const neck = new THREE.Mesh(neckGeo, bodyMat);
-    neck.position.set(0, -0.12 * scale, -0.22 * scale);
-    neck.rotation.x = 0.3;
-    head.add(neck);
+      // Proximal stem segment
+      const seg1Len = len * 0.52;
+      const stemGeo1 = new THREE.CylinderGeometry(0.024 * scale, 0.016 * scale, seg1Len, 4);
+      stemGeo1.translate(0, seg1Len / 2, 0);
+      const stem1 = new THREE.Mesh(stemGeo1, mat);
+      frond.add(stem1);
 
-    // Skull
-    const skullGeo = new THREE.BoxGeometry(0.56 * scale, 0.58 * scale, 0.65 * scale);
-    const skull = new THREE.Mesh(skullGeo, bodyMat);
-    skull.position.set(0, -0.22 * scale, -0.55 * scale);
-    head.add(skull);
+      // Proximal blade (flattened tapered feather leaf)
+      const bladeGeo1 = new THREE.ConeGeometry(0.42 * scale, seg1Len, 3);
+      bladeGeo1.translate(0, seg1Len / 2, 0);
+      const blade1 = new THREE.Mesh(bladeGeo1, mat);
+      blade1.scale.set(1, 1, 0.12);
+      frond.add(blade1);
 
-    // Head patch
-    const headSpot = new THREE.Mesh(
-      new THREE.BoxGeometry(0.3 * scale, 0.32 * scale, 0.35 * scale),
-      spotMat
-    );
-    headSpot.position.set(-0.16 * scale, -0.16 * scale, -0.58 * scale);
-    head.add(headSpot);
+      // Distal drooping segment (creates iconic arched silhouette)
+      const seg2Len = len * 0.48;
+      const seg2 = new THREE.Group();
+      seg2.position.set(0, seg1Len, 0);
+      seg2.rotation.x = 0.38; // droop further downward
 
-    // Snout / Muzzle
-    const snoutGeo = new THREE.BoxGeometry(0.48 * scale, 0.35 * scale, 0.4 * scale);
-    const snout = new THREE.Mesh(snoutGeo, snoutMat);
-    snout.position.set(0, -0.32 * scale, -0.92 * scale);
-    head.add(snout);
+      const stemGeo2 = new THREE.CylinderGeometry(0.016 * scale, 0.008 * scale, seg2Len, 4);
+      stemGeo2.translate(0, seg2Len / 2, 0);
+      const stem2 = new THREE.Mesh(stemGeo2, mat);
+      seg2.add(stem2);
 
-    // Nostrils
-    const nostrilGeo = new THREE.BoxGeometry(0.06 * scale, 0.05 * scale, 0.02 * scale);
-    const nostrilL = new THREE.Mesh(nostrilGeo, hoofMat);
-    nostrilL.position.set(-0.12 * scale, -0.3 * scale, -1.13 * scale);
-    const nostrilR = new THREE.Mesh(nostrilGeo, hoofMat);
-    nostrilR.position.set(0.12 * scale, -0.3 * scale, -1.13 * scale);
-    head.add(nostrilL);
-    head.add(nostrilR);
+      const bladeGeo2 = new THREE.ConeGeometry(0.35 * scale, seg2Len, 3);
+      bladeGeo2.translate(0, seg2Len / 2, 0);
+      const blade2 = new THREE.Mesh(bladeGeo2, mat);
+      blade2.scale.set(1, 1, 0.1);
+      seg2.add(blade2);
 
-    // Eyes
-    const eyeGeo = new THREE.BoxGeometry(0.05 * scale, 0.08 * scale, 0.08 * scale);
-    const eyeL = new THREE.Mesh(eyeGeo, eyeMat);
-    eyeL.position.set(-0.29 * scale, -0.14 * scale, -0.6 * scale);
-    const eyeR = new THREE.Mesh(eyeGeo, eyeMat);
-    eyeR.position.set(0.29 * scale, -0.14 * scale, -0.6 * scale);
-    head.add(eyeL);
-    head.add(eyeR);
+      frond.add(seg2);
 
-    // Horns
-    const hornGeo = new THREE.ConeGeometry(0.06 * scale, 0.28 * scale, 5);
-    const hornL = new THREE.Mesh(hornGeo, hornMat);
-    hornL.position.set(-0.22 * scale, 0.14 * scale, -0.52 * scale);
-    hornL.rotation.set(-0.2, 0, -0.4);
-    const hornR = new THREE.Mesh(hornGeo, hornMat);
-    hornR.position.set(0.22 * scale, 0.14 * scale, -0.52 * scale);
-    hornR.rotation.set(-0.2, 0, 0.4);
-    head.add(hornL);
-    head.add(hornR);
+      frond.rotation.x = pitchDown;
+      return frond;
+    };
 
-    // Ears
-    const earGeo = new THREE.BoxGeometry(0.26 * scale, 0.1 * scale, 0.14 * scale);
-    const earL = new THREE.Mesh(earGeo, bodyMat);
-    earL.position.set(-0.35 * scale, 0.02 * scale, -0.5 * scale);
-    earL.rotation.set(0, -0.25, -0.2);
-    const earR = new THREE.Mesh(earGeo, bodyMat);
-    earR.position.set(0.35 * scale, 0.02 * scale, -0.5 * scale);
-    earR.rotation.set(0, 0.25, 0.2);
-    head.add(earL);
-    head.add(earR);
+    // Tier 1: Lower drooping mature fronds (8 fronds radiating at ~68° pitch)
+    const n1 = 8;
+    for (let i = 0; i < n1; i++) {
+      const az = (i / n1) * Math.PI * 2 + (Math.random() - 0.5) * 0.2;
+      const fGroup = new THREE.Group();
+      fGroup.rotation.y = az;
+      fGroup.add(createFrond(4.4 * scale, 1.18, matFrondLow));
+      crown.add(fGroup);
+    }
 
-    // 4. Tail
-    const tail = new THREE.Group();
-    tail.position.set(0, 1.62 * scale, 0.95 * scale);
-    group.add(tail);
+    // Tier 2: Mid-canopy arching fronds (8 fronds radiating at ~46° pitch)
+    const n2 = 8;
+    for (let i = 0; i < n2; i++) {
+      const az = (i / n2) * Math.PI * 2 + Math.PI / n2 + (Math.random() - 0.5) * 0.2;
+      const fGroup = new THREE.Group();
+      fGroup.rotation.y = az;
+      fGroup.add(createFrond(3.9 * scale, 0.8, matFrondMid));
+      crown.add(fGroup);
+    }
 
-    const stalkGeo = new THREE.CylinderGeometry(0.028 * scale, 0.02 * scale, 0.65 * scale, 5);
-    stalkGeo.translate(0, -0.32 * scale, 0);
-    const stalk = new THREE.Mesh(stalkGeo, bodyMat);
-    stalk.rotation.x = 0.12;
-    tail.add(stalk);
+    // Tier 3: Upper young spear fronds (6 fronds radiating at ~24° pitch)
+    const n3 = 6;
+    for (let i = 0; i < n3; i++) {
+      const az = (i / n3) * Math.PI * 2 + (Math.random() - 0.5) * 0.25;
+      const fGroup = new THREE.Group();
+      fGroup.rotation.y = az;
+      fGroup.add(createFrond(3.1 * scale, 0.42, matFrondHigh));
+      crown.add(fGroup);
+    }
 
-    const tuftGeo = new THREE.ConeGeometry(0.065 * scale, 0.2 * scale, 5);
-    tuftGeo.translate(0, -0.72 * scale, 0);
-    const tuft = new THREE.Mesh(tuftGeo, spotMat);
-    tuft.rotation.x = Math.PI;
-    tail.add(tuft);
+    // 3. Hanging Date Fruit Bunches (عراجين البلح)
+    const dateMat = new THREE.MeshStandardMaterial({
+      color: 0xd66d18, // ripe golden amber date
+      roughness: 0.65,
+    });
+    const stalkMat = new THREE.MeshStandardMaterial({
+      color: 0x9b541a,
+      roughness: 0.8,
+    });
+
+    const numClusters = 3;
+    for (let c = 0; c < numClusters; c++) {
+      const clusterGroup = new THREE.Group();
+      const az = (c / numClusters) * Math.PI * 2 + 0.5;
+      clusterGroup.rotation.y = az;
+
+      // Arched stalk hanging down
+      const stalkGeo = new THREE.CylinderGeometry(0.02 * scale, 0.015 * scale, 0.65 * scale, 4);
+      stalkGeo.translate(0, -0.32 * scale, 0);
+      const stalk = new THREE.Mesh(stalkGeo, stalkMat);
+      stalk.rotation.x = 0.55;
+      clusterGroup.add(stalk);
+
+      // Heavy cluster of dates hanging from stalk
+      const clusterGeo = new THREE.ConeGeometry(0.3 * scale, 0.7 * scale, 6);
+      clusterGeo.translate(0, -0.35 * scale, 0);
+      const clusterMesh = new THREE.Mesh(clusterGeo, dateMat);
+      clusterMesh.position.set(0, -0.6 * scale, 0.35 * scale);
+      clusterMesh.rotation.x = Math.PI; // hangs downward
+      clusterGroup.add(clusterMesh);
+
+      crown.add(clusterGroup);
+    }
 
     return {
       group,
-      head,
-      tail,
+      crown,
       phase: Math.random() * Math.PI * 2,
     };
   }
 
-  private plantCows(): void {
-    // 1. Adult Holstein Cow (Mother) in foreground pasture clearing
-    const cow1 = this.createCow(1.15, "holstein");
-    cow1.group.position.set(-9.5, 0, 7.2);
-    cow1.group.rotation.y = 0.75;
-    this.frontG.add(cow1.group);
-    this.cows.push(cow1);
+  private plantDatePalms(): void {
+    // Left boundary canal line along main field (slabs[0])
+    for (let z = -50; z <= -4; z += 5.8) {
+      const s = 0.9 + Math.random() * 0.35;
+      const palm = this.createDatePalmTree(s);
+      const jx = (Math.random() - 0.5) * 1.2;
+      const jz = (Math.random() - 0.5) * 1.0;
+      palm.group.position.set(-26.2 + jx, HT[0] / 2, z + jz);
+      palm.group.rotation.y = Math.random() * Math.PI * 2;
+      this.slabs[0].g.add(palm.group);
+      this.palms.push(palm);
+    }
 
-    // 2. Adult Jersey Cow in foreground pasture clearing
-    const cow2 = this.createCow(1.05, "jersey");
-    cow2.group.position.set(-12.8, 0, 9.6);
-    cow2.group.rotation.y = 2.35;
-    this.frontG.add(cow2.group);
-    this.cows.push(cow2);
+    // Right boundary canal line along main field (slabs[0])
+    for (let z = -50; z <= -4; z += 5.8) {
+      const s = 0.9 + Math.random() * 0.35;
+      const palm = this.createDatePalmTree(s);
+      const jx = (Math.random() - 0.5) * 1.2;
+      const jz = (Math.random() - 0.5) * 1.0;
+      palm.group.position.set(26.2 + jx, HT[0] / 2, z + jz);
+      palm.group.rotation.y = Math.random() * Math.PI * 2;
+      this.slabs[0].g.add(palm.group);
+      this.palms.push(palm);
+    }
 
-    // 3. Holstein Calf near mother cow
-    const calf = this.createCow(0.62, "holstein");
-    calf.group.position.set(-7.2, 0, 8.8);
-    calf.group.rotation.y = 1.1;
-    this.frontG.add(calf.group);
-    this.cows.push(calf);
+    // Horizon date palm grove along the rear edge of the field
+    for (let x = -26; x <= 26; x += 4.2) {
+      const s = 0.95 + Math.random() * 0.45;
+      const palm = this.createDatePalmTree(s);
+      const jx = (Math.random() - 0.5) * 1.0;
+      const jz = (Math.random() - 0.5) * 1.4;
+      palm.group.position.set(x + jx, HT[0] / 2, -53 + jz);
+      palm.group.rotation.y = Math.random() * Math.PI * 2;
+      this.slabs[0].g.add(palm.group);
+      this.palms.push(palm);
+    }
 
-    // 4. Distant Holstein grazing on the main agricultural field (slabs[0])
-    const cow4 = this.createCow(1.1, "holstein");
-    cow4.group.position.set(15.5, HT[0] / 2, -14.0);
-    cow4.group.rotation.y = -1.35;
-    this.slabs[0].g.add(cow4.group);
-    this.cows.push(cow4);
+    // Foreground date palms on frontG framing Act 1 camera view
+    for (let z = 3; z <= 14; z += 5.5) {
+      // Left foreground
+      const sL = 0.92 + Math.random() * 0.3;
+      const palmL = this.createDatePalmTree(sL);
+      palmL.group.position.set(-25.5 + (Math.random() - 0.5) * 1.0, 0, z);
+      palmL.group.rotation.y = Math.random() * Math.PI * 2;
+      this.frontG.add(palmL.group);
+      this.palms.push(palmL);
+
+      // Right foreground
+      const sR = 0.92 + Math.random() * 0.3;
+      const palmR = this.createDatePalmTree(sR);
+      palmR.group.position.set(25.5 + (Math.random() - 0.5) * 1.0, 0, z);
+      palmR.group.rotation.y = Math.random() * Math.PI * 2;
+      this.frontG.add(palmR.group);
+      this.palms.push(palmR);
+    }
+  }
+
+  private loadAnimatedCows(): void {
+    const loader = new GLTFLoader();
+    loader.load(
+      "/models/cow.glb",
+      (gltf) => {
+        const baseScene = gltf.scene;
+        const idleClip =
+          gltf.animations.find((a) => a.name === "Idle") || gltf.animations[0];
+
+        baseScene.traverse((child) => {
+          if (child instanceof THREE.Mesh) {
+            child.castShadow = true;
+            child.receiveShadow = true;
+          }
+        });
+
+        const spawnCow = (
+          parent: THREE.Object3D,
+          x: number,
+          y: number,
+          z: number,
+          rotY: number,
+          scale: number
+        ) => {
+          const cow = SkeletonUtils.clone(baseScene);
+          cow.position.set(x, y, z);
+          cow.rotation.y = rotY;
+          cow.scale.set(scale, scale, scale);
+          parent.add(cow);
+
+          if (idleClip) {
+            const mixer = new THREE.AnimationMixer(cow);
+            const action = mixer.clipAction(idleClip);
+            action.play();
+            // Desynchronize idle grazing timing across herd
+            mixer.setTime(Math.random() * 3.0);
+            this.cowMixers.push({ mixer, group: cow });
+          }
+        };
+
+        // Standard Cow asset has height ~5.0m; scaling by ~0.30 yields authentic 1.5m dairy cow
+        // 1. Mother Holstein Cow in foreground pasture clearing
+        spawnCow(this.frontG, -9.5, 0, 7.2, 0.75, 0.31);
+
+        // 2. Companion Holstein Cow in foreground pasture clearing
+        spawnCow(this.frontG, -12.8, 0, 9.6, 2.35, 0.28);
+
+        // 3. Playful Calf near mother cow
+        spawnCow(this.frontG, -7.2, 0, 8.8, 1.1, 0.17);
+
+        // 4. Distant Holstein grazing on the main agricultural field (slabs[0])
+        spawnCow(this.slabs[0].g, 15.5, HT[0] / 2, -14.0, -1.35, 0.29);
+      },
+      undefined,
+      (err) => {
+        console.warn("Failed to load cow.glb:", err);
+      }
+    );
   }
 
   public fit(): void {
@@ -824,11 +781,15 @@ export class SceneController {
       this.updateInspectData();
     }
 
-    // Cattle grazing idle animations
-    for (const cow of this.cows) {
-      cow.head.rotation.x = 0.22 + Math.sin(tt * 1.4 + cow.phase) * 0.08;
-      cow.head.rotation.y = Math.sin(tt * 0.65 + cow.phase) * 0.05;
-      cow.tail.rotation.z = Math.sin(tt * 3.2 + cow.phase) * 0.22;
+    // Update animated cattle models
+    for (const c of this.cowMixers) {
+      c.mixer.update(dt);
+    }
+
+    // Subtle Egyptian breeze swaying palm crowns
+    for (const palm of this.palms) {
+      palm.crown.rotation.z = Math.sin(tt * 1.3 + palm.phase) * 0.025;
+      palm.crown.rotation.x = Math.cos(tt * 0.95 + palm.phase) * 0.02;
     }
 
     this.renderer.render(this.scene, this.cam);
@@ -1068,6 +1029,12 @@ export class SceneController {
     this.canvas.removeEventListener("pointermove", this.pointerMoveHandler);
     this.canvas.removeEventListener("pointerup", this.pointerUpHandler);
     this.canvas.removeEventListener("pointercancel", this.pointerUpHandler);
+
+    for (const c of this.cowMixers) {
+      c.mixer.stopAllAction();
+    }
+    this.cowMixers = [];
+    this.palms = [];
 
     this.scene.clear();
     this.renderer.dispose();
