@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign in with Google - Journey into the Soil | NASA Space Apps 2026</title>
+  
+  <!-- Astryx Typography & Tailwind CSS -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=JetBrains+Mono:wght@400;600;700&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'Cairo', 'sans-serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+            arabic: ['Cairo', 'sans-serif']
+          },
+          colors: {
+            astryx: {
+              primary: '#00a76f',
+              emerald: '#00a76f',
+              forest: '#1b4332',
+              gold: '#f59e0b',
+              soil: '#3d2612'
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    :root {
+      --astryx-primary: #00a76f;
+      --astryx-emerald: #00a76f;
+    }
+    body {
+      font-family: 'Plus Jakarta Sans', Cairo, sans-serif;
+    }
+    [dir="rtl"] body {
+      font-family: Cairo, 'Plus Jakarta Sans', sans-serif;
+    }
+  </style>
+</head>
+<body class="min-h-screen relative flex flex-col justify-between text-neutral-900 dark:text-neutral-100 bg-cover bg-center bg-no-repeat overflow-x-hidden selection:bg-[#00a76f]/20 selection:text-[#00a76f]" style="background-image: url('account_bg.jpg');">
+
+  <!-- Ambient Contrast Scrim -->
+  <div class="fixed inset-0 bg-black/40 backdrop-blur-[2px] pointer-events-none z-0"></div>
+
+  <!-- Top Navigation Bar -->
+  <header class="relative z-10 w-full px-4 sm:px-8 py-5 flex items-center justify-between">
+    <!-- Back to Landing Link -->
+    <a href="/landing.html" class="inline-flex items-center gap-2 px-4 py-2 rounded-2xl bg-white/80 dark:bg-black/50 hover:bg-white dark:hover:bg-black/70 text-neutral-800 dark:text-white border border-white/40 dark:border-white/10 text-xs sm:text-sm font-semibold backdrop-blur-md transition shadow-sm hover:scale-[1.02]">
+      <i data-lucide="arrow-left" class="w-4 h-4 rtl:rotate-180"></i>
+      <span data-i18n="backToLanding">Back to Overview</span>
+    </a>
+
+    <!-- Theme & Language Toggles -->
+    <div class="flex items-center gap-2">
+      <!-- Language Toggle -->
+      <button id="langToggle" type="button" class="px-3 py-2 rounded-2xl bg-white/80 dark:bg-black/50 hover:bg-white dark:hover:bg-black/70 text-neutral-800 dark:text-white border border-white/40 dark:border-white/10 text-xs font-bold backdrop-blur-md transition flex items-center gap-1.5 shadow-sm">
+        <i data-lucide="globe" class="w-3.5 h-3.5 text-[#00a76f]"></i>
+        <span id="langLabel">AR</span>
+      </button>
+
+      <!-- Theme Toggle -->
+      <button id="themeToggle" type="button" class="p-2 rounded-2xl bg-white/80 dark:bg-black/50 hover:bg-white dark:hover:bg-black/70 text-neutral-800 dark:text-white border border-white/40 dark:border-white/10 text-xs font-semibold backdrop-blur-md transition shadow-sm">
+        <i id="themeIcon" data-lucide="sun" class="w-4 h-4 text-amber-400"></i>
+      </button>
+    </div>
+  </header>
+
+  <!-- Main Content: Centered Google Sign-In Card -->
+  <main class="relative z-10 flex-1 flex items-center justify-center p-4 sm:p-6 my-auto">
+    <div class="w-full max-w-[480px] bg-white/95 dark:bg-[#151b17]/95 border border-white/60 dark:border-white/10 rounded-[32px] shadow-2xl p-7 sm:p-10 backdrop-blur-xl text-neutral-900 dark:text-white text-center transform transition-all">
+      
+      <!-- Prominent Enlarged Logo -->
+      <div class="flex flex-col items-center mb-3">
+        <div class="w-28 h-28 sm:w-36 sm:h-36 flex items-center justify-center mb-2">
+          <img src="the_shifters_logo_transparent.png" alt="The Shifters Logo" class="w-full h-full object-contain drop-shadow-xl" />
+        </div>
+        <div class="text-[11px] font-bold uppercase tracking-widest text-[#00a76f] font-mono" data-i18n="brandSubtitle">
+          Journey into the Soil
+        </div>
+      </div>
+
+      <!-- Title & Subtitle -->
+      <h1 class="text-2xl sm:text-3xl font-extrabold tracking-tight text-neutral-900 dark:text-white" data-i18n="authModalGoogleTitle">
+        Sign in with Google
+      </h1>
+      <p class="text-xs sm:text-sm text-neutral-600 dark:text-neutral-300 mt-2 max-w-sm mx-auto leading-relaxed" data-i18n="authModalGoogleSubtitle">
+        Sign in with your Google account to unlock NASA Earth data and precision soil simulation.
+      </p>
+
+      <!-- Google Account SSO Section -->
+      <div class="mt-7 space-y-3.5 text-start">
+        
+        <!-- Primary 1-Tap Google Account (Ahmed Yasser) -->
+        <button type="button" id="btnGooglePrimaryAccount" class="w-full p-4 rounded-2xl border border-neutral-200 dark:border-white/15 bg-neutral-50/80 dark:bg-white/5 hover:bg-neutral-100 dark:hover:bg-white/10 transition flex items-center gap-3.5 group shadow-sm">
+          <div class="relative w-12 h-12 rounded-full bg-gradient-to-tr from-[#1b4332] to-[#00a76f] flex items-center justify-center text-white font-bold text-base shadow flex-shrink-0">
+            AY
+            <!-- Google G tiny emblem -->
+            <div class="absolute -bottom-1 -end-1 w-5 h-5 rounded-full bg-white dark:bg-neutral-800 shadow flex items-center justify-center p-0.5">
+              <svg class="w-3.5 h-3.5" viewBox="0 0 24 24">
+                <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
+                <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
+              </svg>
+            </div>
+          </div>
+          <div class="flex-1 min-w-0">
+            <div class="text-sm font-bold text-neutral-900 dark:text-white truncate">Ahmed Yasser</div>
+            <div class="text-xs text-neutral-500 dark:text-neutral-400 truncate">ahmed.yasser@shifter.org</div>
+          </div>
+          <i data-lucide="chevron-right" class="w-5 h-5 text-neutral-400 group-hover:text-[#00a76f] transition rtl:rotate-180"></i>
+        </button>
+
+        <!-- Primary Emerald Sign In Button (#00a76f) -->
+        <button id="btnGoogleSignInAction" type="button" class="w-full py-4 px-6 rounded-xl font-bold text-sm sm:text-base text-white shadow-xl transition flex items-center justify-center gap-3 hover:brightness-105 active:scale-[0.99]" style="background-color: #00a76f; box-shadow: 0 10px 24px -4px rgba(0, 167, 111, 0.45);">
+          <div class="w-6 h-6 rounded-full bg-white flex items-center justify-center p-1 shadow-sm">
+            <svg class="w-4 h-4" viewBox="0 0 24 24">
+              <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+              <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+              <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
+              <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
+            </svg>
+          </div>
+          <span data-i18n="authBtnGoogleOnly">Sign in with Google Account</span>
+        </button>
+
+        <!-- Secondary "Use another Google account" Button -->
+        <button type="button" id="btnGoogleOtherAccount" class="w-full py-3.5 px-4 rounded-xl text-xs sm:text-sm font-semibold text-neutral-700 dark:text-neutral-200 bg-neutral-100 dark:bg-white/5 hover:bg-neutral-200 dark:hover:bg-white/10 transition border border-neutral-200 dark:border-white/10 flex items-center justify-center gap-2">
+          <i data-lucide="user-plus" class="w-4 h-4 text-[#00a76f]"></i>
+          <span data-i18n="authUseAnotherGoogle">Use another Google account</span>
+        </button>
+
+      </div>
+
+    </div>
+  </main>
+
+  <!-- Footer Disclaimer -->
+  <footer class="relative z-10 w-full px-4 sm:px-8 py-5 text-center text-xs text-white/80 font-medium">
+    <span data-i18n="footerDisclaimer">
+      Developed for NASA Space Apps Challenge 2026 (Field Shift: Adapting Farms with NASA Data). Advisory decision-support system only.
+    </span>
+  </footer>
+
+  <!-- Toast Notification -->
+  <div id="toast" class="fixed bottom-6 end-6 z-50 flex items-center gap-3 px-4 py-3 rounded-2xl bg-neutral-900/90 text-white border border-white/20 shadow-2xl backdrop-blur-md transition-all duration-300 transform translate-y-24 opacity-0 pointer-events-none">
+    <i data-lucide="check-circle" class="w-4 h-4 text-[#00a76f]"></i>
+    <span id="toastMsg" class="text-xs sm:text-sm font-semibold">Notification</span>
+  </div>
+
+  <script>
+    const translations = {
+      en: {
+        brandSubtitle: "Journey into the Soil",
+        backToLanding: "Back to Overview",
+        authModalGoogleTitle: "Sign in with Google",
+        authModalGoogleSubtitle: "Sign in with your Google account to unlock NASA Earth data and precision soil simulation.",
+        authBtnGoogleOnly: "Sign in with Google Account",
+        authUseAnotherGoogle: "Use another Google account",
+        authGoogleToastSuccess: "Authenticated with Google as Ahmed Yasser. Launching Crop Talk AI and simulation...",
+        footerDisclaimer: "Developed for NASA Space Apps Challenge 2026 (Field Shift: Adapting Farms with NASA Data). Advisory decision-support system only."
+      },
+      ar: {
+        brandSubtitle: "رحلة في أعماق التربة",
+        backToLanding: "العودة للرئيسية",
+        authModalGoogleTitle: "تسجيل الدخول عبر Google",
+        authModalGoogleSubtitle: "سجّل الدخول بحساب Google الخاص بك لتشغيل محاكي فيزياء التربة وحديث المحصول التفاعلي.",
+        authBtnGoogleOnly: "تسجيل الدخول باستخدام حساب Google",
+        authUseAnotherGoogle: "استخدام حساب Google آخر",
+        authGoogleToastSuccess: "تم تسجيل الدخول بنجاح عبر حساب Google (أحمد ياسر). جاري تشغيل المحاكي الزراعي...",
+        footerDisclaimer: "تم التطوير لتحدي ناسا لتطبيقات الفضاء 2026. نظام دعم قرارات استرشادي فقط."
+      }
+    };
+
+    const urlParams = new URLSearchParams(window.location.search);
+    let currentLang = urlParams.get("lang") || localStorage.getItem("shifter_lang") || "en";
+    let currentTheme = urlParams.get("theme") || localStorage.getItem("shifter_theme") || "dark";
+    const destinationUrl = urlParams.get("redirect") || "/index.html?feature=croptalk";
+
+    function showToast(msg) {
+      const toast = document.getElementById("toast");
+      const toastMsg = document.getElementById("toastMsg");
+      if (!toast || !toastMsg) return;
+      toastMsg.textContent = msg;
+      toast.classList.remove("translate-y-24", "opacity-0", "pointer-events-none");
+      toast.classList.add("translate-y-0", "opacity-100", "pointer-events-auto");
+      setTimeout(() => {
+        toast.classList.remove("translate-y-0", "opacity-100", "pointer-events-auto");
+        toast.classList.add("translate-y-24", "opacity-0", "pointer-events-none");
+      }, 3500);
+    }
+
+    function applyTheme(theme) {
+      currentTheme = theme;
+      localStorage.setItem("shifter_theme", theme);
+      const icon = document.getElementById("themeIcon");
+      if (theme === "dark") {
+        document.documentElement.classList.add("dark");
+        if (icon) icon.setAttribute("data-lucide", "sun");
+      } else {
+        document.documentElement.classList.remove("dark");
+        if (icon) icon.setAttribute("data-lucide", "moon");
+      }
+      lucide.createIcons();
+    }
+
+    function toggleTheme() {
+      applyTheme(currentTheme === "dark" ? "light" : "dark");
+    }
+
+    function applyLanguage(lang) {
+      currentLang = lang;
+      localStorage.setItem("shifter_lang", lang);
+      document.documentElement.setAttribute("lang", lang);
+      document.documentElement.setAttribute("dir", lang === "ar" ? "rtl" : "ltr");
+      const label = document.getElementById("langLabel");
+      if (label) label.textContent = lang === "en" ? "AR" : "EN";
+
+      document.querySelectorAll("[data-i18n]").forEach(el => {
+        const key = el.getAttribute("data-i18n");
+        if (translations[lang] && translations[lang][key]) {
+          el.textContent = translations[lang][key];
+        }
+      });
+      lucide.createIcons();
+    }
+
+    function toggleLanguage() {
+      applyLanguage(currentLang === "en" ? "ar" : "en");
+    }
+
+    function loginWithGoogle(name = "Ahmed Yasser", email = "ahmed.yasser@shifter.org") {
+      const user = {
+        name: name,
+        email: email,
+        provider: "google",
+        role: "Lead Agronomist & Farmer",
+        loggedInAt: new Date().toISOString()
+      };
+      localStorage.setItem("shifter_user", JSON.stringify(user));
+      showToast(translations[currentLang].authGoogleToastSuccess);
+      setTimeout(() => {
+        window.location.href = destinationUrl;
+      }, 700);
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+      applyTheme(currentTheme);
+      applyLanguage(currentLang);
+
+      document.getElementById("themeToggle")?.addEventListener("click", toggleTheme);
+      document.getElementById("langToggle")?.addEventListener("click", toggleLanguage);
+
+      document.getElementById("btnGooglePrimaryAccount")?.addEventListener("click", () => {
+        loginWithGoogle("Ahmed Yasser", "ahmed.yasser@shifter.org");
+      });
+
+      document.getElementById("btnGoogleSignInAction")?.addEventListener("click", () => {
+        loginWithGoogle("Ahmed Yasser", "ahmed.yasser@shifter.org");
+      });
+
+      document.getElementById("btnGoogleOtherAccount")?.addEventListener("click", () => {
+        const promptMsg = currentLang === "ar" ? "أدخل بريد Google الإلكتروني:" : "Enter your Google Email:";
+        const customEmail = prompt(promptMsg, "farmer.egypt@gmail.com");
+        if (customEmail && customEmail.includes("@")) {
+          const userPart = customEmail.split("@")[0].replace(/[._]/g, " ");
+          const customName = userPart.charAt(0).toUpperCase() + userPart.slice(1);
+          loginWithGoogle(customName, customEmail);
+        }
+      });
+
+      lucide.createIcons();
+    });
+  </script>
+</body>
+</html>

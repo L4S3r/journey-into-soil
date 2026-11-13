@@ -390,14 +390,9 @@
           <img src="Gemini_Generated_Image_42gudn42gudn42gu.svg" alt="The Shifters Logo" class="h-14 sm:h-16 w-auto object-contain group-hover:scale-105 transition-transform duration-300 select-none" />
         </div>
         <div class="flex flex-col justify-center">
-          <div class="flex items-center gap-2">
-            <h1 class="font-extrabold text-xl sm:text-2xl tracking-tight text-[var(--astryx-color-text-primary)]" data-i18n="brandTitle">
-              The Shifter
-            </h1>
-            <span class="astryx-badge astryx-badge--matcha text-[10px] font-mono py-0.5 px-2">
-              NASA 2026
-            </span>
-          </div>
+          <h1 class="font-extrabold text-xl sm:text-2xl tracking-tight text-[var(--astryx-color-text-primary)]" data-i18n="brandTitle">
+            The Shifter
+          </h1>
           <span class="text-xs sm:text-sm text-[var(--astryx-color-primary)] font-bold tracking-wide" data-i18n="brandSubtitle">
             Journey into the Soil
           </span>
@@ -411,7 +406,6 @@
         <a href="#how-it-works" class="px-3 py-2 rounded-xl hover:text-[var(--astryx-color-text-primary)] hover:bg-[var(--astryx-color-surface-subtle)] transition" data-i18n="navHow">How It Works</a>
         <a href="#crop-talk" class="px-3 py-2 rounded-xl hover:text-[var(--astryx-color-text-primary)] hover:bg-[var(--astryx-color-surface-subtle)] transition" data-i18n="navCropTalk">Crop Talk AI</a>
         <a href="#map-section" class="px-3 py-2 rounded-xl hover:text-[var(--astryx-color-text-primary)] hover:bg-[var(--astryx-color-surface-subtle)] transition" data-i18n="navMap">Egypt Map</a>
-        <a href="#demo-sites" class="px-3 py-2 rounded-xl hover:text-[var(--astryx-color-text-primary)] hover:bg-[var(--astryx-color-surface-subtle)] transition" data-i18n="navDemoSites">Demo Sites</a>
       </nav>
 
       <!-- Header Actions: Language, Theme, & Account Auth Button -->
@@ -457,12 +451,6 @@
       <!-- Hero Main Content (Directly on Full Screen, No Inner Bounding Box) -->
       <div class="relative z-10 w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 pb-8 sm:pt-16 sm:pb-12 text-center flex-1 flex flex-col justify-center items-center">
         
-        <!-- Eyebrow Pill -->
-        <div class="inline-flex items-center gap-2 astryx-badge astryx-badge--matcha py-1.5 px-4 mb-6 shadow-md backdrop-blur-md bg-[var(--astryx-color-surface-overlay)]">
-          <span class="w-2 h-2 rounded-full bg-[var(--astryx-color-primary)] animate-ping"></span>
-          <span data-i18n="heroBadge">Astryx Meta Design • NASA Earth Observations</span>
-        </div>
-
         <!-- Grand Unbounded Full-Screen Headline -->
         <h1 class="text-3xl sm:text-5xl lg:text-7xl font-black tracking-tight leading-[1.15] text-[var(--astryx-color-text-primary)] max-w-5xl mx-auto drop-shadow-sm" data-i18n="heroTitle">
           Where Space Data Meets the Root Zone: <br>
@@ -647,24 +635,30 @@
           </p>
         </div>
 
-        <!-- 4-Step Cards Pipeline matching how does it work.png -->
+        <!-- 3-Step Cards Pipeline -->
         <div class="relative mt-8">
           <!-- Connecting dashed line across desktop -->
           <div class="hidden lg:block absolute top-10 inset-x-14 h-0.5 border-t-2 border-dashed border-[var(--astryx-color-border)] z-0" aria-hidden="true"></div>
 
-          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 relative z-10">
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6 relative z-10">
             
             <!-- Step 1 -->
-            <div class="group astryx-card astryx-card--interactive p-6 sm:p-7 flex flex-col items-start">
-              <div class="w-14 h-14 rounded-2xl bg-[var(--astryx-color-surface-subtle)] text-[var(--astryx-color-text-primary)] border-2 border-[var(--astryx-color-border)] flex items-center justify-center font-black text-xl mb-6 shadow-md group-hover:bg-[var(--astryx-color-primary)] group-hover:text-[var(--astryx-color-primary-text)] group-hover:border-transparent transition-all">
-                1
+            <div class="group astryx-card astryx-card--interactive p-6 sm:p-7 flex flex-col items-start relative overflow-hidden">
+              <!-- Background Image with Overlay -->
+              <div class="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-105" style="background-image: url('data_collection.jpeg');"></div>
+              <div class="absolute inset-0 bg-gradient-to-t from-black/95 via-black/65 to-black/15"></div>
+
+              <div class="relative z-10 flex flex-col items-start h-full">
+                <div class="w-14 h-14 rounded-2xl bg-white/90 text-stone-900 border-2 border-white/50 dark:bg-stone-900/90 dark:text-white dark:border-white/10 flex items-center justify-center font-black text-xl mb-6 shadow-md group-hover:bg-[var(--astryx-color-primary)] group-hover:text-[var(--astryx-color-primary-text)] group-hover:border-transparent transition-all backdrop-blur-md">
+                  1
+                </div>
+                <h3 class="text-xl font-bold text-white mb-3 drop-shadow-md" data-i18n="howStep1Title">
+                  input the land data
+                </h3>
+                <p class="text-sm text-stone-200 leading-relaxed drop-shadow" data-i18n="howStep1Desc">
+                  Input field location, water salinity, irrigation method, and recent crop rotation history
+                </p>
               </div>
-              <h3 class="text-xl font-bold text-[var(--astryx-color-text-primary)] mb-3" data-i18n="howStep1Title">
-                Collect Field Data
-              </h3>
-              <p class="text-sm text-[var(--astryx-color-text-secondary)] leading-relaxed" data-i18n="howStep1Desc">
-                Input field location, soil texture by feel, water salinity, irrigation method, and recent crop rotation history.
-              </p>
             </div>
 
             <!-- Step 2 -->
@@ -673,10 +667,10 @@
                 2
               </div>
               <h3 class="text-xl font-bold text-[var(--astryx-color-text-primary)] mb-3" data-i18n="howStep2Title">
-                Integrate NASA Observations
+                Simulate Soil Physics
               </h3>
               <p class="text-sm text-[var(--astryx-color-text-secondary)] leading-relaxed" data-i18n="howStep2Desc">
-                Aggregate daily solar radiation, ambient temperature, precipitation, and soil moisture from NASA POWER and Earth science models.
+                Compute FAO-56 reference evapotranspiration, multi-layer water infiltration, drainage, and root salt accumulation dynamics.
               </p>
             </div>
 
@@ -686,22 +680,9 @@
                 3
               </div>
               <h3 class="text-xl font-bold text-[var(--astryx-color-text-primary)] mb-3" data-i18n="howStep3Title">
-                Simulate Soil Physics
-              </h3>
-              <p class="text-sm text-[var(--astryx-color-text-secondary)] leading-relaxed" data-i18n="howStep3Desc">
-                Compute FAO-56 reference evapotranspiration, multi-layer water infiltration, drainage, and root salt accumulation dynamics.
-              </p>
-            </div>
-
-            <!-- Step 4 -->
-            <div class="group astryx-card astryx-card--interactive p-6 sm:p-7 flex flex-col items-start">
-              <div class="w-14 h-14 rounded-2xl bg-[var(--astryx-color-surface-subtle)] text-[var(--astryx-color-text-primary)] border-2 border-[var(--astryx-color-border)] flex items-center justify-center font-black text-xl mb-6 shadow-md group-hover:bg-[var(--astryx-color-primary)] group-hover:text-[var(--astryx-color-primary-text)] group-hover:border-transparent transition-all">
-                4
-              </div>
-              <h3 class="text-xl font-bold text-[var(--astryx-color-text-primary)] mb-3" data-i18n="howStep4Title">
                 Deliver Recommendations
               </h3>
-              <p class="text-sm text-[var(--astryx-color-text-secondary)] leading-relaxed" data-i18n="howStep4Desc">
+              <p class="text-sm text-[var(--astryx-color-text-secondary)] leading-relaxed" data-i18n="howStep3Desc">
                 Generate ranked crop rotation strategies matching farmer priorities for water saving, soil health, and risk mitigation.
               </p>
             </div>
@@ -902,92 +883,6 @@
       </div>
     </section>
 
-    <!-- ==========================================================================
-         8. DEMO SITES QUICK LAUNCHER (ASTRYX PRE-BUILT PACKS)
-         ========================================================================== -->
-    <section id="demo-sites" class="py-16 sm:py-24 border-t border-[var(--astryx-color-border-subtle)]">
-      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        
-        <div class="text-center max-w-3xl mx-auto mb-14">
-          <div class="inline-flex items-center gap-2 astryx-badge astryx-badge--matcha py-1 px-3 mb-4">
-            <i data-lucide="compass" class="w-3.5 h-3.5"></i>
-            <span data-i18n="demoEyebrow">Offline-Ready Simulation Packs</span>
-          </div>
-          <h2 class="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-[var(--astryx-color-text-primary)] mb-4" data-i18n="demoTitle">
-            Experience Egyptian Demo Sites
-          </h2>
-          <p class="text-base sm:text-lg text-[var(--astryx-color-text-secondary)] leading-relaxed" data-i18n="demoLead">
-            Test real-world agricultural conditions with verified historical climate observations and calibrated soil hydrology.
-          </p>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-          
-          <!-- Demo Site 1: Kafr El Sheikh -->
-          <div class="astryx-card astryx-card--interactive p-6 flex flex-col justify-between">
-            <div>
-              <div class="flex items-center justify-between mb-3">
-                <span class="astryx-badge astryx-badge--matcha text-[11px]" data-i18n="demoSite1Tag">Nile Delta Clay</span>
-                <span class="text-xs font-mono text-[var(--astryx-color-text-tertiary)]">31.1° N, 30.9° E</span>
-              </div>
-              <h3 class="text-xl font-bold text-[var(--astryx-color-text-primary)] mb-2" data-i18n="demoSite1Title">
-                Kafr El Sheikh
-              </h3>
-              <p class="text-sm text-[var(--astryx-color-text-secondary)] leading-relaxed mb-4" data-i18n="demoSite1Desc">
-                Heavy alluvial clay with high water table and salinity risk. Simulates wheat-rice-clover rotations and drainage salt flushing.
-              </p>
-            </div>
-            <a href="/index.html?site=kafr_el_sheikh" class="demo-site-launch-btn astryx-btn astryx-btn--secondary w-full py-2.5 text-xs font-bold justify-between">
-              <span data-i18n="demoLoadBtn">Simulate This Field</span>
-              <i data-lucide="arrow-right" class="w-4 h-4 rtl:rotate-180"></i>
-            </a>
-          </div>
-
-          <!-- Demo Site 2: Nubaria -->
-          <div class="astryx-card astryx-card--interactive p-6 flex flex-col justify-between">
-            <div>
-              <div class="flex items-center justify-between mb-3">
-                <span class="astryx-badge astryx-badge--accent text-[11px]" data-i18n="demoSite2Tag">Reclaimed Sands</span>
-                <span class="text-xs font-mono text-[var(--astryx-color-text-tertiary)]">30.7° N, 30.1° E</span>
-              </div>
-              <h3 class="text-xl font-bold text-[var(--astryx-color-text-primary)] mb-2" data-i18n="demoSite2Title">
-                Nubaria (Beheira)
-              </h3>
-              <p class="text-sm text-[var(--astryx-color-text-secondary)] leading-relaxed mb-4" data-i18n="demoSite2Desc">
-                Sandy reclaimed soils under modern drip irrigation. Focuses on high infiltration, rapid water drainage, and legume enrichment.
-              </p>
-            </div>
-            <a href="/index.html?site=nubaria" class="demo-site-launch-btn astryx-btn astryx-btn--secondary w-full py-2.5 text-xs font-bold justify-between">
-              <span data-i18n="demoLoadBtn">Simulate This Field</span>
-              <i data-lucide="arrow-right" class="w-4 h-4 rtl:rotate-180"></i>
-            </a>
-          </div>
-
-          <!-- Demo Site 3: Fayoum -->
-          <div class="astryx-card astryx-card--interactive p-6 flex flex-col justify-between">
-            <div>
-              <div class="flex items-center justify-between mb-3">
-                <span class="astryx-badge astryx-badge--matcha text-[11px]" data-i18n="demoSite3Tag">Depression Oasis</span>
-                <span class="text-xs font-mono text-[var(--astryx-color-text-tertiary)]">29.3° N, 30.8° E</span>
-              </div>
-              <h3 class="text-xl font-bold text-[var(--astryx-color-text-primary)] mb-2" data-i18n="demoSite3Title">
-                Fayoum Oasis
-              </h3>
-              <p class="text-sm text-[var(--astryx-color-text-secondary)] leading-relaxed mb-4" data-i18n="demoSite3Desc">
-                Enclosed basin facing severe drainage salinity and canal water deficits. Evaluates salt-tolerant rotations and moisture buffers.
-              </p>
-            </div>
-            <a href="/index.html?site=fayoum" class="demo-site-launch-btn astryx-btn astryx-btn--secondary w-full py-2.5 text-xs font-bold justify-between">
-              <span data-i18n="demoLoadBtn">Simulate This Field</span>
-              <i data-lucide="arrow-right" class="w-4 h-4 rtl:rotate-180"></i>
-            </a>
-          </div>
-
-        </div>
-
-      </div>
-    </section>
-
   </main>
 
   <!-- ==========================================================================
@@ -1019,102 +914,80 @@
   <!-- ==========================================================================
        ASTRYX ACCOUNT MODAL (Matches Screenshot 2026-11-13 171035.png)
        ========================================================================== -->
-  <div id="authModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/65 backdrop-blur-md transition-all duration-300 opacity-0 pointer-events-none" aria-modal="true" role="dialog">
-    <div id="authModalCard" class="relative w-full max-w-[520px] bg-white dark:bg-[#151b17] border border-neutral-200 dark:border-white/10 rounded-[28px] shadow-2xl p-7 sm:p-9 transform scale-95 transition-all duration-300 text-neutral-900 dark:text-white">
+  <div id="authModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-cover bg-center transition-all duration-300 opacity-0 pointer-events-none" style="background-image: url('account_bg.jpg');" aria-modal="true" role="dialog">
+    <!-- Backdrop Scrim for contrast -->
+    <div class="absolute inset-0 bg-black/45 backdrop-blur-[2px]"></div>
+
+    <div id="authModalCard" class="relative z-10 w-full max-w-[480px] bg-white/95 dark:bg-[#151b17]/95 border border-white/60 dark:border-white/10 rounded-[28px] shadow-2xl p-7 sm:p-9 transform scale-95 transition-all duration-300 text-neutral-900 dark:text-white backdrop-blur-xl">
       
       <!-- Close Button (✕) -->
       <button id="authModalClose" type="button" aria-label="Close" class="absolute top-5 end-5 p-2 rounded-full text-neutral-400 hover:text-neutral-700 dark:hover:text-white hover:bg-neutral-100 dark:hover:bg-white/10 transition">
         <i data-lucide="x" class="w-5 h-5"></i>
       </button>
 
-      <!-- Modal Header: Icon & Brand -->
+      <!-- Modal Header: Enlarged Logo & Brand -->
       <div class="flex flex-col items-center text-center">
-        <!-- Logo Emblem -->
-        <div class="w-14 h-14 rounded-2xl bg-[#00a76f]/15 border border-[#00a76f]/30 flex items-center justify-center text-[#00a76f] mb-3 shadow-inner">
-          <img src="Gemini_Generated_Image_42gudn42gudn42gu.svg" alt="The Shifter Logo" class="h-9 w-9 object-contain" />
+        <!-- Enlarged Logo Emblem -->
+        <div class="w-28 h-28 sm:w-32 sm:h-32 mb-3 flex items-center justify-center">
+          <img src="the_shifters_logo_transparent.png" alt="The Shifters Logo" class="w-full h-full object-contain drop-shadow-xl" />
         </div>
+        
         <div class="text-xs font-bold uppercase tracking-wider text-[#00a76f] font-mono mb-1" data-i18n="brandSubtitle">
           Journey into the Soil
         </div>
         
         <!-- Heading & Subtitle -->
-        <h3 id="authModalTitle" class="text-2xl sm:text-3xl font-extrabold tracking-tight text-neutral-900 dark:text-white" data-i18n="authModalSignInTitle">
-          Sign in to your Account
+        <h3 id="authModalTitle" class="text-2xl sm:text-3xl font-extrabold tracking-tight text-neutral-900 dark:text-white" data-i18n="authModalGoogleTitle">
+          Sign in with Google
         </h3>
-        <p id="authModalSubtitle" class="text-xs sm:text-sm text-neutral-500 dark:text-neutral-400 mt-2 max-w-sm leading-relaxed" data-i18n="authModalSubtitleSignIn">
-          Welcome back! Please enter your details.
+        <p id="authModalSubtitle" class="text-xs sm:text-sm text-neutral-600 dark:text-neutral-300 mt-2 max-w-sm leading-relaxed" data-i18n="authModalGoogleSubtitle">
+          Sign in with your Google account to unlock NASA Earth data and precision soil simulation.
         </p>
       </div>
 
-      <!-- Form -->
-      <form id="authForm" class="mt-6 space-y-4">
+      <!-- Google-Only Account Options -->
+      <div class="mt-6 space-y-3.5">
         
-        <!-- Full Name (Only visible in sign up mode) -->
-        <div id="authNameField" class="hidden">
-          <label class="block text-xs font-bold text-neutral-700 dark:text-neutral-300 mb-1.5" data-i18n="authLabelFullName">
-            Full Name
-          </label>
-          <div class="relative">
-            <input id="authNameInput" type="text" placeholder="Ahmed Yasser" class="w-full px-4 py-3 rounded-xl border border-neutral-300 dark:border-white/15 bg-neutral-50 dark:bg-white/5 text-neutral-900 dark:text-white placeholder-neutral-400 focus:border-[#00a76f] focus:ring-2 focus:ring-[#00a76f]/20 outline-none transition text-sm">
+        <!-- Quick Select Google Account Card -->
+        <button type="button" id="btnGooglePrimaryAccount" class="w-full p-3.5 rounded-2xl border border-neutral-200 dark:border-white/15 bg-neutral-50/80 dark:bg-white/5 hover:bg-neutral-100 dark:hover:bg-white/10 transition flex items-center gap-3.5 text-start group">
+          <div class="relative w-11 h-11 rounded-full bg-gradient-to-tr from-[#1b4332] to-[#00a76f] flex items-center justify-center text-white font-bold text-base shadow flex-shrink-0">
+            AY
+            <!-- Google G badge on avatar -->
+            <div class="absolute -bottom-1 -end-1 w-5 h-5 rounded-full bg-white dark:bg-neutral-800 shadow flex items-center justify-center p-0.5">
+              <svg class="w-3.5 h-3.5" viewBox="0 0 24 24">
+                <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
+                <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
+              </svg>
+            </div>
           </div>
-        </div>
-
-        <!-- Email address -->
-        <div>
-          <label class="block text-xs font-bold text-neutral-700 dark:text-neutral-300 mb-1.5" data-i18n="authLabelEmail">
-            Email address
-          </label>
-          <div class="relative">
-            <input id="authEmailInput" type="email" required placeholder="farmer@delta.eg" value="farmer@shifter.org" class="w-full px-4 py-3 rounded-xl border border-neutral-300 dark:border-white/15 bg-neutral-50 dark:bg-white/5 text-neutral-900 dark:text-white placeholder-neutral-400 focus:border-[#00a76f] focus:ring-2 focus:ring-[#00a76f]/20 outline-none transition text-sm">
+          <div class="flex-1 min-w-0">
+            <div class="text-sm font-bold text-neutral-900 dark:text-white truncate">Ahmed Yasser</div>
+            <div class="text-xs text-neutral-500 dark:text-neutral-400 truncate">ahmed.yasser@shifter.org</div>
           </div>
-        </div>
-
-        <!-- Password with Eye Toggle -->
-        <div>
-          <label class="block text-xs font-bold text-neutral-700 dark:text-neutral-300 mb-1.5" data-i18n="authLabelPassword">
-            Password
-          </label>
-          <div class="relative">
-            <input id="authPasswordInput" type="password" required placeholder="••••••••" value="NASA2026Soil!" class="w-full px-4 py-3 pe-11 rounded-xl border border-neutral-300 dark:border-white/15 bg-neutral-50 dark:bg-white/5 text-neutral-900 dark:text-white placeholder-neutral-400 focus:border-[#00a76f] focus:ring-2 focus:ring-[#00a76f]/20 outline-none transition text-sm">
-            <button type="button" id="togglePasswordBtn" aria-label="Toggle password visibility" class="absolute end-3.5 top-1/2 -translate-y-1/2 text-neutral-400 hover:text-neutral-600 dark:hover:text-neutral-200 p-1">
-              <i id="passwordEyeIcon" data-lucide="eye" class="w-4 h-4"></i>
-            </button>
-          </div>
-        </div>
-
-        <!-- Options Row: Remember Me & Forgot Password -->
-        <div class="flex items-center justify-between text-xs pt-0.5">
-          <label class="flex items-center gap-2 cursor-pointer text-neutral-600 dark:text-neutral-400 select-none">
-            <input id="authRememberCheckbox" type="checkbox" checked class="w-4 h-4 rounded border-neutral-300 text-[#00a76f] focus:ring-[#00a76f]">
-            <span data-i18n="authRememberMe">Remember me</span>
-          </label>
-          <button type="button" id="btnForgotPwd" class="font-semibold text-[#00a76f] hover:underline" data-i18n="authForgotPassword">
-            Forgot password?
-          </button>
-        </div>
-
-        <!-- Primary Emerald Submit Button (#00a76f) -->
-        <button id="authSubmitBtn" type="submit" class="w-full mt-2 py-3.5 px-6 rounded-xl font-bold text-sm sm:text-base text-white shadow-lg transition flex items-center justify-center gap-2 hover:brightness-105 active:scale-[0.99]" style="background-color: #00a76f; box-shadow: 0 10px 24px -4px rgba(0, 167, 111, 0.4);">
-          <span id="authSubmitBtnText" data-i18n="authSubmitSignIn">Login</span>
-          <i data-lucide="arrow-right" class="w-4 h-4 rtl:rotate-180"></i>
+          <i data-lucide="chevron-right" class="w-5 h-5 text-neutral-400 group-hover:text-[#00a76f] transition rtl:rotate-180"></i>
         </button>
 
-        <!-- Quick 1-Click Guest Access Option for instant testing -->
-        <div class="pt-1">
-          <button type="button" id="btnQuickDemoAuth" class="w-full py-2.5 px-4 rounded-xl text-xs font-semibold text-neutral-700 dark:text-neutral-300 bg-neutral-100 dark:bg-white/5 hover:bg-neutral-200 dark:hover:bg-white/10 transition border border-neutral-200 dark:border-white/10 flex items-center justify-center gap-2">
-            <i data-lucide="sparkles" class="w-3.5 h-3.5 text-amber-500"></i>
-            <span data-i18n="authGuestAccess">One-Click Demo Access (Farmer Guest)</span>
-          </button>
-        </div>
-
-      </form>
-
-      <!-- Footer: Switch Between Sign In & Sign Up -->
-      <div class="mt-6 pt-5 border-t border-neutral-200 dark:border-white/10 text-center text-xs text-neutral-500 dark:text-neutral-400">
-        <span id="authSwitchPrompt" data-i18n="authNoAccount">Don't have an account?</span>
-        <button type="button" id="authModeToggle" class="font-bold text-[#00a76f] hover:underline ms-1" data-i18n="authActionSignUp">
-          Sign up
+        <!-- Primary Emerald Google Sign-in Button (#00a76f matching Screenshot) -->
+        <button id="btnGoogleSignInAction" type="button" class="w-full py-3.5 px-6 rounded-xl font-bold text-sm sm:text-base text-white shadow-lg transition flex items-center justify-center gap-3 hover:brightness-105 active:scale-[0.99]" style="background-color: #00a76f; box-shadow: 0 10px 24px -4px rgba(0, 167, 111, 0.4);">
+          <div class="w-6 h-6 rounded-full bg-white flex items-center justify-center p-1 shadow-sm">
+            <svg class="w-4 h-4" viewBox="0 0 24 24">
+              <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+              <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+              <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
+              <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
+            </svg>
+          </div>
+          <span data-i18n="authBtnGoogleOnly">Sign in with Google Account</span>
         </button>
+
+        <!-- Secondary "Use another Google account" Button -->
+        <button type="button" id="btnGoogleOtherAccount" class="w-full py-3 px-4 rounded-xl text-xs sm:text-sm font-semibold text-neutral-700 dark:text-neutral-200 bg-neutral-100 dark:bg-white/5 hover:bg-neutral-200 dark:hover:bg-white/10 transition border border-neutral-200 dark:border-white/10 flex items-center justify-center gap-2">
+          <i data-lucide="user-plus" class="w-4 h-4 text-[#00a76f]"></i>
+          <span data-i18n="authUseAnotherGoogle">Use another Google account</span>
+        </button>
+
       </div>
 
     </div>
@@ -1140,11 +1013,9 @@
         navHow: "How It Works",
         navCropTalk: "Crop Talk AI",
         navMap: "Egypt Map",
-        navDemoSites: "Demo Sites",
-        btnHeaderAccount: "Sign In / Register",
+        btnHeaderAccount: "Sign in with Google",
         btnHeaderSignOut: "Sign Out",
         btnLaunchSimulator: "Launch Simulator",
-        heroBadge: "Astryx Meta Design • NASA Earth Observations",
         heroTitle: 'Where Space Data Meets the Root Zone: <br><span class="bg-gradient-to-r from-[#1b4332] via-[#2d6a4f] to-[#d97706] dark:from-[#52b788] dark:via-[#74c69d] dark:to-[#f59e0b] bg-clip-text text-transparent">Precision Soil Intelligence</span>',
         heroSubtitle: "A physics-based agronomic advisory system empowering Egyptian farmers with NASA Earth data, multi-layer soil hydrology, and salt-resilient crop rotation planning.",
         btnTryCropTalkLaunch: "try crop talk ai and launch simulation",
@@ -1176,14 +1047,12 @@
         howEyebrow: "HOW IT WORKS",
         howTitle: "How does it work?",
         howLead: "From field sample inputs to resilient rotation plans through physics-based simulation.",
-        howStep1Title: "Collect Field Data",
-        howStep1Desc: "Input field location, soil texture by feel, water salinity, irrigation method, and recent crop rotation history.",
-        howStep2Title: "Integrate NASA Observations",
-        howStep2Desc: "Aggregate daily solar radiation, ambient temperature, precipitation, and soil moisture from NASA POWER and Earth science models.",
-        howStep3Title: "Simulate Soil Physics",
-        howStep3Desc: "Compute FAO-56 reference evapotranspiration, multi-layer water infiltration, drainage, and root salt accumulation dynamics.",
-        howStep4Title: "Deliver Recommendations",
-        howStep4Desc: "Generate ranked crop rotation strategies matching farmer priorities for water saving, soil health, and risk mitigation.",
+        howStep1Title: "input the land data",
+        howStep1Desc: "Input field location, water salinity, irrigation method, and recent crop rotation history",
+        howStep2Title: "Simulate Soil Physics",
+        howStep2Desc: "Compute FAO-56 reference evapotranspiration, multi-layer water infiltration, drainage, and root salt accumulation dynamics.",
+        howStep3Title: "Deliver Recommendations",
+        howStep3Desc: "Generate ranked crop rotation strategies matching farmer priorities for water saving, soil health, and risk mitigation.",
         cropTalkEyebrow: "Interactive Advisory",
         cropTalkTitle: "Crop Talk: Plant a Question, Grow an Answer",
         cropTalkP1: "Farming decisions inevitably raise vital questions: Why was a specific legume recommended after wheat? How will canal water salinity affect next season's tomato roots? What does reference evapotranspiration mean for your irrigation scheduling? Crop Talk is our dedicated agronomic companion, ready around the clock to converse directly with farmers and extension workers whenever they want to understand a recommendation or explore field possibilities.",
@@ -1202,38 +1071,30 @@
         zoneCanal: "Canal & Sinai",
         mapDataStation: "NASA Climate & Soil Data Node",
         mapTagsLabel: "Calibrated Governorates & Agricultural Zones",
-        demoEyebrow: "Offline-Ready Simulation Packs",
-        demoTitle: "Experience Egyptian Demo Sites",
-        demoLead: "Test real-world agricultural conditions with verified historical climate observations and calibrated soil hydrology.",
-        demoSite1Tag: "Nile Delta Clay",
-        demoSite1Title: "Kafr El Sheikh",
-        demoSite1Desc: "Heavy alluvial clay with high water table and salinity risk. Simulates wheat-rice-clover rotations and drainage salt flushing.",
-        demoSite2Tag: "Reclaimed Sands",
-        demoSite2Title: "Nubaria (Beheira)",
-        demoSite2Desc: "Sandy reclaimed soils under modern drip irrigation. Focuses on high infiltration, rapid water drainage, and legume enrichment.",
-        demoSite3Tag: "Depression Oasis",
-        demoSite3Title: "Fayoum Oasis",
-        demoSite3Desc: "Enclosed basin facing severe drainage salinity and canal water deficits. Evaluates salt-tolerant rotations and moisture buffers.",
-        demoLoadBtn: "Simulate This Field",
         footerDisclaimer: "Developed for NASA Space Apps Challenge 2026 (Field Shift: Adapting Farms with NASA Data). Advisory decision-support system only. Does not replace local soil laboratory testing or agronomic expert judgment. No fertilizer rates or yield guarantees provided.",
-        authModalSignInTitle: "Sign in to your Account",
-        authModalSignUpTitle: "Create your Account",
-        authModalSubtitleSignIn: "Welcome back! Please enter your details.",
-        authModalSubtitleSignUp: "Join The Shifter to unlock NASA Earth data and precision soil simulation.",
+        authModalSignInTitle: "Sign in with Google",
+        authModalSignUpTitle: "Sign in with Google",
+        authModalGoogleTitle: "Sign in with Google",
+        authModalSubtitleSignIn: "Sign in with your Google account to unlock NASA Earth data and precision soil simulation.",
+        authModalSubtitleSignUp: "Sign in with your Google account to unlock NASA Earth data and precision soil simulation.",
+        authModalGoogleSubtitle: "Sign in with your Google account to unlock NASA Earth data and precision soil simulation.",
+        authBtnGoogleOnly: "Sign in with Google Account",
+        authUseAnotherGoogle: "Use another Google account",
+        authGoogleToastSuccess: "Authenticated with Google as Ahmed Yasser. Launching Crop Talk AI and simulation...",
         authLabelFullName: "Full Name",
         authLabelEmail: "Email address",
         authLabelPassword: "Password",
         authRememberMe: "Remember me",
         authForgotPassword: "Forgot password?",
-        authSubmitSignIn: "Login",
-        authSubmitSignUp: "Create Account",
-        authGuestAccess: "One-Click Demo Access (Farmer Guest)",
-        authNoAccount: "Don't have an account?",
-        authHaveAccount: "Already have an account?",
-        authActionSignUp: "Sign up",
-        authActionSignIn: "Sign in",
-        authToastRequired: "Please sign in or create an account to launch the simulation.",
-        authToastWelcome: "Welcome back! Launching Crop Talk AI and simulation...",
+        authSubmitSignIn: "Sign in with Google",
+        authSubmitSignUp: "Sign in with Google",
+        authGuestAccess: "Continue as Ahmed Yasser (Google)",
+        authNoAccount: "Need help?",
+        authHaveAccount: "Signed in with Google",
+        authActionSignUp: "Google Support",
+        authActionSignIn: "Google Support",
+        authToastRequired: "Please sign in with your Google account to launch the simulation.",
+        authToastWelcome: "Welcome! Authenticated via Google. Launching simulation...",
         authToastSignedOut: "You have signed out."
       },
       ar: {
@@ -1244,11 +1105,9 @@
         navHow: "آلية العمل",
         navCropTalk: "حديث المحصول",
         navMap: "خريطة مصر",
-        navDemoSites: "حقول العرض",
-        btnHeaderAccount: "تسجيل الدخول / حساب جديد",
+        btnHeaderAccount: "تسجيل الدخول عبر Google",
         btnHeaderSignOut: "تسجيل الخروج",
         btnLaunchSimulator: "تشغيل المحاكي",
-        heroBadge: "نظام تصميم أستريكس • أرصاد وكالة ناسا للأرض",
         heroTitle: 'حيث تلتقي بيانات الفضاء بمنطقة الجذور: <br><span class="bg-gradient-to-r from-[#1b4332] via-[#2d6a4f] to-[#d97706] dark:from-[#52b788] dark:via-[#74c69d] dark:to-[#f59e0b] bg-clip-text text-transparent">ذكاء التربة الدقيق</span>',
         heroSubtitle: "نظام إرشادي قائم على فيزياء التربة يُمكّن المزارع المصري من استثمار أرصاد ناسا الفضائية، وهيدرولوجيا الطبقات، والتخطيط لدورات زراعية صامدة للملوحة.",
         btnTryCropTalkLaunch: "تجربة حديث المحصول وتشغيل المحاكي",
@@ -1280,14 +1139,12 @@
         howEyebrow: "آلية العمل",
         howTitle: "كيف يعمل النظام؟",
         howLead: "من عينات وبيانات الحقل إلى خطط دورات زراعية مرنة عبر المحاكاة الفيزيائية.",
-        howStep1Title: "جمع بيانات الحقل",
-        howStep1Desc: "إدخال موقع الحقل، وقوام التربة بالملمس، وملوحة مياه الري، ونوع نظام الري، وتاريخ المحاصيل في المواسم السابقة.",
-        howStep2Title: "دمج أرصاد وكالة ناسا",
-        howStep2Desc: "تجميع الإشعاع الشمسي اليومي، ودرجات الحرارة، ومعدلات الأمطار، ورطوبة التربة من منصة NASA POWER والنماذج الفضائية.",
-        howStep3Title: "محاكاة فيزياء التربة",
-        howStep3Desc: "حساب التبخر-نتح المرجعي (FAO-56)، وحركة رشح المياه في الطبقات، والصرف، وتراكم الأملاح حول الجذور.",
-        howStep4Title: "تقديم التوصيات الاسترشادية",
-        howStep4Desc: "إنشاء استراتيجيات تتابع محصولي مرتبة وفق أولويات المزارع في توفير المياه، وصحة التربة، والحد من المخاطر.",
+        howStep1Title: "إدخال بيانات الأرض",
+        howStep1Desc: "إدخال موقع الحقل، وملوحة مياه الري، ونوع نظام الري، وتاريخ المحاصيل في المواسم السابقة.",
+        howStep2Title: "محاكاة فيزياء التربة",
+        howStep2Desc: "حساب التبخر-نتح المرجعي (FAO-56)، وحركة رشح المياه في الطبقات، والصرف، وتراكم الأملاح حول الجذور.",
+        howStep3Title: "تقديم التوصيات الاسترشادية",
+        howStep3Desc: "إنشاء استراتيجيات تتابع محصولي مرتبة وفق أولويات المزارع في توفير المياه، وصحة التربة، والحد من المخاطر.",
         cropTalkEyebrow: "الإرشاد التفاعلي",
         cropTalkTitle: "حديث المحصول: ازرع سؤالاً، تحصد إجابة",
         cropTalkP1: "تثير القرارات الزراعية تساؤلات حيوية لا حصر لها: لماذا رُشح محصول بقولي بعد القمح؟ كيف ستؤثر ملوحة مياه الترعة على جذور الطماطم في الموسم القادم؟ وماذا يعني التبخر-نتح لجدول الري الخاص بك؟ 'حديث المحصول' هو رفيقك الزراعي المخصص، المتواجد دائماً للتحاور المباشر مع المزارعين والمرشدين الزراعيين لفهم مخرجات التوصيات واستكشاف خيارات الحقل.",
@@ -1306,38 +1163,30 @@
         zoneCanal: "القناة وسيناء",
         mapDataStation: "محطة بيانات المناخ والتربة (ناسا)",
         mapTagsLabel: "المحافظات والمناطق الزراعية المشمولة بالمعايرة",
-        demoEyebrow: "حزم المحاكاة الجاهزة للعمل بدون إنترنت",
-        demoTitle: "اختبر حقول العرض الزراعية المصرية",
-        demoLead: "جرّب ظروفاً زراعية واقعية تم اختبارها ببيانات مناخية تاريخية وهيدرولوجيا تربة دقيقة.",
-        demoSite1Tag: "طين الدلتا الثقيل",
-        demoSite1Title: "كفر الشيخ",
-        demoSite1Desc: "تربة طينية رسوبية ثقيلة مع منسوب مائي مرتفع ومخاطر ملوحة. تحاكي دورات القمح والأرز والبرسيم ورشح الأملاح.",
-        demoSite2Tag: "أراضي رملية مستصلحة",
-        demoSite2Title: "النوبارية (البحيرة)",
-        demoSite2Desc: "أراضٍ رملية حديثة الاستصلاح تعتمد على الري بالتنقيط. تركز على سرعة الرشح وتثبيت النيتروجين عبر البقوليات.",
-        demoSite3Tag: "منخفض الواحات المغلق",
-        demoSite3Title: "واحة الفيوم",
-        demoSite3Desc: "حوض منخفض يعاني من صعوبة الصرف وملوحة المصارف المرتفعة. تحاكي محاصيل مقاومة للملوحة وإدارة مائية حذرة.",
-        demoLoadBtn: "محاكاة هذا الحقل الآن",
         footerDisclaimer: "تم التطوير لتحدي ناسا لتطبيقات الفضاء 2026 (NASA Space Apps). نظام دعم قرارات استرشادي فقط، ولا يغني عن التحليل المعملي للتربة أو استشارة المهندس الزراعي المختص. لا يتضمن توصيات أسمدة كمية أو وعوداً إنتاجية.",
-        authModalSignInTitle: "تسجيل الدخول إلى حسابك",
-        authModalSignUpTitle: "إنشاء حساب جديد",
-        authModalSubtitleSignIn: "مرحباً بعودتك! يُرجى إدخال بياناتك للمتابعة.",
-        authModalSubtitleSignUp: "انضم إلى The Shifter لاستكشاف بيانات ناسا الفضائية ومحاكاة أعماق التربة.",
+        authModalSignInTitle: "تسجيل الدخول عبر Google",
+        authModalSignUpTitle: "تسجيل الدخول عبر Google",
+        authModalGoogleTitle: "تسجيل الدخول عبر Google",
+        authModalSubtitleSignIn: "سجّل الدخول بحساب Google الخاص بك لتشغيل محاكي فيزياء التربة وحديث المحصول التفاعلي.",
+        authModalSubtitleSignUp: "سجّل الدخول بحساب Google الخاص بك لتشغيل محاكي فيزياء التربة وحديث المحصول التفاعلي.",
+        authModalGoogleSubtitle: "سجّل الدخول بحساب Google الخاص بك لتشغيل محاكي فيزياء التربة وحديث المحصول التفاعلي.",
+        authBtnGoogleOnly: "تسجيل الدخول باستخدام حساب Google",
+        authUseAnotherGoogle: "استخدام حساب Google آخر",
+        authGoogleToastSuccess: "تم تسجيل الدخول بنجاح عبر حساب Google (أحمد ياسر). جاري تشغيل المحاكي الزراعي...",
         authLabelFullName: "الاسم الكامل",
         authLabelEmail: "البريد الإلكتروني",
         authLabelPassword: "كلمة المرور",
         authRememberMe: "تذكر بياناتي",
         authForgotPassword: "نسيت كلمة المرور؟",
-        authSubmitSignIn: "تسجيل الدخول",
-        authSubmitSignUp: "إنشاء الحساب",
-        authGuestAccess: "دخول تجريبي فوري بنقرة واحدة (مزارع)",
-        authNoAccount: "ليس لديك حساب؟",
-        authHaveAccount: "لديك حساب بالفعل؟",
-        authActionSignUp: "إنشاء حساب",
-        authActionSignIn: "تسجيل الدخول",
-        authToastRequired: "يرجى تسجيل الدخول أو إنشاء حساب لتشغيل المحاكي الزراعي.",
-        authToastWelcome: "مرحباً بعودتك! جاري تشغيل 'حديث المحصول' والمحاكي الزراعي...",
+        authSubmitSignIn: "تسجيل الدخول عبر Google",
+        authSubmitSignUp: "تسجيل الدخول عبر Google",
+        authGuestAccess: "المتابعة بحساب أحمد ياسر (Google)",
+        authNoAccount: "تحتاج لمساعدة؟",
+        authHaveAccount: "تم تسجيل الدخول عبر Google",
+        authActionSignUp: "دعم Google",
+        authActionSignIn: "دعم Google",
+        authToastRequired: "يرجى تسجيل الدخول بحساب Google لتشغيل المحاكي الزراعي.",
+        authToastWelcome: "مرحباً بعودتك! تم تسجيل الدخول عبر Google. جاري تشغيل المحاكي...",
         authToastSignedOut: "تم تسجيل الخروج بنجاح."
       }
     };
@@ -1728,8 +1577,13 @@
       } else {
         container.innerHTML = `
           <button id="headerAuthBtn" type="button" class="astryx-btn px-4 py-2 text-xs font-bold text-white shadow-sm flex items-center gap-2 rounded-xl transition hover:brightness-105 active:scale-95" style="background-color: #00a76f;">
-            <i data-lucide="user" class="w-3.5 h-3.5"></i>
-            <span data-i18n="btnHeaderAccount">${translations[currentLang].btnHeaderAccount || 'Sign In / Register'}</span>
+            <svg class="w-3.5 h-3.5" viewBox="0 0 24 24">
+              <path fill="#ffffff" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+              <path fill="#ffffff" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+              <path fill="#ffffff" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
+              <path fill="#ffffff" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
+            </svg>
+            <span data-i18n="btnHeaderAccount">${translations[currentLang].btnHeaderAccount || 'Sign in with Google'}</span>
           </button>
         `;
         const authBtn = document.getElementById("headerAuthBtn");
@@ -1768,45 +1622,12 @@
       document.body.style.overflow = "";
     }
 
-    function toggleAuthMode() {
-      authMode = authMode === "signin" ? "signup" : "signin";
-      const titleEl = document.getElementById("authModalTitle");
-      const subEl = document.getElementById("authModalSubtitle");
-      const nameField = document.getElementById("authNameField");
-      const submitText = document.getElementById("authSubmitBtnText");
-      const switchPrompt = document.getElementById("authSwitchPrompt");
-      const switchToggle = document.getElementById("authModeToggle");
-
-      const t = translations[currentLang];
-
-      if (authMode === "signup") {
-        if (titleEl) titleEl.textContent = t.authModalSignUpTitle;
-        if (subEl) subEl.textContent = t.authModalSubtitleSignUp;
-        if (nameField) nameField.classList.remove("hidden");
-        if (submitText) submitText.textContent = t.authSubmitSignUp;
-        if (switchPrompt) switchPrompt.textContent = t.authHaveAccount;
-        if (switchToggle) switchToggle.textContent = t.authActionSignIn;
-      } else {
-        if (titleEl) titleEl.textContent = t.authModalSignInTitle;
-        if (subEl) subEl.textContent = t.authModalSubtitleSignIn;
-        if (nameField) nameField.classList.add("hidden");
-        if (submitText) submitText.textContent = t.authSubmitSignIn;
-        if (switchPrompt) switchPrompt.textContent = t.authNoAccount;
-        if (switchToggle) switchToggle.textContent = t.authActionSignUp;
-      }
-    }
-
-    function handleAuthSubmit() {
-      const emailInput = document.getElementById("authEmailInput");
-      const email = emailInput ? emailInput.value.trim() : "";
-      const nameInput = document.getElementById("authNameInput");
-      const name = (nameInput && nameInput.value.trim()) || (authMode === "signup" ? "New Farmer" : "Ahmed Yasser");
-      if (!email) return;
-
+    function loginWithGoogle(name = "Ahmed Yasser", email = "ahmed.yasser@shifter.org") {
       const user = {
         name: name,
         email: email,
-        role: "Farmer / Agronomist",
+        provider: "google",
+        role: "Lead Agronomist & Farmer",
         loggedInAt: new Date().toISOString()
       };
 
@@ -1814,37 +1635,36 @@
       renderHeaderAuth();
       closeAuthModal();
 
-      showToast(translations[currentLang].authToastWelcome);
+      const successMsg = translations[currentLang].authGoogleToastSuccess || translations[currentLang].authToastWelcome;
+      showToast(successMsg);
       setTimeout(() => {
         window.location.href = pendingDestinationUrl || "/index.html?feature=croptalk";
       }, 700);
-    }
-
-    function quickDemoAuth() {
-      const demoUser = {
-        name: "Ahmed Yasser",
-        email: "ahmed.yasser@shifter.org",
-        role: "Lead Agronomist (Kafr El Sheikh)",
-        loggedInAt: new Date().toISOString()
-      };
-      localStorage.setItem("shifter_user", JSON.stringify(demoUser));
-      renderHeaderAuth();
-      closeAuthModal();
-
-      showToast(translations[currentLang].authToastWelcome);
-      setTimeout(() => {
-        window.location.href = pendingDestinationUrl || "/index.html?feature=croptalk";
-      }, 600);
     }
 
     function setupAuthListeners() {
       // Close button
       document.getElementById("authModalClose")?.addEventListener("click", closeAuthModal);
 
-      // Form submit
-      document.getElementById("authForm")?.addEventListener("submit", (e) => {
-        e.preventDefault();
-        handleAuthSubmit();
+      // Primary Google Account Card click
+      document.getElementById("btnGooglePrimaryAccount")?.addEventListener("click", () => {
+        loginWithGoogle("Ahmed Yasser", "ahmed.yasser@shifter.org");
+      });
+
+      // Primary Emerald Google Sign-in button click
+      document.getElementById("btnGoogleSignInAction")?.addEventListener("click", () => {
+        loginWithGoogle("Ahmed Yasser", "ahmed.yasser@shifter.org");
+      });
+
+      // Secondary "Use another Google account" button click
+      document.getElementById("btnGoogleOtherAccount")?.addEventListener("click", () => {
+        const promptMsg = currentLang === "ar" ? "أدخل بريد Google الإلكتروني:" : "Enter your Google Email:";
+        const customEmail = prompt(promptMsg, "farmer.egypt@gmail.com");
+        if (customEmail && customEmail.includes("@")) {
+          const userPart = customEmail.split("@")[0].replace(/[._]/g, " ");
+          const customName = userPart.charAt(0).toUpperCase() + userPart.slice(1);
+          loginWithGoogle(customName, customEmail);
+        }
       });
 
       // Click outside card to close
@@ -1859,32 +1679,6 @@
         if (e.key === "Escape") closeAuthModal();
       });
 
-      // Mode toggle
-      document.getElementById("authModeToggle")?.addEventListener("click", toggleAuthMode);
-
-      // Eye Password Visibility Toggle
-      const togglePwdBtn = document.getElementById("togglePasswordBtn");
-      const pwdInput = document.getElementById("authPasswordInput");
-      const eyeIcon = document.getElementById("passwordEyeIcon");
-      if (togglePwdBtn && pwdInput) {
-        togglePwdBtn.addEventListener("click", () => {
-          const isPwd = pwdInput.getAttribute("type") === "password";
-          pwdInput.setAttribute("type", isPwd ? "text" : "password");
-          eyeIcon?.setAttribute("data-lucide", isPwd ? "eye-off" : "eye");
-          lucide.createIcons();
-        });
-      }
-
-      // Forgot password link
-      document.getElementById("btnForgotPwd")?.addEventListener("click", () => {
-        showToast(currentLang === "ar" 
-          ? "تم إرسال رابط استعادة كلمة المرور إلى بريدك الإلكتروني" 
-          : "Password recovery instructions sent to your email.");
-      });
-
-      // Quick Guest Demo Access
-      document.getElementById("btnQuickDemoAuth")?.addEventListener("click", quickDemoAuth);
-
       // Hero Button: "try crop talk ai and launch simulation"
       document.getElementById("btnHeroTryCropTalkLaunch")?.addEventListener("click", () => {
         const user = getLoggedInUser();
@@ -1894,21 +1688,6 @@
           openAuthModal("/index.html?feature=croptalk");
           showToast(translations[currentLang].authToastRequired);
         }
-      });
-
-      // Demo Sites Buttons
-      document.querySelectorAll(".demo-site-launch-btn").forEach(btn => {
-        btn.addEventListener("click", (e) => {
-          e.preventDefault();
-          const targetUrl = btn.getAttribute("href");
-          const user = getLoggedInUser();
-          if (user) {
-            window.location.href = targetUrl;
-          } else {
-            openAuthModal(targetUrl);
-            showToast(translations[currentLang].authToastRequired);
-          }
-        });
       });
 
       // Crop talk input mock click gating
@@ -1946,11 +1725,8 @@
       setupAuthListeners();
 
       // Deep link to Auth Modal if requested via URL
-      if (urlParams.get("auth") === "1" || urlParams.get("modal") === "auth") {
+      if (urlParams.get("auth") === "1" || urlParams.get("modal") === "auth" || urlParams.get("auth") === "signup") {
         openAuthModal();
-      } else if (urlParams.get("auth") === "signup") {
-        openAuthModal();
-        toggleAuthMode();
       }
 
       // Lucide Icons
