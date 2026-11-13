@@ -97,7 +97,7 @@ export class SceneController {
     this.renderer.setPixelRatio(Math.min(2, window.devicePixelRatio || 1));
 
     this.scene = new THREE.Scene();
-    this.scene.fog = new THREE.Fog(0xe8cf9b, 13, 55);
+    this.scene.fog = new THREE.Fog(0xe8cf9b, 28, 105);
 
     this.cam = new THREE.PerspectiveCamera(38, 1, 0.1, 120);
 
@@ -375,20 +375,29 @@ export class SceneController {
     crown.position.set(0, trunkH, 0);
     trunk.add(crown);
 
-    // Frond materials: deep mature green, rich mid canopy, and fresh spear green
+    // Frond materials: rich emerald, vibrant mid canopy, and sunlit spear green
     const matFrondLow = new THREE.MeshStandardMaterial({
-      color: 0x244619,
-      roughness: 0.8,
+      color: 0x2a7a1c,
+      emissive: 0x0a2406,
+      emissiveIntensity: 0.22,
+      roughness: 0.55,
+      metalness: 0.05,
       side: THREE.DoubleSide,
     });
     const matFrondMid = new THREE.MeshStandardMaterial({
-      color: 0x345e22,
-      roughness: 0.8,
+      color: 0x389a24,
+      emissive: 0x0d2e08,
+      emissiveIntensity: 0.22,
+      roughness: 0.55,
+      metalness: 0.05,
       side: THREE.DoubleSide,
     });
     const matFrondHigh = new THREE.MeshStandardMaterial({
-      color: 0x48792c,
-      roughness: 0.8,
+      color: 0x52b82e,
+      emissive: 0x143c0c,
+      emissiveIntensity: 0.22,
+      roughness: 0.55,
+      metalness: 0.05,
       side: THREE.DoubleSide,
     });
 
@@ -601,17 +610,20 @@ export class SceneController {
         };
 
         // Standard Cow asset has height ~5.0m; scaling by ~0.30 yields authentic 1.5m dairy cow
-        // 1. Mother Holstein Cow in foreground pasture clearing
+        // 1. Foreground pasture paddock herd (frontG)
         spawnCow(this.frontG, -9.5, 0, 7.2, 0.75, 0.31);
-
-        // 2. Companion Holstein Cow in foreground pasture clearing
         spawnCow(this.frontG, -12.8, 0, 9.6, 2.35, 0.28);
-
-        // 3. Playful Calf near mother cow
         spawnCow(this.frontG, -7.2, 0, 8.8, 1.1, 0.17);
+        spawnCow(this.frontG, -11.2, 0, 6.2, -0.85, 0.18);
+        spawnCow(this.frontG, -5.5, 0, 10.5, 2.8, 0.30);
 
-        // 4. Distant Holstein grazing on the main agricultural field (slabs[0])
-        spawnCow(this.slabs[0].g, 15.5, HT[0] / 2, -14.0, -1.35, 0.29);
+        // 2. Main agricultural field & grazing margins (slabs[0].g)
+        spawnCow(this.slabs[0].g, 16.5, HT[0] / 2, -7.0, -1.8, 0.30);
+        spawnCow(this.slabs[0].g, 15.0, HT[0] / 2, -15.0, -1.35, 0.29);
+        spawnCow(this.slabs[0].g, 12.5, HT[0] / 2, -23.0, -0.6, 0.28);
+        spawnCow(this.slabs[0].g, -17.5, HT[0] / 2, -9.5, 0.95, 0.31);
+        spawnCow(this.slabs[0].g, -14.5, HT[0] / 2, -22.0, -2.1, 0.29);
+        spawnCow(this.slabs[0].g, -3.0, HT[0] / 2, -32.0, 0.4, 0.27);
       },
       undefined,
       (err) => {
