@@ -182,10 +182,10 @@ export class SceneController {
     // Instanced lush agricultural vegetation (with pasture clearing for livestock)
     this.plantField(this.slabs[0].g, -28, 28, -52, 0, 0.55, 0.45, HT[0] / 2);
     this.plantField(this.frontG, -26, 26, 0, 14, 0.55, 0.45, 0, {
-      x0: -15,
-      x1: -4.5,
-      z0: 4.5,
-      z1: 12,
+      x0: -7.0,
+      x1: 7.0,
+      z0: 0,
+      z1: 6.2,
     });
 
     // Date Palm tree windbreaks (authentic Egyptian Nile Delta farm shelterbelts)
@@ -610,21 +610,24 @@ export class SceneController {
           }
         };
 
-        // Standard Cow asset has height ~5.0m; scaling by ~0.30 yields authentic 1.5m dairy cow
-        // 1. Foreground pasture paddock herd (frontG)
-        spawnCow(this.frontG, -9.5, 0, 7.2, 0.75, 0.31);
-        spawnCow(this.frontG, -12.8, 0, 9.6, 2.35, 0.28);
-        spawnCow(this.frontG, -7.2, 0, 8.8, 1.1, 0.17);
-        spawnCow(this.frontG, -11.2, 0, 6.2, -0.85, 0.18);
-        spawnCow(this.frontG, -5.5, 0, 10.5, 2.8, 0.30);
+        // 1. Immediate foreground pasture paddock (frontG, 5-7m from camera, right in Act 1 sweet spot)
+        // Mother Holstein Cow (majestic & prominent, center-left)
+        spawnCow(this.frontG, -1.8, 0, 2.5, 0.85, 0.42);
+        // Playful Calf grazing next to mother
+        spawnCow(this.frontG, -0.4, 0, 3.2, 1.25, 0.25);
+        // Companion Holstein Cow (grazing sideways, center-right)
+        spawnCow(this.frontG, 2.5, 0, 1.8, -2.1, 0.40);
+        // Second Cow in right foreground
+        spawnCow(this.frontG, 3.8, 0, 3.6, -1.2, 0.38);
+        // Cow in left foreground
+        spawnCow(this.frontG, -3.9, 0, 4.2, 2.4, 0.37);
 
-        // 2. Main agricultural field & grazing margins (slabs[0].g)
-        spawnCow(this.slabs[0].g, 16.5, HT[0] / 2, -7.0, -1.8, 0.30);
-        spawnCow(this.slabs[0].g, 15.0, HT[0] / 2, -15.0, -1.35, 0.29);
-        spawnCow(this.slabs[0].g, 12.5, HT[0] / 2, -23.0, -0.6, 0.28);
-        spawnCow(this.slabs[0].g, -17.5, HT[0] / 2, -9.5, 0.95, 0.31);
-        spawnCow(this.slabs[0].g, -14.5, HT[0] / 2, -22.0, -2.1, 0.29);
-        spawnCow(this.slabs[0].g, -3.0, HT[0] / 2, -32.0, 0.4, 0.27);
+        // 2. Main agricultural field & grazing margins (slabs[0].g, tiered midground & horizon)
+        spawnCow(this.slabs[0].g, 4.8, HT[0] / 2, -4.5, -1.6, 0.35);
+        spawnCow(this.slabs[0].g, -5.2, HT[0] / 2, -7.0, 1.8, 0.34);
+        spawnCow(this.slabs[0].g, 9.0, HT[0] / 2, -14.0, -1.1, 0.32);
+        spawnCow(this.slabs[0].g, -9.5, HT[0] / 2, -18.0, 0.85, 0.31);
+        spawnCow(this.slabs[0].g, 2.2, HT[0] / 2, -26.0, -0.4, 0.29);
       },
       undefined,
       (err) => {
