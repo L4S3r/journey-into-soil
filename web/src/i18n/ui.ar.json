@@ -169,5 +169,8 @@
  "ui.stage_layers": "طبقات التربة",
  "ui.dive_into_soil": "الغوص في باطن الأرض",
  "ui.analyze_soil_core": "احفر عينة التربة وحلل",
- "ui.parcel_selected": "{{feddan}} فدان ({{ha}} هكتار)"
+ "ui.parcel_selected": "{{feddan}} فدان ({{ha}} هكتار)",
+ "ui.reset_focus": "إعادة ضبط التركيز",
+ "ui.focus_layer": "تركيز على الطبقة",
+ "ui.focus_in_3d": "عرض في المجسم الثلاثي"
 }

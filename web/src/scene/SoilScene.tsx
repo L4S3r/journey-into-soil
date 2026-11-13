@@ -22,7 +22,7 @@ export function SoilScene() {
   const inspectorRef = useRef<HTMLDivElement>(null);
   const openerRef = useRef<HTMLElement | null>(null);
 
-  const { result, strategyId, dayT, theme, quality } = useStore();
+  const { result, strategyId, dayT, theme, quality, focusedLayer, setFocusedLayer } = useStore();
 
   useEffect(() => {
     if (!canvasRef.current) return;
@@ -40,6 +40,9 @@ export function SoilScene() {
           controller.setOnStageChange((stage) => {
             setDiveStage(stage);
             setIsExploded(stage === "layers");
+          });
+          controller.setOnLayerFocusChange((idx) => {
+            setFocusedLayer(idx);
           });
           ctrl.current = controller;
           setReady(true);
@@ -71,6 +74,12 @@ export function SoilScene() {
   useEffect(() => ctrl.current?.setSeasonTime(dayT), [dayT, result, strategyId, ready]);
   useEffect(() => ctrl.current?.setTheme(theme), [theme, ready]);
   useEffect(() => ctrl.current?.setQuality(quality), [quality, ready]);
+  useEffect(() => {
+    if (!ctrl.current || !ready) return;
+    if (ctrl.current.getFocusedLayer() !== focusedLayer) {
+      ctrl.current.focusLayer(focusedLayer);
+    }
+  }, [focusedLayer, ready]);
 
   // Focus management for inspector dialog & Esc key handling
   useEffect(() => {
@@ -87,14 +96,15 @@ export function SoilScene() {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
         e.preventDefault();
-        ctrl.current?.clearInspection();
+        setFocusedLayer(null);
+        ctrl.current?.clearFocus();
         setInspectedLayer(null);
         openerRef.current?.focus();
       }
     };
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [inspectedLayer]);
+  }, [inspectedLayer, setFocusedLayer]);
 
   const handlePreset = (preset: CameraPreset) => {
     setActivePreset(preset);
@@ -122,17 +132,21 @@ export function SoilScene() {
   };
 
   const handleReplay = () => {
+    setFocusedLayer(null);
+    ctrl.current?.clearFocus();
     setActivePreset("perspective");
     ctrl.current?.replay();
   };
 
   const handleSelectDepth = (layerIndex: number, e: React.MouseEvent<HTMLButtonElement>) => {
     openerRef.current = e.currentTarget;
-    ctrl.current?.inspectLayer(layerIndex);
+    setFocusedLayer(layerIndex);
+    ctrl.current?.focusLayer(layerIndex);
   };
 
   const handleCloseInspector = () => {
-    ctrl.current?.clearInspection();
+    setFocusedLayer(null);
+    ctrl.current?.clearFocus();
     setInspectedLayer(null);
     openerRef.current?.focus();
   };
@@ -317,6 +331,24 @@ export function SoilScene() {
                 </svg>
                 <span>{t("ui.replay")}</span>
               </button>
+
+              {focusedLayer !== null && (
+                <button
+                  type="button"
+                  className="scene-btn scene-btn-reset-focus"
+                  onClick={() => {
+                    setFocusedLayer(null);
+                    ctrl.current?.clearFocus();
+                  }}
+                  title={t("ui.reset_focus")}
+                >
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                    <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" />
+                    <path d="M3 3v5h5" />
+                  </svg>
+                  <span>{t("ui.reset_focus")}</span>
+                </button>
+              )}
             </div>
           </div>
 

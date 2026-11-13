@@ -95,6 +95,56 @@ legend { padding-inline: 6px; font-weight: 600; }
 .table-wrap { overflow-x: auto; }
 table { border-collapse: collapse; inline-size: 100%; font-size: .85rem; }
 th, td { text-align: start; padding: 5px 8px; border-block-end: 1px solid var(--line); white-space: nowrap; }
+
+/* Interactive Layer Table Rows & Focus Highlighting */
+.layer-row {
+  cursor: pointer;
+  transition: background 150ms ease;
+  user-select: none;
+}
+
+.layer-row:hover {
+  background: color-mix(in srgb, var(--accent) 12%, transparent);
+}
+
+.layer-row.focused {
+  background: color-mix(in srgb, var(--accent) 22%, transparent);
+  font-weight: 600;
+}
+
+.layer-row.focused td {
+  border-block-end-color: var(--accent);
+}
+
+.layer-depth-cell {
+  display: flex;
+  align-items: center;
+}
+
+.layer-zoom-icon {
+  transition: transform 150ms ease, opacity 150ms ease;
+}
+
+.layer-row:hover .layer-zoom-icon {
+  transform: scale(1.15);
+  opacity: 1;
+  color: var(--accent);
+}
+
+.reset-focus-btn {
+  font-size: 0.76rem;
+  padding: 2px 8px;
+  min-block-size: 26px;
+  border-radius: 999px;
+  border: 1px solid var(--accent);
+  color: var(--accent);
+}
+
+.reset-focus-btn:hover {
+  background: var(--accent);
+  color: var(--accent-ink);
+}
+
 details { border-block-end: 1px solid var(--line); padding: 6px 0; } summary { cursor: pointer; font-weight: 600; }
 
 @media (min-width: 900px) {

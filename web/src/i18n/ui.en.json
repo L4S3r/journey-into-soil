@@ -169,5 +169,8 @@
  "ui.stage_layers": "Stratified layers",
  "ui.dive_into_soil": "Dive underground",
  "ui.analyze_soil_core": "Extract Soil Core & Analyze",
- "ui.parcel_selected": "{{feddan}} feddans ({{ha}} ha)"
+ "ui.parcel_selected": "{{feddan}} feddans ({{ha}} ha)",
+ "ui.reset_focus": "Reset focus",
+ "ui.focus_layer": "Focus layer",
+ "ui.focus_in_3d": "Focus in 3D"
 }

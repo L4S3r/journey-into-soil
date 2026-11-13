@@ -48,12 +48,14 @@ interface State {
   loading: boolean;
   error: string | null;
   usingSample: boolean;
+  focusedLayer: number | null;
   setRequest: (patch: Partial<AnalysisRequest>) => void;
   applySite: (site: DemoSite) => void;
   analyze: () => Promise<void>;
   loadSample: () => Promise<void>;
   applyScenario: (dT: number, dP: number) => Promise<void>;
   reset: () => void;
+  setFocusedLayer: (idx: number | null) => void;
   setStrategy: (id: StrategyId) => void;
   setDayT: (t: number) => void;
   setLang: (l: "en" | "ar") => void;
@@ -72,6 +74,7 @@ export const useStore = create<State>((set, get) => ({
   loading: false,
   error: null,
   usingSample: false,
+  focusedLayer: null,
   setRequest: (patch) => set((s) => ({ request: { ...s.request, ...patch } })),
   applySite: (site) =>
     set((s) => ({ request: { ...s.request, ...site.preset, lat: site.lat, lon: site.lon, region: site.region } as AnalysisRequest })),
@@ -104,7 +107,8 @@ export const useStore = create<State>((set, get) => ({
       set({ loading: false, error: e instanceof Error ? e.message : String(e) });
     }
   },
-  reset: () => set({ result: null, error: null, usingSample: false }),
+  reset: () => set({ result: null, error: null, usingSample: false, focusedLayer: null }),
+  setFocusedLayer: (focusedLayer) => set({ focusedLayer }),
   setStrategy: (strategyId) => set({ strategyId }),
   setDayT: (dayT) => set({ dayT }),
   setLang: (lang) => {

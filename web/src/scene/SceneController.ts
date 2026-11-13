@@ -173,12 +173,14 @@ export class SceneController {
   private targetCamTarget: Vector3 = new Vector3(0, -3.2, 0);
   private isAnimatingCam = false;
 
-  // Inspection, Telemetry & Stage callbacks
+  // Inspection, Telemetry, Focus & Stage callbacks
   private onDay?: (day: number) => void;
   private onInspect?: (data: LayerInspectData | null) => void;
   private onTelemetry?: (data: SceneTelemetry) => void;
   private onStageChange?: (stage: DiveStage) => void;
+  private onLayerFocusChange?: (idx: number | null) => void;
   private inspectedLayerIdx: number | null = null;
+  private focusedLayerIdx: number | null = null;
 
   constructor(
     canvas: HTMLCanvasElement,
@@ -234,7 +236,7 @@ export class SceneController {
       this.introT = 1;
     }
 
-    // Tap detection for layer inspection (differentiates tap from orbit/drag, ignores roots/blades)
+    // Tap detection for layer inspection & focus (differentiates tap from orbit/drag, ignores roots/blades)
     this.scene.onPointerObservable.add((pointerInfo) => {
       if (pointerInfo.type === PointerEventTypes.POINTERTAP) {
         const pick = this.scene.pick(
@@ -244,7 +246,7 @@ export class SceneController {
         );
         if (pick && pick.hit && pick.pickedMesh) {
           const idx = parseInt(pick.pickedMesh.name.replace("layer", ""), 10);
-          if (!isNaN(idx)) this.inspectLayer(idx);
+          if (!isNaN(idx)) this.focusLayer(idx);
         }
       }
     });
@@ -268,6 +270,10 @@ export class SceneController {
 
   setOnStageChange(cb: (stage: DiveStage) => void): void {
     this.onStageChange = cb;
+  }
+
+  setOnLayerFocusChange(cb: (idx: number | null) => void): void {
+    this.onLayerFocusChange = cb;
   }
 
   setDiveStage(stage: DiveStage, fromAutoSequence = false): void {
@@ -356,6 +362,55 @@ export class SceneController {
     return this.targetExplode > 0.5;
   }
 
+  focusLayer(idx: number | null): void {
+    if (idx === null || idx < 0 || !this.result || idx >= this.result.layers.length) {
+      this.clearFocus();
+      return;
+    }
+
+    if (this.diveStage === "field") {
+      this.setDiveStage("layers");
+    }
+
+    this.focusedLayerIdx = idx;
+    this.isAnimatingCam = true;
+    this.targetCamAlpha = -Math.PI / 2;
+    this.targetCamBeta = 1.30;
+    this.targetCamRadius = 8.5; // close-up zoom
+
+    const box = this.layerMeshes[idx];
+    const targetY = box ? box.position.y : -2.5;
+    this.targetCamTarget = new Vector3(0, targetY, 0);
+
+    // Warm luminous highlight on the selected stratum; subtle darkening on others
+    this.layerMats.forEach((mat, i) => {
+      mat.emissiveColor = i === idx ? new Color3(0.32, 0.28, 0.18) : new Color3(0.02, 0.02, 0.02);
+    });
+
+    this.inspectLayer(idx);
+    this.onLayerFocusChange?.(idx);
+  }
+
+  clearFocus(): void {
+    this.focusedLayerIdx = null;
+    this.isAnimatingCam = true;
+    this.targetCamAlpha = -Math.PI / 2;
+    this.targetCamBeta = this.targetExplode > 0.5 ? 1.28 : 1.25;
+    this.targetCamRadius = this.targetExplode > 0.5 ? 15.5 : 13.5;
+    this.targetCamTarget = new Vector3(0, this.targetExplode > 0.5 ? -3.2 : -2.8, 0);
+
+    this.layerMats.forEach((mat) => {
+      mat.emissiveColor = Color3.Black();
+    });
+
+    this.clearInspection();
+    this.onLayerFocusChange?.(null);
+  }
+
+  getFocusedLayer(): number | null {
+    return this.focusedLayerIdx;
+  }
+
   inspectLayer(idx: number): void {
     if (!this.result || !this.strategy || idx < 0 || idx >= this.result.layers.length) {
       this.clearInspection();
@@ -376,7 +431,12 @@ export class SceneController {
 
     // Highlight selected layer mesh
     this.layerMats.forEach((mat, i) => {
-      mat.emissiveColor = i === idx ? new Color3(0.18, 0.16, 0.12) : Color3.Black();
+      mat.emissiveColor =
+        i === idx
+          ? this.focusedLayerIdx === idx
+            ? new Color3(0.32, 0.28, 0.18)
+            : new Color3(0.18, 0.16, 0.12)
+          : Color3.Black();
     });
 
     this.onInspect?.({
@@ -401,6 +461,10 @@ export class SceneController {
       mat.emissiveColor = Color3.Black();
     });
     this.onInspect?.(null);
+    if (this.focusedLayerIdx !== null) {
+      this.focusedLayerIdx = null;
+      this.onLayerFocusChange?.(null);
+    }
   }
 
   loadResult(result: AnalysisResult, replay = true): void {
@@ -659,6 +723,12 @@ export class SceneController {
       this.pedestalMesh.position.set(0, pedY, 0);
       if (this.shadowMesh) {
         this.shadowMesh.position.set(0, pedY - 0.14, 0);
+      }
+    }
+    if (this.focusedLayerIdx !== null) {
+      const box = this.layerMeshes[this.focusedLayerIdx];
+      if (box) {
+        this.targetCamTarget = new Vector3(0, box.position.y, 0);
       }
     }
   }

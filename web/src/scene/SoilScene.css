@@ -176,6 +176,19 @@
   border-color: var(--accent);
 }
 
+.scene-btn-reset-focus {
+  background: color-mix(in srgb, var(--accent) 22%, transparent);
+  border-color: var(--accent);
+  color: var(--ink);
+  font-weight: 600;
+  box-shadow: 0 0 8px color-mix(in srgb, var(--accent) 35%, transparent);
+}
+
+.scene-btn-reset-focus:hover {
+  background: var(--accent);
+  color: var(--accent-ink);
+}
+
 .scene-btn svg {
   inline-size: 14px;
   block-size: 14px;
