@@ -199,9 +199,9 @@
 
         <!-- Main Catchy Headline -->
         <h1 class="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-[1.2] text-earth-950 dark:text-earth-50 mb-8" data-i18n="heroTitle">
-          Sensing the Earth Beneath Our Feet: <br>
+          Where Space Data Meets the Root Zone: <br>
           <span class="bg-gradient-to-r from-leaf-700 via-leaf-600 to-accentOrange dark:from-leaf-400 dark:via-accentGold dark:to-leaf-400 bg-clip-text text-transparent">
-            Precision Soil Intelligence for Resilient Egyptian Agriculture
+            Precision Soil Intelligence
           </span>
         </h1>
 
@@ -448,7 +448,7 @@
         brandTitle: "The Shifter",
         brandSubtitle: "Journey into the Soil",
         heroBadge: "Precision Soil Intelligence • NASA Earth Data",
-        heroTitle: "Sensing the Earth Beneath Our Feet: Precision Soil Intelligence for Resilient Egyptian Agriculture",
+        heroTitle: 'Where Space Data Meets the Root Zone: <br><span class="bg-gradient-to-r from-leaf-700 via-leaf-600 to-accentOrange dark:from-leaf-400 dark:via-accentGold dark:to-leaf-400 bg-clip-text text-transparent">Precision Soil Intelligence</span>',
         whyHeading: "Why choose Journey into the Soil?",
         whyText: "Because resilient farming begins deep within the root zone. By bridging NASA Earth observations—including soil moisture, rainfall anomalies, and solar irradiance—with local soil physics and agronomic science, our platform guides farmers toward balanced, water-smart crop rotations that restore soil vitality without guesswork or unrealistic promises.",
         battlefieldEyebrow: "Underground Realities",
@@ -481,7 +481,7 @@
         brandTitle: "The Shifter",
         brandSubtitle: "رحلة في أعماق التربة",
         heroBadge: "ذكاء التربة الدقيق • أرصاد وكالة ناسا للأرض",
-        heroTitle: "استشعار الأرض من تحت أقدامنا: ذكاء التربة الدقيق لزراعة مصرية قادرة على الصمود",
+        heroTitle: 'حيث تلتقي بيانات الفضاء بمنطقة الجذور: <br><span class="bg-gradient-to-r from-leaf-700 via-leaf-600 to-accentOrange dark:from-leaf-400 dark:via-accentGold dark:to-leaf-400 bg-clip-text text-transparent">ذكاء التربة الدقيق</span>',
         whyHeading: "لماذا تختار رحلة في أعماق التربة؟",
         whyText: "لأن الزراعة الصامدة تبدأ من أعماق منطقة الجذور. من خلال ربط أرصاد وكالة ناسا للأرض—بما في ذلك رطوبة التربة، وتقلبات الأمطار، والإشعاع الشمسي—مع فيزياء التربة المحلية والعلوم الزراعية، تُرشد منصتنا المزارعين نحو دورات زراعية متوازنة وموفرة للمياه تستعيد حيوية التربة دون تكهنات أو وعود غير واقعية.",
         battlefieldEyebrow: "حقائق باطن الأرض",
@@ -597,7 +597,11 @@
       document.querySelectorAll("[data-i18n]").forEach(el => {
         const key = el.getAttribute("data-i18n");
         if (translations[lang] && translations[lang][key]) {
-          el.textContent = translations[lang][key];
+          if (translations[lang][key].includes("<")) {
+            el.innerHTML = translations[lang][key];
+          } else {
+            el.textContent = translations[lang][key];
+          }
         }
       });
 
