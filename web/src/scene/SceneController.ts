@@ -39,10 +39,10 @@ const D = 4; // block depth (z)
 const GAP = 0.65; // gap between layers when exploded
 const LAYER_H = [1.3, 1.4, 1.6, 1.9]; // world height per layer
 
-const TIERS: Record<Quality, { scale: number; blades: number; roots: number }> = {
-  high: { scale: 1, blades: 2800, roots: 24 },
-  medium: { scale: 1.25, blades: 1400, roots: 14 },
-  low: { scale: 1.75, blades: 600, roots: 8 },
+const TIERS: Record<Quality, { scale: number; blades: number; roots: number; outerCols: number; outerRows: number }> = {
+  high: { scale: 1, blades: 240, roots: 24, outerCols: 24, outerRows: 22 },
+  medium: { scale: 1.25, blades: 160, roots: 14, outerCols: 18, outerRows: 16 },
+  low: { scale: 1.75, blades: 90, roots: 8, outerCols: 12, outerRows: 12 },
 };
 
 const TAPROOT_CROPS = new Set([
@@ -133,6 +133,8 @@ export class SceneController {
   private fieldNode: TransformNode;
   private rootNode: TransformNode;
   private blade: Mesh | null = null;
+  private outerBladeNorth: Mesh | null = null;
+  private outerBladeSouth: Mesh | null = null;
   private bladeMat: StandardMaterial;
   private rootMat: StandardMaterial;
   private result: AnalysisResult | null = null;
@@ -165,9 +167,9 @@ export class SceneController {
 
   // Camera preset animation & target smoothing
   private targetCamAlpha = -Math.PI / 2;
-  private targetCamBeta = 1.38;
-  private targetCamRadius = 28;
-  private targetCamTarget: Vector3 = new Vector3(0, 0.6, -4.0);
+  private targetCamBeta = 1.34;
+  private targetCamRadius = 24;
+  private targetCamTarget: Vector3 = new Vector3(0, 0.7, -2.5);
   private isAnimatingCam = false;
 
   // Inspection, Telemetry, Focus & Stage callbacks
@@ -189,7 +191,7 @@ export class SceneController {
     this.scene = new Scene(this.engine);
     this.scene.clearColor = new Color4(0, 0, 0, 0);
 
-    this.camera = new ArcRotateCamera("cam", -Math.PI / 2, 1.38, 28, new Vector3(0, 0.6, -4.0), this.scene);
+    this.camera = new ArcRotateCamera("cam", -Math.PI / 2, 1.34, 24, new Vector3(0, 0.7, -2.5), this.scene);
     this.camera.lowerRadiusLimit = 5;
     this.camera.upperRadiusLimit = 36;
     this.camera.lowerBetaLimit = 0.15;
@@ -229,6 +231,7 @@ export class SceneController {
     this.buildReticle();
     this.buildSurroundingField();
     this.positionLayers();
+    this.updateFog();
     this.applyTier("high");
 
     const reduced = typeof matchMedia === "function" && matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -292,13 +295,13 @@ export class SceneController {
     this.targetCamAlpha = -Math.PI / 2;
 
     if (stage === "field") {
-      this.targetCamBeta = 1.38;
-      this.targetCamRadius = 28;
-      this.targetCamTarget = new Vector3(0, 0.6, -4.0);
+      this.targetCamBeta = 1.34;
+      this.targetCamRadius = 24;
+      this.targetCamTarget = new Vector3(0, 0.7, -2.5);
       this.targetExplode = 0;
       this.targetFrontGroundY = 0;
       this.fieldGroundNode?.setEnabled(true);
-      this.reticleMesh?.setEnabled(true);
+      this.reticleMesh?.setEnabled(false);
       this.pedestalMesh?.setEnabled(false);
       this.shadowMesh?.setEnabled(false);
       this.dustMesh?.setEnabled(false);
@@ -325,6 +328,7 @@ export class SceneController {
       this.dustMesh?.setEnabled(true);
     }
 
+    this.updateFog();
     this.positionLayers();
 
     if (this.onStageChange) this.onStageChange(stage);
@@ -568,6 +572,7 @@ export class SceneController {
 
   setTheme(theme: "light" | "dark"): void {
     this.theme = theme;
+    this.updateFog();
     this.applyDay(this.dayIdx);
   }
 
@@ -759,7 +764,7 @@ export class SceneController {
       new Vector3(-halfW, y, -halfD),
     ];
     const reticle = MeshBuilder.CreateLines("coreReticle", { points: pts }, this.scene);
-    reticle.color = new Color3(0.47, 0.88, 0.43);
+    reticle.color = new Color3(0.85, 0.72, 0.45);
     reticle.setEnabled(false);
     this.reticleMesh = reticle;
   }
@@ -771,13 +776,14 @@ export class SceneController {
 
     const sMat = new StandardMaterial("surroundingFieldMat", this.scene);
     const sTex = new Texture("/textures/soil/layer_0.jpg", this.scene);
-    sTex.uScale = 4.0;
-    sTex.vScale = 4.0;
+    sTex.uScale = 24.0;
+    sTex.vScale = 24.0;
     sTex.wrapU = Texture.WRAP_ADDRESSMODE;
     sTex.wrapV = Texture.WRAP_ADDRESSMODE;
     sMat.diffuseTexture = sTex;
-    sMat.diffuseColor = new Color3(0.55, 0.48, 0.38);
-    sMat.specularColor = Color3.Black();
+    sMat.diffuseColor = new Color3(0.42, 0.36, 0.28);
+    sMat.specularColor = new Color3(0.04, 0.04, 0.03);
+    sMat.specularPower = 16;
 
     const span = 48;
     const h = 0.25;
@@ -804,6 +810,24 @@ export class SceneController {
     west.parent = this.fieldGroundNode;
 
     this.fieldGroundNode.setEnabled(true);
+  }
+
+  private updateFog(): void {
+    if (this.diveStage === "field") {
+      this.scene.fogMode = Scene.FOGMODE_EXP2;
+      this.scene.fogDensity = 0.016;
+      if (this.theme === "dark") {
+        this.scene.fogColor = new Color3(0.16, 0.17, 0.20);
+      } else {
+        this.scene.fogColor = new Color3(0.85, 0.90, 0.93);
+      }
+    } else {
+      this.scene.fogMode = Scene.FOGMODE_EXP2;
+      this.scene.fogDensity = 0.006;
+      this.scene.fogColor = this.theme === "dark"
+        ? new Color3(0.06, 0.04, 0.03)
+        : new Color3(0.12, 0.09, 0.06);
+    }
   }
 
   private positionLayers(): void {
@@ -874,6 +898,10 @@ export class SceneController {
   private buildBlades(cropId: string): void {
     this.blade?.dispose();
     this.blade = null;
+    this.outerBladeNorth?.dispose();
+    this.outerBladeNorth = null;
+    this.outerBladeSouth?.dispose();
+    this.outerBladeSouth = null;
     if (!cropId) return;
     const look = CROP_LOOK[cropId] ?? DEFAULT_LOOK;
     this.bladeMat.diffuseColor = new Color3(...look.c);
@@ -898,22 +926,22 @@ export class SceneController {
     tuft.material = this.bladeMat;
     tuft.parent = this.fieldNode;
 
-    const n = TIERS[this.tier].blades;
     const r = rng(7);
-    const buf = new Float32Array(n * 16);
+    const tierConfig = TIERS[this.tier];
 
-    // Arrange in 16 planting rows with realistic agricultural density & organic jitter
-    const rows = 16;
-    const cols = Math.ceil(n / rows);
-    let idx = 0;
-    for (let row = 0; row < rows; row++) {
-      const z0 = ((row + 0.5) / rows - 0.5) * (D - 0.35);
-      for (let col = 0; col < cols; col++) {
-        if (idx >= n) break;
-        const x0 = ((col + 0.5) / cols - 0.5) * (W - 0.35);
-        const x = x0 + (r() - 0.5) * 0.16;
-        const z = z0 + (r() - 0.5) * 0.12;
-        const h = 0.85 + r() * 0.55;
+    // 1. Central Soil Monolith Canopy
+    const coreRows = 12;
+    const coreCols = Math.max(12, Math.round(tierConfig.blades / coreRows));
+    const coreTotal = coreRows * coreCols;
+    const coreBuf = new Float32Array(coreTotal * 16);
+    let cIdx = 0;
+    for (let row = 0; row < coreRows; row++) {
+      const z0 = ((row + 0.5) / coreRows - 0.5) * (D - 0.28);
+      for (let col = 0; col < coreCols; col++) {
+        const x0 = ((col + 0.5) / coreCols - 0.5) * (W - 0.28);
+        const x = x0 + (r() - 0.5) * 0.08;
+        const z = z0 + (r() - 0.5) * 0.06;
+        const h = 0.85 + r() * 0.45;
         const rotY = r() * Math.PI * 2;
         const lean = (r() - 0.5) * 0.22;
 
@@ -921,14 +949,114 @@ export class SceneController {
           new Vector3(1, h, 1),
           Quaternion.FromEulerAngles(lean, rotY, (r() - 0.5) * 0.18),
           new Vector3(x, 0, z),
-        ).copyToArray(buf, idx * 16);
-        idx++;
+        ).copyToArray(coreBuf, cIdx * 16);
+        cIdx++;
+      }
+    }
+    tuft.thinInstanceSetBuffer("matrix", coreBuf, 16, true);
+    tuft.alwaysSelectAsActiveMesh = true;
+    this.blade = tuft;
+
+    // 2. Surrounding North Farmland Rows & Flanks (parented to fieldGroundNode)
+    if (this.fieldGroundNode) {
+      const tuftNorth = tuft.clone("bladeNorth");
+      if (tuftNorth) {
+        tuftNorth.material = this.bladeMat;
+        tuftNorth.parent = this.fieldGroundNode;
+
+        const nCols = tierConfig.outerCols;
+        const nRows = tierConfig.outerRows;
+        const flankCols: number[] = [];
+        for (let c = 0; c < nCols; c++) {
+          const x0 = ((c + 0.5) / nCols - 0.5) * 44;
+          if (Math.abs(x0) > W / 2 + 0.35) {
+            flankCols.push(x0);
+          }
+        }
+        const flankSteps = 4;
+        const northTotal = nCols * nRows + flankCols.length * flankSteps;
+        const northBuf = new Float32Array(northTotal * 16);
+        let nIdx = 0;
+
+        for (let c = 0; c < nCols; c++) {
+          const x0 = ((c + 0.5) / nCols - 0.5) * 44;
+          for (let rStep = 0; rStep < nRows; rStep++) {
+            const z0 = D / 2 + 0.35 + (rStep / (nRows - 1)) * 22.0;
+            const x = x0 + (r() - 0.5) * 0.22;
+            const z = z0 + (r() - 0.5) * 0.18;
+            const h = 0.80 + r() * 0.50;
+            const rotY = r() * Math.PI * 2;
+            const lean = (r() - 0.5) * 0.20;
+
+            Matrix.Compose(
+              new Vector3(1, h, 1),
+              Quaternion.FromEulerAngles(lean, rotY, (r() - 0.5) * 0.18),
+              new Vector3(x, 0, z),
+            ).copyToArray(northBuf, nIdx * 16);
+            nIdx++;
+          }
+        }
+
+        // Add flank instances flanking the monolith
+        for (const x0 of flankCols) {
+          for (let fStep = 0; fStep < flankSteps; fStep++) {
+            const z0 = -D / 2 + 0.4 + (fStep / (flankSteps - 1)) * (D - 0.8);
+            const x = x0 + (r() - 0.5) * 0.22;
+            const z = z0 + (r() - 0.5) * 0.18;
+            const h = 0.80 + r() * 0.50;
+            const rotY = r() * Math.PI * 2;
+            const lean = (r() - 0.5) * 0.20;
+
+            Matrix.Compose(
+              new Vector3(1, h, 1),
+              Quaternion.FromEulerAngles(lean, rotY, (r() - 0.5) * 0.18),
+              new Vector3(x, 0, z),
+            ).copyToArray(northBuf, nIdx * 16);
+            nIdx++;
+          }
+        }
+
+        tuftNorth.thinInstanceSetBuffer("matrix", northBuf, 16, true);
+        tuftNorth.alwaysSelectAsActiveMesh = true;
+        this.outerBladeNorth = tuftNorth;
       }
     }
 
-    tuft.thinInstanceSetBuffer("matrix", buf, 16, true);
-    tuft.alwaysSelectAsActiveMesh = true;
-    this.blade = tuft;
+    // 3. Surrounding South/Foreground Farmland Rows (parented to frontGroundNode for diving animation)
+    if (this.frontGroundNode) {
+      const tuftSouth = tuft.clone("bladeSouth");
+      if (tuftSouth) {
+        tuftSouth.material = this.bladeMat;
+        tuftSouth.parent = this.frontGroundNode;
+
+        const sCols = tierConfig.outerCols;
+        const sRows = tierConfig.outerRows;
+        const southTotal = sCols * sRows;
+        const southBuf = new Float32Array(southTotal * 16);
+        let sIdx = 0;
+        for (let c = 0; c < sCols; c++) {
+          const x0 = ((c + 0.5) / sCols - 0.5) * 44;
+          for (let rStep = 0; rStep < sRows; rStep++) {
+            const z0 = -D / 2 - 0.35 - (rStep / (sRows - 1)) * 22.0;
+            const x = x0 + (r() - 0.5) * 0.22;
+            const z = z0 + (r() - 0.5) * 0.18;
+            const h = 0.80 + r() * 0.50;
+            const rotY = r() * Math.PI * 2;
+            const lean = (r() - 0.5) * 0.20;
+
+            Matrix.Compose(
+              new Vector3(1, h, 1),
+              Quaternion.FromEulerAngles(lean, rotY, (r() - 0.5) * 0.18),
+              new Vector3(x, 0, z),
+            ).copyToArray(southBuf, sIdx * 16);
+            sIdx++;
+          }
+        }
+        tuftSouth.thinInstanceSetBuffer("matrix", southBuf, 16, true);
+        tuftSouth.alwaysSelectAsActiveMesh = true;
+        this.outerBladeSouth = tuftSouth;
+      }
+    }
   }
 
   private isTaproot(cropId: string): boolean {
@@ -1117,10 +1245,10 @@ export class SceneController {
       }
     }
 
-    // Reticle pulse on agricultural ground in field stage
+    // Reticle pulse on agricultural ground if active
     if (this.reticleMesh && this.reticleMesh.isEnabled()) {
-      const pulse = 0.55 + 0.45 * Math.sin(this.time * 4.5);
-      this.reticleMesh.color = new Color3(0.3 * pulse, 0.85 * pulse, 0.3 * pulse);
+      const pulse = 0.65 + 0.35 * Math.sin(this.time * 3.5);
+      this.reticleMesh.color = new Color3(0.85 * pulse, 0.72 * pulse, 0.45 * pulse);
     }
 
     // Explode smoothing
@@ -1132,6 +1260,8 @@ export class SceneController {
     // Multi-frequency wind breeze
     const breeze = Math.sin(this.time * 2.2) * 0.012 + Math.cos(this.time * 1.1) * 0.006;
     this.fieldNode.rotation.z = breeze;
+    if (this.outerBladeNorth) this.outerBladeNorth.rotation.z = breeze;
+    if (this.outerBladeSouth) this.outerBladeSouth.rotation.z = breeze;
 
     // Falling rain streaks
     if (this.rainMesh && this.rainMesh.isEnabled()) {
@@ -1199,6 +1329,8 @@ export class SceneController {
     const canopyPct = sim.canopy[day] ?? 0.2;
     const canopyH = Math.max(0.42, canopyPct * look.h * 1.3);
     this.fieldNode.scaling.y = cropId ? canopyH : 0.001;
+    if (this.outerBladeNorth) this.outerBladeNorth.scaling.y = cropId ? canopyH : 0.001;
+    if (this.outerBladeSouth) this.outerBladeSouth.scaling.y = cropId ? canopyH : 0.001;
 
     // Root stress coloration (natural ivory tissue responding to soil stress)
     const cropIdx = sim.crop_idx[day];

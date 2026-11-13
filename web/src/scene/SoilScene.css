@@ -168,6 +168,19 @@
   flex-wrap: wrap;
 }
 
+/* De-clutter UI controls during the cinematic field stage */
+.scene-container[data-stage="field"] .scene-toolbar {
+  opacity: 0.88;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  transition: opacity 0.3s ease;
+}
+
+.scene-container[data-stage="field"] .scene-toolbar:hover,
+.scene-container[data-stage="field"] .scene-toolbar:focus-within {
+  opacity: 1;
+}
+
 .scene-btn {
   display: inline-flex;
   align-items: center;
