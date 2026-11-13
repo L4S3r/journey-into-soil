@@ -152,7 +152,7 @@ export function SoilScene() {
   };
 
   return (
-    <div className="scene-container">
+    <div className="scene-container" data-stage={diveStage} data-theme={theme}>
       <canvas ref={canvasRef} role="img" aria-label={t("ui.scene_label")} />
       {failed && <p className="scene-fallback">{t("ui.no_webgl")}</p>}
 

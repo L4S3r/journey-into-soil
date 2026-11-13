@@ -71,9 +71,6 @@ legend { padding-inline: 6px; font-weight: 600; }
 .kpis { color: var(--muted); font-size: .85rem; margin: 0; }
 .rank { grid-column: 1 / -1; color: var(--muted); font-size: .9rem; }
 
-.scene { position: relative; block-size: min(62vh, 560px); min-block-size: 320px; border-radius: var(--radius); overflow: hidden; border: 1px solid var(--line); background: #9ec7ea; }
-.scene canvas { inline-size: 100%; block-size: 100%; display: block; touch-action: none; outline: none; }
-.scene-replay { position: absolute; inset-block-start: 10px; inset-inline-end: 10px; background: color-mix(in srgb, var(--surface) 85%, transparent); }
 .scene-fallback { position: absolute; inset: 0; display: grid; place-items: center; padding: 20px; text-align: center; background: var(--surface); }
 
 .timeline { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 10px; }

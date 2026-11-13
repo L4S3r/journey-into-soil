@@ -40,9 +40,9 @@ const GAP = 0.65; // gap between layers when exploded
 const LAYER_H = [1.3, 1.4, 1.6, 1.9]; // world height per layer
 
 const TIERS: Record<Quality, { scale: number; blades: number; roots: number }> = {
-  high: { scale: 1, blades: 1400, roots: 20 },
-  medium: { scale: 1.25, blades: 600, roots: 12 },
-  low: { scale: 1.75, blades: 220, roots: 7 },
+  high: { scale: 1, blades: 2800, roots: 24 },
+  medium: { scale: 1.25, blades: 1400, roots: 14 },
+  low: { scale: 1.75, blades: 600, roots: 8 },
 };
 
 const TAPROOT_CROPS = new Set([
@@ -133,6 +133,7 @@ export class SceneController {
   private pedestalMesh: Mesh | null = null;
   private shadowMesh: Mesh | null = null;
   private rainMesh: Mesh | null = null;
+  private dustMesh: Mesh | null = null;
   private fieldNode: TransformNode;
   private rootNode: TransformNode;
   private blade: Mesh | null = null;
@@ -189,7 +190,7 @@ export class SceneController {
     this.onDay = onDay;
     this.engine = new Engine(canvas, true, { preserveDrawingBuffer: false, stencil: false }, true);
     this.scene = new Scene(this.engine);
-    this.scene.clearColor = new Color4(0.62, 0.78, 0.92, 1);
+    this.scene.clearColor = new Color4(0, 0, 0, 0);
 
     this.camera = new ArcRotateCamera("cam", -Math.PI / 2, 1.25, 22, new Vector3(0, -2.6, 0), this.scene);
     this.camera.lowerRadiusLimit = 6;
@@ -217,14 +218,17 @@ export class SceneController {
     this.fieldNode = new TransformNode("field", this.scene);
     this.rootNode = new TransformNode("roots", this.scene);
     this.bladeMat = new StandardMaterial("blade", this.scene);
-    this.bladeMat.specularColor = Color3.Black();
+    this.bladeMat.specularColor = new Color3(0.08, 0.12, 0.08);
     this.rootMat = new StandardMaterial("root", this.scene);
-    this.rootMat.emissiveColor = new Color3(0.95, 0.92, 0.84);
-    this.rootMat.diffuseColor = Color3.Black();
+    this.rootMat.diffuseColor = new Color3(0.92, 0.88, 0.78);
+    this.rootMat.emissiveColor = new Color3(0.06, 0.05, 0.04);
+    this.rootMat.specularColor = new Color3(0.22, 0.20, 0.16);
+    this.rootMat.specularPower = 36;
 
     this.buildLayers();
     this.buildPedestal();
     this.buildRainMesh();
+    this.buildDustMesh();
     this.buildReticle();
     this.buildSurroundingField();
     this.positionLayers();
@@ -294,6 +298,7 @@ export class SceneController {
       this.reticleMesh?.setEnabled(true);
       this.pedestalMesh?.setEnabled(false);
       this.shadowMesh?.setEnabled(false);
+      this.dustMesh?.setEnabled(false);
     } else if (stage === "underground") {
       this.targetCamBeta = 1.25;
       this.targetCamRadius = 13.5;
@@ -303,6 +308,7 @@ export class SceneController {
       this.reticleMesh?.setEnabled(false);
       this.pedestalMesh?.setEnabled(true);
       this.shadowMesh?.setEnabled(true);
+      this.dustMesh?.setEnabled(true);
     } else if (stage === "layers") {
       this.targetCamBeta = 1.28;
       this.targetCamRadius = 16.5;
@@ -312,6 +318,7 @@ export class SceneController {
       this.reticleMesh?.setEnabled(false);
       this.pedestalMesh?.setEnabled(true);
       this.shadowMesh?.setEnabled(true);
+      this.dustMesh?.setEnabled(true);
     }
 
     this.positionLayers();
@@ -684,6 +691,33 @@ export class SceneController {
     this.rainMesh = drop;
   }
 
+  private buildDustMesh(): void {
+    const n = 140;
+    const r = rng(42);
+    const buf = new Float32Array(n * 16);
+    for (let i = 0; i < n; i++) {
+      const x = (r() - 0.5) * 16;
+      const y = -r() * 10.5;
+      const z = (r() - 0.5) * 10;
+      const s = 0.025 + r() * 0.035;
+      Matrix.Compose(
+        new Vector3(s, s, s),
+        Quaternion.Identity(),
+        new Vector3(x, y, z),
+      ).copyToArray(buf, i * 16);
+    }
+    const dot = MeshBuilder.CreateBox("dustDot", { size: 1 }, this.scene);
+    const dMat = new StandardMaterial("dustMat", this.scene);
+    dMat.emissiveColor = new Color3(0.95, 0.88, 0.72);
+    dMat.diffuseColor = new Color3(0.8, 0.7, 0.5);
+    dMat.alpha = 0.38;
+    dot.material = dMat;
+    dot.thinInstanceSetBuffer("matrix", buf, 16, true);
+    dot.alwaysSelectAsActiveMesh = true;
+    dot.setEnabled(false);
+    this.dustMesh = dot;
+  }
+
   private buildReticle(): void {
     const halfW = W / 2 + 0.04;
     const halfD = D / 2 + 0.04;
@@ -713,7 +747,7 @@ export class SceneController {
     sMat.diffuseColor = new Color3(0.55, 0.48, 0.38);
     sMat.specularColor = Color3.Black();
 
-    const span = 24;
+    const span = 48;
     const h = 0.25;
     const y = -h / 2;
 
@@ -811,29 +845,58 @@ export class SceneController {
     if (!cropId) return;
     const look = CROP_LOOK[cropId] ?? DEFAULT_LOOK;
     this.bladeMat.diffuseColor = new Color3(...look.c);
-    const blade = MeshBuilder.CreateCylinder(
-      "blade",
-      { height: 1, diameterTop: 0, diameterBottom: 0.08, tessellation: 4 },
-      this.scene,
-    );
-    blade.bakeTransformIntoVertices(Matrix.Translation(0, 0.5, 0));
-    blade.material = this.bladeMat;
-    blade.parent = this.fieldNode;
+    this.bladeMat.specularColor = new Color3(0.08, 0.12, 0.08);
+
+    // Compound 3-leaf crop tuft:
+    // b1: central erect shoot
+    const b1 = MeshBuilder.CreateCylinder("b1", { height: 1.0, diameterTop: 0, diameterBottom: 0.07, tessellation: 4 }, this.scene);
+    b1.bakeTransformIntoVertices(Matrix.Compose(new Vector3(1, 1, 1), Quaternion.FromEulerAngles(0.08, 0, 0), new Vector3(0, 0.5, 0)));
+
+    // b2: lateral leaf arching left
+    const b2 = MeshBuilder.CreateCylinder("b2", { height: 0.85, diameterTop: 0, diameterBottom: 0.055, tessellation: 4 }, this.scene);
+    b2.bakeTransformIntoVertices(Matrix.Compose(new Vector3(0.9, 0.85, 0.9), Quaternion.FromEulerAngles(0.32, -0.7, 0.22), new Vector3(-0.06, 0.42, 0.02)));
+
+    // b3: lateral leaf arching right
+    const b3 = MeshBuilder.CreateCylinder("b3", { height: 0.80, diameterTop: 0, diameterBottom: 0.055, tessellation: 4 }, this.scene);
+    b3.bakeTransformIntoVertices(Matrix.Compose(new Vector3(0.85, 0.80, 0.85), Quaternion.FromEulerAngles(-0.25, 0.8, -0.20), new Vector3(0.06, 0.40, -0.02)));
+
+    const tuft = Mesh.MergeMeshes([b1, b2, b3], true, true, undefined, false, true);
+    if (!tuft) return;
+    tuft.name = "blade";
+    tuft.material = this.bladeMat;
+    tuft.parent = this.fieldNode;
 
     const n = TIERS[this.tier].blades;
     const r = rng(7);
     const buf = new Float32Array(n * 16);
-    for (let i = 0; i < n; i++) {
-      const h = 0.7 + r() * 0.6;
-      Matrix.Compose(
-        new Vector3(1, h, 1),
-        Quaternion.FromEulerAngles((r() - 0.5) * 0.35, r() * Math.PI, (r() - 0.5) * 0.35),
-        new Vector3((r() - 0.5) * (W - 0.4), 0, (r() - 0.5) * (D - 0.4)),
-      ).copyToArray(buf, i * 16);
+
+    // Arrange in 16 planting rows with realistic agricultural density & organic jitter
+    const rows = 16;
+    const cols = Math.ceil(n / rows);
+    let idx = 0;
+    for (let row = 0; row < rows; row++) {
+      const z0 = ((row + 0.5) / rows - 0.5) * (D - 0.35);
+      for (let col = 0; col < cols; col++) {
+        if (idx >= n) break;
+        const x0 = ((col + 0.5) / cols - 0.5) * (W - 0.35);
+        const x = x0 + (r() - 0.5) * 0.16;
+        const z = z0 + (r() - 0.5) * 0.12;
+        const h = 0.85 + r() * 0.55;
+        const rotY = r() * Math.PI * 2;
+        const lean = (r() - 0.5) * 0.22;
+
+        Matrix.Compose(
+          new Vector3(1, h, 1),
+          Quaternion.FromEulerAngles(lean, rotY, (r() - 0.5) * 0.18),
+          new Vector3(x, 0, z),
+        ).copyToArray(buf, idx * 16);
+        idx++;
+      }
     }
-    blade.thinInstanceSetBuffer("matrix", buf, 16, true);
-    blade.alwaysSelectAsActiveMesh = true;
-    this.blade = blade;
+
+    tuft.thinInstanceSetBuffer("matrix", buf, 16, true);
+    tuft.alwaysSelectAsActiveMesh = true;
+    this.blade = tuft;
   }
 
   private isTaproot(cropId: string): boolean {
@@ -847,60 +910,135 @@ export class SceneController {
     const isTap = this.isTaproot(cropId);
     const count = TIERS[this.tier].roots;
     const maxY = this.cmToY(maxCm);
-    const z = -D / 2 - 0.06;
+    const zCut = -D / 2 - 0.005; // flush with cutaway face, zero hovering gap
     const r = rng(cropId.length * 131 + maxCm);
 
     if (isTap) {
-      // Taproot architecture: primary tapering taproot with lateral secondaries
-      const primaryCount = Math.max(3, Math.floor(count * 0.45));
+      // Taproot architecture: primary tapering taproot with lateral secondaries and legume nodules
+      const primaryCount = Math.max(4, Math.floor(count * 0.45));
       for (let i = 0; i < primaryCount; i++) {
-        const x0 = ((i + 0.5) / primaryCount - 0.5) * (W - 1.2) + (r() - 0.5) * 0.25;
-        const depth = maxY * (0.8 + r() * 0.2);
+        const x0 = ((i + 0.5) / primaryCount - 0.5) * (W - 1.2) + (r() - 0.5) * 0.2;
+        const depth = maxY * (0.82 + r() * 0.18);
         const pts: Vector3[] = [];
-        const steps = 18;
+        const steps = 22;
         let x = x0;
+        const seedVal = i * 19.3 + maxCm;
+
         for (let s = 0; s <= steps; s++) {
-          x += (r() - 0.5) * 0.1;
-          pts.push(new Vector3(x, (depth * s) / steps - 0.02, z - r() * 0.02));
+          const frac = s / steps;
+          const y = frac * depth; // starts at y = 0, descends to negative depth
+          const meander = Math.sin(s * 0.85 + seedVal) * 0.035 * (1 - frac * 0.4);
+          x += meander + (r() - 0.5) * 0.012;
+          pts.push(new Vector3(x, y, zCut));
         }
-        const tap = MeshBuilder.CreateTube(`taproot${i}`, { path: pts, radius: 0.042, tessellation: 6 }, this.scene);
+
+        const tap = MeshBuilder.CreateTube(
+          `taproot${i}`,
+          {
+            path: pts,
+            radiusFunction: (index) => {
+              const frac = index / steps;
+              return 0.046 * (1 - frac * 0.72) + 0.012; // smooth taper
+            },
+            tessellation: 6,
+            cap: Mesh.CAP_ALL,
+          },
+          this.scene,
+        );
         tap.material = this.rootMat;
         tap.parent = this.rootNode;
 
-        const branchCount = 3 + Math.floor(r() * 2);
+        // Lateral secondary branches
+        const branchCount = 3 + Math.floor(r() * 3);
         for (let b = 0; b < branchCount; b++) {
-          const fromStep = 3 + Math.floor(r() * 9);
+          const fromStep = 3 + Math.floor(r() * 11);
           const from = pts[fromStep] ?? pts[0];
-          const dir = (b % 2 === 0 ? 1 : -1) * (0.7 + r() * 0.5);
-          const bdepth = from.y + (depth - from.y) * 0.35 * (0.6 + r() * 0.4);
+          const dir = (b % 2 === 0 ? 1 : -1) * (0.65 + r() * 0.45);
+          const bdepth = from.y + (depth - from.y) * 0.32 * (0.6 + r() * 0.4);
           const bp: Vector3[] = [];
-          for (let s = 0; s <= 7; s++) {
-            const frac = s / 7;
-            bp.push(new Vector3(from.x + dir * frac * 0.32, from.y + (bdepth - from.y) * frac, z - 0.01));
+          const bsteps = 10;
+          let bx = from.x;
+          for (let s = 0; s <= bsteps; s++) {
+            const bfrac = s / bsteps;
+            bx += dir * 0.035 * Math.sin(bfrac * Math.PI * 0.5);
+            bp.push(new Vector3(bx, from.y + (bdepth - from.y) * bfrac, zCut - 0.002));
           }
-          const bt = MeshBuilder.CreateTube(`tapbranch${i}_${b}`, { path: bp, radius: 0.018, tessellation: 4 }, this.scene);
+          const bt = MeshBuilder.CreateTube(
+            `tapbranch${i}_${b}`,
+            {
+              path: bp,
+              radiusFunction: (index) => {
+                const bfrac = index / bsteps;
+                return 0.020 * (1 - bfrac * 0.65) + 0.007;
+              },
+              tessellation: 4,
+              cap: Mesh.CAP_ALL,
+            },
+            this.scene,
+          );
           bt.material = this.rootMat;
           bt.parent = this.rootNode;
         }
+
+        // Legume root nodules in the topsoil horizon
+        const isLegume = ["lentil", "berseem_clover", "faba_bean", "peanuts", "cowpea", "faba", "soybean"].includes(cropId);
+        if (isLegume) {
+          const noduleCount = 3 + Math.floor(r() * 4);
+          for (let nd = 0; nd < noduleCount; nd++) {
+            const nStep = 2 + Math.floor(r() * 8);
+            const pNode = pts[nStep] ?? pts[0];
+            const nodule = MeshBuilder.CreateSphere(
+              `nodule_${i}_${nd}`,
+              {
+                diameterX: 0.045 + r() * 0.02,
+                diameterY: 0.035 + r() * 0.015,
+                diameterZ: 0.03 + r() * 0.015,
+                segments: 4,
+              },
+              this.scene,
+            );
+            const offsetDir = (nd % 2 === 0 ? 1 : -1) * (0.025 + r() * 0.015);
+            nodule.position.set(pNode.x + offsetDir, pNode.y + (r() - 0.5) * 0.03, zCut);
+            nodule.material = this.rootMat;
+            nodule.parent = this.rootNode;
+          }
+        }
       }
     } else {
-      // Fibrous crown root system: dense network spreading laterally
-      for (let i = 0; i < count; i++) {
-        const plantCenter = Math.floor(i / 3);
-        const plantCount = Math.ceil(count / 3);
-        const x0 = ((plantCenter + 0.5) / plantCount - 0.5) * (W - 1.0) + (r() - 0.5) * 0.15;
-        const spreadAngle = ((i % 3) - 1) * 0.32 + (r() - 0.5) * 0.12;
-        const depth = maxY * (0.65 + r() * 0.35);
-        const pts: Vector3[] = [];
-        const steps = 16;
-        for (let s = 0; s <= steps; s++) {
-          const frac = s / steps;
-          const x = x0 + spreadAngle * frac * 0.75 + (r() - 0.5) * 0.07;
-          pts.push(new Vector3(x, depth * frac - 0.02, z - r() * 0.025));
+      // Fibrous crown root system: dense lateral spreading network
+      const plantCount = Math.max(5, Math.floor(count * 0.42));
+      for (let p = 0; p < plantCount; p++) {
+        const x0 = ((p + 0.5) / plantCount - 0.5) * (W - 1.2) + (r() - 0.5) * 0.2;
+        const rootsPerPlant = 5;
+        for (let rIdx = 0; rIdx < rootsPerPlant; rIdx++) {
+          const spread = (rIdx / (rootsPerPlant - 1) - 0.5) * 0.55 + (r() - 0.5) * 0.12;
+          const depthFrac = 0.55 + (1 - Math.abs(spread)) * 0.45;
+          const depth = maxY * depthFrac;
+          const pts: Vector3[] = [];
+          const steps = 18;
+          let currX = x0;
+          for (let s = 0; s <= steps; s++) {
+            const frac = s / steps;
+            const y = frac * depth;
+            currX = x0 + spread * Math.pow(frac, 0.75) * 1.1 + Math.sin(s * 0.9 + p * 3) * 0.03;
+            pts.push(new Vector3(currX, y, zCut));
+          }
+          const fibrous = MeshBuilder.CreateTube(
+            `fibroot_${p}_${rIdx}`,
+            {
+              path: pts,
+              radiusFunction: (index) => {
+                const frac = index / steps;
+                return 0.034 * (1 - frac * 0.70) + 0.009;
+              },
+              tessellation: 5,
+              cap: Mesh.CAP_ALL,
+            },
+            this.scene,
+          );
+          fibrous.material = this.rootMat;
+          fibrous.parent = this.rootNode;
         }
-        const fibrous = MeshBuilder.CreateTube(`fibroot${i}`, { path: pts, radius: 0.032, tessellation: 5 }, this.scene);
-        fibrous.material = this.rootMat;
-        fibrous.parent = this.rootNode;
       }
     }
   }
@@ -966,6 +1104,14 @@ export class SceneController {
       }
     }
 
+    // Floating subterranean dust particles
+    if (this.dustMesh && this.dustMesh.isEnabled()) {
+      this.dustMesh.position.y += dt * 0.12;
+      if (this.dustMesh.position.y > 2.5) {
+        this.dustMesh.position.y = -0.5;
+      }
+    }
+
     if (this.auto && ++this.frames === 150) {
       const fps = this.engine.getFps();
       if (fps < 28 && this.tier !== "low") this.applyTier(this.tier === "high" ? "medium" : "low");
@@ -1013,30 +1159,24 @@ export class SceneController {
     const root = sim.root_cm[day] ?? 0;
     this.rootNode.scaling.y = cropId ? clamp(root / this.rootMaxCm, 0.02, 1) : 0.001;
     const look = cropId ? (CROP_LOOK[cropId] ?? DEFAULT_LOOK) : DEFAULT_LOOK;
-    this.fieldNode.scaling.y = cropId ? Math.max(0.05, (sim.canopy[day] ?? 0) * look.h) : 0.001;
+    const canopyPct = sim.canopy[day] ?? 0.2;
+    const canopyH = Math.max(0.42, canopyPct * look.h * 1.3);
+    this.fieldNode.scaling.y = cropId ? canopyH : 0.001;
 
-    // Root stress coloration
+    // Root stress coloration (natural ivory tissue responding to soil stress)
     const cropIdx = sim.crop_idx[day];
     const ws = cropIdx >= 0 ? s.seasons[cropIdx]?.indicators?.water_stress ?? 0 : 0;
     const ss = cropIdx >= 0 ? s.seasons[cropIdx]?.indicators?.salinity_stress ?? 0 : 0;
     const stress = clamp(Math.max(ws, ss));
-    const rootR = lerp(0.95, 0.85, stress);
-    const rootG = lerp(0.92, 0.62, stress);
-    const rootB = lerp(0.84, 0.38, stress);
-    this.rootMat.emissiveColor = new Color3(rootR, rootG, rootB);
+    const rootR = lerp(0.92, 0.82, stress);
+    const rootG = lerp(0.88, 0.58, stress);
+    const rootB = lerp(0.78, 0.35, stress);
+    this.rootMat.diffuseColor = new Color3(rootR, rootG, rootB);
+    this.rootMat.emissiveColor = new Color3(0.06, 0.05, 0.04);
 
     // Weather ambiance
     const tmax = res.climate.tmax[day] ?? 28;
     const rain = res.climate.rain[day] ?? 0;
-    const heat = clamp((tmax - 24) / 14);
-    const base = this.theme === "dark" ? [0.07, 0.09, 0.12] : [0.62, 0.78, 0.92];
-    const warm = this.theme === "dark" ? [0.12, 0.1, 0.09] : [0.9, 0.82, 0.68];
-    const grey = this.theme === "dark" ? [0.1, 0.11, 0.13] : [0.55, 0.6, 0.66];
-    const mix = (a: number[], b: number[], t: number) => a.map((v, i) => lerp(v, b[i], t));
-
-    let c = mix(base, warm, heat * 0.7);
-    if (rain > 1) c = mix(c, grey, clamp(rain / 12) * 0.8 + 0.2);
-    this.scene.clearColor = new Color4(c[0], c[1], c[2], 1);
     this.sun.intensity = (this.theme === "dark" ? 0.55 : 0.95) * (rain > 1 ? 0.65 : 1);
 
     if (this.rainMesh) {

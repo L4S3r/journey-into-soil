@@ -7,7 +7,31 @@
   border-radius: var(--radius);
   overflow: hidden;
   border: 1px solid var(--line);
-  background: #9ec7ea;
+  background: radial-gradient(circle at 50% 35%, #2a1f16 0%, #1a130d 55%, #0c0805 100%);
+  transition: background 0.7s cubic-bezier(0.2, 0, 0, 1);
+}
+
+/* Field stage: Sunlit agricultural field atmosphere with warm horizon */
+.scene-container[data-stage="field"] {
+  background: radial-gradient(circle at 25% 18%, rgba(255, 248, 220, 0.95), rgba(255, 235, 175, 0.35) 15%, transparent 32%),
+              linear-gradient(180deg, #6ba6d8 0%, #9fc8e4 26%, #ebd6a4 46%, #dfc58d 48%, #d2b77e 100%);
+}
+
+/* Underground core & Stratified layers: Authentic subterranean soil excavation trench */
+.scene-container[data-stage="underground"],
+.scene-container[data-stage="layers"] {
+  background: radial-gradient(circle at 50% 35%, #2a1f16 0%, #1a130d 55%, #0c0805 100%);
+}
+
+/* Dark mode atmospheric palettes */
+.scene-container[data-theme="dark"][data-stage="field"] {
+  background: radial-gradient(circle at 25% 18%, rgba(200, 220, 255, 0.25), transparent 25%),
+              linear-gradient(180deg, #101824 0%, #192434 32%, #261f18 52%, #1a140f 100%);
+}
+
+.scene-container[data-theme="dark"][data-stage="underground"],
+.scene-container[data-theme="dark"][data-stage="layers"] {
+  background: radial-gradient(circle at 50% 35%, #18120d 0%, #0f0b07 60%, #050302 100%);
 }
 
 .scene-container canvas {
