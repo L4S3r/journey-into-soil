@@ -21,6 +21,7 @@
 - [x] B21 (scene-3d) P0 Scene Polish: i18n dynamic keys, live-updating inspector, a11y focus/Esc, tap picking, 390px bottom sheet, honesty badges.
 - [x] B22 (scene-3d) Fix Layer 0 pedestal clipping, expand strata spacing (GAP=0.65), tight macro zoom and LTR/RTL offset framing with soil texture donut chart.
 - [x] B23 (scene-3d) Atmospheric excavation trench backdrop, floating dust motes, dense 3-blade crop canopy (2800 instances), and natural gravitropic tapering roots with nodules flush against cutaway face.
+- [x] B24 (scene-3d) 3-Act cinematic dive sequence: eye-level sky & agriculture land intro, ground-parting zoom dive, and stratified layer inspection with skip button & i18n narrative.
 - [ ] B16 (frontend) Accessibility pass (focus order, contrast, aria for timeline).
 
 ## P2 - nice

@@ -175,5 +175,9 @@
  "ui.parcel_selected": "{{feddan}} فدان ({{ha}} هكتار)",
  "ui.reset_focus": "إعادة ضبط التركيز",
  "ui.focus_layer": "تركيز على الطبقة",
- "ui.focus_in_3d": "عرض في المجسم الثلاثي"
+ "ui.focus_in_3d": "عرض في المجسم الثلاثي",
+ "ui.dive_caption_field": "فوق سطح الأرض: حقلك تحت السماء الواسعة",
+ "ui.dive_caption_underground": "انفتاح الأرض: الغوص في نطاق الجذور وباطن التربة",
+ "ui.dive_caption_layers": "القطاع الطبقي: استكشاف آفاق التربة الأربعة",
+ "ui.dive_skip": "تخطي المقدمة"
 }

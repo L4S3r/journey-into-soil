@@ -89,10 +89,6 @@ const DEFAULT_LOOK = { h: 1.1, c: [0.3, 0.55, 0.25] as [number, number, number] 
 
 const clamp = (x: number, lo = 0, hi = 1) => Math.max(lo, Math.min(hi, x));
 const lerp = (a: number, b: number, t: number) => a + (b - a) * t;
-const smooth = (x: number) => {
-  const t = clamp(x);
-  return t * t * (3 - 2 * t);
-};
 
 function rng(seed: number) {
   let s = seed >>> 0;
@@ -146,8 +142,6 @@ export class SceneController {
   private rootMaxCm = 100;
   private explode = 0;
   private targetExplode = 0;
-  private isExplodedManual = false;
-  private introT = 1;
   private tier: Quality = "high";
   private auto = true;
   private frames = 0;
@@ -158,20 +152,22 @@ export class SceneController {
 
   // Surrounding farmland terrain & parcel core reticle
   private fieldGroundNode: TransformNode | null = null;
+  private frontGroundNode: TransformNode | null = null;
+  private targetFrontGroundY = 0;
   private reticleMesh: LinesMesh | null = null;
-  private diveStage: DiveStage = "layers";
+  private diveStage: DiveStage = "field";
   private diveTimeouts: ReturnType<typeof setTimeout>[] = [];
 
-  private clearDiveTimeouts(): void {
+  clearDiveTimeouts(): void {
     this.diveTimeouts.forEach((t) => clearTimeout(t));
     this.diveTimeouts = [];
   }
 
   // Camera preset animation & target smoothing
   private targetCamAlpha = -Math.PI / 2;
-  private targetCamBeta = 1.25;
-  private targetCamRadius = 14;
-  private targetCamTarget: Vector3 = new Vector3(0, -3.2, 0);
+  private targetCamBeta = 1.38;
+  private targetCamRadius = 28;
+  private targetCamTarget: Vector3 = new Vector3(0, 0.6, -4.0);
   private isAnimatingCam = false;
 
   // Inspection, Telemetry, Focus & Stage callbacks
@@ -179,6 +175,7 @@ export class SceneController {
   private onInspect?: (data: LayerInspectData | null) => void;
   private onTelemetry?: (data: SceneTelemetry) => void;
   private onStageChange?: (stage: DiveStage) => void;
+  private onDiveProgress?: (captionKey: string | null, canSkip: boolean) => void;
   private onLayerFocusChange?: (idx: number | null) => void;
   private inspectedLayerIdx: number | null = null;
   private focusedLayerIdx: number | null = null;
@@ -192,11 +189,11 @@ export class SceneController {
     this.scene = new Scene(this.engine);
     this.scene.clearColor = new Color4(0, 0, 0, 0);
 
-    this.camera = new ArcRotateCamera("cam", -Math.PI / 2, 1.25, 22, new Vector3(0, -2.6, 0), this.scene);
-    this.camera.lowerRadiusLimit = 6;
-    this.camera.upperRadiusLimit = 32;
+    this.camera = new ArcRotateCamera("cam", -Math.PI / 2, 1.38, 28, new Vector3(0, 0.6, -4.0), this.scene);
+    this.camera.lowerRadiusLimit = 5;
+    this.camera.upperRadiusLimit = 36;
     this.camera.lowerBetaLimit = 0.15;
-    this.camera.upperBetaLimit = 1.75;
+    this.camera.upperBetaLimit = 1.62;
     this.camera.wheelPrecision = 30;
     this.camera.panningSensibility = 0;
     this.camera.attachControl(canvas, true);
@@ -236,9 +233,9 @@ export class SceneController {
 
     const reduced = typeof matchMedia === "function" && matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (reduced) {
-      this.explode = 0;
-      this.targetExplode = 0;
-      this.introT = 1;
+      this.explode = 1;
+      this.targetExplode = 1;
+      this.diveStage = "layers";
     }
 
     // Tap detection for layer inspection & focus (differentiates tap from orbit/drag, ignores roots/blades)
@@ -281,19 +278,25 @@ export class SceneController {
     this.onLayerFocusChange = cb;
   }
 
+  setOnDiveProgress(cb: (captionKey: string | null, canSkip: boolean) => void): void {
+    this.onDiveProgress = cb;
+  }
+
   setDiveStage(stage: DiveStage, fromAutoSequence = false): void {
     if (!fromAutoSequence) {
       this.clearDiveTimeouts();
+      this.onDiveProgress?.(null, false);
     }
     this.diveStage = stage;
     this.isAnimatingCam = true;
     this.targetCamAlpha = -Math.PI / 2;
 
     if (stage === "field") {
-      this.targetCamBeta = 0.72;
-      this.targetCamRadius = 24;
-      this.targetCamTarget = new Vector3(0, 0, 0);
+      this.targetCamBeta = 1.38;
+      this.targetCamRadius = 28;
+      this.targetCamTarget = new Vector3(0, 0.6, -4.0);
       this.targetExplode = 0;
+      this.targetFrontGroundY = 0;
       this.fieldGroundNode?.setEnabled(true);
       this.reticleMesh?.setEnabled(true);
       this.pedestalMesh?.setEnabled(false);
@@ -304,7 +307,7 @@ export class SceneController {
       this.targetCamRadius = 13.5;
       this.targetCamTarget = new Vector3(0, -3.1, 0);
       this.targetExplode = 0;
-      this.fieldGroundNode?.setEnabled(false);
+      this.targetFrontGroundY = -15;
       this.reticleMesh?.setEnabled(false);
       this.pedestalMesh?.setEnabled(true);
       this.shadowMesh?.setEnabled(true);
@@ -314,6 +317,7 @@ export class SceneController {
       this.targetCamRadius = 16.5;
       this.targetCamTarget = new Vector3(0, -4.0, 0);
       this.targetExplode = 1;
+      this.targetFrontGroundY = -15;
       this.fieldGroundNode?.setEnabled(false);
       this.reticleMesh?.setEnabled(false);
       this.pedestalMesh?.setEnabled(true);
@@ -334,22 +338,48 @@ export class SceneController {
     const reduced = typeof matchMedia === "function" && matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (reduced) {
       this.setDiveStage("layers");
+      this.onDiveProgress?.(null, false);
       return;
     }
     this.clearDiveTimeouts();
     this.setDiveStage("field", true);
+    this.onDiveProgress?.("ui.dive_caption_field", true);
+
     this.diveTimeouts.push(
       setTimeout(() => {
-        if (!this.disposed) this.setDiveStage("underground", true);
-      }, 2000),
+        if (!this.disposed) {
+          this.setDiveStage("underground", true);
+          this.onDiveProgress?.("ui.dive_caption_underground", true);
+        }
+      }, 2800),
       setTimeout(() => {
-        if (!this.disposed) this.setDiveStage("layers", true);
-      }, 4200)
+        if (!this.disposed) {
+          this.setDiveStage("layers", true);
+          this.onDiveProgress?.("ui.dive_caption_layers", false);
+        }
+      }, 5400),
+      setTimeout(() => {
+        if (!this.disposed) {
+          this.onDiveProgress?.(null, false);
+        }
+      }, 7600)
     );
   }
 
+  skipDive(): void {
+    this.clearDiveTimeouts();
+    this.setDiveStage("layers");
+    this.camera.beta = this.targetCamBeta;
+    this.camera.radius = this.targetCamRadius;
+    this.camera.target.copyFrom(this.targetCamTarget);
+    this.explode = 1;
+    this.targetExplode = 1;
+    this.positionLayers();
+    this.isAnimatingCam = false;
+    this.onDiveProgress?.(null, false);
+  }
+
   setCameraPreset(preset: CameraPreset): void {
-    this.introT = 1;
     this.isAnimatingCam = true;
     this.targetCamAlpha = -Math.PI / 2;
     if (preset === "perspective") {
@@ -364,7 +394,6 @@ export class SceneController {
   }
 
   setExploded(exploded: boolean): void {
-    this.isExplodedManual = true;
     this.targetExplode = exploded ? 1 : 0;
   }
 
@@ -737,6 +766,9 @@ export class SceneController {
 
   private buildSurroundingField(): void {
     this.fieldGroundNode = new TransformNode("surroundingField", this.scene);
+    this.frontGroundNode = new TransformNode("frontGround", this.scene);
+    this.frontGroundNode.parent = this.fieldGroundNode;
+
     const sMat = new StandardMaterial("surroundingFieldMat", this.scene);
     const sTex = new Texture("/textures/soil/layer_0.jpg", this.scene);
     sTex.uScale = 4.0;
@@ -759,7 +791,7 @@ export class SceneController {
     const south = MeshBuilder.CreateBox("fieldSouth", { width: W + 2 * span, height: h, depth: span }, this.scene);
     south.position.set(0, y, -D / 2 - span / 2);
     south.material = sMat;
-    south.parent = this.fieldGroundNode;
+    south.parent = this.frontGroundNode;
 
     const east = MeshBuilder.CreateBox("fieldEast", { width: span, height: h, depth: D }, this.scene);
     east.position.set(W / 2 + span / 2, y, 0);
@@ -771,7 +803,7 @@ export class SceneController {
     west.material = sMat;
     west.parent = this.fieldGroundNode;
 
-    this.fieldGroundNode.setEnabled(false);
+    this.fieldGroundNode.setEnabled(true);
   }
 
   private positionLayers(): void {
@@ -1047,24 +1079,29 @@ export class SceneController {
   private tick(dt: number): void {
     this.time += dt;
 
-    // Intro camera dive
-    if (this.introT < 1) {
-      this.introT = Math.min(1, this.introT + dt / 3.4);
-      const t = smooth(this.introT);
-      this.camera.radius = lerp(24, 14, t);
-      this.camera.beta = lerp(0.8, 1.25, t);
-      if (!this.isExplodedManual) {
-        this.explode = smooth((this.introT - 0.35) / 0.65);
-        this.positionLayers();
+    // Root visibility based on dive stage
+    if (this.rootNode) {
+      const showRoots = this.diveStage !== "field" || this.camera.beta < 1.0;
+      if (this.rootNode.isEnabled() !== showRoots) {
+        this.rootNode.setEnabled(showRoots);
       }
-      this.rootNode.setEnabled(this.introT > 0.92);
-    } else if (!this.rootNode.isEnabled() && this.strategy) {
-      this.rootNode.setEnabled(true);
+    }
+
+    // Front ground parting animation when diving underground
+    if (this.frontGroundNode) {
+      this.frontGroundNode.position.y = lerp(
+        this.frontGroundNode.position.y,
+        this.targetFrontGroundY,
+        Math.min(1, dt * 3.0)
+      );
+      if (this.diveStage !== "field" && this.frontGroundNode.position.y < -13.5) {
+        this.fieldGroundNode?.setEnabled(false);
+      }
     }
 
     // Camera preset animation & target lerp
     if (this.isAnimatingCam) {
-      const k = Math.min(1, dt * 5.5);
+      const k = Math.min(1, dt * 4.8);
       this.camera.alpha = lerp(this.camera.alpha, this.targetCamAlpha, k);
       this.camera.beta = lerp(this.camera.beta, this.targetCamBeta, k);
       this.camera.radius = lerp(this.camera.radius, this.targetCamRadius, k);

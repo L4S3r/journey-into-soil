@@ -175,5 +175,9 @@
  "ui.parcel_selected": "{{feddan}} feddans ({{ha}} ha)",
  "ui.reset_focus": "Reset focus",
  "ui.focus_layer": "Focus layer",
- "ui.focus_in_3d": "Focus in 3D"
+ "ui.focus_in_3d": "Focus in 3D",
+ "ui.dive_caption_field": "Above ground: your field under the sky",
+ "ui.dive_caption_underground": "The ground opens: diving into the root zone & soil core",
+ "ui.dive_caption_layers": "Stratified profile: exploring the 4 soil horizons",
+ "ui.dive_skip": "Skip intro"
 }
