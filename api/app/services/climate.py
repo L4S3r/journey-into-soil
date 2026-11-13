@@ -30,6 +30,7 @@ class Climate:
     et0: list[float]
     source: str  # "synthetic" | "pack"
     pack_id: str | None = None
+    pack_path: str | None = None
     resolution_km: float | None = None
     notes: list[str] = field(default_factory=list)
 
@@ -54,33 +55,48 @@ def synthetic_day(lat: float, d: date) -> dict[str, float]:
     return {"tmax": tmean + dtr / 2, "tmin": tmean - dtr / 2, "rh": rh, "u2": u2, "rs": rs, "rain": round(rain, 1)}
 
 
-def _find_pack(lat: float, lon: float) -> dict | None:
+def _find_pack(lat: float, lon: float) -> tuple[dict, str] | tuple[None, None]:
+    """Nearest demo pack within 0.15 deg, with its path (path is needed for NASA evidence)."""
     folder = get_settings().packs_dir / "demo_sites"
     if not folder.exists():
-        return None
-    best, best_dist = None, 0.15
+        return None, None
+    best, best_path, best_dist = None, None, 0.15
     for path in folder.glob("*.json"):
         try:
             pack = json.loads(path.read_text(encoding="utf-8"))
             meta = pack["meta"]
             dist = math.hypot(meta["lat"] - lat, meta["lon"] - lon)
-        except (ValueError, KeyError, OSError):
+        except (ValueError, KeyError, OSError, TypeError):
             continue
         if dist <= best_dist:
-            best, best_dist = pack, dist
-    return best
+            best, best_path, best_dist = pack, str(path), dist
+    return best, best_path
+
+
+def pack_path_for(lat: float, lon: float) -> str | None:
+    """Path of the demo pack that would serve this location (used for NASA evidence lookup)."""
+    _pack, path = _find_pack(lat, lon)
+    return path
 
 
 def _analog_lookup(pack: dict) -> dict[str, dict[str, float]]:
-    daily = pack["daily"]
+    daily = pack.get("daily") or {}
+    if not daily.get("date"):
+        return {}
     table: dict[str, dict[str, float]] = {}
+    required = ("tmax", "tmin", "rh", "u2", "rs", "rain")
+    if not all(isinstance(daily.get(k), list) for k in required):
+        return {}  # a pack without a climate section is not a climate pack (e.g. NASA-only packs)
     for i, iso in enumerate(daily["date"]):  # later years overwrite earlier ones
-        table[iso[5:]] = {k: daily[k][i] for k in ("tmax", "tmin", "rh", "u2", "rs", "rain")}
+        try:
+            table[iso[5:]] = {k: daily[k][i] for k in required}
+        except (KeyError, IndexError, TypeError):
+            continue
     return table
 
 
 def get_climate(lat: float, lon: float, dates: list[date], d_t: float = 0.0, d_p: float = 0.0) -> Climate:
-    pack = _find_pack(lat, lon)
+    pack, pack_path = _find_pack(lat, lon)
     table = _analog_lookup(pack) if pack else {}
     rows: list[dict[str, float]] = []
     used_pack = 0
@@ -107,6 +123,7 @@ def get_climate(lat: float, lon: float, dates: list[date], d_t: float = 0.0, d_p
     return Climate(
         dates=[d.isoformat() for d in dates], tmin=tmin, tmax=tmax, rain=rain, et0=et0, source=source,
         pack_id=(pack or {}).get("meta", {}).get("id") if source == "pack" else None,
+        pack_path=pack_path if pack else None,
         resolution_km=(pack or {}).get("meta", {}).get("resolution_km") if source == "pack" else None,
         notes=notes,
     )

@@ -3,7 +3,9 @@ import { useTranslation } from "react-i18next";
 import { api } from "./api/client";
 import { FieldForm } from "./features/inputs/FieldForm";
 import { FieldMap } from "./features/map/FieldMap";
+import { AgentPanel } from "./features/results/AgentPanel";
 import { EvidencePanel } from "./features/results/EvidencePanel";
+import { NasaVsModelPanel, NdviTimelinePanel } from "./features/results/NasaEvidence";
 import { ClimateSlider, Flags, Glossary, LayerTable, NasaPanel } from "./features/results/Panels";
 import { StrategyCards } from "./features/results/StrategyCards";
 import { Timeline } from "./features/results/Timeline";
@@ -95,10 +97,13 @@ function Results() {
       <StrategyCards result={result} />
       <SoilScene />
       <Timeline result={result} strategy={strategy} />
+      <NasaVsModelPanel result={result} strategy={strategy} />
+      <NdviTimelinePanel result={result} />
       <div className="grid">
         <EvidencePanel result={result} strategy={strategy} />
         <div className="side">
           <ClimateSlider result={result} />
+          <AgentPanel result={result} />
           <NasaPanel result={result} />
           <LayerTable result={result} />
           <Glossary />

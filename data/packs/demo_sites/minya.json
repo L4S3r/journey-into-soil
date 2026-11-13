@@ -1,0 +1,3733 @@
+{
+  "meta": {
+    "id": "minya",
+    "name_en": "Minya (Upper Egypt)",
+    "name_ar": "المنيا (صعيد مصر)",
+    "lat": 28.11,
+    "lon": 30.75,
+    "region": "upper_egypt",
+    "source": "nasa-packs",
+    "resolution_km": 9,
+    "period": {
+      "start": "2026-10-25",
+      "end": "2026-11-11"
+    }
+  },
+  "daily": {
+    "date": [],
+    "tmax": [],
+    "tmin": [],
+    "rh": [],
+    "u2": [],
+    "rs": [],
+    "rain": []
+  },
+  "nasa": {
+    "smap": {
+      "status": "planned",
+      "product": "SPL3SMP_E",
+      "product_title": "SMAP Enhanced L3 Radiometer Global Daily 9 km EASE-Grid Soil Moisture",
+      "version": "006",
+      "doi": "10.5067/M20OXIZHY3RJ",
+      "variable": "soil_moisture (passive radiometer retrieval)",
+      "depth": "surface, approximately the top 5 cm",
+      "depth_cm": [
+        0,
+        5
+      ],
+      "root_zone_available": false,
+      "units": "m3/m3",
+      "resolution_km": 9.0,
+      "grid": "global 9 km EASE-Grid 2.0",
+      "site_id": "minya",
+      "period": {
+        "start": "2026-10-25",
+        "end": "2026-11-11"
+      },
+      "observations": [
+        {
+          "site_id": "minya",
+          "date": "2026-10-25",
+          "overpass": "AM",
+          "time_utc": null,
+          "soil_moisture_m3m3": null,
+          "uncertainty_m3m3": null,
+          "accepted": false,
+          "reject_reasons": [
+            "no_retrieval_near_site"
+          ],
+          "quality": {
+            "retrieval_qual_flag": null,
+            "recommended": null,
+            "attempted": null,
+            "successful": null,
+            "surface_conditions": []
+          },
+          "pixel": {
+            "lat": null,
+            "lon": null,
+            "distance_km": null
+          },
+          "vegetation_opacity": null,
+          "granule": "SMAP_L3_SM_P_E_20261025_R19240_001"
+        },
+        {
+          "site_id": "minya",
+          "date": "2026-10-25",
+          "overpass": "PM",
+          "time_utc": null,
+          "soil_moisture_m3m3": null,
+          "uncertainty_m3m3": null,
+          "accepted": false,
+          "reject_reasons": [
+            "no_retrieval_near_site"
+          ],
+          "quality": {
+            "retrieval_qual_flag": null,
+            "recommended": null,
+            "attempted": null,
+            "successful": null,
+            "surface_conditions": []
+          },
+          "pixel": {
+            "lat": null,
+            "lon": null,
+            "distance_km": null
+          },
+          "vegetation_opacity": null,
+          "granule": "SMAP_L3_SM_P_E_20261025_R19240_001"
+        },
+        {
+          "site_id": "minya",
+          "date": "2026-10-26",
+          "overpass": "AM",
+          "time_utc": "np.bytes_(b'2026-10-26T04:28:00.922Z')",
+          "soil_moisture_m3m3": 0.0484,
+          "uncertainty_m3m3": null,
+          "accepted": false,
+          "reject_reasons": [
+            "not_recommended_quality"
+          ],
+          "quality": {
+            "retrieval_qual_flag": 1,
+            "recommended": false,
+            "attempted": true,
+            "successful": true,
+            "surface_conditions": [
+              "9_km_urban_area"
+            ]
+          },
+          "pixel": {
+            "lat": 28.0942,
+            "lon": 30.7624,
+            "distance_km": 2.1
+          },
+          "vegetation_opacity": 0.062,
+          "granule": "SMAP_L3_SM_P_E_20261026_R19240_001"
+        },
+        {
+          "site_id": "minya",
+          "date": "2026-10-26",
+          "overpass": "PM",
+          "time_utc": "np.bytes_(b'2026-10-26T15:23:56.380Z')",
+          "soil_moisture_m3m3": 0.0444,
+          "uncertainty_m3m3": null,
+          "accepted": false,
+          "reject_reasons": [
+            "not_recommended_quality"
+          ],
+          "quality": {
+            "retrieval_qual_flag": 1,
+            "recommended": false,
+            "attempted": true,
+            "successful": true,
+            "surface_conditions": [
+              "9_km_urban_area"
+            ]
+          },
+          "pixel": {
+            "lat": 28.0942,
+            "lon": 30.7624,
+            "distance_km": 2.1
+          },
+          "vegetation_opacity": 0.0888,
+          "granule": "SMAP_L3_SM_P_E_20261026_R19240_001"
+        },
+        {
+          "site_id": "minya",
+          "date": "2026-10-27",
+          "overpass": "AM",
+          "time_utc": null,
+          "soil_moisture_m3m3": null,
+          "uncertainty_m3m3": null,
+          "accepted": false,
+          "reject_reasons": [
+            "no_retrieval_near_site"
+          ],
+          "quality": {
+            "retrieval_qual_flag": null,
+            "recommended": null,
+            "attempted": null,
+            "successful": null,
+            "surface_conditions": []
+          },
+          "pixel": {
+            "lat": null,
+            "lon": null,
+            "distance_km": null
+          },
+          "vegetation_opacity": null,
+          "granule": "SMAP_L3_SM_P_E_20261027_R19240_002"
+        },
+        {
+          "site_id": "minya",
+          "date": "2026-10-27",
+          "overpass": "PM",
+          "time_utc": "np.bytes_(b'2026-10-27T16:00:21.732Z')",
+          "soil_moisture_m3m3": 0.0311,
+          "uncertainty_m3m3": null,
+          "accepted": false,
+          "reject_reasons": [
+            "not_recommended_quality"
+          ],
+          "quality": {
+            "retrieval_qual_flag": 1,
+            "recommended": false,
+            "attempted": true,
+            "successful": true,
+            "surface_conditions": [
+              "9_km_urban_area"
+            ]
+          },
+          "pixel": {
+            "lat": 28.0942,
+            "lon": 30.7624,
+            "distance_km": 2.1
+          },
+          "vegetation_opacity": 0.0462,
+          "granule": "SMAP_L3_SM_P_E_20261027_R19240_002"
+        },
+        {
+          "site_id": "minya",
+          "date": "2026-10-28",
+          "overpass": "AM",
+          "time_utc": "np.bytes_(b'2026-10-28T04:03:40.336Z')",
+          "soil_moisture_m3m3": 0.0458,
+          "uncertainty_m3m3": null,
+          "accepted": false,
+          "reject_reasons": [
+            "not_recommended_quality"
+          ],
+          "quality": {
+            "retrieval_qual_flag": 1,
+            "recommended": false,
+            "attempted": true,
+            "successful": true,
+            "surface_conditions": [
+              "9_km_urban_area"
+            ]
+          },
+          "pixel": {
+            "lat": 28.0942,
+            "lon": 30.7624,
+            "distance_km": 2.1
+          },
+          "vegetation_opacity": 0.0,
+          "granule": "SMAP_L3_SM_P_E_20261028_R19240_002"
+        },
+        {
+          "site_id": "minya",
+          "date": "2026-10-28",
+          "overpass": "PM",
+          "time_utc": null,
+          "soil_moisture_m3m3": null,
+          "uncertainty_m3m3": null,
+          "accepted": false,
+          "reject_reasons": [
+            "no_retrieval_near_site"
+          ],
+          "quality": {
+            "retrieval_qual_flag": null,
+            "recommended": null,
+            "attempted": null,
+            "successful": null,
+            "surface_conditions": []
+          },
+          "pixel": {
+            "lat": null,
+            "lon": null,
+            "distance_km": null
+          },
+          "vegetation_opacity": null,
+          "granule": "SMAP_L3_SM_P_E_20261028_R19240_002"
+        },
+        {
+          "site_id": "minya",
+          "date": "2026-10-29",
+          "overpass": "AM",
+          "time_utc": null,
+          "soil_moisture_m3m3": null,
+          "uncertainty_m3m3": null,
+          "accepted": false,
+          "reject_reasons": [
+            "no_retrieval_near_site"
+          ],
+          "quality": {
+            "retrieval_qual_flag": null,
+            "recommended": null,
+            "attempted": null,
+            "successful": null,
+            "surface_conditions": []
+          },
+          "pixel": {
+            "lat": null,
+            "lon": null,
+            "distance_km": null
+          },
+          "vegetation_opacity": null,
+          "granule": "SMAP_L3_SM_P_E_20261029_R19240_001"
+        },
+        {
+          "site_id": "minya",
+          "date": "2026-10-29",
+          "overpass": "PM",
+          "time_utc": "np.bytes_(b'2026-10-29T15:35:59.692Z')",
+          "soil_moisture_m3m3": 0.0293,
+          "uncertainty_m3m3": null,
+          "accepted": false,
+          "reject_reasons": [
+            "not_recommended_quality"
+          ],
+          "quality": {
+            "retrieval_qual_flag": 1,
+            "recommended": false,
+            "attempted": true,
+            "successful": true,
+            "surface_conditions": [
+              "9_km_urban_area"
+            ]
+          },
+          "pixel": {
+            "lat": 28.0942,
+            "lon": 30.7624,
+            "distance_km": 2.1
+          },
+          "vegetation_opacity": 0.0177,
+          "granule": "SMAP_L3_SM_P_E_20261029_R19240_001"
+        },
+        {
+          "site_id": "minya",
+          "date": "2026-10-30",
+          "overpass": "AM",
+          "time_utc": null,
+          "soil_moisture_m3m3": null,
+          "uncertainty_m3m3": null,
+          "accepted": false,
+          "reject_reasons": [
+            "no_retrieval_near_site"
+          ],
+          "quality": {
+            "retrieval_qual_flag": null,
+            "recommended": null,
+            "attempted": null,
+            "successful": null,
+            "surface_conditions": []
+          },
+          "pixel": {
+            "lat": null,
+            "lon": null,
+            "distance_km": null
+          },
+          "vegetation_opacity": null,
+          "granule": "SMAP_L3_SM_P_E_20261030_R19240_001"
+        },
+        {
+          "site_id": "minya",
+          "date": "2026-10-30",
+          "overpass": "PM",
+          "time_utc": null,
+          "soil_moisture_m3m3": null,
+          "uncertainty_m3m3": null,
+          "accepted": false,
+          "reject_reasons": [
+            "no_retrieval_near_site"
+          ],
+          "quality": {
+            "retrieval_qual_flag": null,
+            "recommended": null,
+            "attempted": null,
+            "successful": null,
+            "surface_conditions": []
+          },
+          "pixel": {
+            "lat": null,
+            "lon": null,
+            "distance_km": null
+          },
+          "vegetation_opacity": null,
+          "granule": "SMAP_L3_SM_P_E_20261030_R19240_001"
+        },
+        {
+          "site_id": "minya",
+          "date": "2026-10-31",
+          "overpass": "AM",
+          "time_utc": "np.bytes_(b'2026-10-31T04:15:44.934Z')",
+          "soil_moisture_m3m3": 0.0398,
+          "uncertainty_m3m3": null,
+          "accepted": false,
+          "reject_reasons": [
+            "not_recommended_quality"
+          ],
+          "quality": {
+            "retrieval_qual_flag": 1,
+            "recommended": false,
+            "attempted": true,
+            "successful": true,
+            "surface_conditions": [
+              "9_km_urban_area"
+            ]
+          },
+          "pixel": {
+            "lat": 28.0942,
+            "lon": 30.7624,
+            "distance_km": 2.1
+          },
+          "vegetation_opacity": 0.0,
+          "granule": "SMAP_L3_SM_P_E_20261031_R19240_002"
+        },
+        {
+          "site_id": "minya",
+          "date": "2026-10-31",
+          "overpass": "PM",
+          "time_utc": null,
+          "soil_moisture_m3m3": null,
+          "uncertainty_m3m3": null,
+          "accepted": false,
+          "reject_reasons": [
+            "no_retrieval_near_site"
+          ],
+          "quality": {
+            "retrieval_qual_flag": null,
+            "recommended": null,
+            "attempted": null,
+            "successful": null,
+            "surface_conditions": []
+          },
+          "pixel": {
+            "lat": null,
+            "lon": null,
+            "distance_km": null
+          },
+          "vegetation_opacity": null,
+          "granule": "SMAP_L3_SM_P_E_20261031_R19240_002"
+        },
+        {
+          "site_id": "minya",
+          "date": "2026-11-01",
+          "overpass": "AM",
+          "time_utc": null,
+          "soil_moisture_m3m3": null,
+          "uncertainty_m3m3": null,
+          "accepted": false,
+          "reject_reasons": [
+            "no_retrieval_near_site"
+          ],
+          "quality": {
+            "retrieval_qual_flag": null,
+            "recommended": null,
+            "attempted": null,
+            "successful": null,
+            "surface_conditions": []
+          },
+          "pixel": {
+            "lat": null,
+            "lon": null,
+            "distance_km": null
+          },
+          "vegetation_opacity": null,
+          "granule": "SMAP_L3_SM_P_E_20261101_R19240_001"
+        },
+        {
+          "site_id": "minya",
+          "date": "2026-11-01",
+          "overpass": "PM",
+          "time_utc": "np.bytes_(b'2026-11-01T15:48:03.884Z')",
+          "soil_moisture_m3m3": 0.0367,
+          "uncertainty_m3m3": null,
+          "accepted": false,
+          "reject_reasons": [
+            "not_recommended_quality"
+          ],
+          "quality": {
+            "retrieval_qual_flag": 1,
+            "recommended": false,
+            "attempted": true,
+            "successful": true,
+            "surface_conditions": [
+              "9_km_urban_area"
+            ]
+          },
+          "pixel": {
+            "lat": 28.0942,
+            "lon": 30.7624,
+            "distance_km": 2.1
+          },
+          "vegetation_opacity": 0.0234,
+          "granule": "SMAP_L3_SM_P_E_20261101_R19240_001"
+        },
+        {
+          "site_id": "minya",
+          "date": "2026-11-02",
+          "overpass": "AM",
+          "time_utc": null,
+          "soil_moisture_m3m3": null,
+          "uncertainty_m3m3": null,
+          "accepted": false,
+          "reject_reasons": [
+            "no_retrieval_near_site"
+          ],
+          "quality": {
+            "retrieval_qual_flag": null,
+            "recommended": null,
+            "attempted": null,
+            "successful": null,
+            "surface_conditions": []
+          },
+          "pixel": {
+            "lat": null,
+            "lon": null,
+            "distance_km": null
+          },
+          "vegetation_opacity": null,
+          "granule": "SMAP_L3_SM_P_E_20261102_R19240_001"
+        },
+        {
+          "site_id": "minya",
+          "date": "2026-11-02",
+          "overpass": "PM",
+          "time_utc": null,
+          "soil_moisture_m3m3": null,
+          "uncertainty_m3m3": null,
+          "accepted": false,
+          "reject_reasons": [
+            "no_retrieval_near_site"
+          ],
+          "quality": {
+            "retrieval_qual_flag": null,
+            "recommended": null,
+            "attempted": null,
+            "successful": null,
+            "surface_conditions": []
+          },
+          "pixel": {
+            "lat": null,
+            "lon": null,
+            "distance_km": null
+          },
+          "vegetation_opacity": null,
+          "granule": "SMAP_L3_SM_P_E_20261102_R19240_001"
+        },
+        {
+          "site_id": "minya",
+          "date": "2026-11-03",
+          "overpass": "AM",
+          "time_utc": "np.bytes_(b'2026-11-03T04:27:48.167Z')",
+          "soil_moisture_m3m3": 0.0402,
+          "uncertainty_m3m3": null,
+          "accepted": false,
+          "reject_reasons": [
+            "not_recommended_quality"
+          ],
+          "quality": {
+            "retrieval_qual_flag": 1,
+            "recommended": false,
+            "attempted": true,
+            "successful": true,
+            "surface_conditions": [
+              "9_km_urban_area"
+            ]
+          },
+          "pixel": {
+            "lat": 28.0942,
+            "lon": 30.7624,
+            "distance_km": 2.1
+          },
+          "vegetation_opacity": 0.0,
+          "granule": "SMAP_L3_SM_P_E_20261103_R19240_001"
+        },
+        {
+          "site_id": "minya",
+          "date": "2026-11-03",
+          "overpass": "PM",
+          "time_utc": "np.bytes_(b'2026-11-03T15:23:43.581Z')",
+          "soil_moisture_m3m3": 0.051,
+          "uncertainty_m3m3": null,
+          "accepted": false,
+          "reject_reasons": [
+            "not_recommended_quality"
+          ],
+          "quality": {
+            "retrieval_qual_flag": 1,
+            "recommended": false,
+            "attempted": true,
+            "successful": true,
+            "surface_conditions": [
+              "9_km_urban_area"
+            ]
+          },
+          "pixel": {
+            "lat": 28.0942,
+            "lon": 30.7624,
+            "distance_km": 2.1
+          },
+          "vegetation_opacity": 0.0404,
+          "granule": "SMAP_L3_SM_P_E_20261103_R19240_001"
+        },
+        {
+          "site_id": "minya",
+          "date": "2026-11-04",
+          "overpass": "AM",
+          "time_utc": null,
+          "soil_moisture_m3m3": null,
+          "uncertainty_m3m3": null,
+          "accepted": false,
+          "reject_reasons": [
+            "no_retrieval_near_site"
+          ],
+          "quality": {
+            "retrieval_qual_flag": null,
+            "recommended": null,
+            "attempted": null,
+            "successful": null,
+            "surface_conditions": []
+          },
+          "pixel": {
+            "lat": null,
+            "lon": null,
+            "distance_km": null
+          },
+          "vegetation_opacity": null,
+          "granule": "SMAP_L3_SM_P_E_20261104_R19240_001"
+        },
+        {
+          "site_id": "minya",
+          "date": "2026-11-04",
+          "overpass": "PM",
+          "time_utc": "np.bytes_(b'2026-11-04T16:00:08.796Z')",
+          "soil_moisture_m3m3": 0.034,
+          "uncertainty_m3m3": null,
+          "accepted": false,
+          "reject_reasons": [
+            "not_recommended_quality"
+          ],
+          "quality": {
+            "retrieval_qual_flag": 1,
+            "recommended": false,
+            "attempted": true,
+            "successful": true,
+            "surface_conditions": [
+              "9_km_urban_area"
+            ]
+          },
+          "pixel": {
+            "lat": 28.0942,
+            "lon": 30.7624,
+            "distance_km": 2.1
+          },
+          "vegetation_opacity": 0.048,
+          "granule": "SMAP_L3_SM_P_E_20261104_R19240_001"
+        },
+        {
+          "site_id": "minya",
+          "date": "2026-11-05",
+          "overpass": "AM",
+          "time_utc": "np.bytes_(b'2026-11-05T04:03:27.123Z')",
+          "soil_moisture_m3m3": 0.0445,
+          "uncertainty_m3m3": null,
+          "accepted": false,
+          "reject_reasons": [
+            "not_recommended_quality"
+          ],
+          "quality": {
+            "retrieval_qual_flag": 1,
+            "recommended": false,
+            "attempted": true,
+            "successful": true,
+            "surface_conditions": [
+              "9_km_urban_area"
+            ]
+          },
+          "pixel": {
+            "lat": 28.0942,
+            "lon": 30.7624,
+            "distance_km": 2.1
+          },
+          "vegetation_opacity": 0.0254,
+          "granule": "SMAP_L3_SM_P_E_20261105_R19240_001"
+        },
+        {
+          "site_id": "minya",
+          "date": "2026-11-05",
+          "overpass": "PM",
+          "time_utc": null,
+          "soil_moisture_m3m3": null,
+          "uncertainty_m3m3": null,
+          "accepted": false,
+          "reject_reasons": [
+            "no_retrieval_near_site"
+          ],
+          "quality": {
+            "retrieval_qual_flag": null,
+            "recommended": null,
+            "attempted": null,
+            "successful": null,
+            "surface_conditions": []
+          },
+          "pixel": {
+            "lat": null,
+            "lon": null,
+            "distance_km": null
+          },
+          "vegetation_opacity": null,
+          "granule": "SMAP_L3_SM_P_E_20261105_R19240_001"
+        },
+        {
+          "site_id": "minya",
+          "date": "2026-11-06",
+          "overpass": "AM",
+          "time_utc": null,
+          "soil_moisture_m3m3": null,
+          "uncertainty_m3m3": null,
+          "accepted": false,
+          "reject_reasons": [
+            "no_retrieval_near_site"
+          ],
+          "quality": {
+            "retrieval_qual_flag": null,
+            "recommended": null,
+            "attempted": null,
+            "successful": null,
+            "surface_conditions": []
+          },
+          "pixel": {
+            "lat": null,
+            "lon": null,
+            "distance_km": null
+          },
+          "vegetation_opacity": null,
+          "granule": "SMAP_L3_SM_P_E_20261106_R19240_001"
+        },
+        {
+          "site_id": "minya",
+          "date": "2026-11-06",
+          "overpass": "PM",
+          "time_utc": "np.bytes_(b'2026-11-06T15:35:46.138Z')",
+          "soil_moisture_m3m3": 0.0359,
+          "uncertainty_m3m3": null,
+          "accepted": false,
+          "reject_reasons": [
+            "not_recommended_quality"
+          ],
+          "quality": {
+            "retrieval_qual_flag": 1,
+            "recommended": false,
+            "attempted": true,
+            "successful": true,
+            "surface_conditions": [
+              "9_km_urban_area"
+            ]
+          },
+          "pixel": {
+            "lat": 28.0942,
+            "lon": 30.7624,
+            "distance_km": 2.1
+          },
+          "vegetation_opacity": 0.0209,
+          "granule": "SMAP_L3_SM_P_E_20261106_R19240_001"
+        },
+        {
+          "site_id": "minya",
+          "date": "2026-11-07",
+          "overpass": "AM",
+          "time_utc": null,
+          "soil_moisture_m3m3": null,
+          "uncertainty_m3m3": null,
+          "accepted": false,
+          "reject_reasons": [
+            "no_retrieval_near_site"
+          ],
+          "quality": {
+            "retrieval_qual_flag": null,
+            "recommended": null,
+            "attempted": null,
+            "successful": null,
+            "surface_conditions": []
+          },
+          "pixel": {
+            "lat": null,
+            "lon": null,
+            "distance_km": null
+          },
+          "vegetation_opacity": null,
+          "granule": "SMAP_L3_SM_P_E_20261107_R19240_001"
+        },
+        {
+          "site_id": "minya",
+          "date": "2026-11-07",
+          "overpass": "PM",
+          "time_utc": null,
+          "soil_moisture_m3m3": null,
+          "uncertainty_m3m3": null,
+          "accepted": false,
+          "reject_reasons": [
+            "no_retrieval_near_site"
+          ],
+          "quality": {
+            "retrieval_qual_flag": null,
+            "recommended": null,
+            "attempted": null,
+            "successful": null,
+            "surface_conditions": []
+          },
+          "pixel": {
+            "lat": null,
+            "lon": null,
+            "distance_km": null
+          },
+          "vegetation_opacity": null,
+          "granule": "SMAP_L3_SM_P_E_20261107_R19240_001"
+        },
+        {
+          "site_id": "minya",
+          "date": "2026-11-08",
+          "overpass": "AM",
+          "time_utc": "np.bytes_(b'2026-11-08T04:15:30.837Z')",
+          "soil_moisture_m3m3": 0.0394,
+          "uncertainty_m3m3": null,
+          "accepted": false,
+          "reject_reasons": [
+            "not_recommended_quality"
+          ],
+          "quality": {
+            "retrieval_qual_flag": 1,
+            "recommended": false,
+            "attempted": true,
+            "successful": true,
+            "surface_conditions": [
+              "9_km_urban_area"
+            ]
+          },
+          "pixel": {
+            "lat": 28.0942,
+            "lon": 30.7624,
+            "distance_km": 2.1
+          },
+          "vegetation_opacity": 0.0,
+          "granule": "SMAP_L3_SM_P_E_20261108_R19240_001"
+        },
+        {
+          "site_id": "minya",
+          "date": "2026-11-08",
+          "overpass": "PM",
+          "time_utc": null,
+          "soil_moisture_m3m3": null,
+          "uncertainty_m3m3": null,
+          "accepted": false,
+          "reject_reasons": [
+            "no_retrieval_near_site"
+          ],
+          "quality": {
+            "retrieval_qual_flag": null,
+            "recommended": null,
+            "attempted": null,
+            "successful": null,
+            "surface_conditions": []
+          },
+          "pixel": {
+            "lat": null,
+            "lon": null,
+            "distance_km": null
+          },
+          "vegetation_opacity": null,
+          "granule": "SMAP_L3_SM_P_E_20261108_R19240_001"
+        },
+        {
+          "site_id": "minya",
+          "date": "2026-11-09",
+          "overpass": "AM",
+          "time_utc": null,
+          "soil_moisture_m3m3": null,
+          "uncertainty_m3m3": null,
+          "accepted": false,
+          "reject_reasons": [
+            "no_retrieval_near_site"
+          ],
+          "quality": {
+            "retrieval_qual_flag": null,
+            "recommended": null,
+            "attempted": null,
+            "successful": null,
+            "surface_conditions": []
+          },
+          "pixel": {
+            "lat": null,
+            "lon": null,
+            "distance_km": null
+          },
+          "vegetation_opacity": null,
+          "granule": "SMAP_L3_SM_P_E_20261109_R19240_001"
+        },
+        {
+          "site_id": "minya",
+          "date": "2026-11-09",
+          "overpass": "PM",
+          "time_utc": "np.bytes_(b'2026-11-09T15:47:49.258Z')",
+          "soil_moisture_m3m3": 0.02,
+          "uncertainty_m3m3": null,
+          "accepted": false,
+          "reject_reasons": [
+            "not_recommended_quality",
+            "retrieval_failed"
+          ],
+          "quality": {
+            "retrieval_qual_flag": 5,
+            "recommended": false,
+            "attempted": true,
+            "successful": false,
+            "surface_conditions": [
+              "9_km_urban_area"
+            ]
+          },
+          "pixel": {
+            "lat": 28.0942,
+            "lon": 30.7624,
+            "distance_km": 2.1
+          },
+          "vegetation_opacity": 0.0,
+          "granule": "SMAP_L3_SM_P_E_20261109_R19240_001"
+        },
+        {
+          "site_id": "minya",
+          "date": "2026-11-10",
+          "overpass": "AM",
+          "time_utc": null,
+          "soil_moisture_m3m3": null,
+          "uncertainty_m3m3": null,
+          "accepted": false,
+          "reject_reasons": [
+            "no_retrieval_near_site"
+          ],
+          "quality": {
+            "retrieval_qual_flag": null,
+            "recommended": null,
+            "attempted": null,
+            "successful": null,
+            "surface_conditions": []
+          },
+          "pixel": {
+            "lat": null,
+            "lon": null,
+            "distance_km": null
+          },
+          "vegetation_opacity": null,
+          "granule": "SMAP_L3_SM_P_E_20261110_R19240_001"
+        },
+        {
+          "site_id": "minya",
+          "date": "2026-11-10",
+          "overpass": "PM",
+          "time_utc": null,
+          "soil_moisture_m3m3": null,
+          "uncertainty_m3m3": null,
+          "accepted": false,
+          "reject_reasons": [
+            "no_retrieval_near_site"
+          ],
+          "quality": {
+            "retrieval_qual_flag": null,
+            "recommended": null,
+            "attempted": null,
+            "successful": null,
+            "surface_conditions": []
+          },
+          "pixel": {
+            "lat": null,
+            "lon": null,
+            "distance_km": null
+          },
+          "vegetation_opacity": null,
+          "granule": "SMAP_L3_SM_P_E_20261110_R19240_001"
+        },
+        {
+          "site_id": "minya",
+          "date": "2026-11-11",
+          "overpass": "AM",
+          "time_utc": "np.bytes_(b'2026-11-11T04:27:32.951Z')",
+          "soil_moisture_m3m3": 0.0299,
+          "uncertainty_m3m3": null,
+          "accepted": false,
+          "reject_reasons": [
+            "not_recommended_quality"
+          ],
+          "quality": {
+            "retrieval_qual_flag": 1,
+            "recommended": false,
+            "attempted": true,
+            "successful": true,
+            "surface_conditions": [
+              "9_km_urban_area"
+            ]
+          },
+          "pixel": {
+            "lat": 28.0942,
+            "lon": 30.7624,
+            "distance_km": 2.1
+          },
+          "vegetation_opacity": 0.0,
+          "granule": "SMAP_L3_SM_P_E_20261111_R19240_001.h5"
+        },
+        {
+          "site_id": "minya",
+          "date": "2026-11-11",
+          "overpass": "PM",
+          "time_utc": "np.bytes_(b'2026-11-11T15:23:28.111Z')",
+          "soil_moisture_m3m3": 0.02,
+          "uncertainty_m3m3": null,
+          "accepted": false,
+          "reject_reasons": [
+            "not_recommended_quality",
+            "retrieval_failed"
+          ],
+          "quality": {
+            "retrieval_qual_flag": 5,
+            "recommended": false,
+            "attempted": true,
+            "successful": false,
+            "surface_conditions": [
+              "9_km_urban_area"
+            ]
+          },
+          "pixel": {
+            "lat": 28.0942,
+            "lon": 30.7624,
+            "distance_km": 2.1
+          },
+          "vegetation_opacity": 0.0,
+          "granule": "SMAP_L3_SM_P_E_20261111_R19240_001.h5"
+        }
+      ],
+      "daily": [],
+      "summary": {
+        "n_observations": 36,
+        "n_accepted": 0,
+        "n_days_with_data": 0,
+        "mean_m3m3": null,
+        "min_m3m3": null,
+        "max_m3m3": null
+      },
+      "notes": [
+        "SMAP L3 enhanced measures SURFACE soil moisture (top ~5 cm) only; it contains no root-zone soil moisture. Root-zone values would require a model-derived Level 4 product.",
+        "Each 9 km cell mixes many fields, roads, channels and urban patches: treat every value as a regional indication, not a field measurement.",
+        "Only retrievals flagged recommended quality (retrieval_qual_flag 0 or 8) and located on land are accepted; rejected observations are kept with their reason codes."
+      ]
+    },
+    "ndvi": {
+      "status": "pack",
+      "product": "VNP13A1",
+      "product_title": "VIIRS/NPP Vegetation Indices 16-Day L3 Global 500 m SIN Grid",
+      "version": "002",
+      "short_name": "VNP13A1",
+      "variable": "NDVI (normalized difference vegetation index)",
+      "resolution_km": 0.5,
+      "grid": "sinusoidal (SIN) grid, 500 m",
+      "compositing_period_days": 16,
+      "scale_factor": 0.0001,
+      "units": "NDVI (dimensionless, -1..1)",
+      "site_id": "minya",
+      "period": {
+        "start": "2025-10-24",
+        "end": "2026-11-08"
+      },
+      "observations": [
+        {
+          "site_id": "minya",
+          "start": "2025-10-24",
+          "end": "2025-11-08",
+          "midpoint": "2025-10-27",
+          "ndvi": 0.318,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "pixel_reliability": 0,
+            "pixel_reliability_meaning": "excellent",
+            "modland_qa": 0,
+            "vi_usefulness": 0
+          },
+          "composite_doy": 300,
+          "pixel": {
+            "lat": 28.1083,
+            "lon": 30.7472,
+            "distance_km": 0.33
+          },
+          "granule": "VNP13A1.A2025297.h20v06.002.2025319030941",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.496,
+            "p25_ndvi": 0.149,
+            "p75_ndvi": 0.614,
+            "n_pixels": 1089,
+            "vegetated_fraction": 0.67,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "minya",
+          "start": "2025-11-01",
+          "end": "2025-11-16",
+          "midpoint": "2025-11-06",
+          "ndvi": 0.248,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "pixel_reliability": 0,
+            "pixel_reliability_meaning": "excellent",
+            "modland_qa": 0,
+            "vi_usefulness": 0
+          },
+          "composite_doy": 310,
+          "pixel": {
+            "lat": 28.1083,
+            "lon": 30.7472,
+            "distance_km": 0.33
+          },
+          "granule": "VNP13A1.A2025305.h20v06.002.2025322113029",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.49,
+            "p25_ndvi": 0.145,
+            "p75_ndvi": 0.613,
+            "n_pixels": 1088,
+            "vegetated_fraction": 0.67,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "minya",
+          "start": "2025-11-09",
+          "end": "2025-11-24",
+          "midpoint": "2025-11-22",
+          "ndvi": 0.328,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "pixel_reliability": 0,
+            "pixel_reliability_meaning": "excellent",
+            "modland_qa": 0,
+            "vi_usefulness": 0
+          },
+          "composite_doy": 326,
+          "pixel": {
+            "lat": 28.1083,
+            "lon": 30.7472,
+            "distance_km": 0.33
+          },
+          "granule": "VNP13A1.A2025313.h20v06.002.2025329135254",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.434,
+            "p25_ndvi": 0.14,
+            "p75_ndvi": 0.558,
+            "n_pixels": 1063,
+            "vegetated_fraction": 0.65,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "minya",
+          "start": "2025-11-17",
+          "end": "2025-12-02",
+          "midpoint": "2025-11-22",
+          "ndvi": 0.328,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "pixel_reliability": 0,
+            "pixel_reliability_meaning": "excellent",
+            "modland_qa": 0,
+            "vi_usefulness": 0
+          },
+          "composite_doy": 326,
+          "pixel": {
+            "lat": 28.1083,
+            "lon": 30.7472,
+            "distance_km": 0.33
+          },
+          "granule": "VNP13A1.A2025321.h20v06.002.2025339085252",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.443,
+            "p25_ndvi": 0.135,
+            "p75_ndvi": 0.564,
+            "n_pixels": 1040,
+            "vegetated_fraction": 0.65,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "minya",
+          "start": "2025-11-25",
+          "end": "2025-12-10",
+          "midpoint": "2025-12-03",
+          "ndvi": 0.272,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "pixel_reliability": 0,
+            "pixel_reliability_meaning": "excellent",
+            "modland_qa": 0,
+            "vi_usefulness": 0
+          },
+          "composite_doy": 337,
+          "pixel": {
+            "lat": 28.1083,
+            "lon": 30.7472,
+            "distance_km": 0.33
+          },
+          "granule": "VNP13A1.A2025329.h20v06.002.2025350005331",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.497,
+            "p25_ndvi": 0.138,
+            "p75_ndvi": 0.607,
+            "n_pixels": 1068,
+            "vegetated_fraction": 0.67,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "minya",
+          "start": "2025-12-03",
+          "end": "2025-12-18",
+          "midpoint": "2025-12-03",
+          "ndvi": 0.272,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "pixel_reliability": 0,
+            "pixel_reliability_meaning": "excellent",
+            "modland_qa": 0,
+            "vi_usefulness": 0
+          },
+          "composite_doy": 337,
+          "pixel": {
+            "lat": 28.1083,
+            "lon": 30.7472,
+            "distance_km": 0.33
+          },
+          "granule": "VNP13A1.A2025337.h20v06.002.2025356074119",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.515,
+            "p25_ndvi": 0.14,
+            "p75_ndvi": 0.621,
+            "n_pixels": 1069,
+            "vegetated_fraction": 0.67,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "minya",
+          "start": "2025-12-11",
+          "end": "2025-12-26",
+          "midpoint": "2025-12-14",
+          "ndvi": 0.261,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "pixel_reliability": 0,
+            "pixel_reliability_meaning": "excellent",
+            "modland_qa": 0,
+            "vi_usefulness": 0
+          },
+          "composite_doy": 348,
+          "pixel": {
+            "lat": 28.1083,
+            "lon": 30.7472,
+            "distance_km": 0.33
+          },
+          "granule": "VNP13A1.A2025345.h20v06.002.2025361164116",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.537,
+            "p25_ndvi": 0.149,
+            "p75_ndvi": 0.642,
+            "n_pixels": 1076,
+            "vegetated_fraction": 0.68,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "minya",
+          "start": "2025-12-19",
+          "end": "2026-01-03",
+          "midpoint": "2025-12-30",
+          "ndvi": 0.295,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "pixel_reliability": 0,
+            "pixel_reliability_meaning": "excellent",
+            "modland_qa": 0,
+            "vi_usefulness": 0
+          },
+          "composite_doy": 364,
+          "pixel": {
+            "lat": 28.1083,
+            "lon": 30.7472,
+            "distance_km": 0.33
+          },
+          "granule": "VNP13A1.A2025353.h20v06.002.2026004134112",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.564,
+            "p25_ndvi": 0.149,
+            "p75_ndvi": 0.663,
+            "n_pixels": 1088,
+            "vegetated_fraction": 0.69,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "minya",
+          "start": "2025-12-27",
+          "end": "2026-01-11",
+          "midpoint": "2025-12-30",
+          "ndvi": 0.295,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "pixel_reliability": 0,
+            "pixel_reliability_meaning": "excellent",
+            "modland_qa": 0,
+            "vi_usefulness": 0
+          },
+          "composite_doy": 364,
+          "pixel": {
+            "lat": 28.1083,
+            "lon": 30.7472,
+            "distance_km": 0.33
+          },
+          "granule": "VNP13A1.A2025361.h20v06.002.2026015084227",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.575,
+            "p25_ndvi": 0.145,
+            "p75_ndvi": 0.686,
+            "n_pixels": 1085,
+            "vegetated_fraction": 0.69,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "minya",
+          "start": "2026-01-01",
+          "end": "2026-01-16",
+          "midpoint": "2026-01-09",
+          "ndvi": 0.244,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "pixel_reliability": 0,
+            "pixel_reliability_meaning": "excellent",
+            "modland_qa": 0,
+            "vi_usefulness": 0
+          },
+          "composite_doy": 9,
+          "pixel": {
+            "lat": 28.1083,
+            "lon": 30.7472,
+            "distance_km": 0.33
+          },
+          "granule": "VNP13A1.A2026001.h20v06.002.2026017110551",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.579,
+            "p25_ndvi": 0.139,
+            "p75_ndvi": 0.688,
+            "n_pixels": 1082,
+            "vegetated_fraction": 0.68,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "minya",
+          "start": "2026-01-09",
+          "end": "2026-01-24",
+          "midpoint": "2026-01-20",
+          "ndvi": 0.25,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "pixel_reliability": 0,
+            "pixel_reliability_meaning": "excellent",
+            "modland_qa": 0,
+            "vi_usefulness": 0
+          },
+          "composite_doy": 20,
+          "pixel": {
+            "lat": 28.1083,
+            "lon": 30.7472,
+            "distance_km": 0.33
+          },
+          "granule": "VNP13A1.A2026009.h20v06.002.2026025115538",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.575,
+            "p25_ndvi": 0.152,
+            "p75_ndvi": 0.686,
+            "n_pixels": 1086,
+            "vegetated_fraction": 0.68,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "minya",
+          "start": "2026-01-17",
+          "end": "2026-02-01",
+          "midpoint": "2026-01-25",
+          "ndvi": 0.281,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "pixel_reliability": 0,
+            "pixel_reliability_meaning": "excellent",
+            "modland_qa": 0,
+            "vi_usefulness": 0
+          },
+          "composite_doy": 25,
+          "pixel": {
+            "lat": 28.1083,
+            "lon": 30.7472,
+            "distance_km": 0.33
+          },
+          "granule": "VNP13A1.A2026017.h20v06.002.2026034235027",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.535,
+            "p25_ndvi": 0.134,
+            "p75_ndvi": 0.671,
+            "n_pixels": 1046,
+            "vegetated_fraction": 0.66,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "minya",
+          "start": "2026-01-25",
+          "end": "2026-02-09",
+          "midpoint": "2026-01-25",
+          "ndvi": 0.281,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "pixel_reliability": 0,
+            "pixel_reliability_meaning": "excellent",
+            "modland_qa": 0,
+            "vi_usefulness": 0
+          },
+          "composite_doy": 25,
+          "pixel": {
+            "lat": 28.1083,
+            "lon": 30.7472,
+            "distance_km": 0.33
+          },
+          "granule": "VNP13A1.A2026025.h20v06.002.2026041114951",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.58,
+            "p25_ndvi": 0.134,
+            "p75_ndvi": 0.733,
+            "n_pixels": 1049,
+            "vegetated_fraction": 0.69,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "minya",
+          "start": "2026-02-02",
+          "end": "2026-02-17",
+          "midpoint": "2026-02-11",
+          "ndvi": 0.344,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "pixel_reliability": 0,
+            "pixel_reliability_meaning": "excellent",
+            "modland_qa": 0,
+            "vi_usefulness": 0
+          },
+          "composite_doy": 42,
+          "pixel": {
+            "lat": 28.1083,
+            "lon": 30.7472,
+            "distance_km": 0.33
+          },
+          "granule": "VNP13A1.A2026033.h20v06.002.2026049114942",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.643,
+            "p25_ndvi": 0.141,
+            "p75_ndvi": 0.766,
+            "n_pixels": 1088,
+            "vegetated_fraction": 0.7,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "minya",
+          "start": "2026-02-10",
+          "end": "2026-02-25",
+          "midpoint": "2026-02-11",
+          "ndvi": 0.344,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "pixel_reliability": 0,
+            "pixel_reliability_meaning": "excellent",
+            "modland_qa": 0,
+            "vi_usefulness": 0
+          },
+          "composite_doy": 42,
+          "pixel": {
+            "lat": 28.1083,
+            "lon": 30.7472,
+            "distance_km": 0.33
+          },
+          "granule": "VNP13A1.A2026041.h20v06.002.2026057095400",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.643,
+            "p25_ndvi": 0.136,
+            "p75_ndvi": 0.77,
+            "n_pixels": 1088,
+            "vegetated_fraction": 0.7,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "minya",
+          "start": "2026-02-18",
+          "end": "2026-03-05",
+          "midpoint": "2026-03-04",
+          "ndvi": 0.342,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "pixel_reliability": 0,
+            "pixel_reliability_meaning": "excellent",
+            "modland_qa": 0,
+            "vi_usefulness": 0
+          },
+          "composite_doy": 63,
+          "pixel": {
+            "lat": 28.1083,
+            "lon": 30.7472,
+            "distance_km": 0.33
+          },
+          "granule": "VNP13A1.A2026049.h20v06.002.2026065115628",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.623,
+            "p25_ndvi": 0.15,
+            "p75_ndvi": 0.751,
+            "n_pixels": 1089,
+            "vegetated_fraction": 0.7,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "minya",
+          "start": "2026-02-26",
+          "end": "2026-03-13",
+          "midpoint": "2026-03-04",
+          "ndvi": 0.342,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "pixel_reliability": 0,
+            "pixel_reliability_meaning": "excellent",
+            "modland_qa": 0,
+            "vi_usefulness": 0
+          },
+          "composite_doy": 63,
+          "pixel": {
+            "lat": 28.1083,
+            "lon": 30.7472,
+            "distance_km": 0.33
+          },
+          "granule": "VNP13A1.A2026057.h20v06.002.2026077164629",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.582,
+            "p25_ndvi": 0.145,
+            "p75_ndvi": 0.724,
+            "n_pixels": 1077,
+            "vegetated_fraction": 0.68,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "minya",
+          "start": "2026-03-06",
+          "end": "2026-03-21",
+          "midpoint": "2026-03-20",
+          "ndvi": 0.31,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "pixel_reliability": 0,
+            "pixel_reliability_meaning": "excellent",
+            "modland_qa": 0,
+            "vi_usefulness": 0
+          },
+          "composite_doy": 79,
+          "pixel": {
+            "lat": 28.1083,
+            "lon": 30.7472,
+            "distance_km": 0.33
+          },
+          "granule": "VNP13A1.A2026065.h20v06.002.2026085150047",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.543,
+            "p25_ndvi": 0.133,
+            "p75_ndvi": 0.694,
+            "n_pixels": 1089,
+            "vegetated_fraction": 0.67,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "minya",
+          "start": "2026-03-14",
+          "end": "2026-03-29",
+          "midpoint": "2026-03-20",
+          "ndvi": 0.31,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "pixel_reliability": 0,
+            "pixel_reliability_meaning": "excellent",
+            "modland_qa": 0,
+            "vi_usefulness": 0
+          },
+          "composite_doy": 79,
+          "pixel": {
+            "lat": 28.1083,
+            "lon": 30.7472,
+            "distance_km": 0.33
+          },
+          "granule": "VNP13A1.A2026073.h20v06.002.2026090124544",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.525,
+            "p25_ndvi": 0.122,
+            "p75_ndvi": 0.687,
+            "n_pixels": 1088,
+            "vegetated_fraction": 0.65,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "minya",
+          "start": "2026-03-22",
+          "end": "2026-04-06",
+          "midpoint": "2026-03-30",
+          "ndvi": 0.371,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "pixel_reliability": 0,
+            "pixel_reliability_meaning": "excellent",
+            "modland_qa": 0,
+            "vi_usefulness": 0
+          },
+          "composite_doy": 89,
+          "pixel": {
+            "lat": 28.1083,
+            "lon": 30.7472,
+            "distance_km": 0.33
+          },
+          "granule": "VNP13A1.A2026081.h20v06.002.2026097095009",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.532,
+            "p25_ndvi": 0.148,
+            "p75_ndvi": 0.65,
+            "n_pixels": 1088,
+            "vegetated_fraction": 0.68,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "minya",
+          "start": "2026-03-30",
+          "end": "2026-04-14",
+          "midpoint": "2026-03-30",
+          "ndvi": 0.371,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "pixel_reliability": 0,
+            "pixel_reliability_meaning": "excellent",
+            "modland_qa": 0,
+            "vi_usefulness": 0
+          },
+          "composite_doy": 89,
+          "pixel": {
+            "lat": 28.1083,
+            "lon": 30.7472,
+            "distance_km": 0.33
+          },
+          "granule": "VNP13A1.A2026089.h20v06.002.2026105101701",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.549,
+            "p25_ndvi": 0.158,
+            "p75_ndvi": 0.658,
+            "n_pixels": 1089,
+            "vegetated_fraction": 0.7,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "minya",
+          "start": "2026-04-07",
+          "end": "2026-04-22",
+          "midpoint": "2026-04-21",
+          "ndvi": 0.27,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "pixel_reliability": 0,
+            "pixel_reliability_meaning": "excellent",
+            "modland_qa": 0,
+            "vi_usefulness": 0
+          },
+          "composite_doy": 111,
+          "pixel": {
+            "lat": 28.1083,
+            "lon": 30.7472,
+            "distance_km": 0.33
+          },
+          "granule": "VNP13A1.A2026097.h20v06.002.2026134171649",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.51,
+            "p25_ndvi": 0.154,
+            "p75_ndvi": 0.63,
+            "n_pixels": 1089,
+            "vegetated_fraction": 0.69,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "minya",
+          "start": "2026-04-15",
+          "end": "2026-04-30",
+          "midpoint": "2026-04-21",
+          "ndvi": 0.27,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "pixel_reliability": 0,
+            "pixel_reliability_meaning": "excellent",
+            "modland_qa": 0,
+            "vi_usefulness": 0
+          },
+          "composite_doy": 111,
+          "pixel": {
+            "lat": 28.1083,
+            "lon": 30.7472,
+            "distance_km": 0.33
+          },
+          "granule": "VNP13A1.A2026105.h20v06.002.2026134024713",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.45,
+            "p25_ndvi": 0.154,
+            "p75_ndvi": 0.543,
+            "n_pixels": 1089,
+            "vegetated_fraction": 0.66,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "minya",
+          "start": "2026-04-23",
+          "end": "2026-05-08",
+          "midpoint": "2026-04-26",
+          "ndvi": 0.201,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "pixel_reliability": 0,
+            "pixel_reliability_meaning": "excellent",
+            "modland_qa": 0,
+            "vi_usefulness": 0
+          },
+          "composite_doy": 116,
+          "pixel": {
+            "lat": 28.1083,
+            "lon": 30.7472,
+            "distance_km": 0.33
+          },
+          "granule": "VNP13A1.A2026113.h20v06.002.2026134025829",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.368,
+            "p25_ndvi": 0.129,
+            "p75_ndvi": 0.442,
+            "n_pixels": 1089,
+            "vegetated_fraction": 0.6,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "minya",
+          "start": "2026-05-01",
+          "end": "2026-05-16",
+          "midpoint": "2026-05-12",
+          "ndvi": 0.232,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "pixel_reliability": 0,
+            "pixel_reliability_meaning": "excellent",
+            "modland_qa": 0,
+            "vi_usefulness": 0
+          },
+          "composite_doy": 132,
+          "pixel": {
+            "lat": 28.1083,
+            "lon": 30.7472,
+            "distance_km": 0.33
+          },
+          "granule": "VNP13A1.A2026121.h20v06.002.2026141160004",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.362,
+            "p25_ndvi": 0.136,
+            "p75_ndvi": 0.432,
+            "n_pixels": 1089,
+            "vegetated_fraction": 0.6,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "minya",
+          "start": "2026-05-09",
+          "end": "2026-05-24",
+          "midpoint": "2026-05-23",
+          "ndvi": 0.238,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "pixel_reliability": 0,
+            "pixel_reliability_meaning": "excellent",
+            "modland_qa": 0,
+            "vi_usefulness": 0
+          },
+          "composite_doy": 143,
+          "pixel": {
+            "lat": 28.1083,
+            "lon": 30.7472,
+            "distance_km": 0.33
+          },
+          "granule": "VNP13A1.A2026129.h20v06.002.2026146131156",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.346,
+            "p25_ndvi": 0.14,
+            "p75_ndvi": 0.429,
+            "n_pixels": 1089,
+            "vegetated_fraction": 0.59,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "minya",
+          "start": "2026-05-17",
+          "end": "2026-06-01",
+          "midpoint": "2026-05-23",
+          "ndvi": 0.238,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "pixel_reliability": 0,
+            "pixel_reliability_meaning": "excellent",
+            "modland_qa": 0,
+            "vi_usefulness": 0
+          },
+          "composite_doy": 143,
+          "pixel": {
+            "lat": 28.1083,
+            "lon": 30.7472,
+            "distance_km": 0.33
+          },
+          "granule": "VNP13A1.A2026137.h20v06.002.2026162011030",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.356,
+            "p25_ndvi": 0.142,
+            "p75_ndvi": 0.454,
+            "n_pixels": 1089,
+            "vegetated_fraction": 0.61,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "minya",
+          "start": "2026-05-25",
+          "end": "2026-06-09",
+          "midpoint": "2026-06-08",
+          "ndvi": 0.202,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "pixel_reliability": 0,
+            "pixel_reliability_meaning": "excellent",
+            "modland_qa": 0,
+            "vi_usefulness": 0
+          },
+          "composite_doy": 159,
+          "pixel": {
+            "lat": 28.1083,
+            "lon": 30.7472,
+            "distance_km": 0.33
+          },
+          "granule": "VNP13A1.A2026145.h20v06.002.2026166043918",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.368,
+            "p25_ndvi": 0.137,
+            "p75_ndvi": 0.462,
+            "n_pixels": 1089,
+            "vegetated_fraction": 0.62,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "minya",
+          "start": "2026-06-02",
+          "end": "2026-06-17",
+          "midpoint": "2026-06-14",
+          "ndvi": 0.237,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "pixel_reliability": 1,
+            "pixel_reliability_meaning": "good",
+            "modland_qa": 0,
+            "vi_usefulness": 0
+          },
+          "composite_doy": 165,
+          "pixel": {
+            "lat": 28.1083,
+            "lon": 30.7472,
+            "distance_km": 0.33
+          },
+          "granule": "VNP13A1.A2026153.h20v06.002.2026170030219",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.378,
+            "p25_ndvi": 0.14,
+            "p75_ndvi": 0.484,
+            "n_pixels": 1086,
+            "vegetated_fraction": 0.62,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "minya",
+          "start": "2026-06-10",
+          "end": "2026-06-25",
+          "midpoint": "2026-06-23",
+          "ndvi": 0.274,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "pixel_reliability": 1,
+            "pixel_reliability_meaning": "good",
+            "modland_qa": 0,
+            "vi_usefulness": 0
+          },
+          "composite_doy": 174,
+          "pixel": {
+            "lat": 28.1083,
+            "lon": 30.7472,
+            "distance_km": 0.33
+          },
+          "granule": "VNP13A1.A2026161.h20v06.002.2026177103802",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.441,
+            "p25_ndvi": 0.144,
+            "p75_ndvi": 0.551,
+            "n_pixels": 1089,
+            "vegetated_fraction": 0.66,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "minya",
+          "start": "2026-06-18",
+          "end": "2026-07-03",
+          "midpoint": "2026-06-23",
+          "ndvi": 0.274,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "pixel_reliability": 1,
+            "pixel_reliability_meaning": "good",
+            "modland_qa": 0,
+            "vi_usefulness": 0
+          },
+          "composite_doy": 174,
+          "pixel": {
+            "lat": 28.1083,
+            "lon": 30.7472,
+            "distance_km": 0.33
+          },
+          "granule": "VNP13A1.A2026169.h20v06.002.2026188194908",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.487,
+            "p25_ndvi": 0.149,
+            "p75_ndvi": 0.607,
+            "n_pixels": 1089,
+            "vegetated_fraction": 0.67,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "minya",
+          "start": "2026-06-26",
+          "end": "2026-07-11",
+          "midpoint": "2026-07-09",
+          "ndvi": 0.321,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "pixel_reliability": 1,
+            "pixel_reliability_meaning": "good",
+            "modland_qa": 0,
+            "vi_usefulness": 0
+          },
+          "composite_doy": 190,
+          "pixel": {
+            "lat": 28.1083,
+            "lon": 30.7472,
+            "distance_km": 0.33
+          },
+          "granule": "VNP13A1.A2026177.h20v06.002.2026204142441",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.529,
+            "p25_ndvi": 0.149,
+            "p75_ndvi": 0.648,
+            "n_pixels": 1085,
+            "vegetated_fraction": 0.69,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "minya",
+          "start": "2026-07-04",
+          "end": "2026-07-19",
+          "midpoint": "2026-07-09",
+          "ndvi": 0.321,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "pixel_reliability": 1,
+            "pixel_reliability_meaning": "good",
+            "modland_qa": 0,
+            "vi_usefulness": 0
+          },
+          "composite_doy": 190,
+          "pixel": {
+            "lat": 28.1083,
+            "lon": 30.7472,
+            "distance_km": 0.33
+          },
+          "granule": "VNP13A1.A2026185.h20v06.002.2026209042133",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.517,
+            "p25_ndvi": 0.143,
+            "p75_ndvi": 0.64,
+            "n_pixels": 1086,
+            "vegetated_fraction": 0.67,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "minya",
+          "start": "2026-07-12",
+          "end": "2026-07-27",
+          "midpoint": "2026-07-26",
+          "ndvi": 0.329,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "pixel_reliability": 0,
+            "pixel_reliability_meaning": "excellent",
+            "modland_qa": 0,
+            "vi_usefulness": 0
+          },
+          "composite_doy": 207,
+          "pixel": {
+            "lat": 28.1083,
+            "lon": 30.7472,
+            "distance_km": 0.33
+          },
+          "granule": "VNP13A1.A2026193.h20v06.002.2026209195742",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.533,
+            "p25_ndvi": 0.155,
+            "p75_ndvi": 0.673,
+            "n_pixels": 1087,
+            "vegetated_fraction": 0.68,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "minya",
+          "start": "2026-07-20",
+          "end": "2026-08-04",
+          "midpoint": "2026-07-26",
+          "ndvi": 0.329,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "pixel_reliability": 0,
+            "pixel_reliability_meaning": "excellent",
+            "modland_qa": 0,
+            "vi_usefulness": 0
+          },
+          "composite_doy": 207,
+          "pixel": {
+            "lat": 28.1083,
+            "lon": 30.7472,
+            "distance_km": 0.33
+          },
+          "granule": "VNP13A1.A2026201.h20v06.002.2026222173206",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.552,
+            "p25_ndvi": 0.164,
+            "p75_ndvi": 0.676,
+            "n_pixels": 1082,
+            "vegetated_fraction": 0.7,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "minya",
+          "start": "2026-07-28",
+          "end": "2026-08-12",
+          "midpoint": "2026-08-10",
+          "ndvi": 0.308,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "pixel_reliability": 1,
+            "pixel_reliability_meaning": "good",
+            "modland_qa": 0,
+            "vi_usefulness": 0
+          },
+          "composite_doy": 222,
+          "pixel": {
+            "lat": 28.1083,
+            "lon": 30.7472,
+            "distance_km": 0.33
+          },
+          "granule": "VNP13A1.A2026209.h20v06.002.2026225155549",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.514,
+            "p25_ndvi": 0.143,
+            "p75_ndvi": 0.635,
+            "n_pixels": 1052,
+            "vegetated_fraction": 0.68,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "minya",
+          "start": "2026-08-05",
+          "end": "2026-08-20",
+          "midpoint": "2026-08-10",
+          "ndvi": 0.308,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "pixel_reliability": 1,
+            "pixel_reliability_meaning": "good",
+            "modland_qa": 0,
+            "vi_usefulness": 0
+          },
+          "composite_doy": 222,
+          "pixel": {
+            "lat": 28.1083,
+            "lon": 30.7472,
+            "distance_km": 0.33
+          },
+          "granule": "VNP13A1.A2026217.h20v06.002.2026236114043",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.455,
+            "p25_ndvi": 0.155,
+            "p75_ndvi": 0.616,
+            "n_pixels": 1075,
+            "vegetated_fraction": 0.68,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "minya",
+          "start": "2026-08-13",
+          "end": "2026-08-28",
+          "midpoint": "2026-08-16",
+          "ndvi": 0.239,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "pixel_reliability": 0,
+            "pixel_reliability_meaning": "excellent",
+            "modland_qa": 0,
+            "vi_usefulness": 0
+          },
+          "composite_doy": 228,
+          "pixel": {
+            "lat": 28.1083,
+            "lon": 30.7472,
+            "distance_km": 0.33
+          },
+          "granule": "VNP13A1.A2026225.h20v06.002.2026241083734",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.456,
+            "p25_ndvi": 0.16,
+            "p75_ndvi": 0.622,
+            "n_pixels": 1089,
+            "vegetated_fraction": 0.68,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "minya",
+          "start": "2026-08-21",
+          "end": "2026-09-05",
+          "midpoint": "2026-09-02",
+          "ndvi": 0.241,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "pixel_reliability": 1,
+            "pixel_reliability_meaning": "good",
+            "modland_qa": 0,
+            "vi_usefulness": 0
+          },
+          "composite_doy": 245,
+          "pixel": {
+            "lat": 28.1083,
+            "lon": 30.7472,
+            "distance_km": 0.33
+          },
+          "granule": "VNP13A1.A2026233.h20v06.002.2026251193422",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.434,
+            "p25_ndvi": 0.148,
+            "p75_ndvi": 0.597,
+            "n_pixels": 1089,
+            "vegetated_fraction": 0.66,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "minya",
+          "start": "2026-08-29",
+          "end": "2026-09-13",
+          "midpoint": "2026-09-02",
+          "ndvi": 0.241,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "pixel_reliability": 1,
+            "pixel_reliability_meaning": "good",
+            "modland_qa": 0,
+            "vi_usefulness": 0
+          },
+          "composite_doy": 245,
+          "pixel": {
+            "lat": 28.1083,
+            "lon": 30.7472,
+            "distance_km": 0.33
+          },
+          "granule": "VNP13A1.A2026241.h20v06.002.2026258002910",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.366,
+            "p25_ndvi": 0.152,
+            "p75_ndvi": 0.523,
+            "n_pixels": 1089,
+            "vegetated_fraction": 0.6,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "minya",
+          "start": "2026-09-06",
+          "end": "2026-09-21",
+          "midpoint": "2026-09-07",
+          "ndvi": 0.216,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "pixel_reliability": 0,
+            "pixel_reliability_meaning": "excellent",
+            "modland_qa": 0,
+            "vi_usefulness": 0
+          },
+          "composite_doy": 250,
+          "pixel": {
+            "lat": 28.1083,
+            "lon": 30.7472,
+            "distance_km": 0.33
+          },
+          "granule": "VNP13A1.A2026249.h20v06.002.2026265092148",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.353,
+            "p25_ndvi": 0.148,
+            "p75_ndvi": 0.482,
+            "n_pixels": 1089,
+            "vegetated_fraction": 0.57,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "minya",
+          "start": "2026-09-14",
+          "end": "2026-09-29",
+          "midpoint": "2026-09-27",
+          "ndvi": 0.229,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "pixel_reliability": 1,
+            "pixel_reliability_meaning": "good",
+            "modland_qa": 0,
+            "vi_usefulness": 0
+          },
+          "composite_doy": 270,
+          "pixel": {
+            "lat": 28.1083,
+            "lon": 30.7472,
+            "distance_km": 0.33
+          },
+          "granule": "VNP13A1.A2026257.h20v06.002.2026289164631",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.32,
+            "p25_ndvi": 0.141,
+            "p75_ndvi": 0.429,
+            "n_pixels": 1089,
+            "vegetated_fraction": 0.55,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "minya",
+          "start": "2026-09-22",
+          "end": "2026-10-07",
+          "midpoint": "2026-09-27",
+          "ndvi": 0.229,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "pixel_reliability": 1,
+            "pixel_reliability_meaning": "good",
+            "modland_qa": 0,
+            "vi_usefulness": 0
+          },
+          "composite_doy": 270,
+          "pixel": {
+            "lat": 28.1083,
+            "lon": 30.7472,
+            "distance_km": 0.33
+          },
+          "granule": "VNP13A1.A2026265.h20v06.002.2026289164638",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.344,
+            "p25_ndvi": 0.14,
+            "p75_ndvi": 0.417,
+            "n_pixels": 1088,
+            "vegetated_fraction": 0.61,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "minya",
+          "start": "2026-09-30",
+          "end": "2026-10-15",
+          "midpoint": "2026-10-03",
+          "ndvi": 0.226,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "pixel_reliability": 0,
+            "pixel_reliability_meaning": "excellent",
+            "modland_qa": 0,
+            "vi_usefulness": 0
+          },
+          "composite_doy": 276,
+          "pixel": {
+            "lat": 28.1083,
+            "lon": 30.7472,
+            "distance_km": 0.33
+          },
+          "granule": "VNP13A1.A2026273.h20v06.002.2026296170111",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.347,
+            "p25_ndvi": 0.146,
+            "p75_ndvi": 0.436,
+            "n_pixels": 1089,
+            "vegetated_fraction": 0.62,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "minya",
+          "start": "2026-10-08",
+          "end": "2026-10-23",
+          "midpoint": "2026-10-19",
+          "ndvi": 0.24,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "pixel_reliability": 0,
+            "pixel_reliability_meaning": "excellent",
+            "modland_qa": 0,
+            "vi_usefulness": 0
+          },
+          "composite_doy": 292,
+          "pixel": {
+            "lat": 28.1083,
+            "lon": 30.7472,
+            "distance_km": 0.33
+          },
+          "granule": "VNP13A1.A2026281.h20v06.002.2026297094923",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.362,
+            "p25_ndvi": 0.148,
+            "p75_ndvi": 0.459,
+            "n_pixels": 1089,
+            "vegetated_fraction": 0.62,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "minya",
+          "start": "2026-10-16",
+          "end": "2026-10-31",
+          "midpoint": "2026-10-19",
+          "ndvi": 0.24,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "pixel_reliability": 0,
+            "pixel_reliability_meaning": "excellent",
+            "modland_qa": 0,
+            "vi_usefulness": 0
+          },
+          "composite_doy": 292,
+          "pixel": {
+            "lat": 28.1083,
+            "lon": 30.7472,
+            "distance_km": 0.33
+          },
+          "granule": "VNP13A1.A2026289.h20v06.002.2026307014637",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.428,
+            "p25_ndvi": 0.146,
+            "p75_ndvi": 0.542,
+            "n_pixels": 1089,
+            "vegetated_fraction": 0.65,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "minya",
+          "start": "2026-10-24",
+          "end": "2026-11-08",
+          "midpoint": "2026-10-30",
+          "ndvi": 0.221,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "pixel_reliability": 0,
+            "pixel_reliability_meaning": "excellent",
+            "modland_qa": 0,
+            "vi_usefulness": 0
+          },
+          "composite_doy": 303,
+          "pixel": {
+            "lat": 28.1083,
+            "lon": 30.7472,
+            "distance_km": 0.33
+          },
+          "granule": "VNP13A1.A2026297.h20v06.002.2026309112351",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.424,
+            "p25_ndvi": 0.146,
+            "p75_ndvi": 0.542,
+            "n_pixels": 1089,
+            "vegetated_fraction": 0.64,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        }
+      ],
+      "series": [
+        {
+          "start": "2025-10-24",
+          "end": "2025-11-08",
+          "ndvi": 0.318
+        },
+        {
+          "start": "2025-11-01",
+          "end": "2025-11-16",
+          "ndvi": 0.248
+        },
+        {
+          "start": "2025-11-09",
+          "end": "2025-11-24",
+          "ndvi": 0.328
+        },
+        {
+          "start": "2025-11-17",
+          "end": "2025-12-02",
+          "ndvi": 0.328
+        },
+        {
+          "start": "2025-11-25",
+          "end": "2025-12-10",
+          "ndvi": 0.272
+        },
+        {
+          "start": "2025-12-03",
+          "end": "2025-12-18",
+          "ndvi": 0.272
+        },
+        {
+          "start": "2025-12-11",
+          "end": "2025-12-26",
+          "ndvi": 0.261
+        },
+        {
+          "start": "2025-12-19",
+          "end": "2026-01-03",
+          "ndvi": 0.295
+        },
+        {
+          "start": "2025-12-27",
+          "end": "2026-01-11",
+          "ndvi": 0.295
+        },
+        {
+          "start": "2026-01-01",
+          "end": "2026-01-16",
+          "ndvi": 0.244
+        },
+        {
+          "start": "2026-01-09",
+          "end": "2026-01-24",
+          "ndvi": 0.25
+        },
+        {
+          "start": "2026-01-17",
+          "end": "2026-02-01",
+          "ndvi": 0.281
+        },
+        {
+          "start": "2026-01-25",
+          "end": "2026-02-09",
+          "ndvi": 0.281
+        },
+        {
+          "start": "2026-02-02",
+          "end": "2026-02-17",
+          "ndvi": 0.344
+        },
+        {
+          "start": "2026-02-10",
+          "end": "2026-02-25",
+          "ndvi": 0.344
+        },
+        {
+          "start": "2026-02-18",
+          "end": "2026-03-05",
+          "ndvi": 0.342
+        },
+        {
+          "start": "2026-02-26",
+          "end": "2026-03-13",
+          "ndvi": 0.342
+        },
+        {
+          "start": "2026-03-06",
+          "end": "2026-03-21",
+          "ndvi": 0.31
+        },
+        {
+          "start": "2026-03-14",
+          "end": "2026-03-29",
+          "ndvi": 0.31
+        },
+        {
+          "start": "2026-03-22",
+          "end": "2026-04-06",
+          "ndvi": 0.371
+        },
+        {
+          "start": "2026-03-30",
+          "end": "2026-04-14",
+          "ndvi": 0.371
+        },
+        {
+          "start": "2026-04-07",
+          "end": "2026-04-22",
+          "ndvi": 0.27
+        },
+        {
+          "start": "2026-04-15",
+          "end": "2026-04-30",
+          "ndvi": 0.27
+        },
+        {
+          "start": "2026-04-23",
+          "end": "2026-05-08",
+          "ndvi": 0.201
+        },
+        {
+          "start": "2026-05-01",
+          "end": "2026-05-16",
+          "ndvi": 0.232
+        },
+        {
+          "start": "2026-05-09",
+          "end": "2026-05-24",
+          "ndvi": 0.238
+        },
+        {
+          "start": "2026-05-17",
+          "end": "2026-06-01",
+          "ndvi": 0.238
+        },
+        {
+          "start": "2026-05-25",
+          "end": "2026-06-09",
+          "ndvi": 0.202
+        },
+        {
+          "start": "2026-06-02",
+          "end": "2026-06-17",
+          "ndvi": 0.237
+        },
+        {
+          "start": "2026-06-10",
+          "end": "2026-06-25",
+          "ndvi": 0.274
+        },
+        {
+          "start": "2026-06-18",
+          "end": "2026-07-03",
+          "ndvi": 0.274
+        },
+        {
+          "start": "2026-06-26",
+          "end": "2026-07-11",
+          "ndvi": 0.321
+        },
+        {
+          "start": "2026-07-04",
+          "end": "2026-07-19",
+          "ndvi": 0.321
+        },
+        {
+          "start": "2026-07-12",
+          "end": "2026-07-27",
+          "ndvi": 0.329
+        },
+        {
+          "start": "2026-07-20",
+          "end": "2026-08-04",
+          "ndvi": 0.329
+        },
+        {
+          "start": "2026-07-28",
+          "end": "2026-08-12",
+          "ndvi": 0.308
+        },
+        {
+          "start": "2026-08-05",
+          "end": "2026-08-20",
+          "ndvi": 0.308
+        },
+        {
+          "start": "2026-08-13",
+          "end": "2026-08-28",
+          "ndvi": 0.239
+        },
+        {
+          "start": "2026-08-21",
+          "end": "2026-09-05",
+          "ndvi": 0.241
+        },
+        {
+          "start": "2026-08-29",
+          "end": "2026-09-13",
+          "ndvi": 0.241
+        },
+        {
+          "start": "2026-09-06",
+          "end": "2026-09-21",
+          "ndvi": 0.216
+        },
+        {
+          "start": "2026-09-14",
+          "end": "2026-09-29",
+          "ndvi": 0.229
+        },
+        {
+          "start": "2026-09-22",
+          "end": "2026-10-07",
+          "ndvi": 0.229
+        },
+        {
+          "start": "2026-09-30",
+          "end": "2026-10-15",
+          "ndvi": 0.226
+        },
+        {
+          "start": "2026-10-08",
+          "end": "2026-10-23",
+          "ndvi": 0.24
+        },
+        {
+          "start": "2026-10-16",
+          "end": "2026-10-31",
+          "ndvi": 0.24
+        },
+        {
+          "start": "2026-10-24",
+          "end": "2026-11-08",
+          "ndvi": 0.221
+        }
+      ],
+      "regional_series": [
+        {
+          "start": "2025-10-24",
+          "end": "2025-11-08",
+          "ndvi": 0.496,
+          "p25": 0.149,
+          "p75": 0.614,
+          "vegetated_fraction": 0.67
+        },
+        {
+          "start": "2025-11-01",
+          "end": "2025-11-16",
+          "ndvi": 0.49,
+          "p25": 0.145,
+          "p75": 0.613,
+          "vegetated_fraction": 0.67
+        },
+        {
+          "start": "2025-11-09",
+          "end": "2025-11-24",
+          "ndvi": 0.434,
+          "p25": 0.14,
+          "p75": 0.558,
+          "vegetated_fraction": 0.65
+        },
+        {
+          "start": "2025-11-17",
+          "end": "2025-12-02",
+          "ndvi": 0.443,
+          "p25": 0.135,
+          "p75": 0.564,
+          "vegetated_fraction": 0.65
+        },
+        {
+          "start": "2025-11-25",
+          "end": "2025-12-10",
+          "ndvi": 0.497,
+          "p25": 0.138,
+          "p75": 0.607,
+          "vegetated_fraction": 0.67
+        },
+        {
+          "start": "2025-12-03",
+          "end": "2025-12-18",
+          "ndvi": 0.515,
+          "p25": 0.14,
+          "p75": 0.621,
+          "vegetated_fraction": 0.67
+        },
+        {
+          "start": "2025-12-11",
+          "end": "2025-12-26",
+          "ndvi": 0.537,
+          "p25": 0.149,
+          "p75": 0.642,
+          "vegetated_fraction": 0.68
+        },
+        {
+          "start": "2025-12-19",
+          "end": "2026-01-03",
+          "ndvi": 0.564,
+          "p25": 0.149,
+          "p75": 0.663,
+          "vegetated_fraction": 0.69
+        },
+        {
+          "start": "2025-12-27",
+          "end": "2026-01-11",
+          "ndvi": 0.575,
+          "p25": 0.145,
+          "p75": 0.686,
+          "vegetated_fraction": 0.69
+        },
+        {
+          "start": "2026-01-01",
+          "end": "2026-01-16",
+          "ndvi": 0.579,
+          "p25": 0.139,
+          "p75": 0.688,
+          "vegetated_fraction": 0.68
+        },
+        {
+          "start": "2026-01-09",
+          "end": "2026-01-24",
+          "ndvi": 0.575,
+          "p25": 0.152,
+          "p75": 0.686,
+          "vegetated_fraction": 0.68
+        },
+        {
+          "start": "2026-01-17",
+          "end": "2026-02-01",
+          "ndvi": 0.535,
+          "p25": 0.134,
+          "p75": 0.671,
+          "vegetated_fraction": 0.66
+        },
+        {
+          "start": "2026-01-25",
+          "end": "2026-02-09",
+          "ndvi": 0.58,
+          "p25": 0.134,
+          "p75": 0.733,
+          "vegetated_fraction": 0.69
+        },
+        {
+          "start": "2026-02-02",
+          "end": "2026-02-17",
+          "ndvi": 0.643,
+          "p25": 0.141,
+          "p75": 0.766,
+          "vegetated_fraction": 0.7
+        },
+        {
+          "start": "2026-02-10",
+          "end": "2026-02-25",
+          "ndvi": 0.643,
+          "p25": 0.136,
+          "p75": 0.77,
+          "vegetated_fraction": 0.7
+        },
+        {
+          "start": "2026-02-18",
+          "end": "2026-03-05",
+          "ndvi": 0.623,
+          "p25": 0.15,
+          "p75": 0.751,
+          "vegetated_fraction": 0.7
+        },
+        {
+          "start": "2026-02-26",
+          "end": "2026-03-13",
+          "ndvi": 0.582,
+          "p25": 0.145,
+          "p75": 0.724,
+          "vegetated_fraction": 0.68
+        },
+        {
+          "start": "2026-03-06",
+          "end": "2026-03-21",
+          "ndvi": 0.543,
+          "p25": 0.133,
+          "p75": 0.694,
+          "vegetated_fraction": 0.67
+        },
+        {
+          "start": "2026-03-14",
+          "end": "2026-03-29",
+          "ndvi": 0.525,
+          "p25": 0.122,
+          "p75": 0.687,
+          "vegetated_fraction": 0.65
+        },
+        {
+          "start": "2026-03-22",
+          "end": "2026-04-06",
+          "ndvi": 0.532,
+          "p25": 0.148,
+          "p75": 0.65,
+          "vegetated_fraction": 0.68
+        },
+        {
+          "start": "2026-03-30",
+          "end": "2026-04-14",
+          "ndvi": 0.549,
+          "p25": 0.158,
+          "p75": 0.658,
+          "vegetated_fraction": 0.7
+        },
+        {
+          "start": "2026-04-07",
+          "end": "2026-04-22",
+          "ndvi": 0.51,
+          "p25": 0.154,
+          "p75": 0.63,
+          "vegetated_fraction": 0.69
+        },
+        {
+          "start": "2026-04-15",
+          "end": "2026-04-30",
+          "ndvi": 0.45,
+          "p25": 0.154,
+          "p75": 0.543,
+          "vegetated_fraction": 0.66
+        },
+        {
+          "start": "2026-04-23",
+          "end": "2026-05-08",
+          "ndvi": 0.368,
+          "p25": 0.129,
+          "p75": 0.442,
+          "vegetated_fraction": 0.6
+        },
+        {
+          "start": "2026-05-01",
+          "end": "2026-05-16",
+          "ndvi": 0.362,
+          "p25": 0.136,
+          "p75": 0.432,
+          "vegetated_fraction": 0.6
+        },
+        {
+          "start": "2026-05-09",
+          "end": "2026-05-24",
+          "ndvi": 0.346,
+          "p25": 0.14,
+          "p75": 0.429,
+          "vegetated_fraction": 0.59
+        },
+        {
+          "start": "2026-05-17",
+          "end": "2026-06-01",
+          "ndvi": 0.356,
+          "p25": 0.142,
+          "p75": 0.454,
+          "vegetated_fraction": 0.61
+        },
+        {
+          "start": "2026-05-25",
+          "end": "2026-06-09",
+          "ndvi": 0.368,
+          "p25": 0.137,
+          "p75": 0.462,
+          "vegetated_fraction": 0.62
+        },
+        {
+          "start": "2026-06-02",
+          "end": "2026-06-17",
+          "ndvi": 0.378,
+          "p25": 0.14,
+          "p75": 0.484,
+          "vegetated_fraction": 0.62
+        },
+        {
+          "start": "2026-06-10",
+          "end": "2026-06-25",
+          "ndvi": 0.441,
+          "p25": 0.144,
+          "p75": 0.551,
+          "vegetated_fraction": 0.66
+        },
+        {
+          "start": "2026-06-18",
+          "end": "2026-07-03",
+          "ndvi": 0.487,
+          "p25": 0.149,
+          "p75": 0.607,
+          "vegetated_fraction": 0.67
+        },
+        {
+          "start": "2026-06-26",
+          "end": "2026-07-11",
+          "ndvi": 0.529,
+          "p25": 0.149,
+          "p75": 0.648,
+          "vegetated_fraction": 0.69
+        },
+        {
+          "start": "2026-07-04",
+          "end": "2026-07-19",
+          "ndvi": 0.517,
+          "p25": 0.143,
+          "p75": 0.64,
+          "vegetated_fraction": 0.67
+        },
+        {
+          "start": "2026-07-12",
+          "end": "2026-07-27",
+          "ndvi": 0.533,
+          "p25": 0.155,
+          "p75": 0.673,
+          "vegetated_fraction": 0.68
+        },
+        {
+          "start": "2026-07-20",
+          "end": "2026-08-04",
+          "ndvi": 0.552,
+          "p25": 0.164,
+          "p75": 0.676,
+          "vegetated_fraction": 0.7
+        },
+        {
+          "start": "2026-07-28",
+          "end": "2026-08-12",
+          "ndvi": 0.514,
+          "p25": 0.143,
+          "p75": 0.635,
+          "vegetated_fraction": 0.68
+        },
+        {
+          "start": "2026-08-05",
+          "end": "2026-08-20",
+          "ndvi": 0.455,
+          "p25": 0.155,
+          "p75": 0.616,
+          "vegetated_fraction": 0.68
+        },
+        {
+          "start": "2026-08-13",
+          "end": "2026-08-28",
+          "ndvi": 0.456,
+          "p25": 0.16,
+          "p75": 0.622,
+          "vegetated_fraction": 0.68
+        },
+        {
+          "start": "2026-08-21",
+          "end": "2026-09-05",
+          "ndvi": 0.434,
+          "p25": 0.148,
+          "p75": 0.597,
+          "vegetated_fraction": 0.66
+        },
+        {
+          "start": "2026-08-29",
+          "end": "2026-09-13",
+          "ndvi": 0.366,
+          "p25": 0.152,
+          "p75": 0.523,
+          "vegetated_fraction": 0.6
+        },
+        {
+          "start": "2026-09-06",
+          "end": "2026-09-21",
+          "ndvi": 0.353,
+          "p25": 0.148,
+          "p75": 0.482,
+          "vegetated_fraction": 0.57
+        },
+        {
+          "start": "2026-09-14",
+          "end": "2026-09-29",
+          "ndvi": 0.32,
+          "p25": 0.141,
+          "p75": 0.429,
+          "vegetated_fraction": 0.55
+        },
+        {
+          "start": "2026-09-22",
+          "end": "2026-10-07",
+          "ndvi": 0.344,
+          "p25": 0.14,
+          "p75": 0.417,
+          "vegetated_fraction": 0.61
+        },
+        {
+          "start": "2026-09-30",
+          "end": "2026-10-15",
+          "ndvi": 0.347,
+          "p25": 0.146,
+          "p75": 0.436,
+          "vegetated_fraction": 0.62
+        },
+        {
+          "start": "2026-10-08",
+          "end": "2026-10-23",
+          "ndvi": 0.362,
+          "p25": 0.148,
+          "p75": 0.459,
+          "vegetated_fraction": 0.62
+        },
+        {
+          "start": "2026-10-16",
+          "end": "2026-10-31",
+          "ndvi": 0.428,
+          "p25": 0.146,
+          "p75": 0.542,
+          "vegetated_fraction": 0.65
+        },
+        {
+          "start": "2026-10-24",
+          "end": "2026-11-08",
+          "ndvi": 0.424,
+          "p25": 0.146,
+          "p75": 0.542,
+          "vegetated_fraction": 0.64
+        }
+      ],
+      "summary": {
+        "n_composites": 47,
+        "n_accepted": 47,
+        "n_records_read": 94,
+        "n_duplicate_records_dropped": 47,
+        "mean_ndvi": 0.278,
+        "min_ndvi": 0.201,
+        "max_ndvi": 0.371
+      },
+      "notes": [
+        "NDVI indicates vegetation greenness and canopy condition; it is not a measurement of soil health, crop identity or soil fertility.",
+        "A 500 m pixel covers about 25 hectares and mixes many small fields, so a single value is not a field measurement.",
+        "16-day composites trade temporal detail for fewer cloudy/missing observations; each composite keeps its pixel reliability and VI quality bits.",
+        "Overlapping sinusoidal tiles report the same composite more than once; only the best-quality record per composite period is kept (see summary.n_duplicate_records_dropped).",
+        "`series` is the single pixel at the site (often the town centre); `regional_series` is the median of usable pixels in a ~15 km box and is what the timeline check uses."
+      ],
+      "timeline_check": {
+        "method": "expected calendar vs NDVI threshold",
+        "classification_used": true,
+        "threshold_ndvi": 0.441,
+        "separation_ndvi": 0.153,
+        "min_separation_ndvi": 0.1,
+        "median_crop_ndvi": 0.517,
+        "median_fallow_ndvi": 0.364,
+        "expected_periods": [
+          {
+            "start": "2025-11-01",
+            "end": "2026-04-29",
+            "crop": "sugar_beet",
+            "season": "winter"
+          },
+          {
+            "start": "2026-04-01",
+            "end": "2026-08-13",
+            "crop": "maize",
+            "season": "summer"
+          },
+          {
+            "start": "2026-11-01",
+            "end": "2026-11-08",
+            "crop": "sugar_beet",
+            "season": "winter"
+          }
+        ],
+        "items": [
+          {
+            "start": "2025-10-24",
+            "end": "2025-11-08",
+            "midpoint": "2025-10-24",
+            "ndvi": 0.496,
+            "expected": "fallow",
+            "expected_crop": null,
+            "expected_season": null,
+            "observed": "vegetated",
+            "agreement": "check"
+          },
+          {
+            "start": "2025-11-01",
+            "end": "2025-11-16",
+            "midpoint": "2025-11-01",
+            "ndvi": 0.49,
+            "expected": "crop",
+            "expected_crop": "sugar_beet",
+            "expected_season": "winter",
+            "observed": "vegetated",
+            "agreement": "ok"
+          },
+          {
+            "start": "2025-11-09",
+            "end": "2025-11-24",
+            "midpoint": "2025-11-09",
+            "ndvi": 0.434,
+            "expected": "crop",
+            "expected_crop": "sugar_beet",
+            "expected_season": "winter",
+            "observed": "low_cover",
+            "agreement": "check"
+          },
+          {
+            "start": "2025-11-17",
+            "end": "2025-12-02",
+            "midpoint": "2025-11-17",
+            "ndvi": 0.443,
+            "expected": "crop",
+            "expected_crop": "sugar_beet",
+            "expected_season": "winter",
+            "observed": "vegetated",
+            "agreement": "ok"
+          },
+          {
+            "start": "2025-11-25",
+            "end": "2025-12-10",
+            "midpoint": "2025-11-25",
+            "ndvi": 0.497,
+            "expected": "crop",
+            "expected_crop": "sugar_beet",
+            "expected_season": "winter",
+            "observed": "vegetated",
+            "agreement": "ok"
+          },
+          {
+            "start": "2025-12-03",
+            "end": "2025-12-18",
+            "midpoint": "2025-12-03",
+            "ndvi": 0.515,
+            "expected": "crop",
+            "expected_crop": "sugar_beet",
+            "expected_season": "winter",
+            "observed": "vegetated",
+            "agreement": "ok"
+          },
+          {
+            "start": "2025-12-11",
+            "end": "2025-12-26",
+            "midpoint": "2025-12-11",
+            "ndvi": 0.537,
+            "expected": "crop",
+            "expected_crop": "sugar_beet",
+            "expected_season": "winter",
+            "observed": "vegetated",
+            "agreement": "ok"
+          },
+          {
+            "start": "2025-12-19",
+            "end": "2026-01-03",
+            "midpoint": "2025-12-19",
+            "ndvi": 0.564,
+            "expected": "crop",
+            "expected_crop": "sugar_beet",
+            "expected_season": "winter",
+            "observed": "vegetated",
+            "agreement": "ok"
+          },
+          {
+            "start": "2025-12-27",
+            "end": "2026-01-11",
+            "midpoint": "2025-12-27",
+            "ndvi": 0.575,
+            "expected": "crop",
+            "expected_crop": "sugar_beet",
+            "expected_season": "winter",
+            "observed": "vegetated",
+            "agreement": "ok"
+          },
+          {
+            "start": "2026-01-01",
+            "end": "2026-01-16",
+            "midpoint": "2026-01-01",
+            "ndvi": 0.579,
+            "expected": "crop",
+            "expected_crop": "sugar_beet",
+            "expected_season": "winter",
+            "observed": "vegetated",
+            "agreement": "ok"
+          },
+          {
+            "start": "2026-01-09",
+            "end": "2026-01-24",
+            "midpoint": "2026-01-09",
+            "ndvi": 0.575,
+            "expected": "crop",
+            "expected_crop": "sugar_beet",
+            "expected_season": "winter",
+            "observed": "vegetated",
+            "agreement": "ok"
+          },
+          {
+            "start": "2026-01-17",
+            "end": "2026-02-01",
+            "midpoint": "2026-01-17",
+            "ndvi": 0.535,
+            "expected": "crop",
+            "expected_crop": "sugar_beet",
+            "expected_season": "winter",
+            "observed": "vegetated",
+            "agreement": "ok"
+          },
+          {
+            "start": "2026-01-25",
+            "end": "2026-02-09",
+            "midpoint": "2026-01-25",
+            "ndvi": 0.58,
+            "expected": "crop",
+            "expected_crop": "sugar_beet",
+            "expected_season": "winter",
+            "observed": "vegetated",
+            "agreement": "ok"
+          },
+          {
+            "start": "2026-02-02",
+            "end": "2026-02-17",
+            "midpoint": "2026-02-02",
+            "ndvi": 0.643,
+            "expected": "crop",
+            "expected_crop": "sugar_beet",
+            "expected_season": "winter",
+            "observed": "vegetated",
+            "agreement": "ok"
+          },
+          {
+            "start": "2026-02-10",
+            "end": "2026-02-25",
+            "midpoint": "2026-02-10",
+            "ndvi": 0.643,
+            "expected": "crop",
+            "expected_crop": "sugar_beet",
+            "expected_season": "winter",
+            "observed": "vegetated",
+            "agreement": "ok"
+          },
+          {
+            "start": "2026-02-18",
+            "end": "2026-03-05",
+            "midpoint": "2026-02-18",
+            "ndvi": 0.623,
+            "expected": "crop",
+            "expected_crop": "sugar_beet",
+            "expected_season": "winter",
+            "observed": "vegetated",
+            "agreement": "ok"
+          },
+          {
+            "start": "2026-02-26",
+            "end": "2026-03-13",
+            "midpoint": "2026-02-26",
+            "ndvi": 0.582,
+            "expected": "crop",
+            "expected_crop": "sugar_beet",
+            "expected_season": "winter",
+            "observed": "vegetated",
+            "agreement": "ok"
+          },
+          {
+            "start": "2026-03-06",
+            "end": "2026-03-21",
+            "midpoint": "2026-03-06",
+            "ndvi": 0.543,
+            "expected": "crop",
+            "expected_crop": "sugar_beet",
+            "expected_season": "winter",
+            "observed": "vegetated",
+            "agreement": "ok"
+          },
+          {
+            "start": "2026-03-14",
+            "end": "2026-03-29",
+            "midpoint": "2026-03-14",
+            "ndvi": 0.525,
+            "expected": "crop",
+            "expected_crop": "sugar_beet",
+            "expected_season": "winter",
+            "observed": "vegetated",
+            "agreement": "ok"
+          },
+          {
+            "start": "2026-03-22",
+            "end": "2026-04-06",
+            "midpoint": "2026-03-22",
+            "ndvi": 0.532,
+            "expected": "crop",
+            "expected_crop": "sugar_beet",
+            "expected_season": "winter",
+            "observed": "vegetated",
+            "agreement": "ok"
+          },
+          {
+            "start": "2026-03-30",
+            "end": "2026-04-14",
+            "midpoint": "2026-03-30",
+            "ndvi": 0.549,
+            "expected": "crop",
+            "expected_crop": "sugar_beet",
+            "expected_season": "winter",
+            "observed": "vegetated",
+            "agreement": "ok"
+          },
+          {
+            "start": "2026-04-07",
+            "end": "2026-04-22",
+            "midpoint": "2026-04-07",
+            "ndvi": 0.51,
+            "expected": "crop",
+            "expected_crop": "sugar_beet",
+            "expected_season": "winter",
+            "observed": "vegetated",
+            "agreement": "ok"
+          },
+          {
+            "start": "2026-04-15",
+            "end": "2026-04-30",
+            "midpoint": "2026-04-15",
+            "ndvi": 0.45,
+            "expected": "crop",
+            "expected_crop": "sugar_beet",
+            "expected_season": "winter",
+            "observed": "vegetated",
+            "agreement": "ok"
+          },
+          {
+            "start": "2026-04-23",
+            "end": "2026-05-08",
+            "midpoint": "2026-04-23",
+            "ndvi": 0.368,
+            "expected": "crop",
+            "expected_crop": "sugar_beet",
+            "expected_season": "winter",
+            "observed": "low_cover",
+            "agreement": "check"
+          },
+          {
+            "start": "2026-05-01",
+            "end": "2026-05-16",
+            "midpoint": "2026-05-01",
+            "ndvi": 0.362,
+            "expected": "crop",
+            "expected_crop": "maize",
+            "expected_season": "summer",
+            "observed": "low_cover",
+            "agreement": "check"
+          },
+          {
+            "start": "2026-05-09",
+            "end": "2026-05-24",
+            "midpoint": "2026-05-09",
+            "ndvi": 0.346,
+            "expected": "crop",
+            "expected_crop": "maize",
+            "expected_season": "summer",
+            "observed": "low_cover",
+            "agreement": "check"
+          },
+          {
+            "start": "2026-05-17",
+            "end": "2026-06-01",
+            "midpoint": "2026-05-17",
+            "ndvi": 0.356,
+            "expected": "crop",
+            "expected_crop": "maize",
+            "expected_season": "summer",
+            "observed": "low_cover",
+            "agreement": "check"
+          },
+          {
+            "start": "2026-05-25",
+            "end": "2026-06-09",
+            "midpoint": "2026-05-25",
+            "ndvi": 0.368,
+            "expected": "crop",
+            "expected_crop": "maize",
+            "expected_season": "summer",
+            "observed": "low_cover",
+            "agreement": "check"
+          },
+          {
+            "start": "2026-06-02",
+            "end": "2026-06-17",
+            "midpoint": "2026-06-02",
+            "ndvi": 0.378,
+            "expected": "crop",
+            "expected_crop": "maize",
+            "expected_season": "summer",
+            "observed": "low_cover",
+            "agreement": "check"
+          },
+          {
+            "start": "2026-06-10",
+            "end": "2026-06-25",
+            "midpoint": "2026-06-10",
+            "ndvi": 0.441,
+            "expected": "crop",
+            "expected_crop": "maize",
+            "expected_season": "summer",
+            "observed": "vegetated",
+            "agreement": "ok"
+          },
+          {
+            "start": "2026-06-18",
+            "end": "2026-07-03",
+            "midpoint": "2026-06-18",
+            "ndvi": 0.487,
+            "expected": "crop",
+            "expected_crop": "maize",
+            "expected_season": "summer",
+            "observed": "vegetated",
+            "agreement": "ok"
+          },
+          {
+            "start": "2026-06-26",
+            "end": "2026-07-11",
+            "midpoint": "2026-06-26",
+            "ndvi": 0.529,
+            "expected": "crop",
+            "expected_crop": "maize",
+            "expected_season": "summer",
+            "observed": "vegetated",
+            "agreement": "ok"
+          },
+          {
+            "start": "2026-07-04",
+            "end": "2026-07-19",
+            "midpoint": "2026-07-04",
+            "ndvi": 0.517,
+            "expected": "crop",
+            "expected_crop": "maize",
+            "expected_season": "summer",
+            "observed": "vegetated",
+            "agreement": "ok"
+          },
+          {
+            "start": "2026-07-12",
+            "end": "2026-07-27",
+            "midpoint": "2026-07-12",
+            "ndvi": 0.533,
+            "expected": "crop",
+            "expected_crop": "maize",
+            "expected_season": "summer",
+            "observed": "vegetated",
+            "agreement": "ok"
+          },
+          {
+            "start": "2026-07-20",
+            "end": "2026-08-04",
+            "midpoint": "2026-07-20",
+            "ndvi": 0.552,
+            "expected": "crop",
+            "expected_crop": "maize",
+            "expected_season": "summer",
+            "observed": "vegetated",
+            "agreement": "ok"
+          },
+          {
+            "start": "2026-07-28",
+            "end": "2026-08-12",
+            "midpoint": "2026-07-28",
+            "ndvi": 0.514,
+            "expected": "crop",
+            "expected_crop": "maize",
+            "expected_season": "summer",
+            "observed": "vegetated",
+            "agreement": "ok"
+          },
+          {
+            "start": "2026-08-05",
+            "end": "2026-08-20",
+            "midpoint": "2026-08-05",
+            "ndvi": 0.455,
+            "expected": "crop",
+            "expected_crop": "maize",
+            "expected_season": "summer",
+            "observed": "vegetated",
+            "agreement": "ok"
+          },
+          {
+            "start": "2026-08-13",
+            "end": "2026-08-28",
+            "midpoint": "2026-08-13",
+            "ndvi": 0.456,
+            "expected": "crop",
+            "expected_crop": "maize",
+            "expected_season": "summer",
+            "observed": "vegetated",
+            "agreement": "ok"
+          },
+          {
+            "start": "2026-08-21",
+            "end": "2026-09-05",
+            "midpoint": "2026-08-21",
+            "ndvi": 0.434,
+            "expected": "fallow",
+            "expected_crop": null,
+            "expected_season": null,
+            "observed": "low_cover",
+            "agreement": "ok"
+          },
+          {
+            "start": "2026-08-29",
+            "end": "2026-09-13",
+            "midpoint": "2026-08-29",
+            "ndvi": 0.366,
+            "expected": "fallow",
+            "expected_crop": null,
+            "expected_season": null,
+            "observed": "low_cover",
+            "agreement": "ok"
+          },
+          {
+            "start": "2026-09-06",
+            "end": "2026-09-21",
+            "midpoint": "2026-09-06",
+            "ndvi": 0.353,
+            "expected": "fallow",
+            "expected_crop": null,
+            "expected_season": null,
+            "observed": "low_cover",
+            "agreement": "ok"
+          },
+          {
+            "start": "2026-09-14",
+            "end": "2026-09-29",
+            "midpoint": "2026-09-14",
+            "ndvi": 0.32,
+            "expected": "fallow",
+            "expected_crop": null,
+            "expected_season": null,
+            "observed": "low_cover",
+            "agreement": "ok"
+          },
+          {
+            "start": "2026-09-22",
+            "end": "2026-10-07",
+            "midpoint": "2026-09-22",
+            "ndvi": 0.344,
+            "expected": "fallow",
+            "expected_crop": null,
+            "expected_season": null,
+            "observed": "low_cover",
+            "agreement": "ok"
+          },
+          {
+            "start": "2026-09-30",
+            "end": "2026-10-15",
+            "midpoint": "2026-09-30",
+            "ndvi": 0.347,
+            "expected": "fallow",
+            "expected_crop": null,
+            "expected_season": null,
+            "observed": "low_cover",
+            "agreement": "ok"
+          },
+          {
+            "start": "2026-10-08",
+            "end": "2026-10-23",
+            "midpoint": "2026-10-08",
+            "ndvi": 0.362,
+            "expected": "fallow",
+            "expected_crop": null,
+            "expected_season": null,
+            "observed": "low_cover",
+            "agreement": "ok"
+          },
+          {
+            "start": "2026-10-16",
+            "end": "2026-10-31",
+            "midpoint": "2026-10-16",
+            "ndvi": 0.428,
+            "expected": "fallow",
+            "expected_crop": null,
+            "expected_season": null,
+            "observed": "low_cover",
+            "agreement": "ok"
+          },
+          {
+            "start": "2026-10-24",
+            "end": "2026-11-08",
+            "midpoint": "2026-10-24",
+            "ndvi": 0.424,
+            "expected": "fallow",
+            "expected_crop": null,
+            "expected_season": null,
+            "observed": "low_cover",
+            "agreement": "ok"
+          }
+        ],
+        "summary": {
+          "n_composites": 47,
+          "n_ok": 39,
+          "n_check": 8,
+          "n_uncertain": 0,
+          "classification_used": true
+        },
+        "limitations": [
+          "The expected calendar comes from the demo-site preset history, not from the farmer's field records; a mismatch can be late sowing, a second crop, weeds or irrigation.",
+          "A 500 m NDVI pixel mixes many fields, so it cannot confirm what is growing on this field.",
+          "NDVI is a greenness indicator, not a measurement of soil health, crop identity or yield.",
+          "16-day composites smooth the season and blur short fallow gaps."
+        ],
+        "basis": "median of usable 500 m pixels in a ~15 km box"
+      },
+      "expected_calendar_source": "demo-site preset history + knowledge/season_windows.yaml"
+    }
+  },
+  "provenance": {
+    "built_utc": "2026-11-13T17:50:24+00:00",
+    "smaps": {
+      "product": "SPL3SMP_E",
+      "version": "006",
+      "doi": "10.5067/M20OXIZHY3RJ",
+      "source": "NASA NSIDC DAAC",
+      "variables": [
+        "soil_moisture (surface, top ~5 cm)"
+      ]
+    },
+    "ndvi": {
+      "product": "VNP13A1",
+      "version": "002",
+      "source": "NASA LP DAAC",
+      "variables": [
+        "NDVI",
+        "pixel reliability",
+        "VI quality"
+      ]
+    },
+    "labels": {
+      "smap": "observed (NASA satellite retrieval)",
+      "ndvi": "observed (NASA satellite composite)",
+      "model": "simulated (FAO-56 water balance)"
+    }
+  }
+}

@@ -7,7 +7,8 @@ from datetime import date, datetime, timedelta, timezone
 
 from .. import knowledge
 from ..schemas.request import AnalysisRequest
-from ..services.climate import get_climate
+from ..services import nasa
+from ..services.climate import get_climate, pack_path_for
 from ..sim.runner import run_timeline
 from ..sim.types import CropSeason, DayInput
 from . import explain, filters, profile, scoring, strategies, uncertainty
@@ -15,7 +16,7 @@ from . import plan as planner
 from .generator import Cand, Ctx, enumerate_candidates, existing_candidate, select_pool
 from .validate import in_delta_box, infer_region, validate
 
-SCHEMA_VERSION = "1.0.0"
+SCHEMA_VERSION = "1.1.0"
 MAX_DAYS = 900
 
 NEEDS_LOCAL_REVIEW = ["review.irrigation_schedule", "review.variety", "review.pest_diagnosis", "review.market",
@@ -87,13 +88,16 @@ def _strategy_json(item: dict, cand: Cand, ctx: Ctx, existing: Cand, climate, in
     }
 
 
-def _nasa_panel(climate) -> list[dict]:
+def _nasa_panel(climate, evidence: dict | None = None) -> list[dict]:
     pack = climate.source == "pack"
+    evidence = evidence or {}
+    smap = (evidence.get("smap") or {}).get("status", "planned")
+    ndvi = (evidence.get("ndvi") or {}).get("status", "planned")
     return [
         {"id": "power", "name_key": "nasa.power", "role_key": "nasa.power_role", "status": "pack" if pack else "placeholder", "resolution_km": 50},
         {"id": "gpm", "name_key": "nasa.gpm", "role_key": "nasa.gpm_role", "status": "planned", "resolution_km": 10},
-        {"id": "smap", "name_key": "nasa.smap", "role_key": "nasa.smap_role", "status": "planned", "resolution_km": 9},
-        {"id": "ndvi", "name_key": "nasa.ndvi", "role_key": "nasa.ndvi_role", "status": "planned", "resolution_km": 0.03},
+        {"id": "smap", "name_key": "nasa.smap", "role_key": "nasa.smap_role", "status": smap, "resolution_km": 9},
+        {"id": "ndvi", "name_key": "nasa.ndvi", "role_key": "nasa.ndvi_role", "status": ndvi, "resolution_km": 0.5},
         {"id": "soilgrids", "name_key": "nasa.soilgrids", "role_key": "nasa.soilgrids_role", "status": "planned", "resolution_km": 0.25},
     ]
 
@@ -119,6 +123,12 @@ def run(req: AnalysisRequest) -> dict:
 
     first = planner.first_sow(req.next_season, ref)
     start = first[0]
+    # If the demo pack holds NASA observations from before the first sowing, start the simulation
+    # earlier so the observation and model windows actually share days. Those leading days are
+    # bare (crop_idx -1) for every strategy, so the comparison stays like-for-like.
+    observed_start = nasa.earliest_observation_date(pack_path_for(req.lat, req.lon))
+    if observed_start is not None and observed_start < start:
+        start = observed_start
     end = start + timedelta(days=30)
     for c in pool:
         for slot in c.plan:
@@ -140,6 +150,8 @@ def run(req: AnalysisRequest) -> dict:
         _strategy_json(item, item["cand"], ctx, existing, climate, input_status, climate.dates, req, outside, len(hist))
         for item in picked
     ]
+    layers_json = [profile.layer_json(layer) for layer in layers]
+    nasa_evidence = nasa.build(climate.pack_path, strategies_json, climate.dates, layers_json)
     disclaimers = ["disclaimer.main"] + (["disclaimer.preview_data"] if climate.source == "synthetic" else [])
     return {
         "schema_version": SCHEMA_VERSION,
@@ -150,8 +162,9 @@ def run(req: AnalysisRequest) -> dict:
         "field": {"lat": req.lat, "lon": req.lon, "area_feddan": req.area_feddan, "region": infer_region(req)},
         "flags": flags,
         "input_status": input_status,
-        "nasa_data": _nasa_panel(climate),
-        "layers": [profile.layer_json(layer) for layer in layers],
+        "nasa_data": _nasa_panel(climate, nasa_evidence),
+        "nasa_evidence": nasa_evidence,
+        "layers": layers_json,
         "climate": {"dates": climate.dates, "tmax": climate.tmax, "tmin": climate.tmin, "rain": climate.rain,
                     "et0": climate.et0, "source": climate.source, "pack_id": climate.pack_id,
                     "scenario": {"dT": req.scenario.dT, "dP": req.scenario.dP}},

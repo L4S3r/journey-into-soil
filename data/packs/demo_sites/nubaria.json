@@ -1,0 +1,3632 @@
+{
+  "meta": {
+    "id": "nubaria",
+    "name_en": "West Nubaria (new lands)",
+    "name_ar": "النوبارية الغربية (أراضٍ جديدة)",
+    "lat": 30.75,
+    "lon": 30.15,
+    "region": "new_lands",
+    "source": "nasa-packs",
+    "resolution_km": 9,
+    "period": {
+      "start": "2026-10-25",
+      "end": "2026-11-11"
+    }
+  },
+  "daily": {
+    "date": [],
+    "tmax": [],
+    "tmin": [],
+    "rh": [],
+    "u2": [],
+    "rs": [],
+    "rain": []
+  },
+  "nasa": {
+    "smap": {
+      "status": "pack",
+      "product": "SPL3SMP_E",
+      "product_title": "SMAP Enhanced L3 Radiometer Global Daily 9 km EASE-Grid Soil Moisture",
+      "version": "006",
+      "doi": "10.5067/M20OXIZHY3RJ",
+      "variable": "soil_moisture (passive radiometer retrieval)",
+      "depth": "surface, approximately the top 5 cm",
+      "depth_cm": [
+        0,
+        5
+      ],
+      "root_zone_available": false,
+      "units": "m3/m3",
+      "resolution_km": 9.0,
+      "grid": "global 9 km EASE-Grid 2.0",
+      "site_id": "nubaria",
+      "period": {
+        "start": "2026-10-25",
+        "end": "2026-11-11"
+      },
+      "observations": [
+        {
+          "site_id": "nubaria",
+          "date": "2026-10-25",
+          "overpass": "AM",
+          "time_utc": null,
+          "soil_moisture_m3m3": null,
+          "uncertainty_m3m3": null,
+          "accepted": false,
+          "reject_reasons": [
+            "no_retrieval_near_site"
+          ],
+          "quality": {
+            "retrieval_qual_flag": null,
+            "recommended": null,
+            "attempted": null,
+            "successful": null,
+            "surface_conditions": []
+          },
+          "pixel": {
+            "lat": null,
+            "lon": null,
+            "distance_km": null
+          },
+          "vegetation_opacity": null,
+          "granule": "SMAP_L3_SM_P_E_20261025_R19240_001"
+        },
+        {
+          "site_id": "nubaria",
+          "date": "2026-10-25",
+          "overpass": "PM",
+          "time_utc": null,
+          "soil_moisture_m3m3": null,
+          "uncertainty_m3m3": null,
+          "accepted": false,
+          "reject_reasons": [
+            "no_retrieval_near_site"
+          ],
+          "quality": {
+            "retrieval_qual_flag": null,
+            "recommended": null,
+            "attempted": null,
+            "successful": null,
+            "surface_conditions": []
+          },
+          "pixel": {
+            "lat": null,
+            "lon": null,
+            "distance_km": null
+          },
+          "vegetation_opacity": null,
+          "granule": "SMAP_L3_SM_P_E_20261025_R19240_001"
+        },
+        {
+          "site_id": "nubaria",
+          "date": "2026-10-26",
+          "overpass": "AM",
+          "time_utc": "np.bytes_(b'2026-10-26T04:27:21.454Z')",
+          "soil_moisture_m3m3": 0.0917,
+          "uncertainty_m3m3": null,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "retrieval_qual_flag": 0,
+            "recommended": true,
+            "attempted": true,
+            "successful": true,
+            "surface_conditions": []
+          },
+          "pixel": {
+            "lat": 30.7612,
+            "lon": 30.1089,
+            "distance_km": 4.1
+          },
+          "vegetation_opacity": 0.0581,
+          "granule": "SMAP_L3_SM_P_E_20261026_R19240_001"
+        },
+        {
+          "site_id": "nubaria",
+          "date": "2026-10-26",
+          "overpass": "PM",
+          "time_utc": "np.bytes_(b'2026-10-26T15:24:40.226Z')",
+          "soil_moisture_m3m3": 0.0874,
+          "uncertainty_m3m3": null,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "retrieval_qual_flag": 0,
+            "recommended": true,
+            "attempted": true,
+            "successful": true,
+            "surface_conditions": []
+          },
+          "pixel": {
+            "lat": 30.7612,
+            "lon": 30.1089,
+            "distance_km": 4.1
+          },
+          "vegetation_opacity": 0.0901,
+          "granule": "SMAP_L3_SM_P_E_20261026_R19240_001"
+        },
+        {
+          "site_id": "nubaria",
+          "date": "2026-10-27",
+          "overpass": "AM",
+          "time_utc": null,
+          "soil_moisture_m3m3": null,
+          "uncertainty_m3m3": null,
+          "accepted": false,
+          "reject_reasons": [
+            "no_retrieval_near_site"
+          ],
+          "quality": {
+            "retrieval_qual_flag": null,
+            "recommended": null,
+            "attempted": null,
+            "successful": null,
+            "surface_conditions": []
+          },
+          "pixel": {
+            "lat": null,
+            "lon": null,
+            "distance_km": null
+          },
+          "vegetation_opacity": null,
+          "granule": "SMAP_L3_SM_P_E_20261027_R19240_002"
+        },
+        {
+          "site_id": "nubaria",
+          "date": "2026-10-27",
+          "overpass": "PM",
+          "time_utc": "np.bytes_(b'2026-10-27T16:01:06.110Z')",
+          "soil_moisture_m3m3": 0.0687,
+          "uncertainty_m3m3": null,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "retrieval_qual_flag": 0,
+            "recommended": true,
+            "attempted": true,
+            "successful": true,
+            "surface_conditions": []
+          },
+          "pixel": {
+            "lat": 30.7612,
+            "lon": 30.1089,
+            "distance_km": 4.1
+          },
+          "vegetation_opacity": 0.1243,
+          "granule": "SMAP_L3_SM_P_E_20261027_R19240_002"
+        },
+        {
+          "site_id": "nubaria",
+          "date": "2026-10-28",
+          "overpass": "AM",
+          "time_utc": "np.bytes_(b'2026-10-28T04:03:00.279Z')",
+          "soil_moisture_m3m3": 0.1069,
+          "uncertainty_m3m3": null,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "retrieval_qual_flag": 0,
+            "recommended": true,
+            "attempted": true,
+            "successful": true,
+            "surface_conditions": []
+          },
+          "pixel": {
+            "lat": 30.7612,
+            "lon": 30.1089,
+            "distance_km": 4.1
+          },
+          "vegetation_opacity": 0.1335,
+          "granule": "SMAP_L3_SM_P_E_20261028_R19240_002"
+        },
+        {
+          "site_id": "nubaria",
+          "date": "2026-10-28",
+          "overpass": "PM",
+          "time_utc": null,
+          "soil_moisture_m3m3": null,
+          "uncertainty_m3m3": null,
+          "accepted": false,
+          "reject_reasons": [
+            "no_retrieval_near_site"
+          ],
+          "quality": {
+            "retrieval_qual_flag": null,
+            "recommended": null,
+            "attempted": null,
+            "successful": null,
+            "surface_conditions": []
+          },
+          "pixel": {
+            "lat": null,
+            "lon": null,
+            "distance_km": null
+          },
+          "vegetation_opacity": null,
+          "granule": "SMAP_L3_SM_P_E_20261028_R19240_002"
+        },
+        {
+          "site_id": "nubaria",
+          "date": "2026-10-29",
+          "overpass": "AM",
+          "time_utc": "np.bytes_(b'2026-10-29T04:39:24.435Z')",
+          "soil_moisture_m3m3": 0.0879,
+          "uncertainty_m3m3": null,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "retrieval_qual_flag": 0,
+            "recommended": true,
+            "attempted": true,
+            "successful": true,
+            "surface_conditions": []
+          },
+          "pixel": {
+            "lat": 30.7612,
+            "lon": 30.1089,
+            "distance_km": 4.1
+          },
+          "vegetation_opacity": 0.1706,
+          "granule": "SMAP_L3_SM_P_E_20261029_R19240_001"
+        },
+        {
+          "site_id": "nubaria",
+          "date": "2026-10-29",
+          "overpass": "PM",
+          "time_utc": "np.bytes_(b'2026-10-29T15:36:43.778Z')",
+          "soil_moisture_m3m3": 0.0297,
+          "uncertainty_m3m3": null,
+          "accepted": false,
+          "reject_reasons": [
+            "not_recommended_quality",
+            "retrieval_failed"
+          ],
+          "quality": {
+            "retrieval_qual_flag": 5,
+            "recommended": false,
+            "attempted": true,
+            "successful": false,
+            "surface_conditions": []
+          },
+          "pixel": {
+            "lat": 30.7612,
+            "lon": 30.1089,
+            "distance_km": 4.1
+          },
+          "vegetation_opacity": 0.0,
+          "granule": "SMAP_L3_SM_P_E_20261029_R19240_001"
+        },
+        {
+          "site_id": "nubaria",
+          "date": "2026-10-30",
+          "overpass": "AM",
+          "time_utc": null,
+          "soil_moisture_m3m3": null,
+          "uncertainty_m3m3": null,
+          "accepted": false,
+          "reject_reasons": [
+            "no_retrieval_near_site"
+          ],
+          "quality": {
+            "retrieval_qual_flag": null,
+            "recommended": null,
+            "attempted": null,
+            "successful": null,
+            "surface_conditions": []
+          },
+          "pixel": {
+            "lat": null,
+            "lon": null,
+            "distance_km": null
+          },
+          "vegetation_opacity": null,
+          "granule": "SMAP_L3_SM_P_E_20261030_R19240_001"
+        },
+        {
+          "site_id": "nubaria",
+          "date": "2026-10-30",
+          "overpass": "PM",
+          "time_utc": null,
+          "soil_moisture_m3m3": null,
+          "uncertainty_m3m3": null,
+          "accepted": false,
+          "reject_reasons": [
+            "no_retrieval_near_site"
+          ],
+          "quality": {
+            "retrieval_qual_flag": null,
+            "recommended": null,
+            "attempted": null,
+            "successful": null,
+            "surface_conditions": []
+          },
+          "pixel": {
+            "lat": null,
+            "lon": null,
+            "distance_km": null
+          },
+          "vegetation_opacity": null,
+          "granule": "SMAP_L3_SM_P_E_20261030_R19240_001"
+        },
+        {
+          "site_id": "nubaria",
+          "date": "2026-10-31",
+          "overpass": "AM",
+          "time_utc": "np.bytes_(b'2026-10-31T04:15:04.705Z')",
+          "soil_moisture_m3m3": 0.0605,
+          "uncertainty_m3m3": null,
+          "accepted": false,
+          "reject_reasons": [
+            "not_recommended_quality",
+            "retrieval_failed"
+          ],
+          "quality": {
+            "retrieval_qual_flag": 5,
+            "recommended": false,
+            "attempted": true,
+            "successful": false,
+            "surface_conditions": []
+          },
+          "pixel": {
+            "lat": 30.7612,
+            "lon": 30.1089,
+            "distance_km": 4.1
+          },
+          "vegetation_opacity": 0.0,
+          "granule": "SMAP_L3_SM_P_E_20261031_R19240_002"
+        },
+        {
+          "site_id": "nubaria",
+          "date": "2026-10-31",
+          "overpass": "PM",
+          "time_utc": null,
+          "soil_moisture_m3m3": null,
+          "uncertainty_m3m3": null,
+          "accepted": false,
+          "reject_reasons": [
+            "no_retrieval_near_site"
+          ],
+          "quality": {
+            "retrieval_qual_flag": null,
+            "recommended": null,
+            "attempted": null,
+            "successful": null,
+            "surface_conditions": []
+          },
+          "pixel": {
+            "lat": null,
+            "lon": null,
+            "distance_km": null
+          },
+          "vegetation_opacity": null,
+          "granule": "SMAP_L3_SM_P_E_20261031_R19240_002"
+        },
+        {
+          "site_id": "nubaria",
+          "date": "2026-11-01",
+          "overpass": "AM",
+          "time_utc": null,
+          "soil_moisture_m3m3": null,
+          "uncertainty_m3m3": null,
+          "accepted": false,
+          "reject_reasons": [
+            "no_retrieval_near_site"
+          ],
+          "quality": {
+            "retrieval_qual_flag": null,
+            "recommended": null,
+            "attempted": null,
+            "successful": null,
+            "surface_conditions": []
+          },
+          "pixel": {
+            "lat": null,
+            "lon": null,
+            "distance_km": null
+          },
+          "vegetation_opacity": null,
+          "granule": "SMAP_L3_SM_P_E_20261101_R19240_001"
+        },
+        {
+          "site_id": "nubaria",
+          "date": "2026-11-01",
+          "overpass": "PM",
+          "time_utc": "np.bytes_(b'2026-11-01T15:48:48.111Z')",
+          "soil_moisture_m3m3": 0.0469,
+          "uncertainty_m3m3": null,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "retrieval_qual_flag": 0,
+            "recommended": true,
+            "attempted": true,
+            "successful": true,
+            "surface_conditions": []
+          },
+          "pixel": {
+            "lat": 30.7612,
+            "lon": 30.1089,
+            "distance_km": 4.1
+          },
+          "vegetation_opacity": 0.0057,
+          "granule": "SMAP_L3_SM_P_E_20261101_R19240_001"
+        },
+        {
+          "site_id": "nubaria",
+          "date": "2026-11-02",
+          "overpass": "AM",
+          "time_utc": null,
+          "soil_moisture_m3m3": null,
+          "uncertainty_m3m3": null,
+          "accepted": false,
+          "reject_reasons": [
+            "no_retrieval_near_site"
+          ],
+          "quality": {
+            "retrieval_qual_flag": null,
+            "recommended": null,
+            "attempted": null,
+            "successful": null,
+            "surface_conditions": []
+          },
+          "pixel": {
+            "lat": null,
+            "lon": null,
+            "distance_km": null
+          },
+          "vegetation_opacity": null,
+          "granule": "SMAP_L3_SM_P_E_20261102_R19240_001"
+        },
+        {
+          "site_id": "nubaria",
+          "date": "2026-11-02",
+          "overpass": "PM",
+          "time_utc": null,
+          "soil_moisture_m3m3": null,
+          "uncertainty_m3m3": null,
+          "accepted": false,
+          "reject_reasons": [
+            "no_retrieval_near_site"
+          ],
+          "quality": {
+            "retrieval_qual_flag": null,
+            "recommended": null,
+            "attempted": null,
+            "successful": null,
+            "surface_conditions": []
+          },
+          "pixel": {
+            "lat": null,
+            "lon": null,
+            "distance_km": null
+          },
+          "vegetation_opacity": null,
+          "granule": "SMAP_L3_SM_P_E_20261102_R19240_001"
+        },
+        {
+          "site_id": "nubaria",
+          "date": "2026-11-03",
+          "overpass": "AM",
+          "time_utc": "np.bytes_(b'2026-11-03T04:27:08.852Z')",
+          "soil_moisture_m3m3": 0.0818,
+          "uncertainty_m3m3": null,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "retrieval_qual_flag": 0,
+            "recommended": true,
+            "attempted": true,
+            "successful": true,
+            "surface_conditions": []
+          },
+          "pixel": {
+            "lat": 30.7612,
+            "lon": 30.1089,
+            "distance_km": 4.1
+          },
+          "vegetation_opacity": 0.0253,
+          "granule": "SMAP_L3_SM_P_E_20261103_R19240_001"
+        },
+        {
+          "site_id": "nubaria",
+          "date": "2026-11-03",
+          "overpass": "PM",
+          "time_utc": "np.bytes_(b'2026-11-03T15:24:27.488Z')",
+          "soil_moisture_m3m3": 0.0977,
+          "uncertainty_m3m3": null,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "retrieval_qual_flag": 0,
+            "recommended": true,
+            "attempted": true,
+            "successful": true,
+            "surface_conditions": []
+          },
+          "pixel": {
+            "lat": 30.7612,
+            "lon": 30.1089,
+            "distance_km": 4.1
+          },
+          "vegetation_opacity": 0.0983,
+          "granule": "SMAP_L3_SM_P_E_20261103_R19240_001"
+        },
+        {
+          "site_id": "nubaria",
+          "date": "2026-11-04",
+          "overpass": "AM",
+          "time_utc": null,
+          "soil_moisture_m3m3": null,
+          "uncertainty_m3m3": null,
+          "accepted": false,
+          "reject_reasons": [
+            "no_retrieval_near_site"
+          ],
+          "quality": {
+            "retrieval_qual_flag": null,
+            "recommended": null,
+            "attempted": null,
+            "successful": null,
+            "surface_conditions": []
+          },
+          "pixel": {
+            "lat": null,
+            "lon": null,
+            "distance_km": null
+          },
+          "vegetation_opacity": null,
+          "granule": "SMAP_L3_SM_P_E_20261104_R19240_001"
+        },
+        {
+          "site_id": "nubaria",
+          "date": "2026-11-04",
+          "overpass": "PM",
+          "time_utc": "np.bytes_(b'2026-11-04T16:00:52.947Z')",
+          "soil_moisture_m3m3": 0.0606,
+          "uncertainty_m3m3": null,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "retrieval_qual_flag": 0,
+            "recommended": true,
+            "attempted": true,
+            "successful": true,
+            "surface_conditions": []
+          },
+          "pixel": {
+            "lat": 30.7612,
+            "lon": 30.1089,
+            "distance_km": 4.1
+          },
+          "vegetation_opacity": 0.1028,
+          "granule": "SMAP_L3_SM_P_E_20261104_R19240_001"
+        },
+        {
+          "site_id": "nubaria",
+          "date": "2026-11-05",
+          "overpass": "AM",
+          "time_utc": "np.bytes_(b'2026-11-05T04:02:46.263Z')",
+          "soil_moisture_m3m3": 0.0996,
+          "uncertainty_m3m3": null,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "retrieval_qual_flag": 0,
+            "recommended": true,
+            "attempted": true,
+            "successful": true,
+            "surface_conditions": []
+          },
+          "pixel": {
+            "lat": 30.7612,
+            "lon": 30.1089,
+            "distance_km": 4.1
+          },
+          "vegetation_opacity": 0.2062,
+          "granule": "SMAP_L3_SM_P_E_20261105_R19240_001"
+        },
+        {
+          "site_id": "nubaria",
+          "date": "2026-11-05",
+          "overpass": "PM",
+          "time_utc": null,
+          "soil_moisture_m3m3": null,
+          "uncertainty_m3m3": null,
+          "accepted": false,
+          "reject_reasons": [
+            "no_retrieval_near_site"
+          ],
+          "quality": {
+            "retrieval_qual_flag": null,
+            "recommended": null,
+            "attempted": null,
+            "successful": null,
+            "surface_conditions": []
+          },
+          "pixel": {
+            "lat": null,
+            "lon": null,
+            "distance_km": null
+          },
+          "vegetation_opacity": null,
+          "granule": "SMAP_L3_SM_P_E_20261105_R19240_001"
+        },
+        {
+          "site_id": "nubaria",
+          "date": "2026-11-06",
+          "overpass": "AM",
+          "time_utc": "np.bytes_(b'2026-11-06T04:39:11.129Z')",
+          "soil_moisture_m3m3": 0.1352,
+          "uncertainty_m3m3": null,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "retrieval_qual_flag": 0,
+            "recommended": true,
+            "attempted": true,
+            "successful": true,
+            "surface_conditions": []
+          },
+          "pixel": {
+            "lat": 30.7612,
+            "lon": 30.1089,
+            "distance_km": 4.1
+          },
+          "vegetation_opacity": 0.1978,
+          "granule": "SMAP_L3_SM_P_E_20261106_R19240_001"
+        },
+        {
+          "site_id": "nubaria",
+          "date": "2026-11-06",
+          "overpass": "PM",
+          "time_utc": "np.bytes_(b'2026-11-06T15:36:30.207Z')",
+          "soil_moisture_m3m3": 0.1457,
+          "uncertainty_m3m3": null,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "retrieval_qual_flag": 0,
+            "recommended": true,
+            "attempted": true,
+            "successful": true,
+            "surface_conditions": []
+          },
+          "pixel": {
+            "lat": 30.7612,
+            "lon": 30.1089,
+            "distance_km": 4.1
+          },
+          "vegetation_opacity": 0.0468,
+          "granule": "SMAP_L3_SM_P_E_20261106_R19240_001"
+        },
+        {
+          "site_id": "nubaria",
+          "date": "2026-11-07",
+          "overpass": "AM",
+          "time_utc": null,
+          "soil_moisture_m3m3": null,
+          "uncertainty_m3m3": null,
+          "accepted": false,
+          "reject_reasons": [
+            "no_retrieval_near_site"
+          ],
+          "quality": {
+            "retrieval_qual_flag": null,
+            "recommended": null,
+            "attempted": null,
+            "successful": null,
+            "surface_conditions": []
+          },
+          "pixel": {
+            "lat": null,
+            "lon": null,
+            "distance_km": null
+          },
+          "vegetation_opacity": null,
+          "granule": "SMAP_L3_SM_P_E_20261107_R19240_001"
+        },
+        {
+          "site_id": "nubaria",
+          "date": "2026-11-07",
+          "overpass": "PM",
+          "time_utc": null,
+          "soil_moisture_m3m3": null,
+          "uncertainty_m3m3": null,
+          "accepted": false,
+          "reject_reasons": [
+            "no_retrieval_near_site"
+          ],
+          "quality": {
+            "retrieval_qual_flag": null,
+            "recommended": null,
+            "attempted": null,
+            "successful": null,
+            "surface_conditions": []
+          },
+          "pixel": {
+            "lat": null,
+            "lon": null,
+            "distance_km": null
+          },
+          "vegetation_opacity": null,
+          "granule": "SMAP_L3_SM_P_E_20261107_R19240_001"
+        },
+        {
+          "site_id": "nubaria",
+          "date": "2026-11-08",
+          "overpass": "AM",
+          "time_utc": "np.bytes_(b'2026-11-08T04:14:50.723Z')",
+          "soil_moisture_m3m3": 0.1637,
+          "uncertainty_m3m3": null,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "retrieval_qual_flag": 0,
+            "recommended": true,
+            "attempted": true,
+            "successful": true,
+            "surface_conditions": []
+          },
+          "pixel": {
+            "lat": 30.7612,
+            "lon": 30.1089,
+            "distance_km": 4.1
+          },
+          "vegetation_opacity": 0.0813,
+          "granule": "SMAP_L3_SM_P_E_20261108_R19240_001"
+        },
+        {
+          "site_id": "nubaria",
+          "date": "2026-11-08",
+          "overpass": "PM",
+          "time_utc": null,
+          "soil_moisture_m3m3": null,
+          "uncertainty_m3m3": null,
+          "accepted": false,
+          "reject_reasons": [
+            "no_retrieval_near_site"
+          ],
+          "quality": {
+            "retrieval_qual_flag": null,
+            "recommended": null,
+            "attempted": null,
+            "successful": null,
+            "surface_conditions": []
+          },
+          "pixel": {
+            "lat": null,
+            "lon": null,
+            "distance_km": null
+          },
+          "vegetation_opacity": null,
+          "granule": "SMAP_L3_SM_P_E_20261108_R19240_001"
+        },
+        {
+          "site_id": "nubaria",
+          "date": "2026-11-09",
+          "overpass": "AM",
+          "time_utc": null,
+          "soil_moisture_m3m3": null,
+          "uncertainty_m3m3": null,
+          "accepted": false,
+          "reject_reasons": [
+            "no_retrieval_near_site"
+          ],
+          "quality": {
+            "retrieval_qual_flag": null,
+            "recommended": null,
+            "attempted": null,
+            "successful": null,
+            "surface_conditions": []
+          },
+          "pixel": {
+            "lat": null,
+            "lon": null,
+            "distance_km": null
+          },
+          "vegetation_opacity": null,
+          "granule": "SMAP_L3_SM_P_E_20261109_R19240_001"
+        },
+        {
+          "site_id": "nubaria",
+          "date": "2026-11-09",
+          "overpass": "PM",
+          "time_utc": "np.bytes_(b'2026-11-09T15:48:33.543Z')",
+          "soil_moisture_m3m3": 0.086,
+          "uncertainty_m3m3": null,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "retrieval_qual_flag": 0,
+            "recommended": true,
+            "attempted": true,
+            "successful": true,
+            "surface_conditions": []
+          },
+          "pixel": {
+            "lat": 30.7612,
+            "lon": 30.1089,
+            "distance_km": 4.1
+          },
+          "vegetation_opacity": 0.0276,
+          "granule": "SMAP_L3_SM_P_E_20261109_R19240_001"
+        },
+        {
+          "site_id": "nubaria",
+          "date": "2026-11-10",
+          "overpass": "AM",
+          "time_utc": null,
+          "soil_moisture_m3m3": null,
+          "uncertainty_m3m3": null,
+          "accepted": false,
+          "reject_reasons": [
+            "no_retrieval_near_site"
+          ],
+          "quality": {
+            "retrieval_qual_flag": null,
+            "recommended": null,
+            "attempted": null,
+            "successful": null,
+            "surface_conditions": []
+          },
+          "pixel": {
+            "lat": null,
+            "lon": null,
+            "distance_km": null
+          },
+          "vegetation_opacity": null,
+          "granule": "SMAP_L3_SM_P_E_20261110_R19240_001"
+        },
+        {
+          "site_id": "nubaria",
+          "date": "2026-11-10",
+          "overpass": "PM",
+          "time_utc": null,
+          "soil_moisture_m3m3": null,
+          "uncertainty_m3m3": null,
+          "accepted": false,
+          "reject_reasons": [
+            "no_retrieval_near_site"
+          ],
+          "quality": {
+            "retrieval_qual_flag": null,
+            "recommended": null,
+            "attempted": null,
+            "successful": null,
+            "surface_conditions": []
+          },
+          "pixel": {
+            "lat": null,
+            "lon": null,
+            "distance_km": null
+          },
+          "vegetation_opacity": null,
+          "granule": "SMAP_L3_SM_P_E_20261110_R19240_001"
+        },
+        {
+          "site_id": "nubaria",
+          "date": "2026-11-11",
+          "overpass": "AM",
+          "time_utc": "np.bytes_(b'2026-11-11T04:26:53.306Z')",
+          "soil_moisture_m3m3": 0.1009,
+          "uncertainty_m3m3": null,
+          "accepted": false,
+          "reject_reasons": [
+            "not_recommended_quality",
+            "retrieval_failed"
+          ],
+          "quality": {
+            "retrieval_qual_flag": 5,
+            "recommended": false,
+            "attempted": true,
+            "successful": false,
+            "surface_conditions": []
+          },
+          "pixel": {
+            "lat": 30.7612,
+            "lon": 30.1089,
+            "distance_km": 4.1
+          },
+          "vegetation_opacity": 0.0,
+          "granule": "SMAP_L3_SM_P_E_20261111_R19240_001.h5"
+        },
+        {
+          "site_id": "nubaria",
+          "date": "2026-11-11",
+          "overpass": "PM",
+          "time_utc": "np.bytes_(b'2026-11-11T15:24:11.994Z')",
+          "soil_moisture_m3m3": 0.1149,
+          "uncertainty_m3m3": null,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "retrieval_qual_flag": 0,
+            "recommended": true,
+            "attempted": true,
+            "successful": true,
+            "surface_conditions": []
+          },
+          "pixel": {
+            "lat": 30.7612,
+            "lon": 30.1089,
+            "distance_km": 4.1
+          },
+          "vegetation_opacity": 0.1214,
+          "granule": "SMAP_L3_SM_P_E_20261111_R19240_001.h5"
+        }
+      ],
+      "daily": [
+        {
+          "date": "2026-10-26",
+          "soil_moisture_m3m3": 0.0896,
+          "n_overpasses": 2,
+          "overpasses": [
+            "AM",
+            "PM"
+          ],
+          "uncertainty_m3m3": null
+        },
+        {
+          "date": "2026-10-27",
+          "soil_moisture_m3m3": 0.0687,
+          "n_overpasses": 1,
+          "overpasses": [
+            "PM"
+          ],
+          "uncertainty_m3m3": null
+        },
+        {
+          "date": "2026-10-28",
+          "soil_moisture_m3m3": 0.1069,
+          "n_overpasses": 1,
+          "overpasses": [
+            "AM"
+          ],
+          "uncertainty_m3m3": null
+        },
+        {
+          "date": "2026-10-29",
+          "soil_moisture_m3m3": 0.0879,
+          "n_overpasses": 1,
+          "overpasses": [
+            "AM"
+          ],
+          "uncertainty_m3m3": null
+        },
+        {
+          "date": "2026-11-01",
+          "soil_moisture_m3m3": 0.0469,
+          "n_overpasses": 1,
+          "overpasses": [
+            "PM"
+          ],
+          "uncertainty_m3m3": null
+        },
+        {
+          "date": "2026-11-03",
+          "soil_moisture_m3m3": 0.0897,
+          "n_overpasses": 2,
+          "overpasses": [
+            "AM",
+            "PM"
+          ],
+          "uncertainty_m3m3": null
+        },
+        {
+          "date": "2026-11-04",
+          "soil_moisture_m3m3": 0.0606,
+          "n_overpasses": 1,
+          "overpasses": [
+            "PM"
+          ],
+          "uncertainty_m3m3": null
+        },
+        {
+          "date": "2026-11-05",
+          "soil_moisture_m3m3": 0.0996,
+          "n_overpasses": 1,
+          "overpasses": [
+            "AM"
+          ],
+          "uncertainty_m3m3": null
+        },
+        {
+          "date": "2026-11-06",
+          "soil_moisture_m3m3": 0.1404,
+          "n_overpasses": 2,
+          "overpasses": [
+            "AM",
+            "PM"
+          ],
+          "uncertainty_m3m3": null
+        },
+        {
+          "date": "2026-11-08",
+          "soil_moisture_m3m3": 0.1637,
+          "n_overpasses": 1,
+          "overpasses": [
+            "AM"
+          ],
+          "uncertainty_m3m3": null
+        },
+        {
+          "date": "2026-11-09",
+          "soil_moisture_m3m3": 0.086,
+          "n_overpasses": 1,
+          "overpasses": [
+            "PM"
+          ],
+          "uncertainty_m3m3": null
+        },
+        {
+          "date": "2026-11-11",
+          "soil_moisture_m3m3": 0.1149,
+          "n_overpasses": 1,
+          "overpasses": [
+            "PM"
+          ],
+          "uncertainty_m3m3": null
+        }
+      ],
+      "summary": {
+        "n_observations": 36,
+        "n_accepted": 15,
+        "n_days_with_data": 12,
+        "mean_m3m3": 0.0962,
+        "min_m3m3": 0.0469,
+        "max_m3m3": 0.1637
+      },
+      "notes": [
+        "SMAP L3 enhanced measures SURFACE soil moisture (top ~5 cm) only; it contains no root-zone soil moisture. Root-zone values would require a model-derived Level 4 product.",
+        "Each 9 km cell mixes many fields, roads, channels and urban patches: treat every value as a regional indication, not a field measurement.",
+        "Only retrievals flagged recommended quality (retrieval_qual_flag 0 or 8) and located on land are accepted; rejected observations are kept with their reason codes."
+      ]
+    },
+    "ndvi": {
+      "status": "pack",
+      "product": "VNP13A1",
+      "product_title": "VIIRS/NPP Vegetation Indices 16-Day L3 Global 500 m SIN Grid",
+      "version": "002",
+      "short_name": "VNP13A1",
+      "variable": "NDVI (normalized difference vegetation index)",
+      "resolution_km": 0.5,
+      "grid": "sinusoidal (SIN) grid, 500 m",
+      "compositing_period_days": 16,
+      "scale_factor": 0.0001,
+      "units": "NDVI (dimensionless, -1..1)",
+      "site_id": "nubaria",
+      "period": {
+        "start": "2025-10-24",
+        "end": "2026-11-08"
+      },
+      "observations": [
+        {
+          "site_id": "nubaria",
+          "start": "2025-10-24",
+          "end": "2025-11-08",
+          "midpoint": "2025-11-07",
+          "ndvi": 0.471,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "pixel_reliability": 0,
+            "pixel_reliability_meaning": "excellent",
+            "modland_qa": 0,
+            "vi_usefulness": 0
+          },
+          "composite_doy": 311,
+          "pixel": {
+            "lat": 30.75,
+            "lon": 30.1516,
+            "distance_km": 0.16
+          },
+          "granule": "VNP13A1.A2025297.h20v05.002.2025319030928",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.479,
+            "p25_ndvi": 0.404,
+            "p75_ndvi": 0.551,
+            "n_pixels": 1089,
+            "vegetated_fraction": 0.94,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "nubaria",
+          "start": "2025-11-01",
+          "end": "2025-11-16",
+          "midpoint": "2025-11-07",
+          "ndvi": 0.471,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "pixel_reliability": 0,
+            "pixel_reliability_meaning": "excellent",
+            "modland_qa": 0,
+            "vi_usefulness": 0
+          },
+          "composite_doy": 311,
+          "pixel": {
+            "lat": 30.75,
+            "lon": 30.1516,
+            "distance_km": 0.16
+          },
+          "granule": "VNP13A1.A2025305.h20v05.002.2025322113022",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.471,
+            "p25_ndvi": 0.395,
+            "p75_ndvi": 0.546,
+            "n_pixels": 1089,
+            "vegetated_fraction": 0.93,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "nubaria",
+          "start": "2025-11-09",
+          "end": "2025-11-24",
+          "midpoint": "2025-11-17",
+          "ndvi": 0.568,
+          "accepted": false,
+          "reject_reasons": [
+            "modland_qa_not_good"
+          ],
+          "quality": {
+            "pixel_reliability": 2,
+            "pixel_reliability_meaning": "acceptable",
+            "modland_qa": 1,
+            "vi_usefulness": 1
+          },
+          "composite_doy": 321,
+          "pixel": {
+            "lat": 30.75,
+            "lon": 30.1516,
+            "distance_km": 0.16
+          },
+          "granule": "VNP13A1.A2025313.h20v05.002.2025329135211",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.478,
+            "p25_ndvi": 0.389,
+            "p75_ndvi": 0.564,
+            "n_pixels": 639,
+            "vegetated_fraction": 0.88,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "nubaria",
+          "start": "2025-11-17",
+          "end": "2025-12-02",
+          "midpoint": "2025-11-17",
+          "ndvi": 0.568,
+          "accepted": false,
+          "reject_reasons": [
+            "modland_qa_not_good"
+          ],
+          "quality": {
+            "pixel_reliability": 2,
+            "pixel_reliability_meaning": "acceptable",
+            "modland_qa": 1,
+            "vi_usefulness": 1
+          },
+          "composite_doy": 321,
+          "pixel": {
+            "lat": 30.75,
+            "lon": 30.1516,
+            "distance_km": 0.16
+          },
+          "granule": "VNP13A1.A2025321.h20v05.002.2025339085247",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.489,
+            "p25_ndvi": 0.416,
+            "p75_ndvi": 0.562,
+            "n_pixels": 986,
+            "vegetated_fraction": 0.92,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "nubaria",
+          "start": "2025-11-25",
+          "end": "2025-12-10",
+          "midpoint": "2025-12-03",
+          "ndvi": 0.609,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "pixel_reliability": 0,
+            "pixel_reliability_meaning": "excellent",
+            "modland_qa": 0,
+            "vi_usefulness": 0
+          },
+          "composite_doy": 337,
+          "pixel": {
+            "lat": 30.75,
+            "lon": 30.1516,
+            "distance_km": 0.16
+          },
+          "granule": "VNP13A1.A2025329.h20v05.002.2025350010437",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.51,
+            "p25_ndvi": 0.434,
+            "p75_ndvi": 0.573,
+            "n_pixels": 1080,
+            "vegetated_fraction": 0.95,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "nubaria",
+          "start": "2025-12-03",
+          "end": "2025-12-18",
+          "midpoint": "2025-12-03",
+          "ndvi": 0.609,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "pixel_reliability": 0,
+            "pixel_reliability_meaning": "excellent",
+            "modland_qa": 0,
+            "vi_usefulness": 0
+          },
+          "composite_doy": 337,
+          "pixel": {
+            "lat": 30.75,
+            "lon": 30.1516,
+            "distance_km": 0.16
+          },
+          "granule": "VNP13A1.A2025337.h20v05.002.2025356074112",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.49,
+            "p25_ndvi": 0.404,
+            "p75_ndvi": 0.56,
+            "n_pixels": 1084,
+            "vegetated_fraction": 0.93,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "nubaria",
+          "start": "2025-12-11",
+          "end": "2025-12-26",
+          "midpoint": "2025-12-20",
+          "ndvi": 0.595,
+          "accepted": false,
+          "reject_reasons": [
+            "pixel_reliability_marginal",
+            "modland_qa_not_good"
+          ],
+          "quality": {
+            "pixel_reliability": 3,
+            "pixel_reliability_meaning": "marginal",
+            "modland_qa": 1,
+            "vi_usefulness": 1
+          },
+          "composite_doy": 354,
+          "pixel": {
+            "lat": 30.75,
+            "lon": 30.1516,
+            "distance_km": 0.16
+          },
+          "granule": "VNP13A1.A2025345.h20v05.002.2025361170229",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.524,
+            "p25_ndvi": 0.434,
+            "p75_ndvi": 0.6,
+            "n_pixels": 1022,
+            "vegetated_fraction": 0.94,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "nubaria",
+          "start": "2025-12-19",
+          "end": "2026-01-03",
+          "midpoint": "2025-12-31",
+          "ndvi": 0.553,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "pixel_reliability": 1,
+            "pixel_reliability_meaning": "good",
+            "modland_qa": 0,
+            "vi_usefulness": 0
+          },
+          "composite_doy": 365,
+          "pixel": {
+            "lat": 30.75,
+            "lon": 30.1516,
+            "distance_km": 0.16
+          },
+          "granule": "VNP13A1.A2025353.h20v05.002.2026004134059",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.527,
+            "p25_ndvi": 0.435,
+            "p75_ndvi": 0.602,
+            "n_pixels": 1065,
+            "vegetated_fraction": 0.94,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "nubaria",
+          "start": "2025-12-27",
+          "end": "2026-01-11",
+          "midpoint": "2026-01-10",
+          "ndvi": 0.512,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "pixel_reliability": 0,
+            "pixel_reliability_meaning": "excellent",
+            "modland_qa": 0,
+            "vi_usefulness": 0
+          },
+          "composite_doy": 10,
+          "pixel": {
+            "lat": 30.75,
+            "lon": 30.1516,
+            "distance_km": 0.16
+          },
+          "granule": "VNP13A1.A2025361.h20v05.002.2026015084231",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.528,
+            "p25_ndvi": 0.434,
+            "p75_ndvi": 0.604,
+            "n_pixels": 1083,
+            "vegetated_fraction": 0.94,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "nubaria",
+          "start": "2026-01-01",
+          "end": "2026-01-16",
+          "midpoint": "2026-01-10",
+          "ndvi": 0.512,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "pixel_reliability": 0,
+            "pixel_reliability_meaning": "excellent",
+            "modland_qa": 0,
+            "vi_usefulness": 0
+          },
+          "composite_doy": 10,
+          "pixel": {
+            "lat": 30.75,
+            "lon": 30.1516,
+            "distance_km": 0.16
+          },
+          "granule": "VNP13A1.A2026001.h20v05.002.2026017111907",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.528,
+            "p25_ndvi": 0.434,
+            "p75_ndvi": 0.604,
+            "n_pixels": 1083,
+            "vegetated_fraction": 0.93,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "nubaria",
+          "start": "2026-01-09",
+          "end": "2026-01-24",
+          "midpoint": "2026-01-10",
+          "ndvi": 0.512,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "pixel_reliability": 0,
+            "pixel_reliability_meaning": "excellent",
+            "modland_qa": 0,
+            "vi_usefulness": 0
+          },
+          "composite_doy": 10,
+          "pixel": {
+            "lat": 30.75,
+            "lon": 30.1516,
+            "distance_km": 0.16
+          },
+          "granule": "VNP13A1.A2026009.h20v05.002.2026025115537",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.486,
+            "p25_ndvi": 0.399,
+            "p75_ndvi": 0.569,
+            "n_pixels": 1086,
+            "vegetated_fraction": 0.9,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "nubaria",
+          "start": "2026-01-17",
+          "end": "2026-02-01",
+          "midpoint": "2026-01-25",
+          "ndvi": 0.624,
+          "accepted": false,
+          "reject_reasons": [
+            "modland_qa_not_good"
+          ],
+          "quality": {
+            "pixel_reliability": 2,
+            "pixel_reliability_meaning": "acceptable",
+            "modland_qa": 1,
+            "vi_usefulness": 1
+          },
+          "composite_doy": 25,
+          "pixel": {
+            "lat": 30.75,
+            "lon": 30.1516,
+            "distance_km": 0.16
+          },
+          "granule": "VNP13A1.A2026017.h20v05.002.2026034235120",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.465,
+            "p25_ndvi": 0.385,
+            "p75_ndvi": 0.54,
+            "n_pixels": 1052,
+            "vegetated_fraction": 0.9,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "nubaria",
+          "start": "2026-01-25",
+          "end": "2026-02-09",
+          "midpoint": "2026-01-25",
+          "ndvi": 0.624,
+          "accepted": false,
+          "reject_reasons": [
+            "modland_qa_not_good"
+          ],
+          "quality": {
+            "pixel_reliability": 2,
+            "pixel_reliability_meaning": "acceptable",
+            "modland_qa": 1,
+            "vi_usefulness": 1
+          },
+          "composite_doy": 25,
+          "pixel": {
+            "lat": 30.75,
+            "lon": 30.1516,
+            "distance_km": 0.16
+          },
+          "granule": "VNP13A1.A2026025.h20v05.002.2026041114948",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.465,
+            "p25_ndvi": 0.387,
+            "p75_ndvi": 0.54,
+            "n_pixels": 1037,
+            "vegetated_fraction": 0.91,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "nubaria",
+          "start": "2026-02-02",
+          "end": "2026-02-17",
+          "midpoint": "2026-02-10",
+          "ndvi": 0.536,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "pixel_reliability": 0,
+            "pixel_reliability_meaning": "excellent",
+            "modland_qa": 0,
+            "vi_usefulness": 0
+          },
+          "composite_doy": 41,
+          "pixel": {
+            "lat": 30.75,
+            "lon": 30.1516,
+            "distance_km": 0.16
+          },
+          "granule": "VNP13A1.A2026033.h20v05.002.2026049115537",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.462,
+            "p25_ndvi": 0.388,
+            "p75_ndvi": 0.536,
+            "n_pixels": 1073,
+            "vegetated_fraction": 0.91,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "nubaria",
+          "start": "2026-02-10",
+          "end": "2026-02-25",
+          "midpoint": "2026-02-10",
+          "ndvi": 0.536,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "pixel_reliability": 0,
+            "pixel_reliability_meaning": "excellent",
+            "modland_qa": 0,
+            "vi_usefulness": 0
+          },
+          "composite_doy": 41,
+          "pixel": {
+            "lat": 30.75,
+            "lon": 30.1516,
+            "distance_km": 0.16
+          },
+          "granule": "VNP13A1.A2026041.h20v05.002.2026057095357",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.472,
+            "p25_ndvi": 0.398,
+            "p75_ndvi": 0.545,
+            "n_pixels": 1081,
+            "vegetated_fraction": 0.91,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "nubaria",
+          "start": "2026-02-18",
+          "end": "2026-03-05",
+          "midpoint": "2026-02-21",
+          "ndvi": 0.442,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "pixel_reliability": 0,
+            "pixel_reliability_meaning": "excellent",
+            "modland_qa": 0,
+            "vi_usefulness": 0
+          },
+          "composite_doy": 52,
+          "pixel": {
+            "lat": 30.75,
+            "lon": 30.1516,
+            "distance_km": 0.16
+          },
+          "granule": "VNP13A1.A2026049.h20v05.002.2026065120042",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.43,
+            "p25_ndvi": 0.355,
+            "p75_ndvi": 0.51,
+            "n_pixels": 1047,
+            "vegetated_fraction": 0.86,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "nubaria",
+          "start": "2026-02-26",
+          "end": "2026-03-13",
+          "midpoint": "2026-03-05",
+          "ndvi": 0.441,
+          "accepted": false,
+          "reject_reasons": [
+            "pixel_reliability_marginal",
+            "modland_qa_not_good"
+          ],
+          "quality": {
+            "pixel_reliability": 3,
+            "pixel_reliability_meaning": "marginal",
+            "modland_qa": 1,
+            "vi_usefulness": 1
+          },
+          "composite_doy": 64,
+          "pixel": {
+            "lat": 30.75,
+            "lon": 30.1516,
+            "distance_km": 0.16
+          },
+          "granule": "VNP13A1.A2026057.h20v05.002.2026077164633",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.446,
+            "p25_ndvi": 0.288,
+            "p75_ndvi": 0.499,
+            "n_pixels": 56,
+            "vegetated_fraction": 0.71,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "nubaria",
+          "start": "2026-03-06",
+          "end": "2026-03-21",
+          "midpoint": "2026-03-16",
+          "ndvi": 0.518,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "pixel_reliability": 2,
+            "pixel_reliability_meaning": "acceptable",
+            "modland_qa": 0,
+            "vi_usefulness": 1
+          },
+          "composite_doy": 75,
+          "pixel": {
+            "lat": 30.75,
+            "lon": 30.1516,
+            "distance_km": 0.16
+          },
+          "granule": "VNP13A1.A2026065.h20v05.002.2026085150044",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.482,
+            "p25_ndvi": 0.393,
+            "p75_ndvi": 0.56,
+            "n_pixels": 1052,
+            "vegetated_fraction": 0.92,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "nubaria",
+          "start": "2026-03-14",
+          "end": "2026-03-29",
+          "midpoint": "2026-03-29",
+          "ndvi": 0.537,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "pixel_reliability": 2,
+            "pixel_reliability_meaning": "acceptable",
+            "modland_qa": 0,
+            "vi_usefulness": 1
+          },
+          "composite_doy": 88,
+          "pixel": {
+            "lat": 30.75,
+            "lon": 30.1516,
+            "distance_km": 0.16
+          },
+          "granule": "VNP13A1.A2026073.h20v05.002.2026090133202",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.486,
+            "p25_ndvi": 0.405,
+            "p75_ndvi": 0.569,
+            "n_pixels": 1056,
+            "vegetated_fraction": 0.93,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "nubaria",
+          "start": "2026-03-22",
+          "end": "2026-04-06",
+          "midpoint": "2026-03-29",
+          "ndvi": 0.537,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "pixel_reliability": 2,
+            "pixel_reliability_meaning": "acceptable",
+            "modland_qa": 0,
+            "vi_usefulness": 1
+          },
+          "composite_doy": 88,
+          "pixel": {
+            "lat": 30.75,
+            "lon": 30.1516,
+            "distance_km": 0.16
+          },
+          "granule": "VNP13A1.A2026081.h20v05.002.2026097095005",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.496,
+            "p25_ndvi": 0.414,
+            "p75_ndvi": 0.553,
+            "n_pixels": 1058,
+            "vegetated_fraction": 0.94,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "nubaria",
+          "start": "2026-03-30",
+          "end": "2026-04-14",
+          "midpoint": "2026-04-11",
+          "ndvi": 0.467,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "pixel_reliability": 1,
+            "pixel_reliability_meaning": "good",
+            "modland_qa": 0,
+            "vi_usefulness": 0
+          },
+          "composite_doy": 101,
+          "pixel": {
+            "lat": 30.75,
+            "lon": 30.1516,
+            "distance_km": 0.16
+          },
+          "granule": "VNP13A1.A2026089.h20v05.002.2026105101709",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.53,
+            "p25_ndvi": 0.447,
+            "p75_ndvi": 0.589,
+            "n_pixels": 1085,
+            "vegetated_fraction": 0.95,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "nubaria",
+          "start": "2026-04-07",
+          "end": "2026-04-22",
+          "midpoint": "2026-04-21",
+          "ndvi": 0.506,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "pixel_reliability": 0,
+            "pixel_reliability_meaning": "excellent",
+            "modland_qa": 0,
+            "vi_usefulness": 0
+          },
+          "composite_doy": 111,
+          "pixel": {
+            "lat": 30.75,
+            "lon": 30.1516,
+            "distance_km": 0.16
+          },
+          "granule": "VNP13A1.A2026097.h20v05.002.2026134171647",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.531,
+            "p25_ndvi": 0.455,
+            "p75_ndvi": 0.593,
+            "n_pixels": 1087,
+            "vegetated_fraction": 0.96,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "nubaria",
+          "start": "2026-04-15",
+          "end": "2026-04-30",
+          "midpoint": "2026-04-21",
+          "ndvi": 0.506,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "pixel_reliability": 0,
+            "pixel_reliability_meaning": "excellent",
+            "modland_qa": 0,
+            "vi_usefulness": 0
+          },
+          "composite_doy": 111,
+          "pixel": {
+            "lat": 30.75,
+            "lon": 30.1516,
+            "distance_km": 0.16
+          },
+          "granule": "VNP13A1.A2026105.h20v05.002.2026134024720",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.502,
+            "p25_ndvi": 0.427,
+            "p75_ndvi": 0.556,
+            "n_pixels": 1086,
+            "vegetated_fraction": 0.94,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "nubaria",
+          "start": "2026-04-23",
+          "end": "2026-05-08",
+          "midpoint": "2026-05-07",
+          "ndvi": 0.485,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "pixel_reliability": 0,
+            "pixel_reliability_meaning": "excellent",
+            "modland_qa": 0,
+            "vi_usefulness": 0
+          },
+          "composite_doy": 127,
+          "pixel": {
+            "lat": 30.75,
+            "lon": 30.1516,
+            "distance_km": 0.16
+          },
+          "granule": "VNP13A1.A2026113.h20v05.002.2026134025822",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.466,
+            "p25_ndvi": 0.402,
+            "p75_ndvi": 0.524,
+            "n_pixels": 1089,
+            "vegetated_fraction": 0.92,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "nubaria",
+          "start": "2026-05-01",
+          "end": "2026-05-16",
+          "midpoint": "2026-05-07",
+          "ndvi": 0.485,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "pixel_reliability": 0,
+            "pixel_reliability_meaning": "excellent",
+            "modland_qa": 0,
+            "vi_usefulness": 0
+          },
+          "composite_doy": 127,
+          "pixel": {
+            "lat": 30.75,
+            "lon": 30.1516,
+            "distance_km": 0.16
+          },
+          "granule": "VNP13A1.A2026121.h20v05.002.2026141160005",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.461,
+            "p25_ndvi": 0.397,
+            "p75_ndvi": 0.511,
+            "n_pixels": 1089,
+            "vegetated_fraction": 0.93,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "nubaria",
+          "start": "2026-05-09",
+          "end": "2026-05-24",
+          "midpoint": "2026-05-12",
+          "ndvi": 0.434,
+          "accepted": false,
+          "reject_reasons": [
+            "modland_qa_not_good"
+          ],
+          "quality": {
+            "pixel_reliability": 2,
+            "pixel_reliability_meaning": "acceptable",
+            "modland_qa": 1,
+            "vi_usefulness": 1
+          },
+          "composite_doy": 132,
+          "pixel": {
+            "lat": 30.75,
+            "lon": 30.1516,
+            "distance_km": 0.16
+          },
+          "granule": "VNP13A1.A2026129.h20v05.002.2026146131154",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.42,
+            "p25_ndvi": 0.362,
+            "p75_ndvi": 0.468,
+            "n_pixels": 1052,
+            "vegetated_fraction": 0.9,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "nubaria",
+          "start": "2026-05-17",
+          "end": "2026-06-01",
+          "midpoint": "2026-05-28",
+          "ndvi": 0.499,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "pixel_reliability": 0,
+            "pixel_reliability_meaning": "excellent",
+            "modland_qa": 0,
+            "vi_usefulness": 0
+          },
+          "composite_doy": 148,
+          "pixel": {
+            "lat": 30.75,
+            "lon": 30.1516,
+            "distance_km": 0.16
+          },
+          "granule": "VNP13A1.A2026137.h20v05.002.2026162011027",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.435,
+            "p25_ndvi": 0.366,
+            "p75_ndvi": 0.498,
+            "n_pixels": 1085,
+            "vegetated_fraction": 0.9,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "nubaria",
+          "start": "2026-05-25",
+          "end": "2026-06-09",
+          "midpoint": "2026-05-28",
+          "ndvi": 0.499,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "pixel_reliability": 0,
+            "pixel_reliability_meaning": "excellent",
+            "modland_qa": 0,
+            "vi_usefulness": 0
+          },
+          "composite_doy": 148,
+          "pixel": {
+            "lat": 30.75,
+            "lon": 30.1516,
+            "distance_km": 0.16
+          },
+          "granule": "VNP13A1.A2026145.h20v05.002.2026166043917",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.444,
+            "p25_ndvi": 0.374,
+            "p75_ndvi": 0.502,
+            "n_pixels": 1087,
+            "vegetated_fraction": 0.93,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "nubaria",
+          "start": "2026-06-02",
+          "end": "2026-06-17",
+          "midpoint": "2026-06-08",
+          "ndvi": 0.421,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "pixel_reliability": 0,
+            "pixel_reliability_meaning": "excellent",
+            "modland_qa": 0,
+            "vi_usefulness": 0
+          },
+          "composite_doy": 159,
+          "pixel": {
+            "lat": 30.75,
+            "lon": 30.1516,
+            "distance_km": 0.16
+          },
+          "granule": "VNP13A1.A2026153.h20v05.002.2026170030229",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.421,
+            "p25_ndvi": 0.354,
+            "p75_ndvi": 0.482,
+            "n_pixels": 1089,
+            "vegetated_fraction": 0.91,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "nubaria",
+          "start": "2026-06-10",
+          "end": "2026-06-25",
+          "midpoint": "2026-06-19",
+          "ndvi": 0.411,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "pixel_reliability": 0,
+            "pixel_reliability_meaning": "excellent",
+            "modland_qa": 0,
+            "vi_usefulness": 0
+          },
+          "composite_doy": 170,
+          "pixel": {
+            "lat": 30.75,
+            "lon": 30.1516,
+            "distance_km": 0.16
+          },
+          "granule": "VNP13A1.A2026161.h20v05.002.2026177104759",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.429,
+            "p25_ndvi": 0.357,
+            "p75_ndvi": 0.484,
+            "n_pixels": 1089,
+            "vegetated_fraction": 0.91,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "nubaria",
+          "start": "2026-06-18",
+          "end": "2026-07-03",
+          "midpoint": "2026-06-30",
+          "ndvi": 0.435,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "pixel_reliability": 1,
+            "pixel_reliability_meaning": "good",
+            "modland_qa": 0,
+            "vi_usefulness": 0
+          },
+          "composite_doy": 181,
+          "pixel": {
+            "lat": 30.75,
+            "lon": 30.1516,
+            "distance_km": 0.16
+          },
+          "granule": "VNP13A1.A2026169.h20v05.002.2026188194903",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.439,
+            "p25_ndvi": 0.38,
+            "p75_ndvi": 0.499,
+            "n_pixels": 1089,
+            "vegetated_fraction": 0.92,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "nubaria",
+          "start": "2026-06-26",
+          "end": "2026-07-11",
+          "midpoint": "2026-06-30",
+          "ndvi": 0.435,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "pixel_reliability": 1,
+            "pixel_reliability_meaning": "good",
+            "modland_qa": 0,
+            "vi_usefulness": 0
+          },
+          "composite_doy": 181,
+          "pixel": {
+            "lat": 30.75,
+            "lon": 30.1516,
+            "distance_km": 0.16
+          },
+          "granule": "VNP13A1.A2026177.h20v05.002.2026204142435",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.449,
+            "p25_ndvi": 0.387,
+            "p75_ndvi": 0.502,
+            "n_pixels": 1089,
+            "vegetated_fraction": 0.92,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "nubaria",
+          "start": "2026-07-04",
+          "end": "2026-07-19",
+          "midpoint": "2026-07-10",
+          "ndvi": 0.39,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "pixel_reliability": 0,
+            "pixel_reliability_meaning": "excellent",
+            "modland_qa": 0,
+            "vi_usefulness": 0
+          },
+          "composite_doy": 191,
+          "pixel": {
+            "lat": 30.75,
+            "lon": 30.1516,
+            "distance_km": 0.16
+          },
+          "granule": "VNP13A1.A2026185.h20v05.002.2026209042129",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.436,
+            "p25_ndvi": 0.374,
+            "p75_ndvi": 0.489,
+            "n_pixels": 1089,
+            "vegetated_fraction": 0.91,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "nubaria",
+          "start": "2026-07-12",
+          "end": "2026-07-27",
+          "midpoint": "2026-07-21",
+          "ndvi": 0.431,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "pixel_reliability": 0,
+            "pixel_reliability_meaning": "excellent",
+            "modland_qa": 0,
+            "vi_usefulness": 0
+          },
+          "composite_doy": 202,
+          "pixel": {
+            "lat": 30.75,
+            "lon": 30.1516,
+            "distance_km": 0.16
+          },
+          "granule": "VNP13A1.A2026193.h20v05.002.2026209195751",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.459,
+            "p25_ndvi": 0.394,
+            "p75_ndvi": 0.514,
+            "n_pixels": 1082,
+            "vegetated_fraction": 0.91,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "nubaria",
+          "start": "2026-07-20",
+          "end": "2026-08-04",
+          "midpoint": "2026-07-31",
+          "ndvi": 0.441,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "pixel_reliability": 0,
+            "pixel_reliability_meaning": "excellent",
+            "modland_qa": 0,
+            "vi_usefulness": 0
+          },
+          "composite_doy": 212,
+          "pixel": {
+            "lat": 30.75,
+            "lon": 30.1516,
+            "distance_km": 0.16
+          },
+          "granule": "VNP13A1.A2026201.h20v05.002.2026222173200",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.483,
+            "p25_ndvi": 0.416,
+            "p75_ndvi": 0.548,
+            "n_pixels": 1083,
+            "vegetated_fraction": 0.94,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "nubaria",
+          "start": "2026-07-28",
+          "end": "2026-08-12",
+          "midpoint": "2026-07-31",
+          "ndvi": 0.441,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "pixel_reliability": 0,
+            "pixel_reliability_meaning": "excellent",
+            "modland_qa": 0,
+            "vi_usefulness": 0
+          },
+          "composite_doy": 212,
+          "pixel": {
+            "lat": 30.75,
+            "lon": 30.1516,
+            "distance_km": 0.16
+          },
+          "granule": "VNP13A1.A2026209.h20v05.002.2026225161942",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.488,
+            "p25_ndvi": 0.416,
+            "p75_ndvi": 0.551,
+            "n_pixels": 1085,
+            "vegetated_fraction": 0.93,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "nubaria",
+          "start": "2026-08-05",
+          "end": "2026-08-20",
+          "midpoint": "2026-08-11",
+          "ndvi": 0.421,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "pixel_reliability": 0,
+            "pixel_reliability_meaning": "excellent",
+            "modland_qa": 0,
+            "vi_usefulness": 0
+          },
+          "composite_doy": 223,
+          "pixel": {
+            "lat": 30.75,
+            "lon": 30.1516,
+            "distance_km": 0.16
+          },
+          "granule": "VNP13A1.A2026217.h20v05.002.2026236120147",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.475,
+            "p25_ndvi": 0.403,
+            "p75_ndvi": 0.537,
+            "n_pixels": 1083,
+            "vegetated_fraction": 0.9,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "nubaria",
+          "start": "2026-08-13",
+          "end": "2026-08-28",
+          "midpoint": "2026-08-21",
+          "ndvi": 0.461,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "pixel_reliability": 0,
+            "pixel_reliability_meaning": "excellent",
+            "modland_qa": 0,
+            "vi_usefulness": 0
+          },
+          "composite_doy": 233,
+          "pixel": {
+            "lat": 30.75,
+            "lon": 30.1516,
+            "distance_km": 0.16
+          },
+          "granule": "VNP13A1.A2026225.h20v05.002.2026241084812",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.511,
+            "p25_ndvi": 0.44,
+            "p75_ndvi": 0.573,
+            "n_pixels": 1085,
+            "vegetated_fraction": 0.93,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "nubaria",
+          "start": "2026-08-21",
+          "end": "2026-09-05",
+          "midpoint": "2026-08-21",
+          "ndvi": 0.461,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "pixel_reliability": 0,
+            "pixel_reliability_meaning": "excellent",
+            "modland_qa": 0,
+            "vi_usefulness": 0
+          },
+          "composite_doy": 233,
+          "pixel": {
+            "lat": 30.75,
+            "lon": 30.1516,
+            "distance_km": 0.16
+          },
+          "granule": "VNP13A1.A2026233.h20v05.002.2026251193423",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.517,
+            "p25_ndvi": 0.445,
+            "p75_ndvi": 0.583,
+            "n_pixels": 1085,
+            "vegetated_fraction": 0.93,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "nubaria",
+          "start": "2026-08-29",
+          "end": "2026-09-13",
+          "midpoint": "2026-09-06",
+          "ndvi": 0.391,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "pixel_reliability": 0,
+            "pixel_reliability_meaning": "excellent",
+            "modland_qa": 0,
+            "vi_usefulness": 0
+          },
+          "composite_doy": 249,
+          "pixel": {
+            "lat": 30.75,
+            "lon": 30.1516,
+            "distance_km": 0.16
+          },
+          "granule": "VNP13A1.A2026241.h20v05.002.2026258004000",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.509,
+            "p25_ndvi": 0.436,
+            "p75_ndvi": 0.572,
+            "n_pixels": 1088,
+            "vegetated_fraction": 0.94,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "nubaria",
+          "start": "2026-09-06",
+          "end": "2026-09-21",
+          "midpoint": "2026-09-06",
+          "ndvi": 0.391,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "pixel_reliability": 0,
+            "pixel_reliability_meaning": "excellent",
+            "modland_qa": 0,
+            "vi_usefulness": 0
+          },
+          "composite_doy": 249,
+          "pixel": {
+            "lat": 30.75,
+            "lon": 30.1516,
+            "distance_km": 0.16
+          },
+          "granule": "VNP13A1.A2026249.h20v05.002.2026265092139",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.499,
+            "p25_ndvi": 0.426,
+            "p75_ndvi": 0.558,
+            "n_pixels": 1089,
+            "vegetated_fraction": 0.93,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "nubaria",
+          "start": "2026-09-14",
+          "end": "2026-09-29",
+          "midpoint": "2026-09-22",
+          "ndvi": 0.433,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "pixel_reliability": 0,
+            "pixel_reliability_meaning": "excellent",
+            "modland_qa": 0,
+            "vi_usefulness": 0
+          },
+          "composite_doy": 265,
+          "pixel": {
+            "lat": 30.75,
+            "lon": 30.1516,
+            "distance_km": 0.16
+          },
+          "granule": "VNP13A1.A2026257.h20v05.002.2026289164634",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.448,
+            "p25_ndvi": 0.377,
+            "p75_ndvi": 0.511,
+            "n_pixels": 1067,
+            "vegetated_fraction": 0.91,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "nubaria",
+          "start": "2026-09-22",
+          "end": "2026-10-07",
+          "midpoint": "2026-09-22",
+          "ndvi": 0.433,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "pixel_reliability": 0,
+            "pixel_reliability_meaning": "excellent",
+            "modland_qa": 0,
+            "vi_usefulness": 0
+          },
+          "composite_doy": 265,
+          "pixel": {
+            "lat": 30.75,
+            "lon": 30.1516,
+            "distance_km": 0.16
+          },
+          "granule": "VNP13A1.A2026265.h20v05.002.2026289164701",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.45,
+            "p25_ndvi": 0.374,
+            "p75_ndvi": 0.512,
+            "n_pixels": 1087,
+            "vegetated_fraction": 0.91,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "nubaria",
+          "start": "2026-09-30",
+          "end": "2026-10-15",
+          "midpoint": "2026-10-03",
+          "ndvi": 0.354,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "pixel_reliability": 0,
+            "pixel_reliability_meaning": "excellent",
+            "modland_qa": 0,
+            "vi_usefulness": 0
+          },
+          "composite_doy": 276,
+          "pixel": {
+            "lat": 30.75,
+            "lon": 30.1516,
+            "distance_km": 0.16
+          },
+          "granule": "VNP13A1.A2026273.h20v05.002.2026296170107",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.407,
+            "p25_ndvi": 0.33,
+            "p75_ndvi": 0.483,
+            "n_pixels": 1089,
+            "vegetated_fraction": 0.85,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "nubaria",
+          "start": "2026-10-08",
+          "end": "2026-10-23",
+          "midpoint": "2026-10-12",
+          "ndvi": 0.456,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "pixel_reliability": 2,
+            "pixel_reliability_meaning": "acceptable",
+            "modland_qa": 0,
+            "vi_usefulness": 1
+          },
+          "composite_doy": 285,
+          "pixel": {
+            "lat": 30.75,
+            "lon": 30.1516,
+            "distance_km": 0.16
+          },
+          "granule": "VNP13A1.A2026281.h20v05.002.2026297095751",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.394,
+            "p25_ndvi": 0.332,
+            "p75_ndvi": 0.461,
+            "n_pixels": 1066,
+            "vegetated_fraction": 0.86,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "nubaria",
+          "start": "2026-10-16",
+          "end": "2026-10-31",
+          "midpoint": "2026-10-29",
+          "ndvi": 0.45,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "pixel_reliability": 1,
+            "pixel_reliability_meaning": "good",
+            "modland_qa": 0,
+            "vi_usefulness": 0
+          },
+          "composite_doy": 302,
+          "pixel": {
+            "lat": 30.75,
+            "lon": 30.1516,
+            "distance_km": 0.16
+          },
+          "granule": "VNP13A1.A2026289.h20v05.002.2026307014645",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.441,
+            "p25_ndvi": 0.373,
+            "p75_ndvi": 0.523,
+            "n_pixels": 1088,
+            "vegetated_fraction": 0.92,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "nubaria",
+          "start": "2026-10-24",
+          "end": "2026-11-08",
+          "midpoint": "2026-10-29",
+          "ndvi": 0.45,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "pixel_reliability": 1,
+            "pixel_reliability_meaning": "good",
+            "modland_qa": 0,
+            "vi_usefulness": 0
+          },
+          "composite_doy": 302,
+          "pixel": {
+            "lat": 30.75,
+            "lon": 30.1516,
+            "distance_km": 0.16
+          },
+          "granule": "VNP13A1.A2026297.h20v05.002.2026309112426",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.441,
+            "p25_ndvi": 0.373,
+            "p75_ndvi": 0.523,
+            "n_pixels": 1088,
+            "vegetated_fraction": 0.92,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        }
+      ],
+      "series": [
+        {
+          "start": "2025-10-24",
+          "end": "2025-11-08",
+          "ndvi": 0.471
+        },
+        {
+          "start": "2025-11-01",
+          "end": "2025-11-16",
+          "ndvi": 0.471
+        },
+        {
+          "start": "2025-11-25",
+          "end": "2025-12-10",
+          "ndvi": 0.609
+        },
+        {
+          "start": "2025-12-03",
+          "end": "2025-12-18",
+          "ndvi": 0.609
+        },
+        {
+          "start": "2025-12-19",
+          "end": "2026-01-03",
+          "ndvi": 0.553
+        },
+        {
+          "start": "2025-12-27",
+          "end": "2026-01-11",
+          "ndvi": 0.512
+        },
+        {
+          "start": "2026-01-01",
+          "end": "2026-01-16",
+          "ndvi": 0.512
+        },
+        {
+          "start": "2026-01-09",
+          "end": "2026-01-24",
+          "ndvi": 0.512
+        },
+        {
+          "start": "2026-02-02",
+          "end": "2026-02-17",
+          "ndvi": 0.536
+        },
+        {
+          "start": "2026-02-10",
+          "end": "2026-02-25",
+          "ndvi": 0.536
+        },
+        {
+          "start": "2026-02-18",
+          "end": "2026-03-05",
+          "ndvi": 0.442
+        },
+        {
+          "start": "2026-03-06",
+          "end": "2026-03-21",
+          "ndvi": 0.518
+        },
+        {
+          "start": "2026-03-14",
+          "end": "2026-03-29",
+          "ndvi": 0.537
+        },
+        {
+          "start": "2026-03-22",
+          "end": "2026-04-06",
+          "ndvi": 0.537
+        },
+        {
+          "start": "2026-03-30",
+          "end": "2026-04-14",
+          "ndvi": 0.467
+        },
+        {
+          "start": "2026-04-07",
+          "end": "2026-04-22",
+          "ndvi": 0.506
+        },
+        {
+          "start": "2026-04-15",
+          "end": "2026-04-30",
+          "ndvi": 0.506
+        },
+        {
+          "start": "2026-04-23",
+          "end": "2026-05-08",
+          "ndvi": 0.485
+        },
+        {
+          "start": "2026-05-01",
+          "end": "2026-05-16",
+          "ndvi": 0.485
+        },
+        {
+          "start": "2026-05-17",
+          "end": "2026-06-01",
+          "ndvi": 0.499
+        },
+        {
+          "start": "2026-05-25",
+          "end": "2026-06-09",
+          "ndvi": 0.499
+        },
+        {
+          "start": "2026-06-02",
+          "end": "2026-06-17",
+          "ndvi": 0.421
+        },
+        {
+          "start": "2026-06-10",
+          "end": "2026-06-25",
+          "ndvi": 0.411
+        },
+        {
+          "start": "2026-06-18",
+          "end": "2026-07-03",
+          "ndvi": 0.435
+        },
+        {
+          "start": "2026-06-26",
+          "end": "2026-07-11",
+          "ndvi": 0.435
+        },
+        {
+          "start": "2026-07-04",
+          "end": "2026-07-19",
+          "ndvi": 0.39
+        },
+        {
+          "start": "2026-07-12",
+          "end": "2026-07-27",
+          "ndvi": 0.431
+        },
+        {
+          "start": "2026-07-20",
+          "end": "2026-08-04",
+          "ndvi": 0.441
+        },
+        {
+          "start": "2026-07-28",
+          "end": "2026-08-12",
+          "ndvi": 0.441
+        },
+        {
+          "start": "2026-08-05",
+          "end": "2026-08-20",
+          "ndvi": 0.421
+        },
+        {
+          "start": "2026-08-13",
+          "end": "2026-08-28",
+          "ndvi": 0.461
+        },
+        {
+          "start": "2026-08-21",
+          "end": "2026-09-05",
+          "ndvi": 0.461
+        },
+        {
+          "start": "2026-08-29",
+          "end": "2026-09-13",
+          "ndvi": 0.391
+        },
+        {
+          "start": "2026-09-06",
+          "end": "2026-09-21",
+          "ndvi": 0.391
+        },
+        {
+          "start": "2026-09-14",
+          "end": "2026-09-29",
+          "ndvi": 0.433
+        },
+        {
+          "start": "2026-09-22",
+          "end": "2026-10-07",
+          "ndvi": 0.433
+        },
+        {
+          "start": "2026-09-30",
+          "end": "2026-10-15",
+          "ndvi": 0.354
+        },
+        {
+          "start": "2026-10-08",
+          "end": "2026-10-23",
+          "ndvi": 0.456
+        },
+        {
+          "start": "2026-10-16",
+          "end": "2026-10-31",
+          "ndvi": 0.45
+        },
+        {
+          "start": "2026-10-24",
+          "end": "2026-11-08",
+          "ndvi": 0.45
+        }
+      ],
+      "regional_series": [
+        {
+          "start": "2025-10-24",
+          "end": "2025-11-08",
+          "ndvi": 0.479,
+          "p25": 0.404,
+          "p75": 0.551,
+          "vegetated_fraction": 0.94
+        },
+        {
+          "start": "2025-11-01",
+          "end": "2025-11-16",
+          "ndvi": 0.471,
+          "p25": 0.395,
+          "p75": 0.546,
+          "vegetated_fraction": 0.93
+        },
+        {
+          "start": "2025-11-25",
+          "end": "2025-12-10",
+          "ndvi": 0.51,
+          "p25": 0.434,
+          "p75": 0.573,
+          "vegetated_fraction": 0.95
+        },
+        {
+          "start": "2025-12-03",
+          "end": "2025-12-18",
+          "ndvi": 0.49,
+          "p25": 0.404,
+          "p75": 0.56,
+          "vegetated_fraction": 0.93
+        },
+        {
+          "start": "2025-12-19",
+          "end": "2026-01-03",
+          "ndvi": 0.527,
+          "p25": 0.435,
+          "p75": 0.602,
+          "vegetated_fraction": 0.94
+        },
+        {
+          "start": "2025-12-27",
+          "end": "2026-01-11",
+          "ndvi": 0.528,
+          "p25": 0.434,
+          "p75": 0.604,
+          "vegetated_fraction": 0.94
+        },
+        {
+          "start": "2026-01-01",
+          "end": "2026-01-16",
+          "ndvi": 0.528,
+          "p25": 0.434,
+          "p75": 0.604,
+          "vegetated_fraction": 0.93
+        },
+        {
+          "start": "2026-01-09",
+          "end": "2026-01-24",
+          "ndvi": 0.486,
+          "p25": 0.399,
+          "p75": 0.569,
+          "vegetated_fraction": 0.9
+        },
+        {
+          "start": "2026-02-02",
+          "end": "2026-02-17",
+          "ndvi": 0.462,
+          "p25": 0.388,
+          "p75": 0.536,
+          "vegetated_fraction": 0.91
+        },
+        {
+          "start": "2026-02-10",
+          "end": "2026-02-25",
+          "ndvi": 0.472,
+          "p25": 0.398,
+          "p75": 0.545,
+          "vegetated_fraction": 0.91
+        },
+        {
+          "start": "2026-02-18",
+          "end": "2026-03-05",
+          "ndvi": 0.43,
+          "p25": 0.355,
+          "p75": 0.51,
+          "vegetated_fraction": 0.86
+        },
+        {
+          "start": "2026-03-06",
+          "end": "2026-03-21",
+          "ndvi": 0.482,
+          "p25": 0.393,
+          "p75": 0.56,
+          "vegetated_fraction": 0.92
+        },
+        {
+          "start": "2026-03-14",
+          "end": "2026-03-29",
+          "ndvi": 0.486,
+          "p25": 0.405,
+          "p75": 0.569,
+          "vegetated_fraction": 0.93
+        },
+        {
+          "start": "2026-03-22",
+          "end": "2026-04-06",
+          "ndvi": 0.496,
+          "p25": 0.414,
+          "p75": 0.553,
+          "vegetated_fraction": 0.94
+        },
+        {
+          "start": "2026-03-30",
+          "end": "2026-04-14",
+          "ndvi": 0.53,
+          "p25": 0.447,
+          "p75": 0.589,
+          "vegetated_fraction": 0.95
+        },
+        {
+          "start": "2026-04-07",
+          "end": "2026-04-22",
+          "ndvi": 0.531,
+          "p25": 0.455,
+          "p75": 0.593,
+          "vegetated_fraction": 0.96
+        },
+        {
+          "start": "2026-04-15",
+          "end": "2026-04-30",
+          "ndvi": 0.502,
+          "p25": 0.427,
+          "p75": 0.556,
+          "vegetated_fraction": 0.94
+        },
+        {
+          "start": "2026-04-23",
+          "end": "2026-05-08",
+          "ndvi": 0.466,
+          "p25": 0.402,
+          "p75": 0.524,
+          "vegetated_fraction": 0.92
+        },
+        {
+          "start": "2026-05-01",
+          "end": "2026-05-16",
+          "ndvi": 0.461,
+          "p25": 0.397,
+          "p75": 0.511,
+          "vegetated_fraction": 0.93
+        },
+        {
+          "start": "2026-05-17",
+          "end": "2026-06-01",
+          "ndvi": 0.435,
+          "p25": 0.366,
+          "p75": 0.498,
+          "vegetated_fraction": 0.9
+        },
+        {
+          "start": "2026-05-25",
+          "end": "2026-06-09",
+          "ndvi": 0.444,
+          "p25": 0.374,
+          "p75": 0.502,
+          "vegetated_fraction": 0.93
+        },
+        {
+          "start": "2026-06-02",
+          "end": "2026-06-17",
+          "ndvi": 0.421,
+          "p25": 0.354,
+          "p75": 0.482,
+          "vegetated_fraction": 0.91
+        },
+        {
+          "start": "2026-06-10",
+          "end": "2026-06-25",
+          "ndvi": 0.429,
+          "p25": 0.357,
+          "p75": 0.484,
+          "vegetated_fraction": 0.91
+        },
+        {
+          "start": "2026-06-18",
+          "end": "2026-07-03",
+          "ndvi": 0.439,
+          "p25": 0.38,
+          "p75": 0.499,
+          "vegetated_fraction": 0.92
+        },
+        {
+          "start": "2026-06-26",
+          "end": "2026-07-11",
+          "ndvi": 0.449,
+          "p25": 0.387,
+          "p75": 0.502,
+          "vegetated_fraction": 0.92
+        },
+        {
+          "start": "2026-07-04",
+          "end": "2026-07-19",
+          "ndvi": 0.436,
+          "p25": 0.374,
+          "p75": 0.489,
+          "vegetated_fraction": 0.91
+        },
+        {
+          "start": "2026-07-12",
+          "end": "2026-07-27",
+          "ndvi": 0.459,
+          "p25": 0.394,
+          "p75": 0.514,
+          "vegetated_fraction": 0.91
+        },
+        {
+          "start": "2026-07-20",
+          "end": "2026-08-04",
+          "ndvi": 0.483,
+          "p25": 0.416,
+          "p75": 0.548,
+          "vegetated_fraction": 0.94
+        },
+        {
+          "start": "2026-07-28",
+          "end": "2026-08-12",
+          "ndvi": 0.488,
+          "p25": 0.416,
+          "p75": 0.551,
+          "vegetated_fraction": 0.93
+        },
+        {
+          "start": "2026-08-05",
+          "end": "2026-08-20",
+          "ndvi": 0.475,
+          "p25": 0.403,
+          "p75": 0.537,
+          "vegetated_fraction": 0.9
+        },
+        {
+          "start": "2026-08-13",
+          "end": "2026-08-28",
+          "ndvi": 0.511,
+          "p25": 0.44,
+          "p75": 0.573,
+          "vegetated_fraction": 0.93
+        },
+        {
+          "start": "2026-08-21",
+          "end": "2026-09-05",
+          "ndvi": 0.517,
+          "p25": 0.445,
+          "p75": 0.583,
+          "vegetated_fraction": 0.93
+        },
+        {
+          "start": "2026-08-29",
+          "end": "2026-09-13",
+          "ndvi": 0.509,
+          "p25": 0.436,
+          "p75": 0.572,
+          "vegetated_fraction": 0.94
+        },
+        {
+          "start": "2026-09-06",
+          "end": "2026-09-21",
+          "ndvi": 0.499,
+          "p25": 0.426,
+          "p75": 0.558,
+          "vegetated_fraction": 0.93
+        },
+        {
+          "start": "2026-09-14",
+          "end": "2026-09-29",
+          "ndvi": 0.448,
+          "p25": 0.377,
+          "p75": 0.511,
+          "vegetated_fraction": 0.91
+        },
+        {
+          "start": "2026-09-22",
+          "end": "2026-10-07",
+          "ndvi": 0.45,
+          "p25": 0.374,
+          "p75": 0.512,
+          "vegetated_fraction": 0.91
+        },
+        {
+          "start": "2026-09-30",
+          "end": "2026-10-15",
+          "ndvi": 0.407,
+          "p25": 0.33,
+          "p75": 0.483,
+          "vegetated_fraction": 0.85
+        },
+        {
+          "start": "2026-10-08",
+          "end": "2026-10-23",
+          "ndvi": 0.394,
+          "p25": 0.332,
+          "p75": 0.461,
+          "vegetated_fraction": 0.86
+        },
+        {
+          "start": "2026-10-16",
+          "end": "2026-10-31",
+          "ndvi": 0.441,
+          "p25": 0.373,
+          "p75": 0.523,
+          "vegetated_fraction": 0.92
+        },
+        {
+          "start": "2026-10-24",
+          "end": "2026-11-08",
+          "ndvi": 0.441,
+          "p25": 0.373,
+          "p75": 0.523,
+          "vegetated_fraction": 0.92
+        }
+      ],
+      "summary": {
+        "n_composites": 47,
+        "n_accepted": 40,
+        "n_records_read": 94,
+        "n_duplicate_records_dropped": 47,
+        "mean_ndvi": 0.473,
+        "min_ndvi": 0.354,
+        "max_ndvi": 0.609
+      },
+      "notes": [
+        "NDVI indicates vegetation greenness and canopy condition; it is not a measurement of soil health, crop identity or soil fertility.",
+        "A 500 m pixel covers about 25 hectares and mixes many small fields, so a single value is not a field measurement.",
+        "16-day composites trade temporal detail for fewer cloudy/missing observations; each composite keeps its pixel reliability and VI quality bits.",
+        "Overlapping sinusoidal tiles report the same composite more than once; only the best-quality record per composite period is kept (see summary.n_duplicate_records_dropped).",
+        "`series` is the single pixel at the site (often the town centre); `regional_series` is the median of usable pixels in a ~15 km box and is what the timeline check uses."
+      ],
+      "timeline_check": {
+        "method": "expected calendar vs NDVI threshold",
+        "classification_used": false,
+        "threshold_ndvi": null,
+        "separation_ndvi": 0.009,
+        "min_separation_ndvi": 0.1,
+        "median_crop_ndvi": 0.473,
+        "median_fallow_ndvi": 0.465,
+        "expected_periods": [
+          {
+            "start": "2025-11-01",
+            "end": "2026-03-15",
+            "crop": "wheat",
+            "season": "winter"
+          },
+          {
+            "start": "2026-04-01",
+            "end": "2026-08-13",
+            "crop": "maize",
+            "season": "summer"
+          },
+          {
+            "start": "2026-11-01",
+            "end": "2026-11-08",
+            "crop": "wheat",
+            "season": "winter"
+          }
+        ],
+        "items": [
+          {
+            "start": "2025-10-24",
+            "end": "2025-11-08",
+            "midpoint": "2025-10-24",
+            "ndvi": 0.479,
+            "expected": "fallow",
+            "expected_crop": null,
+            "expected_season": null,
+            "observed": "uncertain",
+            "agreement": "uncertain"
+          },
+          {
+            "start": "2025-11-01",
+            "end": "2025-11-16",
+            "midpoint": "2025-11-01",
+            "ndvi": 0.471,
+            "expected": "crop",
+            "expected_crop": "wheat",
+            "expected_season": "winter",
+            "observed": "uncertain",
+            "agreement": "uncertain"
+          },
+          {
+            "start": "2025-11-25",
+            "end": "2025-12-10",
+            "midpoint": "2025-11-25",
+            "ndvi": 0.51,
+            "expected": "crop",
+            "expected_crop": "wheat",
+            "expected_season": "winter",
+            "observed": "uncertain",
+            "agreement": "uncertain"
+          },
+          {
+            "start": "2025-12-03",
+            "end": "2025-12-18",
+            "midpoint": "2025-12-03",
+            "ndvi": 0.49,
+            "expected": "crop",
+            "expected_crop": "wheat",
+            "expected_season": "winter",
+            "observed": "uncertain",
+            "agreement": "uncertain"
+          },
+          {
+            "start": "2025-12-19",
+            "end": "2026-01-03",
+            "midpoint": "2025-12-19",
+            "ndvi": 0.527,
+            "expected": "crop",
+            "expected_crop": "wheat",
+            "expected_season": "winter",
+            "observed": "uncertain",
+            "agreement": "uncertain"
+          },
+          {
+            "start": "2025-12-27",
+            "end": "2026-01-11",
+            "midpoint": "2025-12-27",
+            "ndvi": 0.528,
+            "expected": "crop",
+            "expected_crop": "wheat",
+            "expected_season": "winter",
+            "observed": "uncertain",
+            "agreement": "uncertain"
+          },
+          {
+            "start": "2026-01-01",
+            "end": "2026-01-16",
+            "midpoint": "2026-01-01",
+            "ndvi": 0.528,
+            "expected": "crop",
+            "expected_crop": "wheat",
+            "expected_season": "winter",
+            "observed": "uncertain",
+            "agreement": "uncertain"
+          },
+          {
+            "start": "2026-01-09",
+            "end": "2026-01-24",
+            "midpoint": "2026-01-09",
+            "ndvi": 0.486,
+            "expected": "crop",
+            "expected_crop": "wheat",
+            "expected_season": "winter",
+            "observed": "uncertain",
+            "agreement": "uncertain"
+          },
+          {
+            "start": "2026-02-02",
+            "end": "2026-02-17",
+            "midpoint": "2026-02-02",
+            "ndvi": 0.462,
+            "expected": "crop",
+            "expected_crop": "wheat",
+            "expected_season": "winter",
+            "observed": "uncertain",
+            "agreement": "uncertain"
+          },
+          {
+            "start": "2026-02-10",
+            "end": "2026-02-25",
+            "midpoint": "2026-02-10",
+            "ndvi": 0.472,
+            "expected": "crop",
+            "expected_crop": "wheat",
+            "expected_season": "winter",
+            "observed": "uncertain",
+            "agreement": "uncertain"
+          },
+          {
+            "start": "2026-02-18",
+            "end": "2026-03-05",
+            "midpoint": "2026-02-18",
+            "ndvi": 0.43,
+            "expected": "crop",
+            "expected_crop": "wheat",
+            "expected_season": "winter",
+            "observed": "uncertain",
+            "agreement": "uncertain"
+          },
+          {
+            "start": "2026-03-06",
+            "end": "2026-03-21",
+            "midpoint": "2026-03-06",
+            "ndvi": 0.482,
+            "expected": "crop",
+            "expected_crop": "wheat",
+            "expected_season": "winter",
+            "observed": "uncertain",
+            "agreement": "uncertain"
+          },
+          {
+            "start": "2026-03-14",
+            "end": "2026-03-29",
+            "midpoint": "2026-03-14",
+            "ndvi": 0.486,
+            "expected": "crop",
+            "expected_crop": "wheat",
+            "expected_season": "winter",
+            "observed": "uncertain",
+            "agreement": "uncertain"
+          },
+          {
+            "start": "2026-03-22",
+            "end": "2026-04-06",
+            "midpoint": "2026-03-22",
+            "ndvi": 0.496,
+            "expected": "fallow",
+            "expected_crop": null,
+            "expected_season": null,
+            "observed": "uncertain",
+            "agreement": "uncertain"
+          },
+          {
+            "start": "2026-03-30",
+            "end": "2026-04-14",
+            "midpoint": "2026-03-30",
+            "ndvi": 0.53,
+            "expected": "fallow",
+            "expected_crop": null,
+            "expected_season": null,
+            "observed": "uncertain",
+            "agreement": "uncertain"
+          },
+          {
+            "start": "2026-04-07",
+            "end": "2026-04-22",
+            "midpoint": "2026-04-07",
+            "ndvi": 0.531,
+            "expected": "crop",
+            "expected_crop": "maize",
+            "expected_season": "summer",
+            "observed": "uncertain",
+            "agreement": "uncertain"
+          },
+          {
+            "start": "2026-04-15",
+            "end": "2026-04-30",
+            "midpoint": "2026-04-15",
+            "ndvi": 0.502,
+            "expected": "crop",
+            "expected_crop": "maize",
+            "expected_season": "summer",
+            "observed": "uncertain",
+            "agreement": "uncertain"
+          },
+          {
+            "start": "2026-04-23",
+            "end": "2026-05-08",
+            "midpoint": "2026-04-23",
+            "ndvi": 0.466,
+            "expected": "crop",
+            "expected_crop": "maize",
+            "expected_season": "summer",
+            "observed": "uncertain",
+            "agreement": "uncertain"
+          },
+          {
+            "start": "2026-05-01",
+            "end": "2026-05-16",
+            "midpoint": "2026-05-01",
+            "ndvi": 0.461,
+            "expected": "crop",
+            "expected_crop": "maize",
+            "expected_season": "summer",
+            "observed": "uncertain",
+            "agreement": "uncertain"
+          },
+          {
+            "start": "2026-05-17",
+            "end": "2026-06-01",
+            "midpoint": "2026-05-17",
+            "ndvi": 0.435,
+            "expected": "crop",
+            "expected_crop": "maize",
+            "expected_season": "summer",
+            "observed": "uncertain",
+            "agreement": "uncertain"
+          },
+          {
+            "start": "2026-05-25",
+            "end": "2026-06-09",
+            "midpoint": "2026-05-25",
+            "ndvi": 0.444,
+            "expected": "crop",
+            "expected_crop": "maize",
+            "expected_season": "summer",
+            "observed": "uncertain",
+            "agreement": "uncertain"
+          },
+          {
+            "start": "2026-06-02",
+            "end": "2026-06-17",
+            "midpoint": "2026-06-02",
+            "ndvi": 0.421,
+            "expected": "crop",
+            "expected_crop": "maize",
+            "expected_season": "summer",
+            "observed": "uncertain",
+            "agreement": "uncertain"
+          },
+          {
+            "start": "2026-06-10",
+            "end": "2026-06-25",
+            "midpoint": "2026-06-10",
+            "ndvi": 0.429,
+            "expected": "crop",
+            "expected_crop": "maize",
+            "expected_season": "summer",
+            "observed": "uncertain",
+            "agreement": "uncertain"
+          },
+          {
+            "start": "2026-06-18",
+            "end": "2026-07-03",
+            "midpoint": "2026-06-18",
+            "ndvi": 0.439,
+            "expected": "crop",
+            "expected_crop": "maize",
+            "expected_season": "summer",
+            "observed": "uncertain",
+            "agreement": "uncertain"
+          },
+          {
+            "start": "2026-06-26",
+            "end": "2026-07-11",
+            "midpoint": "2026-06-26",
+            "ndvi": 0.449,
+            "expected": "crop",
+            "expected_crop": "maize",
+            "expected_season": "summer",
+            "observed": "uncertain",
+            "agreement": "uncertain"
+          },
+          {
+            "start": "2026-07-04",
+            "end": "2026-07-19",
+            "midpoint": "2026-07-04",
+            "ndvi": 0.436,
+            "expected": "crop",
+            "expected_crop": "maize",
+            "expected_season": "summer",
+            "observed": "uncertain",
+            "agreement": "uncertain"
+          },
+          {
+            "start": "2026-07-12",
+            "end": "2026-07-27",
+            "midpoint": "2026-07-12",
+            "ndvi": 0.459,
+            "expected": "crop",
+            "expected_crop": "maize",
+            "expected_season": "summer",
+            "observed": "uncertain",
+            "agreement": "uncertain"
+          },
+          {
+            "start": "2026-07-20",
+            "end": "2026-08-04",
+            "midpoint": "2026-07-20",
+            "ndvi": 0.483,
+            "expected": "crop",
+            "expected_crop": "maize",
+            "expected_season": "summer",
+            "observed": "uncertain",
+            "agreement": "uncertain"
+          },
+          {
+            "start": "2026-07-28",
+            "end": "2026-08-12",
+            "midpoint": "2026-07-28",
+            "ndvi": 0.488,
+            "expected": "crop",
+            "expected_crop": "maize",
+            "expected_season": "summer",
+            "observed": "uncertain",
+            "agreement": "uncertain"
+          },
+          {
+            "start": "2026-08-05",
+            "end": "2026-08-20",
+            "midpoint": "2026-08-05",
+            "ndvi": 0.475,
+            "expected": "crop",
+            "expected_crop": "maize",
+            "expected_season": "summer",
+            "observed": "uncertain",
+            "agreement": "uncertain"
+          },
+          {
+            "start": "2026-08-13",
+            "end": "2026-08-28",
+            "midpoint": "2026-08-13",
+            "ndvi": 0.511,
+            "expected": "crop",
+            "expected_crop": "maize",
+            "expected_season": "summer",
+            "observed": "uncertain",
+            "agreement": "uncertain"
+          },
+          {
+            "start": "2026-08-21",
+            "end": "2026-09-05",
+            "midpoint": "2026-08-21",
+            "ndvi": 0.517,
+            "expected": "fallow",
+            "expected_crop": null,
+            "expected_season": null,
+            "observed": "uncertain",
+            "agreement": "uncertain"
+          },
+          {
+            "start": "2026-08-29",
+            "end": "2026-09-13",
+            "midpoint": "2026-08-29",
+            "ndvi": 0.509,
+            "expected": "fallow",
+            "expected_crop": null,
+            "expected_season": null,
+            "observed": "uncertain",
+            "agreement": "uncertain"
+          },
+          {
+            "start": "2026-09-06",
+            "end": "2026-09-21",
+            "midpoint": "2026-09-06",
+            "ndvi": 0.499,
+            "expected": "fallow",
+            "expected_crop": null,
+            "expected_season": null,
+            "observed": "uncertain",
+            "agreement": "uncertain"
+          },
+          {
+            "start": "2026-09-14",
+            "end": "2026-09-29",
+            "midpoint": "2026-09-14",
+            "ndvi": 0.448,
+            "expected": "fallow",
+            "expected_crop": null,
+            "expected_season": null,
+            "observed": "uncertain",
+            "agreement": "uncertain"
+          },
+          {
+            "start": "2026-09-22",
+            "end": "2026-10-07",
+            "midpoint": "2026-09-22",
+            "ndvi": 0.45,
+            "expected": "fallow",
+            "expected_crop": null,
+            "expected_season": null,
+            "observed": "uncertain",
+            "agreement": "uncertain"
+          },
+          {
+            "start": "2026-09-30",
+            "end": "2026-10-15",
+            "midpoint": "2026-09-30",
+            "ndvi": 0.407,
+            "expected": "fallow",
+            "expected_crop": null,
+            "expected_season": null,
+            "observed": "uncertain",
+            "agreement": "uncertain"
+          },
+          {
+            "start": "2026-10-08",
+            "end": "2026-10-23",
+            "midpoint": "2026-10-08",
+            "ndvi": 0.394,
+            "expected": "fallow",
+            "expected_crop": null,
+            "expected_season": null,
+            "observed": "uncertain",
+            "agreement": "uncertain"
+          },
+          {
+            "start": "2026-10-16",
+            "end": "2026-10-31",
+            "midpoint": "2026-10-16",
+            "ndvi": 0.441,
+            "expected": "fallow",
+            "expected_crop": null,
+            "expected_season": null,
+            "observed": "uncertain",
+            "agreement": "uncertain"
+          },
+          {
+            "start": "2026-10-24",
+            "end": "2026-11-08",
+            "midpoint": "2026-10-24",
+            "ndvi": 0.441,
+            "expected": "fallow",
+            "expected_crop": null,
+            "expected_season": null,
+            "observed": "uncertain",
+            "agreement": "uncertain"
+          }
+        ],
+        "summary": {
+          "n_composites": 40,
+          "n_ok": 0,
+          "n_check": 0,
+          "n_uncertain": 40,
+          "classification_used": false
+        },
+        "limitations": [
+          "The expected calendar comes from the demo-site preset history, not from the farmer's field records; a mismatch can be late sowing, a second crop, weeds or irrigation.",
+          "A 500 m NDVI pixel mixes many fields, so it cannot confirm what is growing on this field.",
+          "NDVI is a greenness indicator, not a measurement of soil health, crop identity or yield.",
+          "16-day composites smooth the season and blur short fallow gaps."
+        ],
+        "basis": "median of usable 500 m pixels in a ~15 km box"
+      },
+      "expected_calendar_source": "demo-site preset history + knowledge/season_windows.yaml"
+    }
+  },
+  "provenance": {
+    "built_utc": "2026-11-13T17:50:24+00:00",
+    "smaps": {
+      "product": "SPL3SMP_E",
+      "version": "006",
+      "doi": "10.5067/M20OXIZHY3RJ",
+      "source": "NASA NSIDC DAAC",
+      "variables": [
+        "soil_moisture (surface, top ~5 cm)"
+      ]
+    },
+    "ndvi": {
+      "product": "VNP13A1",
+      "version": "002",
+      "source": "NASA LP DAAC",
+      "variables": [
+        "NDVI",
+        "pixel reliability",
+        "VI quality"
+      ]
+    },
+    "labels": {
+      "smap": "observed (NASA satellite retrieval)",
+      "ndvi": "observed (NASA satellite composite)",
+      "model": "simulated (FAO-56 water balance)"
+    }
+  }
+}

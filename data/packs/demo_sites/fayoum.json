@@ -1,0 +1,3735 @@
+{
+  "meta": {
+    "id": "fayoum",
+    "name_en": "Fayoum (saline depression)",
+    "name_ar": "الفيوم (منخفض ملحي)",
+    "lat": 29.31,
+    "lon": 30.84,
+    "region": "upper_egypt",
+    "source": "nasa-packs",
+    "resolution_km": 9,
+    "period": {
+      "start": "2026-10-25",
+      "end": "2026-11-11"
+    }
+  },
+  "daily": {
+    "date": [],
+    "tmax": [],
+    "tmin": [],
+    "rh": [],
+    "u2": [],
+    "rs": [],
+    "rain": []
+  },
+  "nasa": {
+    "smap": {
+      "status": "planned",
+      "product": "SPL3SMP_E",
+      "product_title": "SMAP Enhanced L3 Radiometer Global Daily 9 km EASE-Grid Soil Moisture",
+      "version": "006",
+      "doi": "10.5067/M20OXIZHY3RJ",
+      "variable": "soil_moisture (passive radiometer retrieval)",
+      "depth": "surface, approximately the top 5 cm",
+      "depth_cm": [
+        0,
+        5
+      ],
+      "root_zone_available": false,
+      "units": "m3/m3",
+      "resolution_km": 9.0,
+      "grid": "global 9 km EASE-Grid 2.0",
+      "site_id": "fayoum",
+      "period": {
+        "start": "2026-10-25",
+        "end": "2026-11-11"
+      },
+      "observations": [
+        {
+          "site_id": "fayoum",
+          "date": "2026-10-25",
+          "overpass": "AM",
+          "time_utc": null,
+          "soil_moisture_m3m3": null,
+          "uncertainty_m3m3": null,
+          "accepted": false,
+          "reject_reasons": [
+            "no_retrieval_near_site"
+          ],
+          "quality": {
+            "retrieval_qual_flag": null,
+            "recommended": null,
+            "attempted": null,
+            "successful": null,
+            "surface_conditions": []
+          },
+          "pixel": {
+            "lat": null,
+            "lon": null,
+            "distance_km": null
+          },
+          "vegetation_opacity": null,
+          "granule": "SMAP_L3_SM_P_E_20261025_R19240_001"
+        },
+        {
+          "site_id": "fayoum",
+          "date": "2026-10-25",
+          "overpass": "PM",
+          "time_utc": null,
+          "soil_moisture_m3m3": null,
+          "uncertainty_m3m3": null,
+          "accepted": false,
+          "reject_reasons": [
+            "no_retrieval_near_site"
+          ],
+          "quality": {
+            "retrieval_qual_flag": null,
+            "recommended": null,
+            "attempted": null,
+            "successful": null,
+            "surface_conditions": []
+          },
+          "pixel": {
+            "lat": null,
+            "lon": null,
+            "distance_km": null
+          },
+          "vegetation_opacity": null,
+          "granule": "SMAP_L3_SM_P_E_20261025_R19240_001"
+        },
+        {
+          "site_id": "fayoum",
+          "date": "2026-10-26",
+          "overpass": "AM",
+          "time_utc": "np.bytes_(b'2026-10-26T04:27:43.126Z')",
+          "soil_moisture_m3m3": 0.0496,
+          "uncertainty_m3m3": null,
+          "accepted": false,
+          "reject_reasons": [
+            "not_recommended_quality"
+          ],
+          "quality": {
+            "retrieval_qual_flag": 1,
+            "recommended": false,
+            "attempted": true,
+            "successful": true,
+            "surface_conditions": [
+              "9_km_urban_area"
+            ]
+          },
+          "pixel": {
+            "lat": 29.298,
+            "lon": 30.8558,
+            "distance_km": 2.0
+          },
+          "vegetation_opacity": 0.0418,
+          "granule": "SMAP_L3_SM_P_E_20261026_R19240_001"
+        },
+        {
+          "site_id": "fayoum",
+          "date": "2026-10-26",
+          "overpass": "PM",
+          "time_utc": "np.bytes_(b'2026-10-26T15:24:14.844Z')",
+          "soil_moisture_m3m3": 0.0205,
+          "uncertainty_m3m3": null,
+          "accepted": false,
+          "reject_reasons": [
+            "not_recommended_quality"
+          ],
+          "quality": {
+            "retrieval_qual_flag": 1,
+            "recommended": false,
+            "attempted": true,
+            "successful": true,
+            "surface_conditions": [
+              "9_km_urban_area"
+            ]
+          },
+          "pixel": {
+            "lat": 29.298,
+            "lon": 30.8558,
+            "distance_km": 2.0
+          },
+          "vegetation_opacity": 0.0243,
+          "granule": "SMAP_L3_SM_P_E_20261026_R19240_001"
+        },
+        {
+          "site_id": "fayoum",
+          "date": "2026-10-27",
+          "overpass": "AM",
+          "time_utc": null,
+          "soil_moisture_m3m3": null,
+          "uncertainty_m3m3": null,
+          "accepted": false,
+          "reject_reasons": [
+            "no_retrieval_near_site"
+          ],
+          "quality": {
+            "retrieval_qual_flag": null,
+            "recommended": null,
+            "attempted": null,
+            "successful": null,
+            "surface_conditions": []
+          },
+          "pixel": {
+            "lat": null,
+            "lon": null,
+            "distance_km": null
+          },
+          "vegetation_opacity": null,
+          "granule": "SMAP_L3_SM_P_E_20261027_R19240_002"
+        },
+        {
+          "site_id": "fayoum",
+          "date": "2026-10-27",
+          "overpass": "PM",
+          "time_utc": null,
+          "soil_moisture_m3m3": null,
+          "uncertainty_m3m3": null,
+          "accepted": false,
+          "reject_reasons": [
+            "no_retrieval_near_site"
+          ],
+          "quality": {
+            "retrieval_qual_flag": null,
+            "recommended": null,
+            "attempted": null,
+            "successful": null,
+            "surface_conditions": []
+          },
+          "pixel": {
+            "lat": null,
+            "lon": null,
+            "distance_km": null
+          },
+          "vegetation_opacity": null,
+          "granule": "SMAP_L3_SM_P_E_20261027_R19240_002"
+        },
+        {
+          "site_id": "fayoum",
+          "date": "2026-10-28",
+          "overpass": "AM",
+          "time_utc": "np.bytes_(b'2026-10-28T04:03:20.835Z')",
+          "soil_moisture_m3m3": 0.032,
+          "uncertainty_m3m3": null,
+          "accepted": false,
+          "reject_reasons": [
+            "not_recommended_quality"
+          ],
+          "quality": {
+            "retrieval_qual_flag": 1,
+            "recommended": false,
+            "attempted": true,
+            "successful": true,
+            "surface_conditions": [
+              "9_km_urban_area"
+            ]
+          },
+          "pixel": {
+            "lat": 29.298,
+            "lon": 30.8558,
+            "distance_km": 2.0
+          },
+          "vegetation_opacity": 0.0536,
+          "granule": "SMAP_L3_SM_P_E_20261028_R19240_002"
+        },
+        {
+          "site_id": "fayoum",
+          "date": "2026-10-28",
+          "overpass": "PM",
+          "time_utc": null,
+          "soil_moisture_m3m3": null,
+          "uncertainty_m3m3": null,
+          "accepted": false,
+          "reject_reasons": [
+            "no_retrieval_near_site"
+          ],
+          "quality": {
+            "retrieval_qual_flag": null,
+            "recommended": null,
+            "attempted": null,
+            "successful": null,
+            "surface_conditions": []
+          },
+          "pixel": {
+            "lat": null,
+            "lon": null,
+            "distance_km": null
+          },
+          "vegetation_opacity": null,
+          "granule": "SMAP_L3_SM_P_E_20261028_R19240_002"
+        },
+        {
+          "site_id": "fayoum",
+          "date": "2026-10-29",
+          "overpass": "AM",
+          "time_utc": null,
+          "soil_moisture_m3m3": null,
+          "uncertainty_m3m3": null,
+          "accepted": false,
+          "reject_reasons": [
+            "no_retrieval_near_site"
+          ],
+          "quality": {
+            "retrieval_qual_flag": null,
+            "recommended": null,
+            "attempted": null,
+            "successful": null,
+            "surface_conditions": []
+          },
+          "pixel": {
+            "lat": null,
+            "lon": null,
+            "distance_km": null
+          },
+          "vegetation_opacity": null,
+          "granule": "SMAP_L3_SM_P_E_20261029_R19240_001"
+        },
+        {
+          "site_id": "fayoum",
+          "date": "2026-10-29",
+          "overpass": "PM",
+          "time_utc": "np.bytes_(b'2026-10-29T15:36:18.362Z')",
+          "soil_moisture_m3m3": 0.02,
+          "uncertainty_m3m3": null,
+          "accepted": false,
+          "reject_reasons": [
+            "not_recommended_quality",
+            "retrieval_failed"
+          ],
+          "quality": {
+            "retrieval_qual_flag": 5,
+            "recommended": false,
+            "attempted": true,
+            "successful": false,
+            "surface_conditions": [
+              "9_km_urban_area"
+            ]
+          },
+          "pixel": {
+            "lat": 29.298,
+            "lon": 30.8558,
+            "distance_km": 2.0
+          },
+          "vegetation_opacity": 0.1181,
+          "granule": "SMAP_L3_SM_P_E_20261029_R19240_001"
+        },
+        {
+          "site_id": "fayoum",
+          "date": "2026-10-30",
+          "overpass": "AM",
+          "time_utc": null,
+          "soil_moisture_m3m3": null,
+          "uncertainty_m3m3": null,
+          "accepted": false,
+          "reject_reasons": [
+            "no_retrieval_near_site"
+          ],
+          "quality": {
+            "retrieval_qual_flag": null,
+            "recommended": null,
+            "attempted": null,
+            "successful": null,
+            "surface_conditions": []
+          },
+          "pixel": {
+            "lat": null,
+            "lon": null,
+            "distance_km": null
+          },
+          "vegetation_opacity": null,
+          "granule": "SMAP_L3_SM_P_E_20261030_R19240_001"
+        },
+        {
+          "site_id": "fayoum",
+          "date": "2026-10-30",
+          "overpass": "PM",
+          "time_utc": null,
+          "soil_moisture_m3m3": null,
+          "uncertainty_m3m3": null,
+          "accepted": false,
+          "reject_reasons": [
+            "no_retrieval_near_site"
+          ],
+          "quality": {
+            "retrieval_qual_flag": null,
+            "recommended": null,
+            "attempted": null,
+            "successful": null,
+            "surface_conditions": []
+          },
+          "pixel": {
+            "lat": null,
+            "lon": null,
+            "distance_km": null
+          },
+          "vegetation_opacity": null,
+          "granule": "SMAP_L3_SM_P_E_20261030_R19240_001"
+        },
+        {
+          "site_id": "fayoum",
+          "date": "2026-10-31",
+          "overpass": "AM",
+          "time_utc": "np.bytes_(b'2026-10-31T04:15:25.720Z')",
+          "soil_moisture_m3m3": 0.0381,
+          "uncertainty_m3m3": null,
+          "accepted": false,
+          "reject_reasons": [
+            "not_recommended_quality"
+          ],
+          "quality": {
+            "retrieval_qual_flag": 1,
+            "recommended": false,
+            "attempted": true,
+            "successful": true,
+            "surface_conditions": [
+              "9_km_urban_area"
+            ]
+          },
+          "pixel": {
+            "lat": 29.298,
+            "lon": 30.8558,
+            "distance_km": 2.0
+          },
+          "vegetation_opacity": 0.0001,
+          "granule": "SMAP_L3_SM_P_E_20261031_R19240_002"
+        },
+        {
+          "site_id": "fayoum",
+          "date": "2026-10-31",
+          "overpass": "PM",
+          "time_utc": null,
+          "soil_moisture_m3m3": null,
+          "uncertainty_m3m3": null,
+          "accepted": false,
+          "reject_reasons": [
+            "no_retrieval_near_site"
+          ],
+          "quality": {
+            "retrieval_qual_flag": null,
+            "recommended": null,
+            "attempted": null,
+            "successful": null,
+            "surface_conditions": []
+          },
+          "pixel": {
+            "lat": null,
+            "lon": null,
+            "distance_km": null
+          },
+          "vegetation_opacity": null,
+          "granule": "SMAP_L3_SM_P_E_20261031_R19240_002"
+        },
+        {
+          "site_id": "fayoum",
+          "date": "2026-11-01",
+          "overpass": "AM",
+          "time_utc": null,
+          "soil_moisture_m3m3": null,
+          "uncertainty_m3m3": null,
+          "accepted": false,
+          "reject_reasons": [
+            "no_retrieval_near_site"
+          ],
+          "quality": {
+            "retrieval_qual_flag": null,
+            "recommended": null,
+            "attempted": null,
+            "successful": null,
+            "surface_conditions": []
+          },
+          "pixel": {
+            "lat": null,
+            "lon": null,
+            "distance_km": null
+          },
+          "vegetation_opacity": null,
+          "granule": "SMAP_L3_SM_P_E_20261101_R19240_001"
+        },
+        {
+          "site_id": "fayoum",
+          "date": "2026-11-01",
+          "overpass": "PM",
+          "time_utc": "np.bytes_(b'2026-11-01T15:48:21.984Z')",
+          "soil_moisture_m3m3": 0.02,
+          "uncertainty_m3m3": null,
+          "accepted": false,
+          "reject_reasons": [
+            "not_recommended_quality",
+            "retrieval_failed"
+          ],
+          "quality": {
+            "retrieval_qual_flag": 5,
+            "recommended": false,
+            "attempted": true,
+            "successful": false,
+            "surface_conditions": [
+              "9_km_urban_area"
+            ]
+          },
+          "pixel": {
+            "lat": 29.298,
+            "lon": 30.9492,
+            "distance_km": 10.7
+          },
+          "vegetation_opacity": 0.0,
+          "granule": "SMAP_L3_SM_P_E_20261101_R19240_001"
+        },
+        {
+          "site_id": "fayoum",
+          "date": "2026-11-02",
+          "overpass": "AM",
+          "time_utc": null,
+          "soil_moisture_m3m3": null,
+          "uncertainty_m3m3": null,
+          "accepted": false,
+          "reject_reasons": [
+            "no_retrieval_near_site"
+          ],
+          "quality": {
+            "retrieval_qual_flag": null,
+            "recommended": null,
+            "attempted": null,
+            "successful": null,
+            "surface_conditions": []
+          },
+          "pixel": {
+            "lat": null,
+            "lon": null,
+            "distance_km": null
+          },
+          "vegetation_opacity": null,
+          "granule": "SMAP_L3_SM_P_E_20261102_R19240_001"
+        },
+        {
+          "site_id": "fayoum",
+          "date": "2026-11-02",
+          "overpass": "PM",
+          "time_utc": null,
+          "soil_moisture_m3m3": null,
+          "uncertainty_m3m3": null,
+          "accepted": false,
+          "reject_reasons": [
+            "no_retrieval_near_site"
+          ],
+          "quality": {
+            "retrieval_qual_flag": null,
+            "recommended": null,
+            "attempted": null,
+            "successful": null,
+            "surface_conditions": []
+          },
+          "pixel": {
+            "lat": null,
+            "lon": null,
+            "distance_km": null
+          },
+          "vegetation_opacity": null,
+          "granule": "SMAP_L3_SM_P_E_20261102_R19240_001"
+        },
+        {
+          "site_id": "fayoum",
+          "date": "2026-11-03",
+          "overpass": "AM",
+          "time_utc": "np.bytes_(b'2026-11-03T04:27:29.048Z')",
+          "soil_moisture_m3m3": 0.0263,
+          "uncertainty_m3m3": null,
+          "accepted": false,
+          "reject_reasons": [
+            "not_recommended_quality"
+          ],
+          "quality": {
+            "retrieval_qual_flag": 1,
+            "recommended": false,
+            "attempted": true,
+            "successful": true,
+            "surface_conditions": [
+              "9_km_urban_area"
+            ]
+          },
+          "pixel": {
+            "lat": 29.298,
+            "lon": 30.8558,
+            "distance_km": 2.0
+          },
+          "vegetation_opacity": 0.051,
+          "granule": "SMAP_L3_SM_P_E_20261103_R19240_001"
+        },
+        {
+          "site_id": "fayoum",
+          "date": "2026-11-03",
+          "overpass": "PM",
+          "time_utc": "np.bytes_(b'2026-11-03T15:24:02.028Z')",
+          "soil_moisture_m3m3": 0.02,
+          "uncertainty_m3m3": null,
+          "accepted": false,
+          "reject_reasons": [
+            "not_recommended_quality",
+            "retrieval_failed"
+          ],
+          "quality": {
+            "retrieval_qual_flag": 5,
+            "recommended": false,
+            "attempted": true,
+            "successful": false,
+            "surface_conditions": [
+              "9_km_urban_area"
+            ]
+          },
+          "pixel": {
+            "lat": 29.298,
+            "lon": 30.8558,
+            "distance_km": 2.0
+          },
+          "vegetation_opacity": 0.0,
+          "granule": "SMAP_L3_SM_P_E_20261103_R19240_001"
+        },
+        {
+          "site_id": "fayoum",
+          "date": "2026-11-04",
+          "overpass": "AM",
+          "time_utc": null,
+          "soil_moisture_m3m3": null,
+          "uncertainty_m3m3": null,
+          "accepted": false,
+          "reject_reasons": [
+            "no_retrieval_near_site"
+          ],
+          "quality": {
+            "retrieval_qual_flag": null,
+            "recommended": null,
+            "attempted": null,
+            "successful": null,
+            "surface_conditions": []
+          },
+          "pixel": {
+            "lat": null,
+            "lon": null,
+            "distance_km": null
+          },
+          "vegetation_opacity": null,
+          "granule": "SMAP_L3_SM_P_E_20261104_R19240_001"
+        },
+        {
+          "site_id": "fayoum",
+          "date": "2026-11-04",
+          "overpass": "PM",
+          "time_utc": null,
+          "soil_moisture_m3m3": null,
+          "uncertainty_m3m3": null,
+          "accepted": false,
+          "reject_reasons": [
+            "no_retrieval_near_site"
+          ],
+          "quality": {
+            "retrieval_qual_flag": null,
+            "recommended": null,
+            "attempted": null,
+            "successful": null,
+            "surface_conditions": []
+          },
+          "pixel": {
+            "lat": null,
+            "lon": null,
+            "distance_km": null
+          },
+          "vegetation_opacity": null,
+          "granule": "SMAP_L3_SM_P_E_20261104_R19240_001"
+        },
+        {
+          "site_id": "fayoum",
+          "date": "2026-11-05",
+          "overpass": "AM",
+          "time_utc": "np.bytes_(b'2026-11-05T04:03:07.669Z')",
+          "soil_moisture_m3m3": 0.0299,
+          "uncertainty_m3m3": null,
+          "accepted": false,
+          "reject_reasons": [
+            "not_recommended_quality",
+            "retrieval_failed"
+          ],
+          "quality": {
+            "retrieval_qual_flag": 5,
+            "recommended": false,
+            "attempted": true,
+            "successful": false,
+            "surface_conditions": [
+              "9_km_urban_area"
+            ]
+          },
+          "pixel": {
+            "lat": 29.298,
+            "lon": 30.8558,
+            "distance_km": 2.0
+          },
+          "vegetation_opacity": 0.0,
+          "granule": "SMAP_L3_SM_P_E_20261105_R19240_001"
+        },
+        {
+          "site_id": "fayoum",
+          "date": "2026-11-05",
+          "overpass": "PM",
+          "time_utc": null,
+          "soil_moisture_m3m3": null,
+          "uncertainty_m3m3": null,
+          "accepted": false,
+          "reject_reasons": [
+            "no_retrieval_near_site"
+          ],
+          "quality": {
+            "retrieval_qual_flag": null,
+            "recommended": null,
+            "attempted": null,
+            "successful": null,
+            "surface_conditions": []
+          },
+          "pixel": {
+            "lat": null,
+            "lon": null,
+            "distance_km": null
+          },
+          "vegetation_opacity": null,
+          "granule": "SMAP_L3_SM_P_E_20261105_R19240_001"
+        },
+        {
+          "site_id": "fayoum",
+          "date": "2026-11-06",
+          "overpass": "AM",
+          "time_utc": null,
+          "soil_moisture_m3m3": null,
+          "uncertainty_m3m3": null,
+          "accepted": false,
+          "reject_reasons": [
+            "no_retrieval_near_site"
+          ],
+          "quality": {
+            "retrieval_qual_flag": null,
+            "recommended": null,
+            "attempted": null,
+            "successful": null,
+            "surface_conditions": []
+          },
+          "pixel": {
+            "lat": null,
+            "lon": null,
+            "distance_km": null
+          },
+          "vegetation_opacity": null,
+          "granule": "SMAP_L3_SM_P_E_20261106_R19240_001"
+        },
+        {
+          "site_id": "fayoum",
+          "date": "2026-11-06",
+          "overpass": "PM",
+          "time_utc": "np.bytes_(b'2026-11-06T15:36:04.859Z')",
+          "soil_moisture_m3m3": 0.02,
+          "uncertainty_m3m3": null,
+          "accepted": false,
+          "reject_reasons": [
+            "not_recommended_quality",
+            "retrieval_failed"
+          ],
+          "quality": {
+            "retrieval_qual_flag": 5,
+            "recommended": false,
+            "attempted": true,
+            "successful": false,
+            "surface_conditions": [
+              "9_km_urban_area"
+            ]
+          },
+          "pixel": {
+            "lat": 29.298,
+            "lon": 30.8558,
+            "distance_km": 2.0
+          },
+          "vegetation_opacity": 0.0,
+          "granule": "SMAP_L3_SM_P_E_20261106_R19240_001"
+        },
+        {
+          "site_id": "fayoum",
+          "date": "2026-11-07",
+          "overpass": "AM",
+          "time_utc": null,
+          "soil_moisture_m3m3": null,
+          "uncertainty_m3m3": null,
+          "accepted": false,
+          "reject_reasons": [
+            "no_retrieval_near_site"
+          ],
+          "quality": {
+            "retrieval_qual_flag": null,
+            "recommended": null,
+            "attempted": null,
+            "successful": null,
+            "surface_conditions": []
+          },
+          "pixel": {
+            "lat": null,
+            "lon": null,
+            "distance_km": null
+          },
+          "vegetation_opacity": null,
+          "granule": "SMAP_L3_SM_P_E_20261107_R19240_001"
+        },
+        {
+          "site_id": "fayoum",
+          "date": "2026-11-07",
+          "overpass": "PM",
+          "time_utc": null,
+          "soil_moisture_m3m3": null,
+          "uncertainty_m3m3": null,
+          "accepted": false,
+          "reject_reasons": [
+            "no_retrieval_near_site"
+          ],
+          "quality": {
+            "retrieval_qual_flag": null,
+            "recommended": null,
+            "attempted": null,
+            "successful": null,
+            "surface_conditions": []
+          },
+          "pixel": {
+            "lat": null,
+            "lon": null,
+            "distance_km": null
+          },
+          "vegetation_opacity": null,
+          "granule": "SMAP_L3_SM_P_E_20261107_R19240_001"
+        },
+        {
+          "site_id": "fayoum",
+          "date": "2026-11-08",
+          "overpass": "AM",
+          "time_utc": "np.bytes_(b'2026-11-08T04:15:11.608Z')",
+          "soil_moisture_m3m3": 0.0366,
+          "uncertainty_m3m3": null,
+          "accepted": false,
+          "reject_reasons": [
+            "not_recommended_quality"
+          ],
+          "quality": {
+            "retrieval_qual_flag": 1,
+            "recommended": false,
+            "attempted": true,
+            "successful": true,
+            "surface_conditions": [
+              "9_km_urban_area"
+            ]
+          },
+          "pixel": {
+            "lat": 29.298,
+            "lon": 30.8558,
+            "distance_km": 2.0
+          },
+          "vegetation_opacity": 0.0406,
+          "granule": "SMAP_L3_SM_P_E_20261108_R19240_001"
+        },
+        {
+          "site_id": "fayoum",
+          "date": "2026-11-08",
+          "overpass": "PM",
+          "time_utc": null,
+          "soil_moisture_m3m3": null,
+          "uncertainty_m3m3": null,
+          "accepted": false,
+          "reject_reasons": [
+            "no_retrieval_near_site"
+          ],
+          "quality": {
+            "retrieval_qual_flag": null,
+            "recommended": null,
+            "attempted": null,
+            "successful": null,
+            "surface_conditions": []
+          },
+          "pixel": {
+            "lat": null,
+            "lon": null,
+            "distance_km": null
+          },
+          "vegetation_opacity": null,
+          "granule": "SMAP_L3_SM_P_E_20261108_R19240_001"
+        },
+        {
+          "site_id": "fayoum",
+          "date": "2026-11-09",
+          "overpass": "AM",
+          "time_utc": null,
+          "soil_moisture_m3m3": null,
+          "uncertainty_m3m3": null,
+          "accepted": false,
+          "reject_reasons": [
+            "no_retrieval_near_site"
+          ],
+          "quality": {
+            "retrieval_qual_flag": null,
+            "recommended": null,
+            "attempted": null,
+            "successful": null,
+            "surface_conditions": []
+          },
+          "pixel": {
+            "lat": null,
+            "lon": null,
+            "distance_km": null
+          },
+          "vegetation_opacity": null,
+          "granule": "SMAP_L3_SM_P_E_20261109_R19240_001"
+        },
+        {
+          "site_id": "fayoum",
+          "date": "2026-11-09",
+          "overpass": "PM",
+          "time_utc": "np.bytes_(b'2026-11-09T15:48:07.931Z')",
+          "soil_moisture_m3m3": 0.02,
+          "uncertainty_m3m3": null,
+          "accepted": false,
+          "reject_reasons": [
+            "not_recommended_quality",
+            "retrieval_failed"
+          ],
+          "quality": {
+            "retrieval_qual_flag": 5,
+            "recommended": false,
+            "attempted": true,
+            "successful": false,
+            "surface_conditions": [
+              "9_km_urban_area"
+            ]
+          },
+          "pixel": {
+            "lat": 29.298,
+            "lon": 30.8558,
+            "distance_km": 2.0
+          },
+          "vegetation_opacity": 0.0,
+          "granule": "SMAP_L3_SM_P_E_20261109_R19240_001"
+        },
+        {
+          "site_id": "fayoum",
+          "date": "2026-11-10",
+          "overpass": "AM",
+          "time_utc": null,
+          "soil_moisture_m3m3": null,
+          "uncertainty_m3m3": null,
+          "accepted": false,
+          "reject_reasons": [
+            "no_retrieval_near_site"
+          ],
+          "quality": {
+            "retrieval_qual_flag": null,
+            "recommended": null,
+            "attempted": null,
+            "successful": null,
+            "surface_conditions": []
+          },
+          "pixel": {
+            "lat": null,
+            "lon": null,
+            "distance_km": null
+          },
+          "vegetation_opacity": null,
+          "granule": "SMAP_L3_SM_P_E_20261110_R19240_001"
+        },
+        {
+          "site_id": "fayoum",
+          "date": "2026-11-10",
+          "overpass": "PM",
+          "time_utc": null,
+          "soil_moisture_m3m3": null,
+          "uncertainty_m3m3": null,
+          "accepted": false,
+          "reject_reasons": [
+            "no_retrieval_near_site"
+          ],
+          "quality": {
+            "retrieval_qual_flag": null,
+            "recommended": null,
+            "attempted": null,
+            "successful": null,
+            "surface_conditions": []
+          },
+          "pixel": {
+            "lat": null,
+            "lon": null,
+            "distance_km": null
+          },
+          "vegetation_opacity": null,
+          "granule": "SMAP_L3_SM_P_E_20261110_R19240_001"
+        },
+        {
+          "site_id": "fayoum",
+          "date": "2026-11-11",
+          "overpass": "AM",
+          "time_utc": "np.bytes_(b'2026-11-11T04:27:13.785Z')",
+          "soil_moisture_m3m3": 0.02,
+          "uncertainty_m3m3": null,
+          "accepted": false,
+          "reject_reasons": [
+            "not_recommended_quality",
+            "retrieval_failed"
+          ],
+          "quality": {
+            "retrieval_qual_flag": 5,
+            "recommended": false,
+            "attempted": true,
+            "successful": false,
+            "surface_conditions": [
+              "9_km_urban_area"
+            ]
+          },
+          "pixel": {
+            "lat": 29.298,
+            "lon": 30.8558,
+            "distance_km": 2.0
+          },
+          "vegetation_opacity": 0.0,
+          "granule": "SMAP_L3_SM_P_E_20261111_R19240_001.h5"
+        },
+        {
+          "site_id": "fayoum",
+          "date": "2026-11-11",
+          "overpass": "PM",
+          "time_utc": "np.bytes_(b'2026-11-11T15:23:46.520Z')",
+          "soil_moisture_m3m3": 0.02,
+          "uncertainty_m3m3": null,
+          "accepted": false,
+          "reject_reasons": [
+            "not_recommended_quality",
+            "retrieval_failed"
+          ],
+          "quality": {
+            "retrieval_qual_flag": 5,
+            "recommended": false,
+            "attempted": true,
+            "successful": false,
+            "surface_conditions": [
+              "9_km_urban_area"
+            ]
+          },
+          "pixel": {
+            "lat": 29.298,
+            "lon": 30.8558,
+            "distance_km": 2.0
+          },
+          "vegetation_opacity": 0.0,
+          "granule": "SMAP_L3_SM_P_E_20261111_R19240_001.h5"
+        }
+      ],
+      "daily": [],
+      "summary": {
+        "n_observations": 36,
+        "n_accepted": 0,
+        "n_days_with_data": 0,
+        "mean_m3m3": null,
+        "min_m3m3": null,
+        "max_m3m3": null
+      },
+      "notes": [
+        "SMAP L3 enhanced measures SURFACE soil moisture (top ~5 cm) only; it contains no root-zone soil moisture. Root-zone values would require a model-derived Level 4 product.",
+        "Each 9 km cell mixes many fields, roads, channels and urban patches: treat every value as a regional indication, not a field measurement.",
+        "Only retrievals flagged recommended quality (retrieval_qual_flag 0 or 8) and located on land are accepted; rejected observations are kept with their reason codes."
+      ]
+    },
+    "ndvi": {
+      "status": "pack",
+      "product": "VNP13A1",
+      "product_title": "VIIRS/NPP Vegetation Indices 16-Day L3 Global 500 m SIN Grid",
+      "version": "002",
+      "short_name": "VNP13A1",
+      "variable": "NDVI (normalized difference vegetation index)",
+      "resolution_km": 0.5,
+      "grid": "sinusoidal (SIN) grid, 500 m",
+      "compositing_period_days": 16,
+      "scale_factor": 0.0001,
+      "units": "NDVI (dimensionless, -1..1)",
+      "site_id": "fayoum",
+      "period": {
+        "start": "2025-10-24",
+        "end": "2026-11-08"
+      },
+      "observations": [
+        {
+          "site_id": "fayoum",
+          "start": "2025-10-24",
+          "end": "2025-11-08",
+          "midpoint": "2025-11-07",
+          "ndvi": 0.136,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "pixel_reliability": 0,
+            "pixel_reliability_meaning": "excellent",
+            "modland_qa": 0,
+            "vi_usefulness": 0
+          },
+          "composite_doy": 311,
+          "pixel": {
+            "lat": 29.3083,
+            "lon": 30.8391,
+            "distance_km": 0.2
+          },
+          "granule": "VNP13A1.A2025297.h20v06.002.2025319030941",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.541,
+            "p25_ndvi": 0.463,
+            "p75_ndvi": 0.603,
+            "n_pixels": 1089,
+            "vegetated_fraction": 0.89,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "fayoum",
+          "start": "2025-11-01",
+          "end": "2025-11-16",
+          "midpoint": "2025-11-07",
+          "ndvi": 0.136,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "pixel_reliability": 0,
+            "pixel_reliability_meaning": "excellent",
+            "modland_qa": 0,
+            "vi_usefulness": 0
+          },
+          "composite_doy": 311,
+          "pixel": {
+            "lat": 29.3083,
+            "lon": 30.8391,
+            "distance_km": 0.2
+          },
+          "granule": "VNP13A1.A2025305.h20v06.002.2025322113029",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.554,
+            "p25_ndvi": 0.471,
+            "p75_ndvi": 0.611,
+            "n_pixels": 1088,
+            "vegetated_fraction": 0.9,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "fayoum",
+          "start": "2025-11-09",
+          "end": "2025-11-24",
+          "midpoint": "2025-11-11",
+          "ndvi": 0.136,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "pixel_reliability": 1,
+            "pixel_reliability_meaning": "good",
+            "modland_qa": 0,
+            "vi_usefulness": 0
+          },
+          "composite_doy": 315,
+          "pixel": {
+            "lat": 29.3083,
+            "lon": 30.8391,
+            "distance_km": 0.2
+          },
+          "granule": "VNP13A1.A2025313.h20v06.002.2025329135254",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.535,
+            "p25_ndvi": 0.436,
+            "p75_ndvi": 0.593,
+            "n_pixels": 1029,
+            "vegetated_fraction": 0.87,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "fayoum",
+          "start": "2025-11-17",
+          "end": "2025-12-02",
+          "midpoint": "2025-11-27",
+          "ndvi": 0.13,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "pixel_reliability": 1,
+            "pixel_reliability_meaning": "good",
+            "modland_qa": 0,
+            "vi_usefulness": 0
+          },
+          "composite_doy": 331,
+          "pixel": {
+            "lat": 29.3083,
+            "lon": 30.8391,
+            "distance_km": 0.2
+          },
+          "granule": "VNP13A1.A2025321.h20v06.002.2025339085252",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.541,
+            "p25_ndvi": 0.392,
+            "p75_ndvi": 0.608,
+            "n_pixels": 773,
+            "vegetated_fraction": 0.84,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "fayoum",
+          "start": "2025-11-25",
+          "end": "2025-12-10",
+          "midpoint": "2025-11-27",
+          "ndvi": 0.13,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "pixel_reliability": 1,
+            "pixel_reliability_meaning": "good",
+            "modland_qa": 0,
+            "vi_usefulness": 0
+          },
+          "composite_doy": 331,
+          "pixel": {
+            "lat": 29.3083,
+            "lon": 30.8391,
+            "distance_km": 0.2
+          },
+          "granule": "VNP13A1.A2025329.h20v06.002.2025350005331",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.593,
+            "p25_ndvi": 0.482,
+            "p75_ndvi": 0.646,
+            "n_pixels": 1087,
+            "vegetated_fraction": 0.89,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "fayoum",
+          "start": "2025-12-03",
+          "end": "2025-12-18",
+          "midpoint": "2025-12-03",
+          "ndvi": 0.129,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "pixel_reliability": 0,
+            "pixel_reliability_meaning": "excellent",
+            "modland_qa": 0,
+            "vi_usefulness": 0
+          },
+          "composite_doy": 337,
+          "pixel": {
+            "lat": 29.3083,
+            "lon": 30.8391,
+            "distance_km": 0.2
+          },
+          "granule": "VNP13A1.A2025337.h20v06.002.2025356074119",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.594,
+            "p25_ndvi": 0.471,
+            "p75_ndvi": 0.649,
+            "n_pixels": 1089,
+            "vegetated_fraction": 0.89,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "fayoum",
+          "start": "2025-12-11",
+          "end": "2025-12-26",
+          "midpoint": "2025-12-13",
+          "ndvi": 0.088,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "pixel_reliability": 1,
+            "pixel_reliability_meaning": "good",
+            "modland_qa": 0,
+            "vi_usefulness": 0
+          },
+          "composite_doy": 347,
+          "pixel": {
+            "lat": 29.3083,
+            "lon": 30.8391,
+            "distance_km": 0.2
+          },
+          "granule": "VNP13A1.A2025345.h20v06.002.2025361164116",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.646,
+            "p25_ndvi": 0.525,
+            "p75_ndvi": 0.705,
+            "n_pixels": 1055,
+            "vegetated_fraction": 0.89,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "fayoum",
+          "start": "2025-12-19",
+          "end": "2026-01-03",
+          "midpoint": "2025-12-29",
+          "ndvi": 0.127,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "pixel_reliability": 1,
+            "pixel_reliability_meaning": "good",
+            "modland_qa": 0,
+            "vi_usefulness": 0
+          },
+          "composite_doy": 363,
+          "pixel": {
+            "lat": 29.3083,
+            "lon": 30.8391,
+            "distance_km": 0.2
+          },
+          "granule": "VNP13A1.A2025353.h20v06.002.2026004134112",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.677,
+            "p25_ndvi": 0.526,
+            "p75_ndvi": 0.741,
+            "n_pixels": 1087,
+            "vegetated_fraction": 0.9,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "fayoum",
+          "start": "2025-12-27",
+          "end": "2026-01-11",
+          "midpoint": "2026-01-10",
+          "ndvi": 0.153,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "pixel_reliability": 0,
+            "pixel_reliability_meaning": "excellent",
+            "modland_qa": 0,
+            "vi_usefulness": 0
+          },
+          "composite_doy": 10,
+          "pixel": {
+            "lat": 29.3083,
+            "lon": 30.8391,
+            "distance_km": 0.2
+          },
+          "granule": "VNP13A1.A2025361.h20v06.002.2026015084227",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.7,
+            "p25_ndvi": 0.563,
+            "p75_ndvi": 0.764,
+            "n_pixels": 1070,
+            "vegetated_fraction": 0.91,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "fayoum",
+          "start": "2026-01-01",
+          "end": "2026-01-16",
+          "midpoint": "2026-01-10",
+          "ndvi": 0.153,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "pixel_reliability": 0,
+            "pixel_reliability_meaning": "excellent",
+            "modland_qa": 0,
+            "vi_usefulness": 0
+          },
+          "composite_doy": 10,
+          "pixel": {
+            "lat": 29.3083,
+            "lon": 30.8391,
+            "distance_km": 0.2
+          },
+          "granule": "VNP13A1.A2026001.h20v06.002.2026017110551",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.706,
+            "p25_ndvi": 0.557,
+            "p75_ndvi": 0.775,
+            "n_pixels": 1056,
+            "vegetated_fraction": 0.91,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "fayoum",
+          "start": "2026-01-09",
+          "end": "2026-01-24",
+          "midpoint": "2026-01-10",
+          "ndvi": 0.153,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "pixel_reliability": 0,
+            "pixel_reliability_meaning": "excellent",
+            "modland_qa": 0,
+            "vi_usefulness": 0
+          },
+          "composite_doy": 10,
+          "pixel": {
+            "lat": 29.3083,
+            "lon": 30.8391,
+            "distance_km": 0.2
+          },
+          "granule": "VNP13A1.A2026009.h20v06.002.2026025115538",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.707,
+            "p25_ndvi": 0.562,
+            "p75_ndvi": 0.776,
+            "n_pixels": 1085,
+            "vegetated_fraction": 0.91,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "fayoum",
+          "start": "2026-01-17",
+          "end": "2026-02-01",
+          "midpoint": "2026-01-31",
+          "ndvi": 0.139,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "pixel_reliability": 0,
+            "pixel_reliability_meaning": "excellent",
+            "modland_qa": 0,
+            "vi_usefulness": 0
+          },
+          "composite_doy": 31,
+          "pixel": {
+            "lat": 29.3083,
+            "lon": 30.8391,
+            "distance_km": 0.2
+          },
+          "granule": "VNP13A1.A2026017.h20v06.002.2026034235027",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.673,
+            "p25_ndvi": 0.541,
+            "p75_ndvi": 0.754,
+            "n_pixels": 1054,
+            "vegetated_fraction": 0.91,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "fayoum",
+          "start": "2026-01-25",
+          "end": "2026-02-09",
+          "midpoint": "2026-01-31",
+          "ndvi": 0.139,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "pixel_reliability": 0,
+            "pixel_reliability_meaning": "excellent",
+            "modland_qa": 0,
+            "vi_usefulness": 0
+          },
+          "composite_doy": 31,
+          "pixel": {
+            "lat": 29.3083,
+            "lon": 30.8391,
+            "distance_km": 0.2
+          },
+          "granule": "VNP13A1.A2026025.h20v06.002.2026041114951",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.687,
+            "p25_ndvi": 0.558,
+            "p75_ndvi": 0.757,
+            "n_pixels": 1054,
+            "vegetated_fraction": 0.92,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "fayoum",
+          "start": "2026-02-02",
+          "end": "2026-02-17",
+          "midpoint": "2026-02-11",
+          "ndvi": 0.152,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "pixel_reliability": 0,
+            "pixel_reliability_meaning": "excellent",
+            "modland_qa": 0,
+            "vi_usefulness": 0
+          },
+          "composite_doy": 42,
+          "pixel": {
+            "lat": 29.3083,
+            "lon": 30.8391,
+            "distance_km": 0.2
+          },
+          "granule": "VNP13A1.A2026033.h20v06.002.2026049114942",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.746,
+            "p25_ndvi": 0.632,
+            "p75_ndvi": 0.798,
+            "n_pixels": 1089,
+            "vegetated_fraction": 0.93,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "fayoum",
+          "start": "2026-02-10",
+          "end": "2026-02-25",
+          "midpoint": "2026-02-11",
+          "ndvi": 0.152,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "pixel_reliability": 0,
+            "pixel_reliability_meaning": "excellent",
+            "modland_qa": 0,
+            "vi_usefulness": 0
+          },
+          "composite_doy": 42,
+          "pixel": {
+            "lat": 29.3083,
+            "lon": 30.8391,
+            "distance_km": 0.2
+          },
+          "granule": "VNP13A1.A2026041.h20v06.002.2026057095400",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.756,
+            "p25_ndvi": 0.643,
+            "p75_ndvi": 0.807,
+            "n_pixels": 1089,
+            "vegetated_fraction": 0.93,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "fayoum",
+          "start": "2026-02-18",
+          "end": "2026-03-05",
+          "midpoint": "2026-02-21",
+          "ndvi": 0.14,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "pixel_reliability": 0,
+            "pixel_reliability_meaning": "excellent",
+            "modland_qa": 0,
+            "vi_usefulness": 0
+          },
+          "composite_doy": 52,
+          "pixel": {
+            "lat": 29.3083,
+            "lon": 30.8391,
+            "distance_km": 0.2
+          },
+          "granule": "VNP13A1.A2026049.h20v06.002.2026065115628",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.725,
+            "p25_ndvi": 0.595,
+            "p75_ndvi": 0.797,
+            "n_pixels": 1088,
+            "vegetated_fraction": 0.91,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "fayoum",
+          "start": "2026-02-26",
+          "end": "2026-03-13",
+          "midpoint": "2026-03-09",
+          "ndvi": 0.143,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "pixel_reliability": 0,
+            "pixel_reliability_meaning": "excellent",
+            "modland_qa": 0,
+            "vi_usefulness": 0
+          },
+          "composite_doy": 68,
+          "pixel": {
+            "lat": 29.3083,
+            "lon": 30.8391,
+            "distance_km": 0.2
+          },
+          "granule": "VNP13A1.A2026057.h20v06.002.2026077164629",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.678,
+            "p25_ndvi": 0.53,
+            "p75_ndvi": 0.749,
+            "n_pixels": 1089,
+            "vegetated_fraction": 0.9,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "fayoum",
+          "start": "2026-03-06",
+          "end": "2026-03-21",
+          "midpoint": "2026-03-09",
+          "ndvi": 0.143,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "pixel_reliability": 0,
+            "pixel_reliability_meaning": "excellent",
+            "modland_qa": 0,
+            "vi_usefulness": 0
+          },
+          "composite_doy": 68,
+          "pixel": {
+            "lat": 29.3083,
+            "lon": 30.8391,
+            "distance_km": 0.2
+          },
+          "granule": "VNP13A1.A2026065.h20v06.002.2026085150047",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.685,
+            "p25_ndvi": 0.545,
+            "p75_ndvi": 0.754,
+            "n_pixels": 1089,
+            "vegetated_fraction": 0.91,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "fayoum",
+          "start": "2026-03-14",
+          "end": "2026-03-29",
+          "midpoint": "2026-03-25",
+          "ndvi": 0.142,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "pixel_reliability": 0,
+            "pixel_reliability_meaning": "excellent",
+            "modland_qa": 0,
+            "vi_usefulness": 0
+          },
+          "composite_doy": 84,
+          "pixel": {
+            "lat": 29.3083,
+            "lon": 30.8391,
+            "distance_km": 0.2
+          },
+          "granule": "VNP13A1.A2026073.h20v06.002.2026090124544",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.661,
+            "p25_ndvi": 0.536,
+            "p75_ndvi": 0.726,
+            "n_pixels": 1089,
+            "vegetated_fraction": 0.91,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "fayoum",
+          "start": "2026-03-22",
+          "end": "2026-04-06",
+          "midpoint": "2026-03-25",
+          "ndvi": 0.142,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "pixel_reliability": 0,
+            "pixel_reliability_meaning": "excellent",
+            "modland_qa": 0,
+            "vi_usefulness": 0
+          },
+          "composite_doy": 84,
+          "pixel": {
+            "lat": 29.3083,
+            "lon": 30.8391,
+            "distance_km": 0.2
+          },
+          "granule": "VNP13A1.A2026081.h20v06.002.2026097095009",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.654,
+            "p25_ndvi": 0.562,
+            "p75_ndvi": 0.709,
+            "n_pixels": 1089,
+            "vegetated_fraction": 0.93,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "fayoum",
+          "start": "2026-03-30",
+          "end": "2026-04-14",
+          "midpoint": "2026-04-05",
+          "ndvi": 0.142,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "pixel_reliability": 0,
+            "pixel_reliability_meaning": "excellent",
+            "modland_qa": 0,
+            "vi_usefulness": 0
+          },
+          "composite_doy": 95,
+          "pixel": {
+            "lat": 29.3083,
+            "lon": 30.8391,
+            "distance_km": 0.2
+          },
+          "granule": "VNP13A1.A2026089.h20v06.002.2026105101701",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.653,
+            "p25_ndvi": 0.568,
+            "p75_ndvi": 0.703,
+            "n_pixels": 1089,
+            "vegetated_fraction": 0.93,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "fayoum",
+          "start": "2026-04-07",
+          "end": "2026-04-22",
+          "midpoint": "2026-04-16",
+          "ndvi": 0.181,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "pixel_reliability": 0,
+            "pixel_reliability_meaning": "excellent",
+            "modland_qa": 0,
+            "vi_usefulness": 0
+          },
+          "composite_doy": 106,
+          "pixel": {
+            "lat": 29.3083,
+            "lon": 30.8391,
+            "distance_km": 0.2
+          },
+          "granule": "VNP13A1.A2026097.h20v06.002.2026134171649",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.609,
+            "p25_ndvi": 0.51,
+            "p75_ndvi": 0.663,
+            "n_pixels": 1089,
+            "vegetated_fraction": 0.92,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "fayoum",
+          "start": "2026-04-15",
+          "end": "2026-04-30",
+          "midpoint": "2026-04-16",
+          "ndvi": 0.181,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "pixel_reliability": 0,
+            "pixel_reliability_meaning": "excellent",
+            "modland_qa": 0,
+            "vi_usefulness": 0
+          },
+          "composite_doy": 106,
+          "pixel": {
+            "lat": 29.3083,
+            "lon": 30.8391,
+            "distance_km": 0.2
+          },
+          "granule": "VNP13A1.A2026105.h20v06.002.2026134024713",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.523,
+            "p25_ndvi": 0.457,
+            "p75_ndvi": 0.567,
+            "n_pixels": 1089,
+            "vegetated_fraction": 0.91,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "fayoum",
+          "start": "2026-04-23",
+          "end": "2026-05-08",
+          "midpoint": "2026-05-02",
+          "ndvi": 0.141,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "pixel_reliability": 0,
+            "pixel_reliability_meaning": "excellent",
+            "modland_qa": 0,
+            "vi_usefulness": 0
+          },
+          "composite_doy": 122,
+          "pixel": {
+            "lat": 29.3083,
+            "lon": 30.8391,
+            "distance_km": 0.2
+          },
+          "granule": "VNP13A1.A2026113.h20v06.002.2026134025829",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.47,
+            "p25_ndvi": 0.41,
+            "p75_ndvi": 0.514,
+            "n_pixels": 1089,
+            "vegetated_fraction": 0.88,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "fayoum",
+          "start": "2026-05-01",
+          "end": "2026-05-16",
+          "midpoint": "2026-05-02",
+          "ndvi": 0.141,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "pixel_reliability": 0,
+            "pixel_reliability_meaning": "excellent",
+            "modland_qa": 0,
+            "vi_usefulness": 0
+          },
+          "composite_doy": 122,
+          "pixel": {
+            "lat": 29.3083,
+            "lon": 30.8391,
+            "distance_km": 0.2
+          },
+          "granule": "VNP13A1.A2026121.h20v06.002.2026141160004",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.467,
+            "p25_ndvi": 0.407,
+            "p75_ndvi": 0.509,
+            "n_pixels": 1089,
+            "vegetated_fraction": 0.88,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "fayoum",
+          "start": "2026-05-09",
+          "end": "2026-05-24",
+          "midpoint": "2026-05-23",
+          "ndvi": 0.128,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "pixel_reliability": 0,
+            "pixel_reliability_meaning": "excellent",
+            "modland_qa": 0,
+            "vi_usefulness": 0
+          },
+          "composite_doy": 143,
+          "pixel": {
+            "lat": 29.3083,
+            "lon": 30.8391,
+            "distance_km": 0.2
+          },
+          "granule": "VNP13A1.A2026129.h20v06.002.2026146131156",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.452,
+            "p25_ndvi": 0.38,
+            "p75_ndvi": 0.497,
+            "n_pixels": 1089,
+            "vegetated_fraction": 0.87,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "fayoum",
+          "start": "2026-05-17",
+          "end": "2026-06-01",
+          "midpoint": "2026-05-23",
+          "ndvi": 0.128,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "pixel_reliability": 0,
+            "pixel_reliability_meaning": "excellent",
+            "modland_qa": 0,
+            "vi_usefulness": 0
+          },
+          "composite_doy": 143,
+          "pixel": {
+            "lat": 29.3083,
+            "lon": 30.8391,
+            "distance_km": 0.2
+          },
+          "granule": "VNP13A1.A2026137.h20v06.002.2026162011030",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.471,
+            "p25_ndvi": 0.394,
+            "p75_ndvi": 0.523,
+            "n_pixels": 1089,
+            "vegetated_fraction": 0.87,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "fayoum",
+          "start": "2026-05-25",
+          "end": "2026-06-09",
+          "midpoint": "2026-06-08",
+          "ndvi": 0.134,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "pixel_reliability": 0,
+            "pixel_reliability_meaning": "excellent",
+            "modland_qa": 0,
+            "vi_usefulness": 0
+          },
+          "composite_doy": 159,
+          "pixel": {
+            "lat": 29.3083,
+            "lon": 30.8391,
+            "distance_km": 0.2
+          },
+          "granule": "VNP13A1.A2026145.h20v06.002.2026166043918",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.475,
+            "p25_ndvi": 0.393,
+            "p75_ndvi": 0.523,
+            "n_pixels": 1089,
+            "vegetated_fraction": 0.87,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "fayoum",
+          "start": "2026-06-02",
+          "end": "2026-06-17",
+          "midpoint": "2026-06-08",
+          "ndvi": 0.134,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "pixel_reliability": 0,
+            "pixel_reliability_meaning": "excellent",
+            "modland_qa": 0,
+            "vi_usefulness": 0
+          },
+          "composite_doy": 159,
+          "pixel": {
+            "lat": 29.3083,
+            "lon": 30.8391,
+            "distance_km": 0.2
+          },
+          "granule": "VNP13A1.A2026153.h20v06.002.2026170030219",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.484,
+            "p25_ndvi": 0.405,
+            "p75_ndvi": 0.538,
+            "n_pixels": 1089,
+            "vegetated_fraction": 0.88,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "fayoum",
+          "start": "2026-06-10",
+          "end": "2026-06-25",
+          "midpoint": "2026-06-19",
+          "ndvi": 0.128,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "pixel_reliability": 0,
+            "pixel_reliability_meaning": "excellent",
+            "modland_qa": 0,
+            "vi_usefulness": 0
+          },
+          "composite_doy": 170,
+          "pixel": {
+            "lat": 29.3083,
+            "lon": 30.8391,
+            "distance_km": 0.2
+          },
+          "granule": "VNP13A1.A2026161.h20v06.002.2026177103802",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.507,
+            "p25_ndvi": 0.426,
+            "p75_ndvi": 0.562,
+            "n_pixels": 1089,
+            "vegetated_fraction": 0.89,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "fayoum",
+          "start": "2026-06-18",
+          "end": "2026-07-03",
+          "midpoint": "2026-06-30",
+          "ndvi": 0.14,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "pixel_reliability": 1,
+            "pixel_reliability_meaning": "good",
+            "modland_qa": 0,
+            "vi_usefulness": 0
+          },
+          "composite_doy": 181,
+          "pixel": {
+            "lat": 29.3083,
+            "lon": 30.8391,
+            "distance_km": 0.2
+          },
+          "granule": "VNP13A1.A2026169.h20v06.002.2026188194908",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.541,
+            "p25_ndvi": 0.452,
+            "p75_ndvi": 0.599,
+            "n_pixels": 1089,
+            "vegetated_fraction": 0.9,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "fayoum",
+          "start": "2026-06-26",
+          "end": "2026-07-11",
+          "midpoint": "2026-06-30",
+          "ndvi": 0.14,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "pixel_reliability": 1,
+            "pixel_reliability_meaning": "good",
+            "modland_qa": 0,
+            "vi_usefulness": 0
+          },
+          "composite_doy": 181,
+          "pixel": {
+            "lat": 29.3083,
+            "lon": 30.8391,
+            "distance_km": 0.2
+          },
+          "granule": "VNP13A1.A2026177.h20v06.002.2026204142441",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.564,
+            "p25_ndvi": 0.471,
+            "p75_ndvi": 0.624,
+            "n_pixels": 1089,
+            "vegetated_fraction": 0.9,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "fayoum",
+          "start": "2026-07-04",
+          "end": "2026-07-19",
+          "midpoint": "2026-07-10",
+          "ndvi": 0.139,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "pixel_reliability": 0,
+            "pixel_reliability_meaning": "excellent",
+            "modland_qa": 0,
+            "vi_usefulness": 0
+          },
+          "composite_doy": 191,
+          "pixel": {
+            "lat": 29.3083,
+            "lon": 30.8391,
+            "distance_km": 0.2
+          },
+          "granule": "VNP13A1.A2026185.h20v06.002.2026209042133",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.556,
+            "p25_ndvi": 0.45,
+            "p75_ndvi": 0.616,
+            "n_pixels": 1089,
+            "vegetated_fraction": 0.89,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "fayoum",
+          "start": "2026-07-12",
+          "end": "2026-07-27",
+          "midpoint": "2026-07-26",
+          "ndvi": 0.137,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "pixel_reliability": 0,
+            "pixel_reliability_meaning": "excellent",
+            "modland_qa": 0,
+            "vi_usefulness": 0
+          },
+          "composite_doy": 207,
+          "pixel": {
+            "lat": 29.3083,
+            "lon": 30.8391,
+            "distance_km": 0.2
+          },
+          "granule": "VNP13A1.A2026193.h20v06.002.2026209195742",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.595,
+            "p25_ndvi": 0.493,
+            "p75_ndvi": 0.651,
+            "n_pixels": 1089,
+            "vegetated_fraction": 0.9,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "fayoum",
+          "start": "2026-07-20",
+          "end": "2026-08-04",
+          "midpoint": "2026-07-31",
+          "ndvi": 0.142,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "pixel_reliability": 0,
+            "pixel_reliability_meaning": "excellent",
+            "modland_qa": 0,
+            "vi_usefulness": 0
+          },
+          "composite_doy": 212,
+          "pixel": {
+            "lat": 29.3083,
+            "lon": 30.8391,
+            "distance_km": 0.2
+          },
+          "granule": "VNP13A1.A2026201.h20v06.002.2026222173206",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.612,
+            "p25_ndvi": 0.515,
+            "p75_ndvi": 0.665,
+            "n_pixels": 1089,
+            "vegetated_fraction": 0.92,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "fayoum",
+          "start": "2026-07-28",
+          "end": "2026-08-12",
+          "midpoint": "2026-07-31",
+          "ndvi": 0.142,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "pixel_reliability": 0,
+            "pixel_reliability_meaning": "excellent",
+            "modland_qa": 0,
+            "vi_usefulness": 0
+          },
+          "composite_doy": 212,
+          "pixel": {
+            "lat": 29.3083,
+            "lon": 30.8391,
+            "distance_km": 0.2
+          },
+          "granule": "VNP13A1.A2026209.h20v06.002.2026225155549",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.602,
+            "p25_ndvi": 0.497,
+            "p75_ndvi": 0.654,
+            "n_pixels": 1088,
+            "vegetated_fraction": 0.92,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "fayoum",
+          "start": "2026-08-05",
+          "end": "2026-08-20",
+          "midpoint": "2026-08-17",
+          "ndvi": 0.144,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "pixel_reliability": 1,
+            "pixel_reliability_meaning": "good",
+            "modland_qa": 0,
+            "vi_usefulness": 0
+          },
+          "composite_doy": 229,
+          "pixel": {
+            "lat": 29.3083,
+            "lon": 30.8391,
+            "distance_km": 0.2
+          },
+          "granule": "VNP13A1.A2026217.h20v06.002.2026236114043",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.608,
+            "p25_ndvi": 0.506,
+            "p75_ndvi": 0.671,
+            "n_pixels": 1089,
+            "vegetated_fraction": 0.91,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "fayoum",
+          "start": "2026-08-13",
+          "end": "2026-08-28",
+          "midpoint": "2026-08-17",
+          "ndvi": 0.144,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "pixel_reliability": 1,
+            "pixel_reliability_meaning": "good",
+            "modland_qa": 0,
+            "vi_usefulness": 0
+          },
+          "composite_doy": 229,
+          "pixel": {
+            "lat": 29.3083,
+            "lon": 30.8391,
+            "distance_km": 0.2
+          },
+          "granule": "VNP13A1.A2026225.h20v06.002.2026241083734",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.616,
+            "p25_ndvi": 0.529,
+            "p75_ndvi": 0.68,
+            "n_pixels": 1089,
+            "vegetated_fraction": 0.92,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "fayoum",
+          "start": "2026-08-21",
+          "end": "2026-09-05",
+          "midpoint": "2026-09-02",
+          "ndvi": 0.147,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "pixel_reliability": 1,
+            "pixel_reliability_meaning": "good",
+            "modland_qa": 0,
+            "vi_usefulness": 0
+          },
+          "composite_doy": 245,
+          "pixel": {
+            "lat": 29.3083,
+            "lon": 30.8391,
+            "distance_km": 0.2
+          },
+          "granule": "VNP13A1.A2026233.h20v06.002.2026251193422",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.605,
+            "p25_ndvi": 0.514,
+            "p75_ndvi": 0.67,
+            "n_pixels": 1089,
+            "vegetated_fraction": 0.92,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "fayoum",
+          "start": "2026-08-29",
+          "end": "2026-09-13",
+          "midpoint": "2026-09-02",
+          "ndvi": 0.147,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "pixel_reliability": 1,
+            "pixel_reliability_meaning": "good",
+            "modland_qa": 0,
+            "vi_usefulness": 0
+          },
+          "composite_doy": 245,
+          "pixel": {
+            "lat": 29.3083,
+            "lon": 30.8391,
+            "distance_km": 0.2
+          },
+          "granule": "VNP13A1.A2026241.h20v06.002.2026258002910",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.582,
+            "p25_ndvi": 0.493,
+            "p75_ndvi": 0.649,
+            "n_pixels": 1089,
+            "vegetated_fraction": 0.92,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "fayoum",
+          "start": "2026-09-06",
+          "end": "2026-09-21",
+          "midpoint": "2026-09-17",
+          "ndvi": 0.146,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "pixel_reliability": 0,
+            "pixel_reliability_meaning": "excellent",
+            "modland_qa": 0,
+            "vi_usefulness": 0
+          },
+          "composite_doy": 260,
+          "pixel": {
+            "lat": 29.3083,
+            "lon": 30.8391,
+            "distance_km": 0.2
+          },
+          "granule": "VNP13A1.A2026249.h20v06.002.2026265092148",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.571,
+            "p25_ndvi": 0.48,
+            "p75_ndvi": 0.638,
+            "n_pixels": 1089,
+            "vegetated_fraction": 0.92,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "fayoum",
+          "start": "2026-09-14",
+          "end": "2026-09-29",
+          "midpoint": "2026-09-17",
+          "ndvi": 0.146,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "pixel_reliability": 0,
+            "pixel_reliability_meaning": "excellent",
+            "modland_qa": 0,
+            "vi_usefulness": 0
+          },
+          "composite_doy": 260,
+          "pixel": {
+            "lat": 29.3083,
+            "lon": 30.8391,
+            "distance_km": 0.2
+          },
+          "granule": "VNP13A1.A2026257.h20v06.002.2026289164631",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.551,
+            "p25_ndvi": 0.465,
+            "p75_ndvi": 0.617,
+            "n_pixels": 1089,
+            "vegetated_fraction": 0.92,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "fayoum",
+          "start": "2026-09-22",
+          "end": "2026-10-07",
+          "midpoint": "2026-09-27",
+          "ndvi": 0.134,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "pixel_reliability": 1,
+            "pixel_reliability_meaning": "good",
+            "modland_qa": 0,
+            "vi_usefulness": 0
+          },
+          "composite_doy": 270,
+          "pixel": {
+            "lat": 29.3083,
+            "lon": 30.8391,
+            "distance_km": 0.2
+          },
+          "granule": "VNP13A1.A2026265.h20v06.002.2026289164638",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.523,
+            "p25_ndvi": 0.448,
+            "p75_ndvi": 0.585,
+            "n_pixels": 1089,
+            "vegetated_fraction": 0.9,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "fayoum",
+          "start": "2026-09-30",
+          "end": "2026-10-15",
+          "midpoint": "2026-10-14",
+          "ndvi": 0.143,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "pixel_reliability": 0,
+            "pixel_reliability_meaning": "excellent",
+            "modland_qa": 0,
+            "vi_usefulness": 0
+          },
+          "composite_doy": 287,
+          "pixel": {
+            "lat": 29.3083,
+            "lon": 30.8391,
+            "distance_km": 0.2
+          },
+          "granule": "VNP13A1.A2026273.h20v06.002.2026296170111",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.492,
+            "p25_ndvi": 0.418,
+            "p75_ndvi": 0.542,
+            "n_pixels": 1089,
+            "vegetated_fraction": 0.89,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "fayoum",
+          "start": "2026-10-08",
+          "end": "2026-10-23",
+          "midpoint": "2026-10-14",
+          "ndvi": 0.143,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "pixel_reliability": 0,
+            "pixel_reliability_meaning": "excellent",
+            "modland_qa": 0,
+            "vi_usefulness": 0
+          },
+          "composite_doy": 287,
+          "pixel": {
+            "lat": 29.3083,
+            "lon": 30.8391,
+            "distance_km": 0.2
+          },
+          "granule": "VNP13A1.A2026281.h20v06.002.2026297094923",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.482,
+            "p25_ndvi": 0.407,
+            "p75_ndvi": 0.526,
+            "n_pixels": 1089,
+            "vegetated_fraction": 0.89,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "fayoum",
+          "start": "2026-10-16",
+          "end": "2026-10-31",
+          "midpoint": "2026-10-19",
+          "ndvi": 0.126,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "pixel_reliability": 0,
+            "pixel_reliability_meaning": "excellent",
+            "modland_qa": 0,
+            "vi_usefulness": 0
+          },
+          "composite_doy": 292,
+          "pixel": {
+            "lat": 29.3083,
+            "lon": 30.8391,
+            "distance_km": 0.2
+          },
+          "granule": "VNP13A1.A2026289.h20v06.002.2026307014637",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.504,
+            "p25_ndvi": 0.428,
+            "p75_ndvi": 0.553,
+            "n_pixels": 1089,
+            "vegetated_fraction": 0.89,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "fayoum",
+          "start": "2026-10-24",
+          "end": "2026-11-08",
+          "midpoint": "2026-10-30",
+          "ndvi": 0.121,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "pixel_reliability": 0,
+            "pixel_reliability_meaning": "excellent",
+            "modland_qa": 0,
+            "vi_usefulness": 0
+          },
+          "composite_doy": 303,
+          "pixel": {
+            "lat": 29.3083,
+            "lon": 30.8391,
+            "distance_km": 0.2
+          },
+          "granule": "VNP13A1.A2026297.h20v06.002.2026309112351",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.493,
+            "p25_ndvi": 0.415,
+            "p75_ndvi": 0.548,
+            "n_pixels": 1089,
+            "vegetated_fraction": 0.87,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        }
+      ],
+      "series": [
+        {
+          "start": "2025-10-24",
+          "end": "2025-11-08",
+          "ndvi": 0.136
+        },
+        {
+          "start": "2025-11-01",
+          "end": "2025-11-16",
+          "ndvi": 0.136
+        },
+        {
+          "start": "2025-11-09",
+          "end": "2025-11-24",
+          "ndvi": 0.136
+        },
+        {
+          "start": "2025-11-17",
+          "end": "2025-12-02",
+          "ndvi": 0.13
+        },
+        {
+          "start": "2025-11-25",
+          "end": "2025-12-10",
+          "ndvi": 0.13
+        },
+        {
+          "start": "2025-12-03",
+          "end": "2025-12-18",
+          "ndvi": 0.129
+        },
+        {
+          "start": "2025-12-11",
+          "end": "2025-12-26",
+          "ndvi": 0.088
+        },
+        {
+          "start": "2025-12-19",
+          "end": "2026-01-03",
+          "ndvi": 0.127
+        },
+        {
+          "start": "2025-12-27",
+          "end": "2026-01-11",
+          "ndvi": 0.153
+        },
+        {
+          "start": "2026-01-01",
+          "end": "2026-01-16",
+          "ndvi": 0.153
+        },
+        {
+          "start": "2026-01-09",
+          "end": "2026-01-24",
+          "ndvi": 0.153
+        },
+        {
+          "start": "2026-01-17",
+          "end": "2026-02-01",
+          "ndvi": 0.139
+        },
+        {
+          "start": "2026-01-25",
+          "end": "2026-02-09",
+          "ndvi": 0.139
+        },
+        {
+          "start": "2026-02-02",
+          "end": "2026-02-17",
+          "ndvi": 0.152
+        },
+        {
+          "start": "2026-02-10",
+          "end": "2026-02-25",
+          "ndvi": 0.152
+        },
+        {
+          "start": "2026-02-18",
+          "end": "2026-03-05",
+          "ndvi": 0.14
+        },
+        {
+          "start": "2026-02-26",
+          "end": "2026-03-13",
+          "ndvi": 0.143
+        },
+        {
+          "start": "2026-03-06",
+          "end": "2026-03-21",
+          "ndvi": 0.143
+        },
+        {
+          "start": "2026-03-14",
+          "end": "2026-03-29",
+          "ndvi": 0.142
+        },
+        {
+          "start": "2026-03-22",
+          "end": "2026-04-06",
+          "ndvi": 0.142
+        },
+        {
+          "start": "2026-03-30",
+          "end": "2026-04-14",
+          "ndvi": 0.142
+        },
+        {
+          "start": "2026-04-07",
+          "end": "2026-04-22",
+          "ndvi": 0.181
+        },
+        {
+          "start": "2026-04-15",
+          "end": "2026-04-30",
+          "ndvi": 0.181
+        },
+        {
+          "start": "2026-04-23",
+          "end": "2026-05-08",
+          "ndvi": 0.141
+        },
+        {
+          "start": "2026-05-01",
+          "end": "2026-05-16",
+          "ndvi": 0.141
+        },
+        {
+          "start": "2026-05-09",
+          "end": "2026-05-24",
+          "ndvi": 0.128
+        },
+        {
+          "start": "2026-05-17",
+          "end": "2026-06-01",
+          "ndvi": 0.128
+        },
+        {
+          "start": "2026-05-25",
+          "end": "2026-06-09",
+          "ndvi": 0.134
+        },
+        {
+          "start": "2026-06-02",
+          "end": "2026-06-17",
+          "ndvi": 0.134
+        },
+        {
+          "start": "2026-06-10",
+          "end": "2026-06-25",
+          "ndvi": 0.128
+        },
+        {
+          "start": "2026-06-18",
+          "end": "2026-07-03",
+          "ndvi": 0.14
+        },
+        {
+          "start": "2026-06-26",
+          "end": "2026-07-11",
+          "ndvi": 0.14
+        },
+        {
+          "start": "2026-07-04",
+          "end": "2026-07-19",
+          "ndvi": 0.139
+        },
+        {
+          "start": "2026-07-12",
+          "end": "2026-07-27",
+          "ndvi": 0.137
+        },
+        {
+          "start": "2026-07-20",
+          "end": "2026-08-04",
+          "ndvi": 0.142
+        },
+        {
+          "start": "2026-07-28",
+          "end": "2026-08-12",
+          "ndvi": 0.142
+        },
+        {
+          "start": "2026-08-05",
+          "end": "2026-08-20",
+          "ndvi": 0.144
+        },
+        {
+          "start": "2026-08-13",
+          "end": "2026-08-28",
+          "ndvi": 0.144
+        },
+        {
+          "start": "2026-08-21",
+          "end": "2026-09-05",
+          "ndvi": 0.147
+        },
+        {
+          "start": "2026-08-29",
+          "end": "2026-09-13",
+          "ndvi": 0.147
+        },
+        {
+          "start": "2026-09-06",
+          "end": "2026-09-21",
+          "ndvi": 0.146
+        },
+        {
+          "start": "2026-09-14",
+          "end": "2026-09-29",
+          "ndvi": 0.146
+        },
+        {
+          "start": "2026-09-22",
+          "end": "2026-10-07",
+          "ndvi": 0.134
+        },
+        {
+          "start": "2026-09-30",
+          "end": "2026-10-15",
+          "ndvi": 0.143
+        },
+        {
+          "start": "2026-10-08",
+          "end": "2026-10-23",
+          "ndvi": 0.143
+        },
+        {
+          "start": "2026-10-16",
+          "end": "2026-10-31",
+          "ndvi": 0.126
+        },
+        {
+          "start": "2026-10-24",
+          "end": "2026-11-08",
+          "ndvi": 0.121
+        }
+      ],
+      "regional_series": [
+        {
+          "start": "2025-10-24",
+          "end": "2025-11-08",
+          "ndvi": 0.541,
+          "p25": 0.463,
+          "p75": 0.603,
+          "vegetated_fraction": 0.89
+        },
+        {
+          "start": "2025-11-01",
+          "end": "2025-11-16",
+          "ndvi": 0.554,
+          "p25": 0.471,
+          "p75": 0.611,
+          "vegetated_fraction": 0.9
+        },
+        {
+          "start": "2025-11-09",
+          "end": "2025-11-24",
+          "ndvi": 0.535,
+          "p25": 0.436,
+          "p75": 0.593,
+          "vegetated_fraction": 0.87
+        },
+        {
+          "start": "2025-11-17",
+          "end": "2025-12-02",
+          "ndvi": 0.541,
+          "p25": 0.392,
+          "p75": 0.608,
+          "vegetated_fraction": 0.84
+        },
+        {
+          "start": "2025-11-25",
+          "end": "2025-12-10",
+          "ndvi": 0.593,
+          "p25": 0.482,
+          "p75": 0.646,
+          "vegetated_fraction": 0.89
+        },
+        {
+          "start": "2025-12-03",
+          "end": "2025-12-18",
+          "ndvi": 0.594,
+          "p25": 0.471,
+          "p75": 0.649,
+          "vegetated_fraction": 0.89
+        },
+        {
+          "start": "2025-12-11",
+          "end": "2025-12-26",
+          "ndvi": 0.646,
+          "p25": 0.525,
+          "p75": 0.705,
+          "vegetated_fraction": 0.89
+        },
+        {
+          "start": "2025-12-19",
+          "end": "2026-01-03",
+          "ndvi": 0.677,
+          "p25": 0.526,
+          "p75": 0.741,
+          "vegetated_fraction": 0.9
+        },
+        {
+          "start": "2025-12-27",
+          "end": "2026-01-11",
+          "ndvi": 0.7,
+          "p25": 0.563,
+          "p75": 0.764,
+          "vegetated_fraction": 0.91
+        },
+        {
+          "start": "2026-01-01",
+          "end": "2026-01-16",
+          "ndvi": 0.706,
+          "p25": 0.557,
+          "p75": 0.775,
+          "vegetated_fraction": 0.91
+        },
+        {
+          "start": "2026-01-09",
+          "end": "2026-01-24",
+          "ndvi": 0.707,
+          "p25": 0.562,
+          "p75": 0.776,
+          "vegetated_fraction": 0.91
+        },
+        {
+          "start": "2026-01-17",
+          "end": "2026-02-01",
+          "ndvi": 0.673,
+          "p25": 0.541,
+          "p75": 0.754,
+          "vegetated_fraction": 0.91
+        },
+        {
+          "start": "2026-01-25",
+          "end": "2026-02-09",
+          "ndvi": 0.687,
+          "p25": 0.558,
+          "p75": 0.757,
+          "vegetated_fraction": 0.92
+        },
+        {
+          "start": "2026-02-02",
+          "end": "2026-02-17",
+          "ndvi": 0.746,
+          "p25": 0.632,
+          "p75": 0.798,
+          "vegetated_fraction": 0.93
+        },
+        {
+          "start": "2026-02-10",
+          "end": "2026-02-25",
+          "ndvi": 0.756,
+          "p25": 0.643,
+          "p75": 0.807,
+          "vegetated_fraction": 0.93
+        },
+        {
+          "start": "2026-02-18",
+          "end": "2026-03-05",
+          "ndvi": 0.725,
+          "p25": 0.595,
+          "p75": 0.797,
+          "vegetated_fraction": 0.91
+        },
+        {
+          "start": "2026-02-26",
+          "end": "2026-03-13",
+          "ndvi": 0.678,
+          "p25": 0.53,
+          "p75": 0.749,
+          "vegetated_fraction": 0.9
+        },
+        {
+          "start": "2026-03-06",
+          "end": "2026-03-21",
+          "ndvi": 0.685,
+          "p25": 0.545,
+          "p75": 0.754,
+          "vegetated_fraction": 0.91
+        },
+        {
+          "start": "2026-03-14",
+          "end": "2026-03-29",
+          "ndvi": 0.661,
+          "p25": 0.536,
+          "p75": 0.726,
+          "vegetated_fraction": 0.91
+        },
+        {
+          "start": "2026-03-22",
+          "end": "2026-04-06",
+          "ndvi": 0.654,
+          "p25": 0.562,
+          "p75": 0.709,
+          "vegetated_fraction": 0.93
+        },
+        {
+          "start": "2026-03-30",
+          "end": "2026-04-14",
+          "ndvi": 0.653,
+          "p25": 0.568,
+          "p75": 0.703,
+          "vegetated_fraction": 0.93
+        },
+        {
+          "start": "2026-04-07",
+          "end": "2026-04-22",
+          "ndvi": 0.609,
+          "p25": 0.51,
+          "p75": 0.663,
+          "vegetated_fraction": 0.92
+        },
+        {
+          "start": "2026-04-15",
+          "end": "2026-04-30",
+          "ndvi": 0.523,
+          "p25": 0.457,
+          "p75": 0.567,
+          "vegetated_fraction": 0.91
+        },
+        {
+          "start": "2026-04-23",
+          "end": "2026-05-08",
+          "ndvi": 0.47,
+          "p25": 0.41,
+          "p75": 0.514,
+          "vegetated_fraction": 0.88
+        },
+        {
+          "start": "2026-05-01",
+          "end": "2026-05-16",
+          "ndvi": 0.467,
+          "p25": 0.407,
+          "p75": 0.509,
+          "vegetated_fraction": 0.88
+        },
+        {
+          "start": "2026-05-09",
+          "end": "2026-05-24",
+          "ndvi": 0.452,
+          "p25": 0.38,
+          "p75": 0.497,
+          "vegetated_fraction": 0.87
+        },
+        {
+          "start": "2026-05-17",
+          "end": "2026-06-01",
+          "ndvi": 0.471,
+          "p25": 0.394,
+          "p75": 0.523,
+          "vegetated_fraction": 0.87
+        },
+        {
+          "start": "2026-05-25",
+          "end": "2026-06-09",
+          "ndvi": 0.475,
+          "p25": 0.393,
+          "p75": 0.523,
+          "vegetated_fraction": 0.87
+        },
+        {
+          "start": "2026-06-02",
+          "end": "2026-06-17",
+          "ndvi": 0.484,
+          "p25": 0.405,
+          "p75": 0.538,
+          "vegetated_fraction": 0.88
+        },
+        {
+          "start": "2026-06-10",
+          "end": "2026-06-25",
+          "ndvi": 0.507,
+          "p25": 0.426,
+          "p75": 0.562,
+          "vegetated_fraction": 0.89
+        },
+        {
+          "start": "2026-06-18",
+          "end": "2026-07-03",
+          "ndvi": 0.541,
+          "p25": 0.452,
+          "p75": 0.599,
+          "vegetated_fraction": 0.9
+        },
+        {
+          "start": "2026-06-26",
+          "end": "2026-07-11",
+          "ndvi": 0.564,
+          "p25": 0.471,
+          "p75": 0.624,
+          "vegetated_fraction": 0.9
+        },
+        {
+          "start": "2026-07-04",
+          "end": "2026-07-19",
+          "ndvi": 0.556,
+          "p25": 0.45,
+          "p75": 0.616,
+          "vegetated_fraction": 0.89
+        },
+        {
+          "start": "2026-07-12",
+          "end": "2026-07-27",
+          "ndvi": 0.595,
+          "p25": 0.493,
+          "p75": 0.651,
+          "vegetated_fraction": 0.9
+        },
+        {
+          "start": "2026-07-20",
+          "end": "2026-08-04",
+          "ndvi": 0.612,
+          "p25": 0.515,
+          "p75": 0.665,
+          "vegetated_fraction": 0.92
+        },
+        {
+          "start": "2026-07-28",
+          "end": "2026-08-12",
+          "ndvi": 0.602,
+          "p25": 0.497,
+          "p75": 0.654,
+          "vegetated_fraction": 0.92
+        },
+        {
+          "start": "2026-08-05",
+          "end": "2026-08-20",
+          "ndvi": 0.608,
+          "p25": 0.506,
+          "p75": 0.671,
+          "vegetated_fraction": 0.91
+        },
+        {
+          "start": "2026-08-13",
+          "end": "2026-08-28",
+          "ndvi": 0.616,
+          "p25": 0.529,
+          "p75": 0.68,
+          "vegetated_fraction": 0.92
+        },
+        {
+          "start": "2026-08-21",
+          "end": "2026-09-05",
+          "ndvi": 0.605,
+          "p25": 0.514,
+          "p75": 0.67,
+          "vegetated_fraction": 0.92
+        },
+        {
+          "start": "2026-08-29",
+          "end": "2026-09-13",
+          "ndvi": 0.582,
+          "p25": 0.493,
+          "p75": 0.649,
+          "vegetated_fraction": 0.92
+        },
+        {
+          "start": "2026-09-06",
+          "end": "2026-09-21",
+          "ndvi": 0.571,
+          "p25": 0.48,
+          "p75": 0.638,
+          "vegetated_fraction": 0.92
+        },
+        {
+          "start": "2026-09-14",
+          "end": "2026-09-29",
+          "ndvi": 0.551,
+          "p25": 0.465,
+          "p75": 0.617,
+          "vegetated_fraction": 0.92
+        },
+        {
+          "start": "2026-09-22",
+          "end": "2026-10-07",
+          "ndvi": 0.523,
+          "p25": 0.448,
+          "p75": 0.585,
+          "vegetated_fraction": 0.9
+        },
+        {
+          "start": "2026-09-30",
+          "end": "2026-10-15",
+          "ndvi": 0.492,
+          "p25": 0.418,
+          "p75": 0.542,
+          "vegetated_fraction": 0.89
+        },
+        {
+          "start": "2026-10-08",
+          "end": "2026-10-23",
+          "ndvi": 0.482,
+          "p25": 0.407,
+          "p75": 0.526,
+          "vegetated_fraction": 0.89
+        },
+        {
+          "start": "2026-10-16",
+          "end": "2026-10-31",
+          "ndvi": 0.504,
+          "p25": 0.428,
+          "p75": 0.553,
+          "vegetated_fraction": 0.89
+        },
+        {
+          "start": "2026-10-24",
+          "end": "2026-11-08",
+          "ndvi": 0.493,
+          "p25": 0.415,
+          "p75": 0.548,
+          "vegetated_fraction": 0.87
+        }
+      ],
+      "summary": {
+        "n_composites": 47,
+        "n_accepted": 47,
+        "n_records_read": 94,
+        "n_duplicate_records_dropped": 47,
+        "mean_ndvi": 0.14,
+        "min_ndvi": 0.088,
+        "max_ndvi": 0.181
+      },
+      "notes": [
+        "NDVI indicates vegetation greenness and canopy condition; it is not a measurement of soil health, crop identity or soil fertility.",
+        "A 500 m pixel covers about 25 hectares and mixes many small fields, so a single value is not a field measurement.",
+        "16-day composites trade temporal detail for fewer cloudy/missing observations; each composite keeps its pixel reliability and VI quality bits.",
+        "Overlapping sinusoidal tiles report the same composite more than once; only the best-quality record per composite period is kept (see summary.n_duplicate_records_dropped).",
+        "`series` is the single pixel at the site (often the town centre); `regional_series` is the median of usable pixels in a ~15 km box and is what the timeline check uses."
+      ],
+      "timeline_check": {
+        "method": "expected calendar vs NDVI threshold",
+        "classification_used": false,
+        "threshold_ndvi": null,
+        "separation_ndvi": 0.052,
+        "min_separation_ndvi": 0.1,
+        "median_crop_ndvi": 0.593,
+        "median_fallow_ndvi": 0.541,
+        "expected_periods": [
+          {
+            "start": "2025-11-01",
+            "end": "2026-03-15",
+            "crop": "wheat",
+            "season": "winter"
+          },
+          {
+            "start": "2026-04-01",
+            "end": "2026-10-12",
+            "crop": "cotton",
+            "season": "summer"
+          },
+          {
+            "start": "2026-11-01",
+            "end": "2026-11-08",
+            "crop": "wheat",
+            "season": "winter"
+          }
+        ],
+        "items": [
+          {
+            "start": "2025-10-24",
+            "end": "2025-11-08",
+            "midpoint": "2025-10-24",
+            "ndvi": 0.541,
+            "expected": "fallow",
+            "expected_crop": null,
+            "expected_season": null,
+            "observed": "uncertain",
+            "agreement": "uncertain"
+          },
+          {
+            "start": "2025-11-01",
+            "end": "2025-11-16",
+            "midpoint": "2025-11-01",
+            "ndvi": 0.554,
+            "expected": "crop",
+            "expected_crop": "wheat",
+            "expected_season": "winter",
+            "observed": "uncertain",
+            "agreement": "uncertain"
+          },
+          {
+            "start": "2025-11-09",
+            "end": "2025-11-24",
+            "midpoint": "2025-11-09",
+            "ndvi": 0.535,
+            "expected": "crop",
+            "expected_crop": "wheat",
+            "expected_season": "winter",
+            "observed": "uncertain",
+            "agreement": "uncertain"
+          },
+          {
+            "start": "2025-11-17",
+            "end": "2025-12-02",
+            "midpoint": "2025-11-17",
+            "ndvi": 0.541,
+            "expected": "crop",
+            "expected_crop": "wheat",
+            "expected_season": "winter",
+            "observed": "uncertain",
+            "agreement": "uncertain"
+          },
+          {
+            "start": "2025-11-25",
+            "end": "2025-12-10",
+            "midpoint": "2025-11-25",
+            "ndvi": 0.593,
+            "expected": "crop",
+            "expected_crop": "wheat",
+            "expected_season": "winter",
+            "observed": "uncertain",
+            "agreement": "uncertain"
+          },
+          {
+            "start": "2025-12-03",
+            "end": "2025-12-18",
+            "midpoint": "2025-12-03",
+            "ndvi": 0.594,
+            "expected": "crop",
+            "expected_crop": "wheat",
+            "expected_season": "winter",
+            "observed": "uncertain",
+            "agreement": "uncertain"
+          },
+          {
+            "start": "2025-12-11",
+            "end": "2025-12-26",
+            "midpoint": "2025-12-11",
+            "ndvi": 0.646,
+            "expected": "crop",
+            "expected_crop": "wheat",
+            "expected_season": "winter",
+            "observed": "uncertain",
+            "agreement": "uncertain"
+          },
+          {
+            "start": "2025-12-19",
+            "end": "2026-01-03",
+            "midpoint": "2025-12-19",
+            "ndvi": 0.677,
+            "expected": "crop",
+            "expected_crop": "wheat",
+            "expected_season": "winter",
+            "observed": "uncertain",
+            "agreement": "uncertain"
+          },
+          {
+            "start": "2025-12-27",
+            "end": "2026-01-11",
+            "midpoint": "2025-12-27",
+            "ndvi": 0.7,
+            "expected": "crop",
+            "expected_crop": "wheat",
+            "expected_season": "winter",
+            "observed": "uncertain",
+            "agreement": "uncertain"
+          },
+          {
+            "start": "2026-01-01",
+            "end": "2026-01-16",
+            "midpoint": "2026-01-01",
+            "ndvi": 0.706,
+            "expected": "crop",
+            "expected_crop": "wheat",
+            "expected_season": "winter",
+            "observed": "uncertain",
+            "agreement": "uncertain"
+          },
+          {
+            "start": "2026-01-09",
+            "end": "2026-01-24",
+            "midpoint": "2026-01-09",
+            "ndvi": 0.707,
+            "expected": "crop",
+            "expected_crop": "wheat",
+            "expected_season": "winter",
+            "observed": "uncertain",
+            "agreement": "uncertain"
+          },
+          {
+            "start": "2026-01-17",
+            "end": "2026-02-01",
+            "midpoint": "2026-01-17",
+            "ndvi": 0.673,
+            "expected": "crop",
+            "expected_crop": "wheat",
+            "expected_season": "winter",
+            "observed": "uncertain",
+            "agreement": "uncertain"
+          },
+          {
+            "start": "2026-01-25",
+            "end": "2026-02-09",
+            "midpoint": "2026-01-25",
+            "ndvi": 0.687,
+            "expected": "crop",
+            "expected_crop": "wheat",
+            "expected_season": "winter",
+            "observed": "uncertain",
+            "agreement": "uncertain"
+          },
+          {
+            "start": "2026-02-02",
+            "end": "2026-02-17",
+            "midpoint": "2026-02-02",
+            "ndvi": 0.746,
+            "expected": "crop",
+            "expected_crop": "wheat",
+            "expected_season": "winter",
+            "observed": "uncertain",
+            "agreement": "uncertain"
+          },
+          {
+            "start": "2026-02-10",
+            "end": "2026-02-25",
+            "midpoint": "2026-02-10",
+            "ndvi": 0.756,
+            "expected": "crop",
+            "expected_crop": "wheat",
+            "expected_season": "winter",
+            "observed": "uncertain",
+            "agreement": "uncertain"
+          },
+          {
+            "start": "2026-02-18",
+            "end": "2026-03-05",
+            "midpoint": "2026-02-18",
+            "ndvi": 0.725,
+            "expected": "crop",
+            "expected_crop": "wheat",
+            "expected_season": "winter",
+            "observed": "uncertain",
+            "agreement": "uncertain"
+          },
+          {
+            "start": "2026-02-26",
+            "end": "2026-03-13",
+            "midpoint": "2026-02-26",
+            "ndvi": 0.678,
+            "expected": "crop",
+            "expected_crop": "wheat",
+            "expected_season": "winter",
+            "observed": "uncertain",
+            "agreement": "uncertain"
+          },
+          {
+            "start": "2026-03-06",
+            "end": "2026-03-21",
+            "midpoint": "2026-03-06",
+            "ndvi": 0.685,
+            "expected": "crop",
+            "expected_crop": "wheat",
+            "expected_season": "winter",
+            "observed": "uncertain",
+            "agreement": "uncertain"
+          },
+          {
+            "start": "2026-03-14",
+            "end": "2026-03-29",
+            "midpoint": "2026-03-14",
+            "ndvi": 0.661,
+            "expected": "crop",
+            "expected_crop": "wheat",
+            "expected_season": "winter",
+            "observed": "uncertain",
+            "agreement": "uncertain"
+          },
+          {
+            "start": "2026-03-22",
+            "end": "2026-04-06",
+            "midpoint": "2026-03-22",
+            "ndvi": 0.654,
+            "expected": "fallow",
+            "expected_crop": null,
+            "expected_season": null,
+            "observed": "uncertain",
+            "agreement": "uncertain"
+          },
+          {
+            "start": "2026-03-30",
+            "end": "2026-04-14",
+            "midpoint": "2026-03-30",
+            "ndvi": 0.653,
+            "expected": "fallow",
+            "expected_crop": null,
+            "expected_season": null,
+            "observed": "uncertain",
+            "agreement": "uncertain"
+          },
+          {
+            "start": "2026-04-07",
+            "end": "2026-04-22",
+            "midpoint": "2026-04-07",
+            "ndvi": 0.609,
+            "expected": "crop",
+            "expected_crop": "cotton",
+            "expected_season": "summer",
+            "observed": "uncertain",
+            "agreement": "uncertain"
+          },
+          {
+            "start": "2026-04-15",
+            "end": "2026-04-30",
+            "midpoint": "2026-04-15",
+            "ndvi": 0.523,
+            "expected": "crop",
+            "expected_crop": "cotton",
+            "expected_season": "summer",
+            "observed": "uncertain",
+            "agreement": "uncertain"
+          },
+          {
+            "start": "2026-04-23",
+            "end": "2026-05-08",
+            "midpoint": "2026-04-23",
+            "ndvi": 0.47,
+            "expected": "crop",
+            "expected_crop": "cotton",
+            "expected_season": "summer",
+            "observed": "uncertain",
+            "agreement": "uncertain"
+          },
+          {
+            "start": "2026-05-01",
+            "end": "2026-05-16",
+            "midpoint": "2026-05-01",
+            "ndvi": 0.467,
+            "expected": "crop",
+            "expected_crop": "cotton",
+            "expected_season": "summer",
+            "observed": "uncertain",
+            "agreement": "uncertain"
+          },
+          {
+            "start": "2026-05-09",
+            "end": "2026-05-24",
+            "midpoint": "2026-05-09",
+            "ndvi": 0.452,
+            "expected": "crop",
+            "expected_crop": "cotton",
+            "expected_season": "summer",
+            "observed": "uncertain",
+            "agreement": "uncertain"
+          },
+          {
+            "start": "2026-05-17",
+            "end": "2026-06-01",
+            "midpoint": "2026-05-17",
+            "ndvi": 0.471,
+            "expected": "crop",
+            "expected_crop": "cotton",
+            "expected_season": "summer",
+            "observed": "uncertain",
+            "agreement": "uncertain"
+          },
+          {
+            "start": "2026-05-25",
+            "end": "2026-06-09",
+            "midpoint": "2026-05-25",
+            "ndvi": 0.475,
+            "expected": "crop",
+            "expected_crop": "cotton",
+            "expected_season": "summer",
+            "observed": "uncertain",
+            "agreement": "uncertain"
+          },
+          {
+            "start": "2026-06-02",
+            "end": "2026-06-17",
+            "midpoint": "2026-06-02",
+            "ndvi": 0.484,
+            "expected": "crop",
+            "expected_crop": "cotton",
+            "expected_season": "summer",
+            "observed": "uncertain",
+            "agreement": "uncertain"
+          },
+          {
+            "start": "2026-06-10",
+            "end": "2026-06-25",
+            "midpoint": "2026-06-10",
+            "ndvi": 0.507,
+            "expected": "crop",
+            "expected_crop": "cotton",
+            "expected_season": "summer",
+            "observed": "uncertain",
+            "agreement": "uncertain"
+          },
+          {
+            "start": "2026-06-18",
+            "end": "2026-07-03",
+            "midpoint": "2026-06-18",
+            "ndvi": 0.541,
+            "expected": "crop",
+            "expected_crop": "cotton",
+            "expected_season": "summer",
+            "observed": "uncertain",
+            "agreement": "uncertain"
+          },
+          {
+            "start": "2026-06-26",
+            "end": "2026-07-11",
+            "midpoint": "2026-06-26",
+            "ndvi": 0.564,
+            "expected": "crop",
+            "expected_crop": "cotton",
+            "expected_season": "summer",
+            "observed": "uncertain",
+            "agreement": "uncertain"
+          },
+          {
+            "start": "2026-07-04",
+            "end": "2026-07-19",
+            "midpoint": "2026-07-04",
+            "ndvi": 0.556,
+            "expected": "crop",
+            "expected_crop": "cotton",
+            "expected_season": "summer",
+            "observed": "uncertain",
+            "agreement": "uncertain"
+          },
+          {
+            "start": "2026-07-12",
+            "end": "2026-07-27",
+            "midpoint": "2026-07-12",
+            "ndvi": 0.595,
+            "expected": "crop",
+            "expected_crop": "cotton",
+            "expected_season": "summer",
+            "observed": "uncertain",
+            "agreement": "uncertain"
+          },
+          {
+            "start": "2026-07-20",
+            "end": "2026-08-04",
+            "midpoint": "2026-07-20",
+            "ndvi": 0.612,
+            "expected": "crop",
+            "expected_crop": "cotton",
+            "expected_season": "summer",
+            "observed": "uncertain",
+            "agreement": "uncertain"
+          },
+          {
+            "start": "2026-07-28",
+            "end": "2026-08-12",
+            "midpoint": "2026-07-28",
+            "ndvi": 0.602,
+            "expected": "crop",
+            "expected_crop": "cotton",
+            "expected_season": "summer",
+            "observed": "uncertain",
+            "agreement": "uncertain"
+          },
+          {
+            "start": "2026-08-05",
+            "end": "2026-08-20",
+            "midpoint": "2026-08-05",
+            "ndvi": 0.608,
+            "expected": "crop",
+            "expected_crop": "cotton",
+            "expected_season": "summer",
+            "observed": "uncertain",
+            "agreement": "uncertain"
+          },
+          {
+            "start": "2026-08-13",
+            "end": "2026-08-28",
+            "midpoint": "2026-08-13",
+            "ndvi": 0.616,
+            "expected": "crop",
+            "expected_crop": "cotton",
+            "expected_season": "summer",
+            "observed": "uncertain",
+            "agreement": "uncertain"
+          },
+          {
+            "start": "2026-08-21",
+            "end": "2026-09-05",
+            "midpoint": "2026-08-21",
+            "ndvi": 0.605,
+            "expected": "crop",
+            "expected_crop": "cotton",
+            "expected_season": "summer",
+            "observed": "uncertain",
+            "agreement": "uncertain"
+          },
+          {
+            "start": "2026-08-29",
+            "end": "2026-09-13",
+            "midpoint": "2026-08-29",
+            "ndvi": 0.582,
+            "expected": "crop",
+            "expected_crop": "cotton",
+            "expected_season": "summer",
+            "observed": "uncertain",
+            "agreement": "uncertain"
+          },
+          {
+            "start": "2026-09-06",
+            "end": "2026-09-21",
+            "midpoint": "2026-09-06",
+            "ndvi": 0.571,
+            "expected": "crop",
+            "expected_crop": "cotton",
+            "expected_season": "summer",
+            "observed": "uncertain",
+            "agreement": "uncertain"
+          },
+          {
+            "start": "2026-09-14",
+            "end": "2026-09-29",
+            "midpoint": "2026-09-14",
+            "ndvi": 0.551,
+            "expected": "crop",
+            "expected_crop": "cotton",
+            "expected_season": "summer",
+            "observed": "uncertain",
+            "agreement": "uncertain"
+          },
+          {
+            "start": "2026-09-22",
+            "end": "2026-10-07",
+            "midpoint": "2026-09-22",
+            "ndvi": 0.523,
+            "expected": "crop",
+            "expected_crop": "cotton",
+            "expected_season": "summer",
+            "observed": "uncertain",
+            "agreement": "uncertain"
+          },
+          {
+            "start": "2026-09-30",
+            "end": "2026-10-15",
+            "midpoint": "2026-09-30",
+            "ndvi": 0.492,
+            "expected": "crop",
+            "expected_crop": "cotton",
+            "expected_season": "summer",
+            "observed": "uncertain",
+            "agreement": "uncertain"
+          },
+          {
+            "start": "2026-10-08",
+            "end": "2026-10-23",
+            "midpoint": "2026-10-08",
+            "ndvi": 0.482,
+            "expected": "crop",
+            "expected_crop": "cotton",
+            "expected_season": "summer",
+            "observed": "uncertain",
+            "agreement": "uncertain"
+          },
+          {
+            "start": "2026-10-16",
+            "end": "2026-10-31",
+            "midpoint": "2026-10-16",
+            "ndvi": 0.504,
+            "expected": "fallow",
+            "expected_crop": null,
+            "expected_season": null,
+            "observed": "uncertain",
+            "agreement": "uncertain"
+          },
+          {
+            "start": "2026-10-24",
+            "end": "2026-11-08",
+            "midpoint": "2026-10-24",
+            "ndvi": 0.493,
+            "expected": "fallow",
+            "expected_crop": null,
+            "expected_season": null,
+            "observed": "uncertain",
+            "agreement": "uncertain"
+          }
+        ],
+        "summary": {
+          "n_composites": 47,
+          "n_ok": 0,
+          "n_check": 0,
+          "n_uncertain": 47,
+          "classification_used": false
+        },
+        "limitations": [
+          "The expected calendar comes from the demo-site preset history, not from the farmer's field records; a mismatch can be late sowing, a second crop, weeds or irrigation.",
+          "A 500 m NDVI pixel mixes many fields, so it cannot confirm what is growing on this field.",
+          "NDVI is a greenness indicator, not a measurement of soil health, crop identity or yield.",
+          "16-day composites smooth the season and blur short fallow gaps."
+        ],
+        "basis": "median of usable 500 m pixels in a ~15 km box"
+      },
+      "expected_calendar_source": "demo-site preset history + knowledge/season_windows.yaml"
+    }
+  },
+  "provenance": {
+    "built_utc": "2026-11-13T17:50:24+00:00",
+    "smaps": {
+      "product": "SPL3SMP_E",
+      "version": "006",
+      "doi": "10.5067/M20OXIZHY3RJ",
+      "source": "NASA NSIDC DAAC",
+      "variables": [
+        "soil_moisture (surface, top ~5 cm)"
+      ]
+    },
+    "ndvi": {
+      "product": "VNP13A1",
+      "version": "002",
+      "source": "NASA LP DAAC",
+      "variables": [
+        "NDVI",
+        "pixel reliability",
+        "VI quality"
+      ]
+    },
+    "labels": {
+      "smap": "observed (NASA satellite retrieval)",
+      "ndvi": "observed (NASA satellite composite)",
+      "model": "simulated (FAO-56 water balance)"
+    }
+  }
+}

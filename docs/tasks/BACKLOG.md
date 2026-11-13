@@ -15,8 +15,10 @@
 
 ## P1 - should
 
-- [ ] B11 (data-pipelines) SMAP SPL3SMP_E root/surface moisture series into the pack; compare to simulated moisture in an evidence panel ("NASA vs model", labelled indicative).
-- [ ] B12 (data-pipelines) NDVI (HLS or MOD13Q1, else AppEEARS) per site; show bare-field vs crop timeline check.
+- [x] B11 (data-pipelines) SMAP SPL3SMP_E **surface** moisture series into the pack (root zone documented as unavailable); "NASA vs model" evidence panel labelled indicative. `pipelines/smap/`, `api/app/services/nasa.py`, `web/src/features/results/NasaEvidence.tsx`.
+- [x] B12 (data-pipelines) NDVI per site from `VNP13A1` v002 (500 m, 16-day) + bare-field/crop timeline check. Product choice and limits: `docs/ndvi-source.md`.
+- [x] B21 (ai-agent) Deterministic agent orchestration over the real engine (`/agent/recommend`) with an optional LLM phrasing layer (`OPENAI_API_KEY`, never scoring).
+- [x] B22 (rag) Source-grounded assistant (`/agent/ask`, `/knowledge/search`): BM25 over `knowledge/agronomy/*.md` + knowledge YAML, extractive answers with citations, explicit refusal when the corpus does not cover the question.
 - [ ] B13 (data-pipelines) SoilGrids lookup cached into pack for demo sites; `services/soil.py` already parses it.
 - [ ] B14 (frontend) Native Arabic review pass with a speaker; fix strings in `contracts/i18n/ar.json` + `web/src/i18n/ui.ar.json`.
 - [ ] B15 (scene-3d) Lazy-load Babylon, measure FPS on a mid phone, tune tiers.

@@ -1,0 +1,3664 @@
+{
+  "meta": {
+    "id": "kafr_el_sheikh",
+    "name_en": "Kafr El-Sheikh (northern Delta)",
+    "name_ar": "كفر الشيخ (شمال الدلتا)",
+    "lat": 31.11,
+    "lon": 30.94,
+    "region": "delta",
+    "source": "nasa-packs",
+    "resolution_km": 9,
+    "period": {
+      "start": "2026-10-25",
+      "end": "2026-11-11"
+    }
+  },
+  "daily": {
+    "date": [],
+    "tmax": [],
+    "tmin": [],
+    "rh": [],
+    "u2": [],
+    "rs": [],
+    "rain": []
+  },
+  "nasa": {
+    "smap": {
+      "status": "pack",
+      "product": "SPL3SMP_E",
+      "product_title": "SMAP Enhanced L3 Radiometer Global Daily 9 km EASE-Grid Soil Moisture",
+      "version": "006",
+      "doi": "10.5067/M20OXIZHY3RJ",
+      "variable": "soil_moisture (passive radiometer retrieval)",
+      "depth": "surface, approximately the top 5 cm",
+      "depth_cm": [
+        0,
+        5
+      ],
+      "root_zone_available": false,
+      "units": "m3/m3",
+      "resolution_km": 9.0,
+      "grid": "global 9 km EASE-Grid 2.0",
+      "site_id": "kafr_el_sheikh",
+      "period": {
+        "start": "2026-10-25",
+        "end": "2026-11-11"
+      },
+      "observations": [
+        {
+          "site_id": "kafr_el_sheikh",
+          "date": "2026-10-25",
+          "overpass": "AM",
+          "time_utc": null,
+          "soil_moisture_m3m3": null,
+          "uncertainty_m3m3": null,
+          "accepted": false,
+          "reject_reasons": [
+            "no_retrieval_near_site"
+          ],
+          "quality": {
+            "retrieval_qual_flag": null,
+            "recommended": null,
+            "attempted": null,
+            "successful": null,
+            "surface_conditions": []
+          },
+          "pixel": {
+            "lat": null,
+            "lon": null,
+            "distance_km": null
+          },
+          "vegetation_opacity": null,
+          "granule": "SMAP_L3_SM_P_E_20261025_R19240_001"
+        },
+        {
+          "site_id": "kafr_el_sheikh",
+          "date": "2026-10-25",
+          "overpass": "PM",
+          "time_utc": null,
+          "soil_moisture_m3m3": null,
+          "uncertainty_m3m3": null,
+          "accepted": false,
+          "reject_reasons": [
+            "no_retrieval_near_site"
+          ],
+          "quality": {
+            "retrieval_qual_flag": null,
+            "recommended": null,
+            "attempted": null,
+            "successful": null,
+            "surface_conditions": []
+          },
+          "pixel": {
+            "lat": null,
+            "lon": null,
+            "distance_km": null
+          },
+          "vegetation_opacity": null,
+          "granule": "SMAP_L3_SM_P_E_20261025_R19240_001"
+        },
+        {
+          "site_id": "kafr_el_sheikh",
+          "date": "2026-10-26",
+          "overpass": "AM",
+          "time_utc": "np.bytes_(b'2026-10-26T04:27:13.384Z')",
+          "soil_moisture_m3m3": 0.0786,
+          "uncertainty_m3m3": null,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "retrieval_qual_flag": 8,
+            "recommended": true,
+            "attempted": true,
+            "successful": true,
+            "surface_conditions": [
+              "9_km_radiometer_frozen_ground"
+            ]
+          },
+          "pixel": {
+            "lat": 31.0893,
+            "lon": 30.9492,
+            "distance_km": 2.5
+          },
+          "vegetation_opacity": 0.1131,
+          "granule": "SMAP_L3_SM_P_E_20261026_R19240_001"
+        },
+        {
+          "site_id": "kafr_el_sheikh",
+          "date": "2026-10-26",
+          "overpass": "PM",
+          "time_utc": "np.bytes_(b'2026-10-26T15:24:42.488Z')",
+          "soil_moisture_m3m3": 0.0667,
+          "uncertainty_m3m3": null,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "retrieval_qual_flag": 8,
+            "recommended": true,
+            "attempted": true,
+            "successful": true,
+            "surface_conditions": [
+              "9_km_radiometer_frozen_ground"
+            ]
+          },
+          "pixel": {
+            "lat": 31.0893,
+            "lon": 30.9492,
+            "distance_km": 2.5
+          },
+          "vegetation_opacity": 0.1459,
+          "granule": "SMAP_L3_SM_P_E_20261026_R19240_001"
+        },
+        {
+          "site_id": "kafr_el_sheikh",
+          "date": "2026-10-27",
+          "overpass": "AM",
+          "time_utc": null,
+          "soil_moisture_m3m3": null,
+          "uncertainty_m3m3": null,
+          "accepted": false,
+          "reject_reasons": [
+            "no_retrieval_near_site"
+          ],
+          "quality": {
+            "retrieval_qual_flag": null,
+            "recommended": null,
+            "attempted": null,
+            "successful": null,
+            "surface_conditions": []
+          },
+          "pixel": {
+            "lat": null,
+            "lon": null,
+            "distance_km": null
+          },
+          "vegetation_opacity": null,
+          "granule": "SMAP_L3_SM_P_E_20261027_R19240_002"
+        },
+        {
+          "site_id": "kafr_el_sheikh",
+          "date": "2026-10-27",
+          "overpass": "PM",
+          "time_utc": null,
+          "soil_moisture_m3m3": null,
+          "uncertainty_m3m3": null,
+          "accepted": false,
+          "reject_reasons": [
+            "no_retrieval_near_site"
+          ],
+          "quality": {
+            "retrieval_qual_flag": null,
+            "recommended": null,
+            "attempted": null,
+            "successful": null,
+            "surface_conditions": []
+          },
+          "pixel": {
+            "lat": null,
+            "lon": null,
+            "distance_km": null
+          },
+          "vegetation_opacity": null,
+          "granule": "SMAP_L3_SM_P_E_20261027_R19240_002"
+        },
+        {
+          "site_id": "kafr_el_sheikh",
+          "date": "2026-10-28",
+          "overpass": "AM",
+          "time_utc": "np.bytes_(b'2026-10-28T04:02:52.103Z')",
+          "soil_moisture_m3m3": 0.0963,
+          "uncertainty_m3m3": null,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "retrieval_qual_flag": 8,
+            "recommended": true,
+            "attempted": true,
+            "successful": true,
+            "surface_conditions": [
+              "9_km_radiometer_frozen_ground"
+            ]
+          },
+          "pixel": {
+            "lat": 31.0893,
+            "lon": 30.9492,
+            "distance_km": 2.5
+          },
+          "vegetation_opacity": 0.1959,
+          "granule": "SMAP_L3_SM_P_E_20261028_R19240_002"
+        },
+        {
+          "site_id": "kafr_el_sheikh",
+          "date": "2026-10-28",
+          "overpass": "PM",
+          "time_utc": null,
+          "soil_moisture_m3m3": null,
+          "uncertainty_m3m3": null,
+          "accepted": false,
+          "reject_reasons": [
+            "no_retrieval_near_site"
+          ],
+          "quality": {
+            "retrieval_qual_flag": null,
+            "recommended": null,
+            "attempted": null,
+            "successful": null,
+            "surface_conditions": []
+          },
+          "pixel": {
+            "lat": null,
+            "lon": null,
+            "distance_km": null
+          },
+          "vegetation_opacity": null,
+          "granule": "SMAP_L3_SM_P_E_20261028_R19240_002"
+        },
+        {
+          "site_id": "kafr_el_sheikh",
+          "date": "2026-10-29",
+          "overpass": "AM",
+          "time_utc": null,
+          "soil_moisture_m3m3": null,
+          "uncertainty_m3m3": null,
+          "accepted": false,
+          "reject_reasons": [
+            "no_retrieval_near_site"
+          ],
+          "quality": {
+            "retrieval_qual_flag": null,
+            "recommended": null,
+            "attempted": null,
+            "successful": null,
+            "surface_conditions": []
+          },
+          "pixel": {
+            "lat": null,
+            "lon": null,
+            "distance_km": null
+          },
+          "vegetation_opacity": null,
+          "granule": "SMAP_L3_SM_P_E_20261029_R19240_001"
+        },
+        {
+          "site_id": "kafr_el_sheikh",
+          "date": "2026-10-29",
+          "overpass": "PM",
+          "time_utc": "np.bytes_(b'2026-10-29T15:36:46.240Z')",
+          "soil_moisture_m3m3": 0.02,
+          "uncertainty_m3m3": null,
+          "accepted": false,
+          "reject_reasons": [
+            "not_recommended_quality",
+            "retrieval_failed"
+          ],
+          "quality": {
+            "retrieval_qual_flag": 13,
+            "recommended": false,
+            "attempted": true,
+            "successful": false,
+            "surface_conditions": [
+              "9_km_radiometer_frozen_ground"
+            ]
+          },
+          "pixel": {
+            "lat": 31.0893,
+            "lon": 30.9492,
+            "distance_km": 2.5
+          },
+          "vegetation_opacity": 0.1393,
+          "granule": "SMAP_L3_SM_P_E_20261029_R19240_001"
+        },
+        {
+          "site_id": "kafr_el_sheikh",
+          "date": "2026-10-30",
+          "overpass": "AM",
+          "time_utc": null,
+          "soil_moisture_m3m3": null,
+          "uncertainty_m3m3": null,
+          "accepted": false,
+          "reject_reasons": [
+            "no_retrieval_near_site"
+          ],
+          "quality": {
+            "retrieval_qual_flag": null,
+            "recommended": null,
+            "attempted": null,
+            "successful": null,
+            "surface_conditions": []
+          },
+          "pixel": {
+            "lat": null,
+            "lon": null,
+            "distance_km": null
+          },
+          "vegetation_opacity": null,
+          "granule": "SMAP_L3_SM_P_E_20261030_R19240_001"
+        },
+        {
+          "site_id": "kafr_el_sheikh",
+          "date": "2026-10-30",
+          "overpass": "PM",
+          "time_utc": null,
+          "soil_moisture_m3m3": null,
+          "uncertainty_m3m3": null,
+          "accepted": false,
+          "reject_reasons": [
+            "no_retrieval_near_site"
+          ],
+          "quality": {
+            "retrieval_qual_flag": null,
+            "recommended": null,
+            "attempted": null,
+            "successful": null,
+            "surface_conditions": []
+          },
+          "pixel": {
+            "lat": null,
+            "lon": null,
+            "distance_km": null
+          },
+          "vegetation_opacity": null,
+          "granule": "SMAP_L3_SM_P_E_20261030_R19240_001"
+        },
+        {
+          "site_id": "kafr_el_sheikh",
+          "date": "2026-10-31",
+          "overpass": "AM",
+          "time_utc": "np.bytes_(b'2026-10-31T04:14:57.178Z')",
+          "soil_moisture_m3m3": 0.0777,
+          "uncertainty_m3m3": null,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "retrieval_qual_flag": 8,
+            "recommended": true,
+            "attempted": true,
+            "successful": true,
+            "surface_conditions": [
+              "9_km_radiometer_frozen_ground"
+            ]
+          },
+          "pixel": {
+            "lat": 31.0893,
+            "lon": 30.9492,
+            "distance_km": 2.5
+          },
+          "vegetation_opacity": 0.0497,
+          "granule": "SMAP_L3_SM_P_E_20261031_R19240_002"
+        },
+        {
+          "site_id": "kafr_el_sheikh",
+          "date": "2026-10-31",
+          "overpass": "PM",
+          "time_utc": null,
+          "soil_moisture_m3m3": null,
+          "uncertainty_m3m3": null,
+          "accepted": false,
+          "reject_reasons": [
+            "no_retrieval_near_site"
+          ],
+          "quality": {
+            "retrieval_qual_flag": null,
+            "recommended": null,
+            "attempted": null,
+            "successful": null,
+            "surface_conditions": []
+          },
+          "pixel": {
+            "lat": null,
+            "lon": null,
+            "distance_km": null
+          },
+          "vegetation_opacity": null,
+          "granule": "SMAP_L3_SM_P_E_20261031_R19240_002"
+        },
+        {
+          "site_id": "kafr_el_sheikh",
+          "date": "2026-11-01",
+          "overpass": "AM",
+          "time_utc": null,
+          "soil_moisture_m3m3": null,
+          "uncertainty_m3m3": null,
+          "accepted": false,
+          "reject_reasons": [
+            "no_retrieval_near_site"
+          ],
+          "quality": {
+            "retrieval_qual_flag": null,
+            "recommended": null,
+            "attempted": null,
+            "successful": null,
+            "surface_conditions": []
+          },
+          "pixel": {
+            "lat": null,
+            "lon": null,
+            "distance_km": null
+          },
+          "vegetation_opacity": null,
+          "granule": "SMAP_L3_SM_P_E_20261101_R19240_001"
+        },
+        {
+          "site_id": "kafr_el_sheikh",
+          "date": "2026-11-01",
+          "overpass": "PM",
+          "time_utc": "np.bytes_(b'2026-11-01T15:48:52.048Z')",
+          "soil_moisture_m3m3": 0.0351,
+          "uncertainty_m3m3": null,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "retrieval_qual_flag": 8,
+            "recommended": true,
+            "attempted": true,
+            "successful": true,
+            "surface_conditions": [
+              "9_km_radiometer_frozen_ground"
+            ]
+          },
+          "pixel": {
+            "lat": 31.0893,
+            "lon": 30.9492,
+            "distance_km": 2.5
+          },
+          "vegetation_opacity": 0.1087,
+          "granule": "SMAP_L3_SM_P_E_20261101_R19240_001"
+        },
+        {
+          "site_id": "kafr_el_sheikh",
+          "date": "2026-11-02",
+          "overpass": "AM",
+          "time_utc": null,
+          "soil_moisture_m3m3": null,
+          "uncertainty_m3m3": null,
+          "accepted": false,
+          "reject_reasons": [
+            "no_retrieval_near_site"
+          ],
+          "quality": {
+            "retrieval_qual_flag": null,
+            "recommended": null,
+            "attempted": null,
+            "successful": null,
+            "surface_conditions": []
+          },
+          "pixel": {
+            "lat": null,
+            "lon": null,
+            "distance_km": null
+          },
+          "vegetation_opacity": null,
+          "granule": "SMAP_L3_SM_P_E_20261102_R19240_001"
+        },
+        {
+          "site_id": "kafr_el_sheikh",
+          "date": "2026-11-02",
+          "overpass": "PM",
+          "time_utc": null,
+          "soil_moisture_m3m3": null,
+          "uncertainty_m3m3": null,
+          "accepted": false,
+          "reject_reasons": [
+            "no_retrieval_near_site"
+          ],
+          "quality": {
+            "retrieval_qual_flag": null,
+            "recommended": null,
+            "attempted": null,
+            "successful": null,
+            "surface_conditions": []
+          },
+          "pixel": {
+            "lat": null,
+            "lon": null,
+            "distance_km": null
+          },
+          "vegetation_opacity": null,
+          "granule": "SMAP_L3_SM_P_E_20261102_R19240_001"
+        },
+        {
+          "site_id": "kafr_el_sheikh",
+          "date": "2026-11-03",
+          "overpass": "AM",
+          "time_utc": "np.bytes_(b'2026-11-03T04:27:00.681Z')",
+          "soil_moisture_m3m3": 0.1093,
+          "uncertainty_m3m3": null,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "retrieval_qual_flag": 8,
+            "recommended": true,
+            "attempted": true,
+            "successful": true,
+            "surface_conditions": [
+              "9_km_radiometer_frozen_ground"
+            ]
+          },
+          "pixel": {
+            "lat": 31.0893,
+            "lon": 30.9492,
+            "distance_km": 2.5
+          },
+          "vegetation_opacity": 0.1974,
+          "granule": "SMAP_L3_SM_P_E_20261103_R19240_001"
+        },
+        {
+          "site_id": "kafr_el_sheikh",
+          "date": "2026-11-03",
+          "overpass": "PM",
+          "time_utc": "np.bytes_(b'2026-11-03T15:24:29.682Z')",
+          "soil_moisture_m3m3": 0.0614,
+          "uncertainty_m3m3": null,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "retrieval_qual_flag": 8,
+            "recommended": true,
+            "attempted": true,
+            "successful": true,
+            "surface_conditions": [
+              "9_km_radiometer_frozen_ground"
+            ]
+          },
+          "pixel": {
+            "lat": 31.0893,
+            "lon": 30.9492,
+            "distance_km": 2.5
+          },
+          "vegetation_opacity": 0.1633,
+          "granule": "SMAP_L3_SM_P_E_20261103_R19240_001"
+        },
+        {
+          "site_id": "kafr_el_sheikh",
+          "date": "2026-11-04",
+          "overpass": "AM",
+          "time_utc": null,
+          "soil_moisture_m3m3": null,
+          "uncertainty_m3m3": null,
+          "accepted": false,
+          "reject_reasons": [
+            "no_retrieval_near_site"
+          ],
+          "quality": {
+            "retrieval_qual_flag": null,
+            "recommended": null,
+            "attempted": null,
+            "successful": null,
+            "surface_conditions": []
+          },
+          "pixel": {
+            "lat": null,
+            "lon": null,
+            "distance_km": null
+          },
+          "vegetation_opacity": null,
+          "granule": "SMAP_L3_SM_P_E_20261104_R19240_001"
+        },
+        {
+          "site_id": "kafr_el_sheikh",
+          "date": "2026-11-04",
+          "overpass": "PM",
+          "time_utc": null,
+          "soil_moisture_m3m3": null,
+          "uncertainty_m3m3": null,
+          "accepted": false,
+          "reject_reasons": [
+            "no_retrieval_near_site"
+          ],
+          "quality": {
+            "retrieval_qual_flag": null,
+            "recommended": null,
+            "attempted": null,
+            "successful": null,
+            "surface_conditions": []
+          },
+          "pixel": {
+            "lat": null,
+            "lon": null,
+            "distance_km": null
+          },
+          "vegetation_opacity": null,
+          "granule": "SMAP_L3_SM_P_E_20261104_R19240_001"
+        },
+        {
+          "site_id": "kafr_el_sheikh",
+          "date": "2026-11-05",
+          "overpass": "AM",
+          "time_utc": "np.bytes_(b'2026-11-05T04:02:38.924Z')",
+          "soil_moisture_m3m3": 0.0851,
+          "uncertainty_m3m3": null,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "retrieval_qual_flag": 8,
+            "recommended": true,
+            "attempted": true,
+            "successful": true,
+            "surface_conditions": [
+              "9_km_radiometer_frozen_ground"
+            ]
+          },
+          "pixel": {
+            "lat": 31.0893,
+            "lon": 30.9492,
+            "distance_km": 2.5
+          },
+          "vegetation_opacity": 0.1737,
+          "granule": "SMAP_L3_SM_P_E_20261105_R19240_001"
+        },
+        {
+          "site_id": "kafr_el_sheikh",
+          "date": "2026-11-05",
+          "overpass": "PM",
+          "time_utc": null,
+          "soil_moisture_m3m3": null,
+          "uncertainty_m3m3": null,
+          "accepted": false,
+          "reject_reasons": [
+            "no_retrieval_near_site"
+          ],
+          "quality": {
+            "retrieval_qual_flag": null,
+            "recommended": null,
+            "attempted": null,
+            "successful": null,
+            "surface_conditions": []
+          },
+          "pixel": {
+            "lat": null,
+            "lon": null,
+            "distance_km": null
+          },
+          "vegetation_opacity": null,
+          "granule": "SMAP_L3_SM_P_E_20261105_R19240_001"
+        },
+        {
+          "site_id": "kafr_el_sheikh",
+          "date": "2026-11-06",
+          "overpass": "AM",
+          "time_utc": null,
+          "soil_moisture_m3m3": null,
+          "uncertainty_m3m3": null,
+          "accepted": false,
+          "reject_reasons": [
+            "no_retrieval_near_site"
+          ],
+          "quality": {
+            "retrieval_qual_flag": null,
+            "recommended": null,
+            "attempted": null,
+            "successful": null,
+            "surface_conditions": []
+          },
+          "pixel": {
+            "lat": null,
+            "lon": null,
+            "distance_km": null
+          },
+          "vegetation_opacity": null,
+          "granule": "SMAP_L3_SM_P_E_20261106_R19240_001"
+        },
+        {
+          "site_id": "kafr_el_sheikh",
+          "date": "2026-11-06",
+          "overpass": "PM",
+          "time_utc": "np.bytes_(b'2026-11-06T15:36:32.665Z')",
+          "soil_moisture_m3m3": 0.0207,
+          "uncertainty_m3m3": null,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "retrieval_qual_flag": 8,
+            "recommended": true,
+            "attempted": true,
+            "successful": true,
+            "surface_conditions": [
+              "9_km_radiometer_frozen_ground"
+            ]
+          },
+          "pixel": {
+            "lat": 31.0893,
+            "lon": 30.9492,
+            "distance_km": 2.5
+          },
+          "vegetation_opacity": 0.0103,
+          "granule": "SMAP_L3_SM_P_E_20261106_R19240_001"
+        },
+        {
+          "site_id": "kafr_el_sheikh",
+          "date": "2026-11-07",
+          "overpass": "AM",
+          "time_utc": null,
+          "soil_moisture_m3m3": null,
+          "uncertainty_m3m3": null,
+          "accepted": false,
+          "reject_reasons": [
+            "no_retrieval_near_site"
+          ],
+          "quality": {
+            "retrieval_qual_flag": null,
+            "recommended": null,
+            "attempted": null,
+            "successful": null,
+            "surface_conditions": []
+          },
+          "pixel": {
+            "lat": null,
+            "lon": null,
+            "distance_km": null
+          },
+          "vegetation_opacity": null,
+          "granule": "SMAP_L3_SM_P_E_20261107_R19240_001"
+        },
+        {
+          "site_id": "kafr_el_sheikh",
+          "date": "2026-11-07",
+          "overpass": "PM",
+          "time_utc": null,
+          "soil_moisture_m3m3": null,
+          "uncertainty_m3m3": null,
+          "accepted": false,
+          "reject_reasons": [
+            "no_retrieval_near_site"
+          ],
+          "quality": {
+            "retrieval_qual_flag": null,
+            "recommended": null,
+            "attempted": null,
+            "successful": null,
+            "surface_conditions": []
+          },
+          "pixel": {
+            "lat": null,
+            "lon": null,
+            "distance_km": null
+          },
+          "vegetation_opacity": null,
+          "granule": "SMAP_L3_SM_P_E_20261107_R19240_001"
+        },
+        {
+          "site_id": "kafr_el_sheikh",
+          "date": "2026-11-08",
+          "overpass": "AM",
+          "time_utc": "np.bytes_(b'2026-11-08T04:14:42.987Z')",
+          "soil_moisture_m3m3": 0.084,
+          "uncertainty_m3m3": null,
+          "accepted": false,
+          "reject_reasons": [
+            "not_recommended_quality",
+            "retrieval_failed"
+          ],
+          "quality": {
+            "retrieval_qual_flag": 13,
+            "recommended": false,
+            "attempted": true,
+            "successful": false,
+            "surface_conditions": [
+              "9_km_radiometer_frozen_ground"
+            ]
+          },
+          "pixel": {
+            "lat": 31.0893,
+            "lon": 30.9492,
+            "distance_km": 2.5
+          },
+          "vegetation_opacity": 0.0,
+          "granule": "SMAP_L3_SM_P_E_20261108_R19240_001"
+        },
+        {
+          "site_id": "kafr_el_sheikh",
+          "date": "2026-11-08",
+          "overpass": "PM",
+          "time_utc": null,
+          "soil_moisture_m3m3": null,
+          "uncertainty_m3m3": null,
+          "accepted": false,
+          "reject_reasons": [
+            "no_retrieval_near_site"
+          ],
+          "quality": {
+            "retrieval_qual_flag": null,
+            "recommended": null,
+            "attempted": null,
+            "successful": null,
+            "surface_conditions": []
+          },
+          "pixel": {
+            "lat": null,
+            "lon": null,
+            "distance_km": null
+          },
+          "vegetation_opacity": null,
+          "granule": "SMAP_L3_SM_P_E_20261108_R19240_001"
+        },
+        {
+          "site_id": "kafr_el_sheikh",
+          "date": "2026-11-09",
+          "overpass": "AM",
+          "time_utc": null,
+          "soil_moisture_m3m3": null,
+          "uncertainty_m3m3": null,
+          "accepted": false,
+          "reject_reasons": [
+            "no_retrieval_near_site"
+          ],
+          "quality": {
+            "retrieval_qual_flag": null,
+            "recommended": null,
+            "attempted": null,
+            "successful": null,
+            "surface_conditions": []
+          },
+          "pixel": {
+            "lat": null,
+            "lon": null,
+            "distance_km": null
+          },
+          "vegetation_opacity": null,
+          "granule": "SMAP_L3_SM_P_E_20261109_R19240_001"
+        },
+        {
+          "site_id": "kafr_el_sheikh",
+          "date": "2026-11-09",
+          "overpass": "PM",
+          "time_utc": "np.bytes_(b'2026-11-09T15:48:36.221Z')",
+          "soil_moisture_m3m3": 0.0271,
+          "uncertainty_m3m3": null,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "retrieval_qual_flag": 8,
+            "recommended": true,
+            "attempted": true,
+            "successful": true,
+            "surface_conditions": [
+              "9_km_radiometer_frozen_ground"
+            ]
+          },
+          "pixel": {
+            "lat": 31.0893,
+            "lon": 30.9492,
+            "distance_km": 2.5
+          },
+          "vegetation_opacity": 0.2021,
+          "granule": "SMAP_L3_SM_P_E_20261109_R19240_001"
+        },
+        {
+          "site_id": "kafr_el_sheikh",
+          "date": "2026-11-10",
+          "overpass": "AM",
+          "time_utc": null,
+          "soil_moisture_m3m3": null,
+          "uncertainty_m3m3": null,
+          "accepted": false,
+          "reject_reasons": [
+            "no_retrieval_near_site"
+          ],
+          "quality": {
+            "retrieval_qual_flag": null,
+            "recommended": null,
+            "attempted": null,
+            "successful": null,
+            "surface_conditions": []
+          },
+          "pixel": {
+            "lat": null,
+            "lon": null,
+            "distance_km": null
+          },
+          "vegetation_opacity": null,
+          "granule": "SMAP_L3_SM_P_E_20261110_R19240_001"
+        },
+        {
+          "site_id": "kafr_el_sheikh",
+          "date": "2026-11-10",
+          "overpass": "PM",
+          "time_utc": null,
+          "soil_moisture_m3m3": null,
+          "uncertainty_m3m3": null,
+          "accepted": false,
+          "reject_reasons": [
+            "no_retrieval_near_site"
+          ],
+          "quality": {
+            "retrieval_qual_flag": null,
+            "recommended": null,
+            "attempted": null,
+            "successful": null,
+            "surface_conditions": []
+          },
+          "pixel": {
+            "lat": null,
+            "lon": null,
+            "distance_km": null
+          },
+          "vegetation_opacity": null,
+          "granule": "SMAP_L3_SM_P_E_20261110_R19240_001"
+        },
+        {
+          "site_id": "kafr_el_sheikh",
+          "date": "2026-11-11",
+          "overpass": "AM",
+          "time_utc": "np.bytes_(b'2026-11-11T04:26:45.369Z')",
+          "soil_moisture_m3m3": 0.0617,
+          "uncertainty_m3m3": null,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "retrieval_qual_flag": 8,
+            "recommended": true,
+            "attempted": true,
+            "successful": true,
+            "surface_conditions": [
+              "9_km_radiometer_frozen_ground"
+            ]
+          },
+          "pixel": {
+            "lat": 31.0893,
+            "lon": 30.9492,
+            "distance_km": 2.5
+          },
+          "vegetation_opacity": 0.0607,
+          "granule": "SMAP_L3_SM_P_E_20261111_R19240_001.h5"
+        },
+        {
+          "site_id": "kafr_el_sheikh",
+          "date": "2026-11-11",
+          "overpass": "PM",
+          "time_utc": "np.bytes_(b'2026-11-11T15:24:14.202Z')",
+          "soil_moisture_m3m3": 0.0539,
+          "uncertainty_m3m3": null,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "retrieval_qual_flag": 8,
+            "recommended": true,
+            "attempted": true,
+            "successful": true,
+            "surface_conditions": [
+              "9_km_radiometer_frozen_ground"
+            ]
+          },
+          "pixel": {
+            "lat": 31.0893,
+            "lon": 30.9492,
+            "distance_km": 2.5
+          },
+          "vegetation_opacity": 0.1824,
+          "granule": "SMAP_L3_SM_P_E_20261111_R19240_001.h5"
+        }
+      ],
+      "daily": [
+        {
+          "date": "2026-10-26",
+          "soil_moisture_m3m3": 0.0726,
+          "n_overpasses": 2,
+          "overpasses": [
+            "AM",
+            "PM"
+          ],
+          "uncertainty_m3m3": null
+        },
+        {
+          "date": "2026-10-28",
+          "soil_moisture_m3m3": 0.0963,
+          "n_overpasses": 1,
+          "overpasses": [
+            "AM"
+          ],
+          "uncertainty_m3m3": null
+        },
+        {
+          "date": "2026-10-31",
+          "soil_moisture_m3m3": 0.0777,
+          "n_overpasses": 1,
+          "overpasses": [
+            "AM"
+          ],
+          "uncertainty_m3m3": null
+        },
+        {
+          "date": "2026-11-01",
+          "soil_moisture_m3m3": 0.0351,
+          "n_overpasses": 1,
+          "overpasses": [
+            "PM"
+          ],
+          "uncertainty_m3m3": null
+        },
+        {
+          "date": "2026-11-03",
+          "soil_moisture_m3m3": 0.0853,
+          "n_overpasses": 2,
+          "overpasses": [
+            "AM",
+            "PM"
+          ],
+          "uncertainty_m3m3": null
+        },
+        {
+          "date": "2026-11-05",
+          "soil_moisture_m3m3": 0.0851,
+          "n_overpasses": 1,
+          "overpasses": [
+            "AM"
+          ],
+          "uncertainty_m3m3": null
+        },
+        {
+          "date": "2026-11-06",
+          "soil_moisture_m3m3": 0.0207,
+          "n_overpasses": 1,
+          "overpasses": [
+            "PM"
+          ],
+          "uncertainty_m3m3": null
+        },
+        {
+          "date": "2026-11-09",
+          "soil_moisture_m3m3": 0.0271,
+          "n_overpasses": 1,
+          "overpasses": [
+            "PM"
+          ],
+          "uncertainty_m3m3": null
+        },
+        {
+          "date": "2026-11-11",
+          "soil_moisture_m3m3": 0.0578,
+          "n_overpasses": 2,
+          "overpasses": [
+            "AM",
+            "PM"
+          ],
+          "uncertainty_m3m3": null
+        }
+      ],
+      "summary": {
+        "n_observations": 36,
+        "n_accepted": 12,
+        "n_days_with_data": 9,
+        "mean_m3m3": 0.062,
+        "min_m3m3": 0.0207,
+        "max_m3m3": 0.0963
+      },
+      "notes": [
+        "SMAP L3 enhanced measures SURFACE soil moisture (top ~5 cm) only; it contains no root-zone soil moisture. Root-zone values would require a model-derived Level 4 product.",
+        "Each 9 km cell mixes many fields, roads, channels and urban patches: treat every value as a regional indication, not a field measurement.",
+        "Only retrievals flagged recommended quality (retrieval_qual_flag 0 or 8) and located on land are accepted; rejected observations are kept with their reason codes."
+      ]
+    },
+    "ndvi": {
+      "status": "pack",
+      "product": "VNP13A1",
+      "product_title": "VIIRS/NPP Vegetation Indices 16-Day L3 Global 500 m SIN Grid",
+      "version": "002",
+      "short_name": "VNP13A1",
+      "variable": "NDVI (normalized difference vegetation index)",
+      "resolution_km": 0.5,
+      "grid": "sinusoidal (SIN) grid, 500 m",
+      "compositing_period_days": 16,
+      "scale_factor": 0.0001,
+      "units": "NDVI (dimensionless, -1..1)",
+      "site_id": "kafr_el_sheikh",
+      "period": {
+        "start": "2025-10-24",
+        "end": "2026-11-08"
+      },
+      "observations": [
+        {
+          "site_id": "kafr_el_sheikh",
+          "start": "2025-10-24",
+          "end": "2025-11-08",
+          "midpoint": "2025-10-31",
+          "ndvi": 0.149,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "pixel_reliability": 2,
+            "pixel_reliability_meaning": "acceptable",
+            "modland_qa": 0,
+            "vi_usefulness": 1
+          },
+          "composite_doy": 304,
+          "pixel": {
+            "lat": 31.1083,
+            "lon": 30.9413,
+            "distance_km": 0.22
+          },
+          "granule": "VNP13A1.A2025297.h20v05.002.2025319030928",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.438,
+            "p25_ndvi": 0.352,
+            "p75_ndvi": 0.517,
+            "n_pixels": 1089,
+            "vegetated_fraction": 0.87,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "kafr_el_sheikh",
+          "start": "2025-11-01",
+          "end": "2025-11-16",
+          "midpoint": "2025-11-11",
+          "ndvi": 0.192,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "pixel_reliability": 1,
+            "pixel_reliability_meaning": "good",
+            "modland_qa": 0,
+            "vi_usefulness": 0
+          },
+          "composite_doy": 315,
+          "pixel": {
+            "lat": 31.1083,
+            "lon": 30.9413,
+            "distance_km": 0.22
+          },
+          "granule": "VNP13A1.A2025305.h20v05.002.2025322113022",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.515,
+            "p25_ndvi": 0.416,
+            "p75_ndvi": 0.584,
+            "n_pixels": 1043,
+            "vegetated_fraction": 0.9,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "kafr_el_sheikh",
+          "start": "2025-11-09",
+          "end": "2025-11-24",
+          "midpoint": "2025-11-17",
+          "ndvi": 0.17,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "pixel_reliability": 0,
+            "pixel_reliability_meaning": "excellent",
+            "modland_qa": 0,
+            "vi_usefulness": 0
+          },
+          "composite_doy": 321,
+          "pixel": {
+            "lat": 31.1083,
+            "lon": 30.9413,
+            "distance_km": 0.22
+          },
+          "granule": "VNP13A1.A2025313.h20v05.002.2025329135211",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.547,
+            "p25_ndvi": 0.447,
+            "p75_ndvi": 0.619,
+            "n_pixels": 1079,
+            "vegetated_fraction": 0.91,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "kafr_el_sheikh",
+          "start": "2025-11-17",
+          "end": "2025-12-02",
+          "midpoint": "2025-11-17",
+          "ndvi": 0.17,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "pixel_reliability": 0,
+            "pixel_reliability_meaning": "excellent",
+            "modland_qa": 0,
+            "vi_usefulness": 0
+          },
+          "composite_doy": 321,
+          "pixel": {
+            "lat": 31.1083,
+            "lon": 30.9413,
+            "distance_km": 0.22
+          },
+          "granule": "VNP13A1.A2025321.h20v05.002.2025339085247",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.592,
+            "p25_ndvi": 0.491,
+            "p75_ndvi": 0.662,
+            "n_pixels": 1083,
+            "vegetated_fraction": 0.93,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "kafr_el_sheikh",
+          "start": "2025-11-25",
+          "end": "2025-12-10",
+          "midpoint": "2025-11-27",
+          "ndvi": 0.149,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "pixel_reliability": 1,
+            "pixel_reliability_meaning": "good",
+            "modland_qa": 0,
+            "vi_usefulness": 0
+          },
+          "composite_doy": 331,
+          "pixel": {
+            "lat": 31.1083,
+            "lon": 30.9413,
+            "distance_km": 0.22
+          },
+          "granule": "VNP13A1.A2025329.h20v05.002.2025350010437",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.653,
+            "p25_ndvi": 0.555,
+            "p75_ndvi": 0.712,
+            "n_pixels": 1081,
+            "vegetated_fraction": 0.94,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "kafr_el_sheikh",
+          "start": "2025-12-03",
+          "end": "2025-12-18",
+          "midpoint": "2025-12-04",
+          "ndvi": 0.201,
+          "accepted": false,
+          "reject_reasons": [
+            "pixel_reliability_marginal",
+            "modland_qa_not_good"
+          ],
+          "quality": {
+            "pixel_reliability": 3,
+            "pixel_reliability_meaning": "marginal",
+            "modland_qa": 1,
+            "vi_usefulness": 1
+          },
+          "composite_doy": 338,
+          "pixel": {
+            "lat": 31.1083,
+            "lon": 30.9413,
+            "distance_km": 0.22
+          },
+          "granule": "VNP13A1.A2025337.h20v05.002.2025356074112",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.645,
+            "p25_ndvi": 0.532,
+            "p75_ndvi": 0.712,
+            "n_pixels": 1006,
+            "vegetated_fraction": 0.93,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "kafr_el_sheikh",
+          "start": "2025-12-11",
+          "end": "2025-12-26",
+          "midpoint": "2025-12-20",
+          "ndvi": 0.185,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "pixel_reliability": 1,
+            "pixel_reliability_meaning": "good",
+            "modland_qa": 0,
+            "vi_usefulness": 0
+          },
+          "composite_doy": 354,
+          "pixel": {
+            "lat": 31.1083,
+            "lon": 30.9413,
+            "distance_km": 0.22
+          },
+          "granule": "VNP13A1.A2025345.h20v05.002.2025361170229",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.744,
+            "p25_ndvi": 0.636,
+            "p75_ndvi": 0.794,
+            "n_pixels": 1067,
+            "vegetated_fraction": 0.95,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "kafr_el_sheikh",
+          "start": "2025-12-19",
+          "end": "2026-01-03",
+          "midpoint": "2025-12-20",
+          "ndvi": 0.185,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "pixel_reliability": 1,
+            "pixel_reliability_meaning": "good",
+            "modland_qa": 0,
+            "vi_usefulness": 0
+          },
+          "composite_doy": 354,
+          "pixel": {
+            "lat": 31.1083,
+            "lon": 30.9413,
+            "distance_km": 0.22
+          },
+          "granule": "VNP13A1.A2025353.h20v05.002.2026004134059",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.749,
+            "p25_ndvi": 0.636,
+            "p75_ndvi": 0.798,
+            "n_pixels": 1079,
+            "vegetated_fraction": 0.95,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "kafr_el_sheikh",
+          "start": "2025-12-27",
+          "end": "2026-01-11",
+          "midpoint": "2026-01-05",
+          "ndvi": 0.183,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "pixel_reliability": 1,
+            "pixel_reliability_meaning": "good",
+            "modland_qa": 0,
+            "vi_usefulness": 0
+          },
+          "composite_doy": 5,
+          "pixel": {
+            "lat": 31.1083,
+            "lon": 30.9413,
+            "distance_km": 0.22
+          },
+          "granule": "VNP13A1.A2025361.h20v05.002.2026015084231",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.79,
+            "p25_ndvi": 0.683,
+            "p75_ndvi": 0.832,
+            "n_pixels": 1080,
+            "vegetated_fraction": 0.95,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "kafr_el_sheikh",
+          "start": "2026-01-01",
+          "end": "2026-01-16",
+          "midpoint": "2026-01-05",
+          "ndvi": 0.183,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "pixel_reliability": 1,
+            "pixel_reliability_meaning": "good",
+            "modland_qa": 0,
+            "vi_usefulness": 0
+          },
+          "composite_doy": 5,
+          "pixel": {
+            "lat": 31.1083,
+            "lon": 30.9413,
+            "distance_km": 0.22
+          },
+          "granule": "VNP13A1.A2026001.h20v05.002.2026017111907",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.788,
+            "p25_ndvi": 0.679,
+            "p75_ndvi": 0.831,
+            "n_pixels": 1063,
+            "vegetated_fraction": 0.95,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "kafr_el_sheikh",
+          "start": "2026-01-09",
+          "end": "2026-01-24",
+          "midpoint": "2026-01-24",
+          "ndvi": 0.165,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "pixel_reliability": 2,
+            "pixel_reliability_meaning": "acceptable",
+            "modland_qa": 0,
+            "vi_usefulness": 1
+          },
+          "composite_doy": 24,
+          "pixel": {
+            "lat": 31.1083,
+            "lon": 30.9413,
+            "distance_km": 0.22
+          },
+          "granule": "VNP13A1.A2026009.h20v05.002.2026025115537",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.771,
+            "p25_ndvi": 0.656,
+            "p75_ndvi": 0.821,
+            "n_pixels": 1019,
+            "vegetated_fraction": 0.94,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "kafr_el_sheikh",
+          "start": "2026-01-17",
+          "end": "2026-02-01",
+          "midpoint": "2026-01-24",
+          "ndvi": 0.165,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "pixel_reliability": 2,
+            "pixel_reliability_meaning": "acceptable",
+            "modland_qa": 0,
+            "vi_usefulness": 1
+          },
+          "composite_doy": 24,
+          "pixel": {
+            "lat": 31.1083,
+            "lon": 30.9413,
+            "distance_km": 0.22
+          },
+          "granule": "VNP13A1.A2026017.h20v05.002.2026034235120",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.736,
+            "p25_ndvi": 0.626,
+            "p75_ndvi": 0.792,
+            "n_pixels": 1011,
+            "vegetated_fraction": 0.94,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "kafr_el_sheikh",
+          "start": "2026-01-25",
+          "end": "2026-02-09",
+          "midpoint": "2026-01-29",
+          "ndvi": 0.164,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "pixel_reliability": 2,
+            "pixel_reliability_meaning": "acceptable",
+            "modland_qa": 0,
+            "vi_usefulness": 1
+          },
+          "composite_doy": 29,
+          "pixel": {
+            "lat": 31.1083,
+            "lon": 30.9413,
+            "distance_km": 0.22
+          },
+          "granule": "VNP13A1.A2026025.h20v05.002.2026041114948",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.737,
+            "p25_ndvi": 0.623,
+            "p75_ndvi": 0.793,
+            "n_pixels": 1008,
+            "vegetated_fraction": 0.94,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "kafr_el_sheikh",
+          "start": "2026-02-02",
+          "end": "2026-02-17",
+          "midpoint": "2026-02-16",
+          "ndvi": 0.166,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "pixel_reliability": 0,
+            "pixel_reliability_meaning": "excellent",
+            "modland_qa": 0,
+            "vi_usefulness": 0
+          },
+          "composite_doy": 47,
+          "pixel": {
+            "lat": 31.1083,
+            "lon": 30.9413,
+            "distance_km": 0.22
+          },
+          "granule": "VNP13A1.A2026033.h20v05.002.2026049115537",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.74,
+            "p25_ndvi": 0.655,
+            "p75_ndvi": 0.787,
+            "n_pixels": 1043,
+            "vegetated_fraction": 0.96,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "kafr_el_sheikh",
+          "start": "2026-02-10",
+          "end": "2026-02-25",
+          "midpoint": "2026-02-16",
+          "ndvi": 0.166,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "pixel_reliability": 0,
+            "pixel_reliability_meaning": "excellent",
+            "modland_qa": 0,
+            "vi_usefulness": 0
+          },
+          "composite_doy": 47,
+          "pixel": {
+            "lat": 31.1083,
+            "lon": 30.9413,
+            "distance_km": 0.22
+          },
+          "granule": "VNP13A1.A2026041.h20v05.002.2026057095357",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.767,
+            "p25_ndvi": 0.693,
+            "p75_ndvi": 0.808,
+            "n_pixels": 1089,
+            "vegetated_fraction": 0.96,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "kafr_el_sheikh",
+          "start": "2026-02-18",
+          "end": "2026-03-05",
+          "midpoint": "2026-02-21",
+          "ndvi": 0.161,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "pixel_reliability": 0,
+            "pixel_reliability_meaning": "excellent",
+            "modland_qa": 0,
+            "vi_usefulness": 0
+          },
+          "composite_doy": 52,
+          "pixel": {
+            "lat": 31.1083,
+            "lon": 30.9413,
+            "distance_km": 0.22
+          },
+          "granule": "VNP13A1.A2026049.h20v05.002.2026065120042",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.768,
+            "p25_ndvi": 0.67,
+            "p75_ndvi": 0.81,
+            "n_pixels": 1089,
+            "vegetated_fraction": 0.94,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "kafr_el_sheikh",
+          "start": "2026-02-26",
+          "end": "2026-03-13",
+          "midpoint": "2026-02-26",
+          "ndvi": 0.21,
+          "accepted": false,
+          "reject_reasons": [
+            "pixel_reliability_marginal",
+            "modland_qa_not_good"
+          ],
+          "quality": {
+            "pixel_reliability": 3,
+            "pixel_reliability_meaning": "marginal",
+            "modland_qa": 1,
+            "vi_usefulness": 1
+          },
+          "composite_doy": 57,
+          "pixel": {
+            "lat": 31.1083,
+            "lon": 30.9413,
+            "distance_km": 0.22
+          },
+          "granule": "VNP13A1.A2026057.h20v05.002.2026077164633",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.767,
+            "p25_ndvi": 0.651,
+            "p75_ndvi": 0.808,
+            "n_pixels": 438,
+            "vegetated_fraction": 0.94,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "kafr_el_sheikh",
+          "start": "2026-03-06",
+          "end": "2026-03-21",
+          "midpoint": "2026-03-17",
+          "ndvi": 0.224,
+          "accepted": false,
+          "reject_reasons": [
+            "pixel_reliability_questionable",
+            "modland_qa_not_good"
+          ],
+          "quality": {
+            "pixel_reliability": 5,
+            "pixel_reliability_meaning": "questionable",
+            "modland_qa": 1,
+            "vi_usefulness": 2
+          },
+          "composite_doy": 76,
+          "pixel": {
+            "lat": 31.1083,
+            "lon": 30.9413,
+            "distance_km": 0.22
+          },
+          "granule": "VNP13A1.A2026065.h20v05.002.2026085150044",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.697,
+            "p25_ndvi": 0.614,
+            "p75_ndvi": 0.764,
+            "n_pixels": 738,
+            "vegetated_fraction": 0.96,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "kafr_el_sheikh",
+          "start": "2026-03-14",
+          "end": "2026-03-29",
+          "midpoint": "2026-03-28",
+          "ndvi": 0.194,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "pixel_reliability": 2,
+            "pixel_reliability_meaning": "acceptable",
+            "modland_qa": 0,
+            "vi_usefulness": 1
+          },
+          "composite_doy": 87,
+          "pixel": {
+            "lat": 31.1083,
+            "lon": 30.9413,
+            "distance_km": 0.22
+          },
+          "granule": "VNP13A1.A2026073.h20v05.002.2026090133202",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.689,
+            "p25_ndvi": 0.592,
+            "p75_ndvi": 0.757,
+            "n_pixels": 745,
+            "vegetated_fraction": 0.96,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "kafr_el_sheikh",
+          "start": "2026-03-22",
+          "end": "2026-04-06",
+          "midpoint": "2026-03-28",
+          "ndvi": 0.194,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "pixel_reliability": 2,
+            "pixel_reliability_meaning": "acceptable",
+            "modland_qa": 0,
+            "vi_usefulness": 1
+          },
+          "composite_doy": 87,
+          "pixel": {
+            "lat": 31.1083,
+            "lon": 30.9413,
+            "distance_km": 0.22
+          },
+          "granule": "VNP13A1.A2026081.h20v05.002.2026097095005",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.564,
+            "p25_ndvi": 0.498,
+            "p75_ndvi": 0.607,
+            "n_pixels": 1069,
+            "vegetated_fraction": 0.93,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "kafr_el_sheikh",
+          "start": "2026-03-30",
+          "end": "2026-04-14",
+          "midpoint": "2026-04-11",
+          "ndvi": 0.17,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "pixel_reliability": 1,
+            "pixel_reliability_meaning": "good",
+            "modland_qa": 0,
+            "vi_usefulness": 0
+          },
+          "composite_doy": 101,
+          "pixel": {
+            "lat": 31.1083,
+            "lon": 30.9413,
+            "distance_km": 0.22
+          },
+          "granule": "VNP13A1.A2026089.h20v05.002.2026105101709",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.576,
+            "p25_ndvi": 0.519,
+            "p75_ndvi": 0.621,
+            "n_pixels": 1089,
+            "vegetated_fraction": 0.94,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "kafr_el_sheikh",
+          "start": "2026-04-07",
+          "end": "2026-04-22",
+          "midpoint": "2026-04-11",
+          "ndvi": 0.17,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "pixel_reliability": 1,
+            "pixel_reliability_meaning": "good",
+            "modland_qa": 0,
+            "vi_usefulness": 0
+          },
+          "composite_doy": 101,
+          "pixel": {
+            "lat": 31.1083,
+            "lon": 30.9413,
+            "distance_km": 0.22
+          },
+          "granule": "VNP13A1.A2026097.h20v05.002.2026134171647",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.558,
+            "p25_ndvi": 0.496,
+            "p75_ndvi": 0.608,
+            "n_pixels": 1089,
+            "vegetated_fraction": 0.95,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "kafr_el_sheikh",
+          "start": "2026-04-15",
+          "end": "2026-04-30",
+          "midpoint": "2026-04-25",
+          "ndvi": 0.153,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "pixel_reliability": 2,
+            "pixel_reliability_meaning": "acceptable",
+            "modland_qa": 0,
+            "vi_usefulness": 1
+          },
+          "composite_doy": 115,
+          "pixel": {
+            "lat": 31.1083,
+            "lon": 30.9413,
+            "distance_km": 0.22
+          },
+          "granule": "VNP13A1.A2026105.h20v05.002.2026134024720",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.472,
+            "p25_ndvi": 0.42,
+            "p75_ndvi": 0.518,
+            "n_pixels": 1089,
+            "vegetated_fraction": 0.93,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "kafr_el_sheikh",
+          "start": "2026-04-23",
+          "end": "2026-05-08",
+          "midpoint": "2026-05-07",
+          "ndvi": 0.157,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "pixel_reliability": 0,
+            "pixel_reliability_meaning": "excellent",
+            "modland_qa": 0,
+            "vi_usefulness": 0
+          },
+          "composite_doy": 127,
+          "pixel": {
+            "lat": 31.1083,
+            "lon": 30.9413,
+            "distance_km": 0.22
+          },
+          "granule": "VNP13A1.A2026113.h20v05.002.2026134025822",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.392,
+            "p25_ndvi": 0.337,
+            "p75_ndvi": 0.437,
+            "n_pixels": 1089,
+            "vegetated_fraction": 0.86,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "kafr_el_sheikh",
+          "start": "2026-05-01",
+          "end": "2026-05-16",
+          "midpoint": "2026-05-07",
+          "ndvi": 0.157,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "pixel_reliability": 0,
+            "pixel_reliability_meaning": "excellent",
+            "modland_qa": 0,
+            "vi_usefulness": 0
+          },
+          "composite_doy": 127,
+          "pixel": {
+            "lat": 31.1083,
+            "lon": 30.9413,
+            "distance_km": 0.22
+          },
+          "granule": "VNP13A1.A2026121.h20v05.002.2026141160005",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.389,
+            "p25_ndvi": 0.338,
+            "p75_ndvi": 0.432,
+            "n_pixels": 1082,
+            "vegetated_fraction": 0.88,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "kafr_el_sheikh",
+          "start": "2026-05-09",
+          "end": "2026-05-24",
+          "midpoint": "2026-05-24",
+          "ndvi": 0.183,
+          "accepted": false,
+          "reject_reasons": [
+            "pixel_reliability_marginal",
+            "modland_qa_not_good"
+          ],
+          "quality": {
+            "pixel_reliability": 3,
+            "pixel_reliability_meaning": "marginal",
+            "modland_qa": 1,
+            "vi_usefulness": 1
+          },
+          "composite_doy": 144,
+          "pixel": {
+            "lat": 31.1083,
+            "lon": 30.9413,
+            "distance_km": 0.22
+          },
+          "granule": "VNP13A1.A2026129.h20v05.002.2026146131154",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.34,
+            "p25_ndvi": 0.297,
+            "p75_ndvi": 0.384,
+            "n_pixels": 1077,
+            "vegetated_fraction": 0.74,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "kafr_el_sheikh",
+          "start": "2026-05-17",
+          "end": "2026-06-01",
+          "midpoint": "2026-05-31",
+          "ndvi": 0.181,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "pixel_reliability": 2,
+            "pixel_reliability_meaning": "acceptable",
+            "modland_qa": 0,
+            "vi_usefulness": 1
+          },
+          "composite_doy": 151,
+          "pixel": {
+            "lat": 31.1083,
+            "lon": 30.9413,
+            "distance_km": 0.22
+          },
+          "granule": "VNP13A1.A2026137.h20v05.002.2026162011027",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.31,
+            "p25_ndvi": 0.262,
+            "p75_ndvi": 0.358,
+            "n_pixels": 1089,
+            "vegetated_fraction": 0.56,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "kafr_el_sheikh",
+          "start": "2026-05-25",
+          "end": "2026-06-09",
+          "midpoint": "2026-06-09",
+          "ndvi": 0.179,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "pixel_reliability": 1,
+            "pixel_reliability_meaning": "good",
+            "modland_qa": 0,
+            "vi_usefulness": 0
+          },
+          "composite_doy": 160,
+          "pixel": {
+            "lat": 31.1083,
+            "lon": 30.9413,
+            "distance_km": 0.22
+          },
+          "granule": "VNP13A1.A2026145.h20v05.002.2026166043917",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.329,
+            "p25_ndvi": 0.279,
+            "p75_ndvi": 0.374,
+            "n_pixels": 1089,
+            "vegetated_fraction": 0.66,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "kafr_el_sheikh",
+          "start": "2026-06-02",
+          "end": "2026-06-17",
+          "midpoint": "2026-06-09",
+          "ndvi": 0.179,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "pixel_reliability": 1,
+            "pixel_reliability_meaning": "good",
+            "modland_qa": 0,
+            "vi_usefulness": 0
+          },
+          "composite_doy": 160,
+          "pixel": {
+            "lat": 31.1083,
+            "lon": 30.9413,
+            "distance_km": 0.22
+          },
+          "granule": "VNP13A1.A2026153.h20v05.002.2026170030229",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.342,
+            "p25_ndvi": 0.291,
+            "p75_ndvi": 0.401,
+            "n_pixels": 1089,
+            "vegetated_fraction": 0.72,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "kafr_el_sheikh",
+          "start": "2026-06-10",
+          "end": "2026-06-25",
+          "midpoint": "2026-06-25",
+          "ndvi": 0.169,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "pixel_reliability": 1,
+            "pixel_reliability_meaning": "good",
+            "modland_qa": 0,
+            "vi_usefulness": 0
+          },
+          "composite_doy": 176,
+          "pixel": {
+            "lat": 31.1083,
+            "lon": 30.9413,
+            "distance_km": 0.22
+          },
+          "granule": "VNP13A1.A2026161.h20v05.002.2026177104759",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.48,
+            "p25_ndvi": 0.359,
+            "p75_ndvi": 0.579,
+            "n_pixels": 1089,
+            "vegetated_fraction": 0.84,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "kafr_el_sheikh",
+          "start": "2026-06-18",
+          "end": "2026-07-03",
+          "midpoint": "2026-06-29",
+          "ndvi": 0.178,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "pixel_reliability": 0,
+            "pixel_reliability_meaning": "excellent",
+            "modland_qa": 0,
+            "vi_usefulness": 0
+          },
+          "composite_doy": 180,
+          "pixel": {
+            "lat": 31.1083,
+            "lon": 30.9413,
+            "distance_km": 0.22
+          },
+          "granule": "VNP13A1.A2026169.h20v05.002.2026188194903",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.548,
+            "p25_ndvi": 0.419,
+            "p75_ndvi": 0.634,
+            "n_pixels": 1089,
+            "vegetated_fraction": 0.87,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "kafr_el_sheikh",
+          "start": "2026-06-26",
+          "end": "2026-07-11",
+          "midpoint": "2026-06-29",
+          "ndvi": 0.178,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "pixel_reliability": 0,
+            "pixel_reliability_meaning": "excellent",
+            "modland_qa": 0,
+            "vi_usefulness": 0
+          },
+          "composite_doy": 180,
+          "pixel": {
+            "lat": 31.1083,
+            "lon": 30.9413,
+            "distance_km": 0.22
+          },
+          "granule": "VNP13A1.A2026177.h20v05.002.2026204142435",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.617,
+            "p25_ndvi": 0.48,
+            "p75_ndvi": 0.697,
+            "n_pixels": 1089,
+            "vegetated_fraction": 0.89,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "kafr_el_sheikh",
+          "start": "2026-07-04",
+          "end": "2026-07-19",
+          "midpoint": "2026-07-09",
+          "ndvi": 0.164,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "pixel_reliability": 1,
+            "pixel_reliability_meaning": "good",
+            "modland_qa": 0,
+            "vi_usefulness": 0
+          },
+          "composite_doy": 190,
+          "pixel": {
+            "lat": 31.1083,
+            "lon": 30.9413,
+            "distance_km": 0.22
+          },
+          "granule": "VNP13A1.A2026185.h20v05.002.2026209042129",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.611,
+            "p25_ndvi": 0.47,
+            "p75_ndvi": 0.695,
+            "n_pixels": 1089,
+            "vegetated_fraction": 0.88,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "kafr_el_sheikh",
+          "start": "2026-07-12",
+          "end": "2026-07-27",
+          "midpoint": "2026-07-21",
+          "ndvi": 0.166,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "pixel_reliability": 0,
+            "pixel_reliability_meaning": "excellent",
+            "modland_qa": 0,
+            "vi_usefulness": 0
+          },
+          "composite_doy": 202,
+          "pixel": {
+            "lat": 31.1083,
+            "lon": 30.9413,
+            "distance_km": 0.22
+          },
+          "granule": "VNP13A1.A2026193.h20v05.002.2026209195751",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.717,
+            "p25_ndvi": 0.58,
+            "p75_ndvi": 0.789,
+            "n_pixels": 1088,
+            "vegetated_fraction": 0.94,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "kafr_el_sheikh",
+          "start": "2026-07-20",
+          "end": "2026-08-04",
+          "midpoint": "2026-07-31",
+          "ndvi": 0.175,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "pixel_reliability": 0,
+            "pixel_reliability_meaning": "excellent",
+            "modland_qa": 0,
+            "vi_usefulness": 0
+          },
+          "composite_doy": 212,
+          "pixel": {
+            "lat": 31.1083,
+            "lon": 30.9413,
+            "distance_km": 0.22
+          },
+          "granule": "VNP13A1.A2026201.h20v05.002.2026222173200",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.747,
+            "p25_ndvi": 0.632,
+            "p75_ndvi": 0.805,
+            "n_pixels": 1089,
+            "vegetated_fraction": 0.95,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "kafr_el_sheikh",
+          "start": "2026-07-28",
+          "end": "2026-08-12",
+          "midpoint": "2026-07-31",
+          "ndvi": 0.175,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "pixel_reliability": 0,
+            "pixel_reliability_meaning": "excellent",
+            "modland_qa": 0,
+            "vi_usefulness": 0
+          },
+          "composite_doy": 212,
+          "pixel": {
+            "lat": 31.1083,
+            "lon": 30.9413,
+            "distance_km": 0.22
+          },
+          "granule": "VNP13A1.A2026209.h20v05.002.2026225161942",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.731,
+            "p25_ndvi": 0.626,
+            "p75_ndvi": 0.793,
+            "n_pixels": 1089,
+            "vegetated_fraction": 0.95,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "kafr_el_sheikh",
+          "start": "2026-08-05",
+          "end": "2026-08-20",
+          "midpoint": "2026-08-07",
+          "ndvi": 0.196,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "pixel_reliability": 1,
+            "pixel_reliability_meaning": "good",
+            "modland_qa": 0,
+            "vi_usefulness": 0
+          },
+          "composite_doy": 219,
+          "pixel": {
+            "lat": 31.1083,
+            "lon": 30.9413,
+            "distance_km": 0.22
+          },
+          "granule": "VNP13A1.A2026217.h20v05.002.2026236120147",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.688,
+            "p25_ndvi": 0.581,
+            "p75_ndvi": 0.751,
+            "n_pixels": 1089,
+            "vegetated_fraction": 0.94,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "kafr_el_sheikh",
+          "start": "2026-08-13",
+          "end": "2026-08-28",
+          "midpoint": "2026-08-27",
+          "ndvi": 0.182,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "pixel_reliability": 0,
+            "pixel_reliability_meaning": "excellent",
+            "modland_qa": 0,
+            "vi_usefulness": 0
+          },
+          "composite_doy": 239,
+          "pixel": {
+            "lat": 31.1083,
+            "lon": 30.9413,
+            "distance_km": 0.22
+          },
+          "granule": "VNP13A1.A2026225.h20v05.002.2026241084812",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.696,
+            "p25_ndvi": 0.607,
+            "p75_ndvi": 0.754,
+            "n_pixels": 1089,
+            "vegetated_fraction": 0.94,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "kafr_el_sheikh",
+          "start": "2026-08-21",
+          "end": "2026-09-05",
+          "midpoint": "2026-08-27",
+          "ndvi": 0.182,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "pixel_reliability": 0,
+            "pixel_reliability_meaning": "excellent",
+            "modland_qa": 0,
+            "vi_usefulness": 0
+          },
+          "composite_doy": 239,
+          "pixel": {
+            "lat": 31.1083,
+            "lon": 30.9413,
+            "distance_km": 0.22
+          },
+          "granule": "VNP13A1.A2026233.h20v05.002.2026251193423",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.689,
+            "p25_ndvi": 0.601,
+            "p75_ndvi": 0.751,
+            "n_pixels": 1089,
+            "vegetated_fraction": 0.94,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "kafr_el_sheikh",
+          "start": "2026-08-29",
+          "end": "2026-09-13",
+          "midpoint": "2026-09-12",
+          "ndvi": 0.178,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "pixel_reliability": 0,
+            "pixel_reliability_meaning": "excellent",
+            "modland_qa": 0,
+            "vi_usefulness": 0
+          },
+          "composite_doy": 255,
+          "pixel": {
+            "lat": 31.1083,
+            "lon": 30.9413,
+            "distance_km": 0.22
+          },
+          "granule": "VNP13A1.A2026241.h20v05.002.2026258004000",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.607,
+            "p25_ndvi": 0.501,
+            "p75_ndvi": 0.682,
+            "n_pixels": 1089,
+            "vegetated_fraction": 0.94,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "kafr_el_sheikh",
+          "start": "2026-09-06",
+          "end": "2026-09-21",
+          "midpoint": "2026-09-18",
+          "ndvi": 0.185,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "pixel_reliability": 1,
+            "pixel_reliability_meaning": "good",
+            "modland_qa": 0,
+            "vi_usefulness": 0
+          },
+          "composite_doy": 261,
+          "pixel": {
+            "lat": 31.1083,
+            "lon": 30.9413,
+            "distance_km": 0.22
+          },
+          "granule": "VNP13A1.A2026249.h20v05.002.2026265092139",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.567,
+            "p25_ndvi": 0.468,
+            "p75_ndvi": 0.647,
+            "n_pixels": 1089,
+            "vegetated_fraction": 0.94,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "kafr_el_sheikh",
+          "start": "2026-09-14",
+          "end": "2026-09-29",
+          "midpoint": "2026-09-18",
+          "ndvi": 0.185,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "pixel_reliability": 1,
+            "pixel_reliability_meaning": "good",
+            "modland_qa": 0,
+            "vi_usefulness": 0
+          },
+          "composite_doy": 261,
+          "pixel": {
+            "lat": 31.1083,
+            "lon": 30.9413,
+            "distance_km": 0.22
+          },
+          "granule": "VNP13A1.A2026257.h20v05.002.2026289164634",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.435,
+            "p25_ndvi": 0.357,
+            "p75_ndvi": 0.535,
+            "n_pixels": 1089,
+            "vegetated_fraction": 0.89,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "kafr_el_sheikh",
+          "start": "2026-09-22",
+          "end": "2026-10-07",
+          "midpoint": "2026-09-27",
+          "ndvi": 0.175,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "pixel_reliability": 1,
+            "pixel_reliability_meaning": "good",
+            "modland_qa": 0,
+            "vi_usefulness": 0
+          },
+          "composite_doy": 270,
+          "pixel": {
+            "lat": 31.1083,
+            "lon": 30.9413,
+            "distance_km": 0.22
+          },
+          "granule": "VNP13A1.A2026265.h20v05.002.2026289164701",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.339,
+            "p25_ndvi": 0.293,
+            "p75_ndvi": 0.412,
+            "n_pixels": 1069,
+            "vegetated_fraction": 0.72,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "kafr_el_sheikh",
+          "start": "2026-09-30",
+          "end": "2026-10-15",
+          "midpoint": "2026-10-12",
+          "ndvi": 0.169,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "pixel_reliability": 2,
+            "pixel_reliability_meaning": "acceptable",
+            "modland_qa": 0,
+            "vi_usefulness": 1
+          },
+          "composite_doy": 285,
+          "pixel": {
+            "lat": 31.1083,
+            "lon": 30.9413,
+            "distance_km": 0.22
+          },
+          "granule": "VNP13A1.A2026273.h20v05.002.2026296170107",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.329,
+            "p25_ndvi": 0.286,
+            "p75_ndvi": 0.39,
+            "n_pixels": 1089,
+            "vegetated_fraction": 0.67,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "kafr_el_sheikh",
+          "start": "2026-10-08",
+          "end": "2026-10-23",
+          "midpoint": "2026-10-12",
+          "ndvi": 0.169,
+          "accepted": true,
+          "reject_reasons": [],
+          "quality": {
+            "pixel_reliability": 2,
+            "pixel_reliability_meaning": "acceptable",
+            "modland_qa": 0,
+            "vi_usefulness": 1
+          },
+          "composite_doy": 285,
+          "pixel": {
+            "lat": 31.1083,
+            "lon": 30.9413,
+            "distance_km": 0.22
+          },
+          "granule": "VNP13A1.A2026281.h20v05.002.2026297095751",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.35,
+            "p25_ndvi": 0.299,
+            "p75_ndvi": 0.412,
+            "n_pixels": 1089,
+            "vegetated_fraction": 0.74,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "kafr_el_sheikh",
+          "start": "2026-10-16",
+          "end": "2026-10-31",
+          "midpoint": "2026-10-24",
+          "ndvi": 0.178,
+          "accepted": false,
+          "reject_reasons": [
+            "pixel_reliability_marginal",
+            "modland_qa_not_good"
+          ],
+          "quality": {
+            "pixel_reliability": 3,
+            "pixel_reliability_meaning": "marginal",
+            "modland_qa": 1,
+            "vi_usefulness": 1
+          },
+          "composite_doy": 297,
+          "pixel": {
+            "lat": 31.1083,
+            "lon": 30.9413,
+            "distance_km": 0.22
+          },
+          "granule": "VNP13A1.A2026289.h20v05.002.2026307014645",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.413,
+            "p25_ndvi": 0.34,
+            "p75_ndvi": 0.482,
+            "n_pixels": 1084,
+            "vegetated_fraction": 0.86,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        },
+        {
+          "site_id": "kafr_el_sheikh",
+          "start": "2026-10-24",
+          "end": "2026-11-08",
+          "midpoint": "2026-10-24",
+          "ndvi": 0.178,
+          "accepted": false,
+          "reject_reasons": [
+            "pixel_reliability_marginal",
+            "modland_qa_not_good"
+          ],
+          "quality": {
+            "pixel_reliability": 3,
+            "pixel_reliability_meaning": "marginal",
+            "modland_qa": 1,
+            "vi_usefulness": 1
+          },
+          "composite_doy": 297,
+          "pixel": {
+            "lat": 31.1083,
+            "lon": 30.9413,
+            "distance_km": 0.22
+          },
+          "granule": "VNP13A1.A2026297.h20v05.002.2026309112426",
+          "neighborhood": {
+            "radius_km": 7.4,
+            "median_ndvi": 0.407,
+            "p25_ndvi": 0.334,
+            "p75_ndvi": 0.477,
+            "n_pixels": 1079,
+            "vegetated_fraction": 0.85,
+            "basis": "median of accepted 500 m pixels in the surrounding box, not the field"
+          }
+        }
+      ],
+      "series": [
+        {
+          "start": "2025-10-24",
+          "end": "2025-11-08",
+          "ndvi": 0.149
+        },
+        {
+          "start": "2025-11-01",
+          "end": "2025-11-16",
+          "ndvi": 0.192
+        },
+        {
+          "start": "2025-11-09",
+          "end": "2025-11-24",
+          "ndvi": 0.17
+        },
+        {
+          "start": "2025-11-17",
+          "end": "2025-12-02",
+          "ndvi": 0.17
+        },
+        {
+          "start": "2025-11-25",
+          "end": "2025-12-10",
+          "ndvi": 0.149
+        },
+        {
+          "start": "2025-12-11",
+          "end": "2025-12-26",
+          "ndvi": 0.185
+        },
+        {
+          "start": "2025-12-19",
+          "end": "2026-01-03",
+          "ndvi": 0.185
+        },
+        {
+          "start": "2025-12-27",
+          "end": "2026-01-11",
+          "ndvi": 0.183
+        },
+        {
+          "start": "2026-01-01",
+          "end": "2026-01-16",
+          "ndvi": 0.183
+        },
+        {
+          "start": "2026-01-09",
+          "end": "2026-01-24",
+          "ndvi": 0.165
+        },
+        {
+          "start": "2026-01-17",
+          "end": "2026-02-01",
+          "ndvi": 0.165
+        },
+        {
+          "start": "2026-01-25",
+          "end": "2026-02-09",
+          "ndvi": 0.164
+        },
+        {
+          "start": "2026-02-02",
+          "end": "2026-02-17",
+          "ndvi": 0.166
+        },
+        {
+          "start": "2026-02-10",
+          "end": "2026-02-25",
+          "ndvi": 0.166
+        },
+        {
+          "start": "2026-02-18",
+          "end": "2026-03-05",
+          "ndvi": 0.161
+        },
+        {
+          "start": "2026-03-14",
+          "end": "2026-03-29",
+          "ndvi": 0.194
+        },
+        {
+          "start": "2026-03-22",
+          "end": "2026-04-06",
+          "ndvi": 0.194
+        },
+        {
+          "start": "2026-03-30",
+          "end": "2026-04-14",
+          "ndvi": 0.17
+        },
+        {
+          "start": "2026-04-07",
+          "end": "2026-04-22",
+          "ndvi": 0.17
+        },
+        {
+          "start": "2026-04-15",
+          "end": "2026-04-30",
+          "ndvi": 0.153
+        },
+        {
+          "start": "2026-04-23",
+          "end": "2026-05-08",
+          "ndvi": 0.157
+        },
+        {
+          "start": "2026-05-01",
+          "end": "2026-05-16",
+          "ndvi": 0.157
+        },
+        {
+          "start": "2026-05-17",
+          "end": "2026-06-01",
+          "ndvi": 0.181
+        },
+        {
+          "start": "2026-05-25",
+          "end": "2026-06-09",
+          "ndvi": 0.179
+        },
+        {
+          "start": "2026-06-02",
+          "end": "2026-06-17",
+          "ndvi": 0.179
+        },
+        {
+          "start": "2026-06-10",
+          "end": "2026-06-25",
+          "ndvi": 0.169
+        },
+        {
+          "start": "2026-06-18",
+          "end": "2026-07-03",
+          "ndvi": 0.178
+        },
+        {
+          "start": "2026-06-26",
+          "end": "2026-07-11",
+          "ndvi": 0.178
+        },
+        {
+          "start": "2026-07-04",
+          "end": "2026-07-19",
+          "ndvi": 0.164
+        },
+        {
+          "start": "2026-07-12",
+          "end": "2026-07-27",
+          "ndvi": 0.166
+        },
+        {
+          "start": "2026-07-20",
+          "end": "2026-08-04",
+          "ndvi": 0.175
+        },
+        {
+          "start": "2026-07-28",
+          "end": "2026-08-12",
+          "ndvi": 0.175
+        },
+        {
+          "start": "2026-08-05",
+          "end": "2026-08-20",
+          "ndvi": 0.196
+        },
+        {
+          "start": "2026-08-13",
+          "end": "2026-08-28",
+          "ndvi": 0.182
+        },
+        {
+          "start": "2026-08-21",
+          "end": "2026-09-05",
+          "ndvi": 0.182
+        },
+        {
+          "start": "2026-08-29",
+          "end": "2026-09-13",
+          "ndvi": 0.178
+        },
+        {
+          "start": "2026-09-06",
+          "end": "2026-09-21",
+          "ndvi": 0.185
+        },
+        {
+          "start": "2026-09-14",
+          "end": "2026-09-29",
+          "ndvi": 0.185
+        },
+        {
+          "start": "2026-09-22",
+          "end": "2026-10-07",
+          "ndvi": 0.175
+        },
+        {
+          "start": "2026-09-30",
+          "end": "2026-10-15",
+          "ndvi": 0.169
+        },
+        {
+          "start": "2026-10-08",
+          "end": "2026-10-23",
+          "ndvi": 0.169
+        }
+      ],
+      "regional_series": [
+        {
+          "start": "2025-10-24",
+          "end": "2025-11-08",
+          "ndvi": 0.438,
+          "p25": 0.352,
+          "p75": 0.517,
+          "vegetated_fraction": 0.87
+        },
+        {
+          "start": "2025-11-01",
+          "end": "2025-11-16",
+          "ndvi": 0.515,
+          "p25": 0.416,
+          "p75": 0.584,
+          "vegetated_fraction": 0.9
+        },
+        {
+          "start": "2025-11-09",
+          "end": "2025-11-24",
+          "ndvi": 0.547,
+          "p25": 0.447,
+          "p75": 0.619,
+          "vegetated_fraction": 0.91
+        },
+        {
+          "start": "2025-11-17",
+          "end": "2025-12-02",
+          "ndvi": 0.592,
+          "p25": 0.491,
+          "p75": 0.662,
+          "vegetated_fraction": 0.93
+        },
+        {
+          "start": "2025-11-25",
+          "end": "2025-12-10",
+          "ndvi": 0.653,
+          "p25": 0.555,
+          "p75": 0.712,
+          "vegetated_fraction": 0.94
+        },
+        {
+          "start": "2025-12-11",
+          "end": "2025-12-26",
+          "ndvi": 0.744,
+          "p25": 0.636,
+          "p75": 0.794,
+          "vegetated_fraction": 0.95
+        },
+        {
+          "start": "2025-12-19",
+          "end": "2026-01-03",
+          "ndvi": 0.749,
+          "p25": 0.636,
+          "p75": 0.798,
+          "vegetated_fraction": 0.95
+        },
+        {
+          "start": "2025-12-27",
+          "end": "2026-01-11",
+          "ndvi": 0.79,
+          "p25": 0.683,
+          "p75": 0.832,
+          "vegetated_fraction": 0.95
+        },
+        {
+          "start": "2026-01-01",
+          "end": "2026-01-16",
+          "ndvi": 0.788,
+          "p25": 0.679,
+          "p75": 0.831,
+          "vegetated_fraction": 0.95
+        },
+        {
+          "start": "2026-01-09",
+          "end": "2026-01-24",
+          "ndvi": 0.771,
+          "p25": 0.656,
+          "p75": 0.821,
+          "vegetated_fraction": 0.94
+        },
+        {
+          "start": "2026-01-17",
+          "end": "2026-02-01",
+          "ndvi": 0.736,
+          "p25": 0.626,
+          "p75": 0.792,
+          "vegetated_fraction": 0.94
+        },
+        {
+          "start": "2026-01-25",
+          "end": "2026-02-09",
+          "ndvi": 0.737,
+          "p25": 0.623,
+          "p75": 0.793,
+          "vegetated_fraction": 0.94
+        },
+        {
+          "start": "2026-02-02",
+          "end": "2026-02-17",
+          "ndvi": 0.74,
+          "p25": 0.655,
+          "p75": 0.787,
+          "vegetated_fraction": 0.96
+        },
+        {
+          "start": "2026-02-10",
+          "end": "2026-02-25",
+          "ndvi": 0.767,
+          "p25": 0.693,
+          "p75": 0.808,
+          "vegetated_fraction": 0.96
+        },
+        {
+          "start": "2026-02-18",
+          "end": "2026-03-05",
+          "ndvi": 0.768,
+          "p25": 0.67,
+          "p75": 0.81,
+          "vegetated_fraction": 0.94
+        },
+        {
+          "start": "2026-03-14",
+          "end": "2026-03-29",
+          "ndvi": 0.689,
+          "p25": 0.592,
+          "p75": 0.757,
+          "vegetated_fraction": 0.96
+        },
+        {
+          "start": "2026-03-22",
+          "end": "2026-04-06",
+          "ndvi": 0.564,
+          "p25": 0.498,
+          "p75": 0.607,
+          "vegetated_fraction": 0.93
+        },
+        {
+          "start": "2026-03-30",
+          "end": "2026-04-14",
+          "ndvi": 0.576,
+          "p25": 0.519,
+          "p75": 0.621,
+          "vegetated_fraction": 0.94
+        },
+        {
+          "start": "2026-04-07",
+          "end": "2026-04-22",
+          "ndvi": 0.558,
+          "p25": 0.496,
+          "p75": 0.608,
+          "vegetated_fraction": 0.95
+        },
+        {
+          "start": "2026-04-15",
+          "end": "2026-04-30",
+          "ndvi": 0.472,
+          "p25": 0.42,
+          "p75": 0.518,
+          "vegetated_fraction": 0.93
+        },
+        {
+          "start": "2026-04-23",
+          "end": "2026-05-08",
+          "ndvi": 0.392,
+          "p25": 0.337,
+          "p75": 0.437,
+          "vegetated_fraction": 0.86
+        },
+        {
+          "start": "2026-05-01",
+          "end": "2026-05-16",
+          "ndvi": 0.389,
+          "p25": 0.338,
+          "p75": 0.432,
+          "vegetated_fraction": 0.88
+        },
+        {
+          "start": "2026-05-17",
+          "end": "2026-06-01",
+          "ndvi": 0.31,
+          "p25": 0.262,
+          "p75": 0.358,
+          "vegetated_fraction": 0.56
+        },
+        {
+          "start": "2026-05-25",
+          "end": "2026-06-09",
+          "ndvi": 0.329,
+          "p25": 0.279,
+          "p75": 0.374,
+          "vegetated_fraction": 0.66
+        },
+        {
+          "start": "2026-06-02",
+          "end": "2026-06-17",
+          "ndvi": 0.342,
+          "p25": 0.291,
+          "p75": 0.401,
+          "vegetated_fraction": 0.72
+        },
+        {
+          "start": "2026-06-10",
+          "end": "2026-06-25",
+          "ndvi": 0.48,
+          "p25": 0.359,
+          "p75": 0.579,
+          "vegetated_fraction": 0.84
+        },
+        {
+          "start": "2026-06-18",
+          "end": "2026-07-03",
+          "ndvi": 0.548,
+          "p25": 0.419,
+          "p75": 0.634,
+          "vegetated_fraction": 0.87
+        },
+        {
+          "start": "2026-06-26",
+          "end": "2026-07-11",
+          "ndvi": 0.617,
+          "p25": 0.48,
+          "p75": 0.697,
+          "vegetated_fraction": 0.89
+        },
+        {
+          "start": "2026-07-04",
+          "end": "2026-07-19",
+          "ndvi": 0.611,
+          "p25": 0.47,
+          "p75": 0.695,
+          "vegetated_fraction": 0.88
+        },
+        {
+          "start": "2026-07-12",
+          "end": "2026-07-27",
+          "ndvi": 0.717,
+          "p25": 0.58,
+          "p75": 0.789,
+          "vegetated_fraction": 0.94
+        },
+        {
+          "start": "2026-07-20",
+          "end": "2026-08-04",
+          "ndvi": 0.747,
+          "p25": 0.632,
+          "p75": 0.805,
+          "vegetated_fraction": 0.95
+        },
+        {
+          "start": "2026-07-28",
+          "end": "2026-08-12",
+          "ndvi": 0.731,
+          "p25": 0.626,
+          "p75": 0.793,
+          "vegetated_fraction": 0.95
+        },
+        {
+          "start": "2026-08-05",
+          "end": "2026-08-20",
+          "ndvi": 0.688,
+          "p25": 0.581,
+          "p75": 0.751,
+          "vegetated_fraction": 0.94
+        },
+        {
+          "start": "2026-08-13",
+          "end": "2026-08-28",
+          "ndvi": 0.696,
+          "p25": 0.607,
+          "p75": 0.754,
+          "vegetated_fraction": 0.94
+        },
+        {
+          "start": "2026-08-21",
+          "end": "2026-09-05",
+          "ndvi": 0.689,
+          "p25": 0.601,
+          "p75": 0.751,
+          "vegetated_fraction": 0.94
+        },
+        {
+          "start": "2026-08-29",
+          "end": "2026-09-13",
+          "ndvi": 0.607,
+          "p25": 0.501,
+          "p75": 0.682,
+          "vegetated_fraction": 0.94
+        },
+        {
+          "start": "2026-09-06",
+          "end": "2026-09-21",
+          "ndvi": 0.567,
+          "p25": 0.468,
+          "p75": 0.647,
+          "vegetated_fraction": 0.94
+        },
+        {
+          "start": "2026-09-14",
+          "end": "2026-09-29",
+          "ndvi": 0.435,
+          "p25": 0.357,
+          "p75": 0.535,
+          "vegetated_fraction": 0.89
+        },
+        {
+          "start": "2026-09-22",
+          "end": "2026-10-07",
+          "ndvi": 0.339,
+          "p25": 0.293,
+          "p75": 0.412,
+          "vegetated_fraction": 0.72
+        },
+        {
+          "start": "2026-09-30",
+          "end": "2026-10-15",
+          "ndvi": 0.329,
+          "p25": 0.286,
+          "p75": 0.39,
+          "vegetated_fraction": 0.67
+        },
+        {
+          "start": "2026-10-08",
+          "end": "2026-10-23",
+          "ndvi": 0.35,
+          "p25": 0.299,
+          "p75": 0.412,
+          "vegetated_fraction": 0.74
+        }
+      ],
+      "summary": {
+        "n_composites": 47,
+        "n_accepted": 41,
+        "n_records_read": 94,
+        "n_duplicate_records_dropped": 47,
+        "mean_ndvi": 0.173,
+        "min_ndvi": 0.149,
+        "max_ndvi": 0.196
+      },
+      "notes": [
+        "NDVI indicates vegetation greenness and canopy condition; it is not a measurement of soil health, crop identity or soil fertility.",
+        "A 500 m pixel covers about 25 hectares and mixes many small fields, so a single value is not a field measurement.",
+        "16-day composites trade temporal detail for fewer cloudy/missing observations; each composite keeps its pixel reliability and VI quality bits.",
+        "Overlapping sinusoidal tiles report the same composite more than once; only the best-quality record per composite period is kept (see summary.n_duplicate_records_dropped).",
+        "`series` is the single pixel at the site (often the town centre); `regional_series` is the median of usable pixels in a ~15 km box and is what the timeline check uses."
+      ],
+      "timeline_check": {
+        "method": "expected calendar vs NDVI threshold",
+        "classification_used": true,
+        "threshold_ndvi": 0.563,
+        "separation_ndvi": 0.25,
+        "min_separation_ndvi": 0.1,
+        "median_crop_ndvi": 0.688,
+        "median_fallow_ndvi": 0.438,
+        "expected_periods": [
+          {
+            "start": "2025-11-01",
+            "end": "2026-03-15",
+            "crop": "wheat",
+            "season": "winter"
+          },
+          {
+            "start": "2026-04-01",
+            "end": "2026-08-28",
+            "crop": "rice",
+            "season": "summer"
+          },
+          {
+            "start": "2026-11-01",
+            "end": "2026-11-08",
+            "crop": "wheat",
+            "season": "winter"
+          }
+        ],
+        "items": [
+          {
+            "start": "2025-10-24",
+            "end": "2025-11-08",
+            "midpoint": "2025-10-24",
+            "ndvi": 0.438,
+            "expected": "fallow",
+            "expected_crop": null,
+            "expected_season": null,
+            "observed": "low_cover",
+            "agreement": "ok"
+          },
+          {
+            "start": "2025-11-01",
+            "end": "2025-11-16",
+            "midpoint": "2025-11-01",
+            "ndvi": 0.515,
+            "expected": "crop",
+            "expected_crop": "wheat",
+            "expected_season": "winter",
+            "observed": "low_cover",
+            "agreement": "check"
+          },
+          {
+            "start": "2025-11-09",
+            "end": "2025-11-24",
+            "midpoint": "2025-11-09",
+            "ndvi": 0.547,
+            "expected": "crop",
+            "expected_crop": "wheat",
+            "expected_season": "winter",
+            "observed": "low_cover",
+            "agreement": "check"
+          },
+          {
+            "start": "2025-11-17",
+            "end": "2025-12-02",
+            "midpoint": "2025-11-17",
+            "ndvi": 0.592,
+            "expected": "crop",
+            "expected_crop": "wheat",
+            "expected_season": "winter",
+            "observed": "vegetated",
+            "agreement": "ok"
+          },
+          {
+            "start": "2025-11-25",
+            "end": "2025-12-10",
+            "midpoint": "2025-11-25",
+            "ndvi": 0.653,
+            "expected": "crop",
+            "expected_crop": "wheat",
+            "expected_season": "winter",
+            "observed": "vegetated",
+            "agreement": "ok"
+          },
+          {
+            "start": "2025-12-11",
+            "end": "2025-12-26",
+            "midpoint": "2025-12-11",
+            "ndvi": 0.744,
+            "expected": "crop",
+            "expected_crop": "wheat",
+            "expected_season": "winter",
+            "observed": "vegetated",
+            "agreement": "ok"
+          },
+          {
+            "start": "2025-12-19",
+            "end": "2026-01-03",
+            "midpoint": "2025-12-19",
+            "ndvi": 0.749,
+            "expected": "crop",
+            "expected_crop": "wheat",
+            "expected_season": "winter",
+            "observed": "vegetated",
+            "agreement": "ok"
+          },
+          {
+            "start": "2025-12-27",
+            "end": "2026-01-11",
+            "midpoint": "2025-12-27",
+            "ndvi": 0.79,
+            "expected": "crop",
+            "expected_crop": "wheat",
+            "expected_season": "winter",
+            "observed": "vegetated",
+            "agreement": "ok"
+          },
+          {
+            "start": "2026-01-01",
+            "end": "2026-01-16",
+            "midpoint": "2026-01-01",
+            "ndvi": 0.788,
+            "expected": "crop",
+            "expected_crop": "wheat",
+            "expected_season": "winter",
+            "observed": "vegetated",
+            "agreement": "ok"
+          },
+          {
+            "start": "2026-01-09",
+            "end": "2026-01-24",
+            "midpoint": "2026-01-09",
+            "ndvi": 0.771,
+            "expected": "crop",
+            "expected_crop": "wheat",
+            "expected_season": "winter",
+            "observed": "vegetated",
+            "agreement": "ok"
+          },
+          {
+            "start": "2026-01-17",
+            "end": "2026-02-01",
+            "midpoint": "2026-01-17",
+            "ndvi": 0.736,
+            "expected": "crop",
+            "expected_crop": "wheat",
+            "expected_season": "winter",
+            "observed": "vegetated",
+            "agreement": "ok"
+          },
+          {
+            "start": "2026-01-25",
+            "end": "2026-02-09",
+            "midpoint": "2026-01-25",
+            "ndvi": 0.737,
+            "expected": "crop",
+            "expected_crop": "wheat",
+            "expected_season": "winter",
+            "observed": "vegetated",
+            "agreement": "ok"
+          },
+          {
+            "start": "2026-02-02",
+            "end": "2026-02-17",
+            "midpoint": "2026-02-02",
+            "ndvi": 0.74,
+            "expected": "crop",
+            "expected_crop": "wheat",
+            "expected_season": "winter",
+            "observed": "vegetated",
+            "agreement": "ok"
+          },
+          {
+            "start": "2026-02-10",
+            "end": "2026-02-25",
+            "midpoint": "2026-02-10",
+            "ndvi": 0.767,
+            "expected": "crop",
+            "expected_crop": "wheat",
+            "expected_season": "winter",
+            "observed": "vegetated",
+            "agreement": "ok"
+          },
+          {
+            "start": "2026-02-18",
+            "end": "2026-03-05",
+            "midpoint": "2026-02-18",
+            "ndvi": 0.768,
+            "expected": "crop",
+            "expected_crop": "wheat",
+            "expected_season": "winter",
+            "observed": "vegetated",
+            "agreement": "ok"
+          },
+          {
+            "start": "2026-03-14",
+            "end": "2026-03-29",
+            "midpoint": "2026-03-14",
+            "ndvi": 0.689,
+            "expected": "crop",
+            "expected_crop": "wheat",
+            "expected_season": "winter",
+            "observed": "vegetated",
+            "agreement": "ok"
+          },
+          {
+            "start": "2026-03-22",
+            "end": "2026-04-06",
+            "midpoint": "2026-03-22",
+            "ndvi": 0.564,
+            "expected": "fallow",
+            "expected_crop": null,
+            "expected_season": null,
+            "observed": "vegetated",
+            "agreement": "check"
+          },
+          {
+            "start": "2026-03-30",
+            "end": "2026-04-14",
+            "midpoint": "2026-03-30",
+            "ndvi": 0.576,
+            "expected": "fallow",
+            "expected_crop": null,
+            "expected_season": null,
+            "observed": "vegetated",
+            "agreement": "check"
+          },
+          {
+            "start": "2026-04-07",
+            "end": "2026-04-22",
+            "midpoint": "2026-04-07",
+            "ndvi": 0.558,
+            "expected": "crop",
+            "expected_crop": "rice",
+            "expected_season": "summer",
+            "observed": "low_cover",
+            "agreement": "check"
+          },
+          {
+            "start": "2026-04-15",
+            "end": "2026-04-30",
+            "midpoint": "2026-04-15",
+            "ndvi": 0.472,
+            "expected": "crop",
+            "expected_crop": "rice",
+            "expected_season": "summer",
+            "observed": "low_cover",
+            "agreement": "check"
+          },
+          {
+            "start": "2026-04-23",
+            "end": "2026-05-08",
+            "midpoint": "2026-04-23",
+            "ndvi": 0.392,
+            "expected": "crop",
+            "expected_crop": "rice",
+            "expected_season": "summer",
+            "observed": "low_cover",
+            "agreement": "check"
+          },
+          {
+            "start": "2026-05-01",
+            "end": "2026-05-16",
+            "midpoint": "2026-05-01",
+            "ndvi": 0.389,
+            "expected": "crop",
+            "expected_crop": "rice",
+            "expected_season": "summer",
+            "observed": "low_cover",
+            "agreement": "check"
+          },
+          {
+            "start": "2026-05-17",
+            "end": "2026-06-01",
+            "midpoint": "2026-05-17",
+            "ndvi": 0.31,
+            "expected": "crop",
+            "expected_crop": "rice",
+            "expected_season": "summer",
+            "observed": "low_cover",
+            "agreement": "check"
+          },
+          {
+            "start": "2026-05-25",
+            "end": "2026-06-09",
+            "midpoint": "2026-05-25",
+            "ndvi": 0.329,
+            "expected": "crop",
+            "expected_crop": "rice",
+            "expected_season": "summer",
+            "observed": "low_cover",
+            "agreement": "check"
+          },
+          {
+            "start": "2026-06-02",
+            "end": "2026-06-17",
+            "midpoint": "2026-06-02",
+            "ndvi": 0.342,
+            "expected": "crop",
+            "expected_crop": "rice",
+            "expected_season": "summer",
+            "observed": "low_cover",
+            "agreement": "check"
+          },
+          {
+            "start": "2026-06-10",
+            "end": "2026-06-25",
+            "midpoint": "2026-06-10",
+            "ndvi": 0.48,
+            "expected": "crop",
+            "expected_crop": "rice",
+            "expected_season": "summer",
+            "observed": "low_cover",
+            "agreement": "check"
+          },
+          {
+            "start": "2026-06-18",
+            "end": "2026-07-03",
+            "midpoint": "2026-06-18",
+            "ndvi": 0.548,
+            "expected": "crop",
+            "expected_crop": "rice",
+            "expected_season": "summer",
+            "observed": "low_cover",
+            "agreement": "check"
+          },
+          {
+            "start": "2026-06-26",
+            "end": "2026-07-11",
+            "midpoint": "2026-06-26",
+            "ndvi": 0.617,
+            "expected": "crop",
+            "expected_crop": "rice",
+            "expected_season": "summer",
+            "observed": "vegetated",
+            "agreement": "ok"
+          },
+          {
+            "start": "2026-07-04",
+            "end": "2026-07-19",
+            "midpoint": "2026-07-04",
+            "ndvi": 0.611,
+            "expected": "crop",
+            "expected_crop": "rice",
+            "expected_season": "summer",
+            "observed": "vegetated",
+            "agreement": "ok"
+          },
+          {
+            "start": "2026-07-12",
+            "end": "2026-07-27",
+            "midpoint": "2026-07-12",
+            "ndvi": 0.717,
+            "expected": "crop",
+            "expected_crop": "rice",
+            "expected_season": "summer",
+            "observed": "vegetated",
+            "agreement": "ok"
+          },
+          {
+            "start": "2026-07-20",
+            "end": "2026-08-04",
+            "midpoint": "2026-07-20",
+            "ndvi": 0.747,
+            "expected": "crop",
+            "expected_crop": "rice",
+            "expected_season": "summer",
+            "observed": "vegetated",
+            "agreement": "ok"
+          },
+          {
+            "start": "2026-07-28",
+            "end": "2026-08-12",
+            "midpoint": "2026-07-28",
+            "ndvi": 0.731,
+            "expected": "crop",
+            "expected_crop": "rice",
+            "expected_season": "summer",
+            "observed": "vegetated",
+            "agreement": "ok"
+          },
+          {
+            "start": "2026-08-05",
+            "end": "2026-08-20",
+            "midpoint": "2026-08-05",
+            "ndvi": 0.688,
+            "expected": "crop",
+            "expected_crop": "rice",
+            "expected_season": "summer",
+            "observed": "vegetated",
+            "agreement": "ok"
+          },
+          {
+            "start": "2026-08-13",
+            "end": "2026-08-28",
+            "midpoint": "2026-08-13",
+            "ndvi": 0.696,
+            "expected": "crop",
+            "expected_crop": "rice",
+            "expected_season": "summer",
+            "observed": "vegetated",
+            "agreement": "ok"
+          },
+          {
+            "start": "2026-08-21",
+            "end": "2026-09-05",
+            "midpoint": "2026-08-21",
+            "ndvi": 0.689,
+            "expected": "crop",
+            "expected_crop": "rice",
+            "expected_season": "summer",
+            "observed": "vegetated",
+            "agreement": "ok"
+          },
+          {
+            "start": "2026-08-29",
+            "end": "2026-09-13",
+            "midpoint": "2026-08-29",
+            "ndvi": 0.607,
+            "expected": "fallow",
+            "expected_crop": null,
+            "expected_season": null,
+            "observed": "vegetated",
+            "agreement": "check"
+          },
+          {
+            "start": "2026-09-06",
+            "end": "2026-09-21",
+            "midpoint": "2026-09-06",
+            "ndvi": 0.567,
+            "expected": "fallow",
+            "expected_crop": null,
+            "expected_season": null,
+            "observed": "vegetated",
+            "agreement": "check"
+          },
+          {
+            "start": "2026-09-14",
+            "end": "2026-09-29",
+            "midpoint": "2026-09-14",
+            "ndvi": 0.435,
+            "expected": "fallow",
+            "expected_crop": null,
+            "expected_season": null,
+            "observed": "low_cover",
+            "agreement": "ok"
+          },
+          {
+            "start": "2026-09-22",
+            "end": "2026-10-07",
+            "midpoint": "2026-09-22",
+            "ndvi": 0.339,
+            "expected": "fallow",
+            "expected_crop": null,
+            "expected_season": null,
+            "observed": "low_cover",
+            "agreement": "ok"
+          },
+          {
+            "start": "2026-09-30",
+            "end": "2026-10-15",
+            "midpoint": "2026-09-30",
+            "ndvi": 0.329,
+            "expected": "fallow",
+            "expected_crop": null,
+            "expected_season": null,
+            "observed": "low_cover",
+            "agreement": "ok"
+          },
+          {
+            "start": "2026-10-08",
+            "end": "2026-10-23",
+            "midpoint": "2026-10-08",
+            "ndvi": 0.35,
+            "expected": "fallow",
+            "expected_crop": null,
+            "expected_season": null,
+            "observed": "low_cover",
+            "agreement": "ok"
+          }
+        ],
+        "summary": {
+          "n_composites": 41,
+          "n_ok": 26,
+          "n_check": 15,
+          "n_uncertain": 0,
+          "classification_used": true
+        },
+        "limitations": [
+          "The expected calendar comes from the demo-site preset history, not from the farmer's field records; a mismatch can be late sowing, a second crop, weeds or irrigation.",
+          "A 500 m NDVI pixel mixes many fields, so it cannot confirm what is growing on this field.",
+          "NDVI is a greenness indicator, not a measurement of soil health, crop identity or yield.",
+          "16-day composites smooth the season and blur short fallow gaps."
+        ],
+        "basis": "median of usable 500 m pixels in a ~15 km box"
+      },
+      "expected_calendar_source": "demo-site preset history + knowledge/season_windows.yaml"
+    }
+  },
+  "provenance": {
+    "built_utc": "2026-11-13T17:50:24+00:00",
+    "smaps": {
+      "product": "SPL3SMP_E",
+      "version": "006",
+      "doi": "10.5067/M20OXIZHY3RJ",
+      "source": "NASA NSIDC DAAC",
+      "variables": [
+        "soil_moisture (surface, top ~5 cm)"
+      ]
+    },
+    "ndvi": {
+      "product": "VNP13A1",
+      "version": "002",
+      "source": "NASA LP DAAC",
+      "variables": [
+        "NDVI",
+        "pixel reliability",
+        "VI quality"
+      ]
+    },
+    "labels": {
+      "smap": "observed (NASA satellite retrieval)",
+      "ndvi": "observed (NASA satellite composite)",
+      "model": "simulated (FAO-56 water balance)"
+    }
+  }
+}
