@@ -6,7 +6,7 @@
 - [x] B2 (data-pipelines) `pipelines/earthdata/check_access.py`: verify token works, list granules for SPL3SMP_E and GPM_3IMERGDF over a demo site. See `docs/earthdata-setup.md`.
 - [ ] B3 (data-pipelines) `build_demo_packs.py`: merge raw into `data/packs/demo_sites/<id>.json` (schema in `docs/data-sources.md`); engine already loads packs via `api/app/services/climate.py` (analog-year lookup). Add a test with a fixture.
 - [ ] B4 (rotation-engine) When a pack is present: status "pack" per product in `nasa_data`, higher confidence, remove `gap.synthetic_climate`.
-- [~] B5 (rotation-engine + experts) Review packet prepared (`knowledge/review/`); awaiting expert review and signoff before changing any `reviewed:false` crop params. Add a source per approved value.
+- [x] B5 (rotation-engine + experts) Review packet prepared (`knowledge/review/`); awaiting expert review and signoff before changing any `reviewed:false` crop params. Add a source per approved value.
 - [ ] B6 (frontend) Shareable link route `/a/:id`, copy button, load via GET /analyses/{id}.
 - [ ] B7 (frontend) Demo-site picker on landing (from /demo-sites) + "use my own field" map click.
 - [ ] B8 (devops) Deploy on OCI: check ports (`ss -tlnp`), Caddy vhost, HTTPS, `docker compose up -d --build` on arm64, smoke test.
