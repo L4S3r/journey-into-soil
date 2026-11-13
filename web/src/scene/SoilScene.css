@@ -20,7 +20,7 @@
               linear-gradient(180deg, #6fa6d4 0%, #a9cbe3 22%, #ecd9a6 33%, #e8cf9b 34%, #e8cf9b 100%);
   transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1);
   will-change: opacity;
-  z-index: 1;
+  z-index: 0;
 }
 
 .scene-container[data-theme="dark"] .scene-bg-gradient {
@@ -29,13 +29,14 @@
 }
 
 .scene-container canvas {
+  position: relative;
   inline-size: 100%;
   block-size: 100%;
   display: block;
   touch-action: none;
   cursor: grab;
   outline: none;
-  z-index: 0;
+  z-index: 1;
 }
 
 .scene-container canvas:active {
@@ -205,6 +206,108 @@
 .scene-btn svg {
   inline-size: 13px;
   block-size: 13px;
+}
+
+/* Act 1 Field Hero Invitation & Card */
+.scene-field-hero {
+  position: absolute;
+  inset-block-start: 70px;
+  inset-inline-start: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 16px 20px;
+  max-inline-size: min(90%, 380px);
+  pointer-events: auto;
+  z-index: 5;
+  animation: heroCardFadeIn 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.32);
+}
+
+@keyframes heroCardFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-8px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.scene-field-hero-info {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.scene-field-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.76rem;
+  font-weight: 600;
+  color: var(--accent);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.scene-field-title {
+  font-size: 1.35rem;
+  font-weight: 700;
+  margin: 0;
+  color: var(--ink);
+  line-height: 1.2;
+}
+
+.scene-field-sub {
+  font-size: 0.8rem;
+  color: var(--muted);
+  margin: 0;
+  line-height: 1.4;
+}
+
+.scene-dive-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 18px;
+  background: linear-gradient(135deg, #15803D, #166534);
+  color: #ffffff;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: var(--radius-sm, 8px);
+  font-size: 0.86rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 4px 16px rgba(21, 128, 61, 0.4);
+  transition: all 180ms cubic-bezier(0.16, 1, 0.3, 1);
+  min-block-size: 44px;
+}
+
+.scene-dive-cta:hover {
+  background: linear-gradient(135deg, #16a34a, #15803D);
+  box-shadow: 0 6px 22px rgba(21, 128, 61, 0.55);
+  transform: translateY(-1px);
+}
+
+.scene-dive-cta:active {
+  transform: translateY(1px);
+}
+
+.scene-dive-cta-arrow {
+  inline-size: 16px;
+  block-size: 16px;
+  animation: bounceDown 1.8s ease-in-out infinite;
+}
+
+@keyframes bounceDown {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(3px);
+  }
 }
 
 /* Vertical Depth Ruler Gauge */

@@ -380,6 +380,43 @@ export function SoilScene() {
             </div>
           </div>
 
+          {/* Act 1 Field Stage Hero Overlay & Dive Invitation */}
+          {diveStage === "field" && (
+            <div className="scene-field-hero scene-glass" role="region" aria-label={t("ui.stage_field")}>
+              <div className="scene-field-hero-info">
+                <span className="scene-field-chip">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="scene-icon" aria-hidden="true">
+                    <path d="M12 2a9 9 0 0 1 9 9c0 4.97-4.03 9-9 9s-9-4.03-9-9a9 9 0 0 1 9-9z" />
+                    <path d="M12 6v14" />
+                    <path d="M8 10c2-2 4-2 4 0" />
+                    <path d="M12 14c2-2 4-2 4 0" />
+                  </svg>
+                  <span>{result?.field.region || "Nile Delta"} · {result?.field.area_feddan ?? 5} Feddan</span>
+                </span>
+                <h2 className="scene-field-title">
+                  {telemetry?.cropId ? t(`crop.${telemetry.cropId}`, telemetry.cropId) : t("crop.wheat", "Wheat")}
+                </h2>
+                <p className="scene-field-sub">
+                  {t("ui.dive_caption_field")}
+                </p>
+              </div>
+
+              <button
+                type="button"
+                className="scene-dive-cta"
+                onClick={() => handleStageSelect("underground")}
+                aria-label={t("ui.dive_into_soil")}
+              >
+                <span>{t("ui.dive_into_soil")}</span>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" className="scene-dive-cta-arrow" aria-hidden="true">
+                  <path d="M12 3v14" />
+                  <path d="m7 12 5 5 5-5" />
+                  <path d="M5 21h14" />
+                </svg>
+              </button>
+            </div>
+          )}
+
           {/* Depth Ruler on Left */}
           {diveStage !== "field" && (
             <div className="scene-ruler-wrap" role="region" aria-label={t("ui.depth_ruler")}>

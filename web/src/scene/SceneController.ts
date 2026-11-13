@@ -174,9 +174,9 @@ export class SceneController {
     fb.position.set(0, -3.1, 20);
     this.frontG.add(fb);
 
-    // Instanced vegetation
-    this.plantField(this.slabs[0].g, -26, 26, -48, -1, 1, 0.75, HT[0] / 2);
-    this.plantField(this.frontG, -14, 14, 0.5, 10, 1, 0.75, 0);
+    // Instanced lush agricultural vegetation
+    this.plantField(this.slabs[0].g, -28, 28, -52, 0, 0.55, 0.45, HT[0] / 2);
+    this.plantField(this.frontG, -26, 26, 0, 14, 0.55, 0.45, 0);
 
     // Dust motes particles
     const N = 180;
@@ -254,8 +254,8 @@ export class SceneController {
         );
     };
 
-    const geo = new THREE.ConeGeometry(0.05, 1, 4);
-    geo.translate(0, 0.5, 0);
+    const geo = new THREE.ConeGeometry(0.09, 1.2, 5);
+    geo.translate(0, 0.6, 0);
 
     const d = new THREE.Object3D();
     const c = new THREE.Color();
@@ -266,20 +266,34 @@ export class SceneController {
       let q = 0;
       for (let i = 0; i < nx; i++) {
         for (let j = 0; j < nz; j++) {
-          d.position.set(
-            x0 + i * dx + (Math.random() - 0.5) * 0.25,
-            y,
-            z0 + j * dz + (Math.random() - 0.5) * 0.3
-          );
-          d.rotation.set(0.45 + Math.random() * 0.25, k * 2.1 + Math.random(), 0);
-          d.scale.set(1, 0.55 + Math.random() * 0.5, 1);
+          const jitterX = (Math.random() - 0.5) * dx * 0.7;
+          const jitterZ = (Math.random() - 0.5) * dz * 0.7;
+          d.position.set(x0 + i * dx + jitterX, y, z0 + j * dz + jitterZ);
+
+          if (k === 0) {
+            // Main vertical wheat/barley stalk with ear
+            d.rotation.set((Math.random() - 0.5) * 0.15, Math.random() * Math.PI * 2, 0);
+            d.scale.set(1.15, 0.85 + Math.random() * 0.45, 1.15);
+            // Rich golden-harvest and deep green tones
+            c.setHSL(
+              0.22 + Math.random() * 0.08,
+              0.48 + Math.random() * 0.2,
+              0.2 + Math.random() * 0.14
+            );
+          } else {
+            // Natural spreading side blades and foliage
+            const tilt = 0.28 + Math.random() * 0.35;
+            d.rotation.set(tilt, k * 2.1 + Math.random() * 1.5, 0);
+            d.scale.set(0.85, 0.55 + Math.random() * 0.4, 0.85);
+            c.setHSL(
+              0.24 + Math.random() * 0.09,
+              0.42 + Math.random() * 0.2,
+              0.16 + Math.random() * 0.12
+            );
+          }
+
           d.updateMatrix();
           m.setMatrixAt(q, d.matrix);
-          c.setHSL(
-            0.24 + Math.random() * 0.07,
-            0.38 + Math.random() * 0.17,
-            0.17 + Math.random() * 0.12
-          );
           m.setColorAt(q++, c);
         }
       }
