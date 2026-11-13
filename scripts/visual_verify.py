@@ -107,7 +107,39 @@ def run():
             scene.screenshot(path=str(screenshot_path))
             print(f"Captured: {screenshot_path}")
 
+            # Also capture individual excavation dive stages on desktop en light
+            if width_label == "1280px" and lang == "en" and theme == "light":
+                # Stage 1: Field Surface
+                page.locator(".scene-stage-btn").nth(0).click()
+                page.wait_for_timeout(800)
+                scene.screenshot(path=str(OUT_DIR / "stage_1_field_surface.png"))
+                print(f"Captured: {OUT_DIR / 'stage_1_field_surface.png'}")
+
+                # Stage 2: Underground Core
+                page.locator(".scene-stage-btn").nth(1).click()
+                page.wait_for_timeout(800)
+                scene.screenshot(path=str(OUT_DIR / "stage_2_underground_core.png"))
+                print(f"Captured: {OUT_DIR / 'stage_2_underground_core.png'}")
+
+                # Stage 3: Stratified Layers
+                page.locator(".scene-stage-btn").nth(2).click()
+                page.wait_for_timeout(800)
+                scene.screenshot(path=str(OUT_DIR / "stage_3_stratified_layers.png"))
+                print(f"Captured: {OUT_DIR / 'stage_3_stratified_layers.png'}")
+
             context.close()
+
+        # Capture Map Farmland Parcel Selection
+        map_context = browser.new_context(viewport={"width": 1280, "height": 800})
+        map_page = map_context.new_page()
+        map_page.goto("http://localhost:5173")
+        map_page.wait_for_load_state("networkidle")
+        map_page.wait_for_timeout(2000)
+        map_wrap = map_page.locator(".map-wrap")
+        if map_wrap.count() > 0:
+            map_wrap.first.screenshot(path=str(OUT_DIR / "map_parcel_selection.png"))
+            print(f"Captured: {OUT_DIR / 'map_parcel_selection.png'}")
+        map_context.close()
 
         browser.close()
         print("Visual verification run complete!")

@@ -69,7 +69,15 @@ function Landing() {
         <h2>{t("ui.step_inputs")}</h2>
         <FieldForm />
         <div className="actions">
-          <button className="primary" disabled={loading} onClick={() => void analyze()}>{loading ? t("ui.analyzing") : t("ui.analyze")}</button>
+          <button className="primary" disabled={loading} onClick={() => void analyze()}>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true" style={{ inlineSize: 18, blockSize: 18, marginInlineEnd: 8, verticalAlign: "middle" }}>
+              <circle cx="12" cy="12" r="10" />
+              <line x1="12" y1="2" x2="12" y2="22" />
+              <line x1="2" y1="12" x2="22" y2="12" />
+              <circle cx="12" cy="12" r="4" />
+            </svg>
+            <span>{loading ? t("ui.analyzing") : t("ui.analyze_soil_core")}</span>
+          </button>
           <button className="ghost" disabled={loading} onClick={() => void loadSample()}>{t("ui.sample")}</button>
         </div>
         {error && <p className="error" role="alert">{t("ui.error")} {error}</p>}

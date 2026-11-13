@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useStore } from "../state/store";
 import type { SceneController } from "./SceneController";
-import type { CameraPreset, LayerInspectData, SceneTelemetry } from "./types";
+import type { CameraPreset, DiveStage, LayerInspectData, SceneTelemetry } from "./types";
 import "./SoilScene.css";
 
 export function SoilScene() {
@@ -13,6 +13,7 @@ export function SoilScene() {
   const [failed, setFailed] = useState(false);
   const [ready, setReady] = useState(false);
   const [activePreset, setActivePreset] = useState<CameraPreset>("perspective");
+  const [diveStage, setDiveStage] = useState<DiveStage>("layers");
   const [isExploded, setIsExploded] = useState(false);
   const [inspectedLayer, setInspectedLayer] = useState<LayerInspectData | null>(null);
   const [telemetry, setTelemetry] = useState<SceneTelemetry | null>(null);
@@ -36,6 +37,10 @@ export function SoilScene() {
             setInspectedLayer(data);
           });
           controller.setOnTelemetry((data) => setTelemetry(data));
+          controller.setOnStageChange((stage) => {
+            setDiveStage(stage);
+            setIsExploded(stage === "layers");
+          });
           ctrl.current = controller;
           setReady(true);
         } catch {
@@ -94,12 +99,26 @@ export function SoilScene() {
   const handlePreset = (preset: CameraPreset) => {
     setActivePreset(preset);
     ctrl.current?.setCameraPreset(preset);
+    if (preset === "perspective") {
+      setDiveStage("layers");
+      setIsExploded(true);
+    } else if (preset === "cutaway") {
+      setDiveStage("underground");
+      setIsExploded(false);
+    }
+  };
+
+  const handleStageSelect = (stage: DiveStage) => {
+    setDiveStage(stage);
+    setIsExploded(stage === "layers");
+    ctrl.current?.setDiveStage(stage);
   };
 
   const handleExplode = () => {
     const next = !isExploded;
     setIsExploded(next);
     ctrl.current?.setExploded(next);
+    setDiveStage(next ? "layers" : "underground");
   };
 
   const handleReplay = () => {
@@ -302,23 +321,25 @@ export function SoilScene() {
           </div>
 
           {/* Left Depth Ruler */}
-          <div className="scene-depth-ruler scene-glass">
-            <button type="button" className="scene-depth-tick" onClick={(e) => handleSelectDepth(0, e)}>
-              <i></i> <bdi dir="ltr">{t("ui.unit_cm", { val: 0 })}</bdi>
-            </button>
-            <button type="button" className="scene-depth-tick" onClick={(e) => handleSelectDepth(0, e)}>
-              <i></i> <bdi dir="ltr">{t("ui.unit_cm", { val: 20 })}</bdi>
-            </button>
-            <button type="button" className="scene-depth-tick" onClick={(e) => handleSelectDepth(1, e)}>
-              <i></i> <bdi dir="ltr">{t("ui.unit_cm", { val: 50 })}</bdi>
-            </button>
-            <button type="button" className="scene-depth-tick" onClick={(e) => handleSelectDepth(2, e)}>
-              <i></i> <bdi dir="ltr">{t("ui.unit_cm", { val: 90 })}</bdi>
-            </button>
-            <button type="button" className="scene-depth-tick" onClick={(e) => handleSelectDepth(3, e)}>
-              <i></i> <bdi dir="ltr">{t("ui.unit_cm", { val: 150 })}</bdi>
-            </button>
-          </div>
+          {diveStage !== "field" && (
+            <div className="scene-depth-ruler scene-glass">
+              <button type="button" className="scene-depth-tick" onClick={(e) => handleSelectDepth(0, e)}>
+                <i></i> <bdi dir="ltr">{t("ui.unit_cm", { val: 0 })}</bdi>
+              </button>
+              <button type="button" className="scene-depth-tick" onClick={(e) => handleSelectDepth(0, e)}>
+                <i></i> <bdi dir="ltr">{t("ui.unit_cm", { val: 20 })}</bdi>
+              </button>
+              <button type="button" className="scene-depth-tick" onClick={(e) => handleSelectDepth(1, e)}>
+                <i></i> <bdi dir="ltr">{t("ui.unit_cm", { val: 50 })}</bdi>
+              </button>
+              <button type="button" className="scene-depth-tick" onClick={(e) => handleSelectDepth(2, e)}>
+                <i></i> <bdi dir="ltr">{t("ui.unit_cm", { val: 90 })}</bdi>
+              </button>
+              <button type="button" className="scene-depth-tick" onClick={(e) => handleSelectDepth(3, e)}>
+                <i></i> <bdi dir="ltr">{t("ui.unit_cm", { val: 150 })}</bdi>
+              </button>
+            </div>
+          )}
 
           {/* Layer Inspector Card / Bottom Sheet */}
           {inspectedLayer && (
@@ -379,6 +400,63 @@ export function SoilScene() {
               </div>
             </div>
           )}
+
+          {/* Bottom Bar: 3-Stage Excavation Stepper */}
+          <div className="scene-bottom-bar">
+            <nav className="scene-stages scene-glass" aria-label={t("ui.dive_into_soil")}>
+              <button
+                type="button"
+                className={`scene-stage-btn ${diveStage === "field" ? "active" : ""}`}
+                onClick={() => handleStageSelect("field")}
+                aria-current={diveStage === "field" ? "step" : undefined}
+                title={t("ui.stage_field")}
+              >
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  <path d="M12 19V5" />
+                  <path d="M5 19h14" />
+                  <path d="M12 11c3 0 6-3 6-6-3 0-6 3-6 6z" />
+                  <path d="M12 14c-3 0-6-3-6-6 3 0 6 3 6 6z" />
+                </svg>
+                <span>{t("ui.stage_field")}</span>
+              </button>
+
+              <svg className="scene-stage-sep" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <polyline points="9 18 15 12 9 6" />
+              </svg>
+
+              <button
+                type="button"
+                className={`scene-stage-btn ${diveStage === "underground" ? "active" : ""}`}
+                onClick={() => handleStageSelect("underground")}
+                aria-current={diveStage === "underground" ? "step" : undefined}
+                title={t("ui.stage_underground")}
+              >
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  <path d="M12 3v14" />
+                  <path d="m7 12 5 5 5-5" />
+                  <path d="M5 21h14" />
+                </svg>
+                <span>{t("ui.stage_underground")}</span>
+              </button>
+
+              <svg className="scene-stage-sep" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <polyline points="9 18 15 12 9 6" />
+              </svg>
+
+              <button
+                type="button"
+                className={`scene-stage-btn ${diveStage === "layers" ? "active" : ""}`}
+                onClick={() => handleStageSelect("layers")}
+                aria-current={diveStage === "layers" ? "step" : undefined}
+                title={t("ui.stage_layers")}
+              >
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  <path d="M2 17l10 5 10-5M2 12l10 5 10-5M12 2L2 7l10 5 10-5L12 2z" />
+                </svg>
+                <span>{t("ui.stage_layers")}</span>
+              </button>
+            </nav>
+          </div>
         </div>
       )}
     </div>

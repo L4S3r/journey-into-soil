@@ -8,6 +8,7 @@ import { StandardMaterial } from "@babylonjs/core/Materials/standardMaterial";
 import { Color3, Color4 } from "@babylonjs/core/Maths/math.color";
 import { Matrix, Quaternion, Vector3, Vector4 } from "@babylonjs/core/Maths/math.vector";
 import { Mesh } from "@babylonjs/core/Meshes/mesh";
+import { LinesMesh } from "@babylonjs/core/Meshes/linesMesh";
 import { MeshBuilder } from "@babylonjs/core/Meshes/meshBuilder";
 import { TransformNode } from "@babylonjs/core/Meshes/transformNode";
 import "@babylonjs/core/Meshes/thinInstanceMesh";
@@ -17,6 +18,7 @@ import { Scene } from "@babylonjs/core/scene";
 import type {
   AnalysisResult,
   CameraPreset,
+  DiveStage,
   Layer,
   LayerInspectData,
   Quality,
@@ -153,16 +155,29 @@ export class SceneController {
   private resizeObs: ResizeObserver | null = null;
   private time = 0;
 
-  // Camera preset animation
+  // Surrounding farmland terrain & parcel core reticle
+  private fieldGroundNode: TransformNode | null = null;
+  private reticleMesh: LinesMesh | null = null;
+  private diveStage: DiveStage = "layers";
+  private diveTimeouts: ReturnType<typeof setTimeout>[] = [];
+
+  private clearDiveTimeouts(): void {
+    this.diveTimeouts.forEach((t) => clearTimeout(t));
+    this.diveTimeouts = [];
+  }
+
+  // Camera preset animation & target smoothing
   private targetCamAlpha = -Math.PI / 2;
   private targetCamBeta = 1.25;
   private targetCamRadius = 14;
+  private targetCamTarget: Vector3 = new Vector3(0, -3.2, 0);
   private isAnimatingCam = false;
 
-  // Inspection & Telemetry callbacks
+  // Inspection, Telemetry & Stage callbacks
   private onDay?: (day: number) => void;
   private onInspect?: (data: LayerInspectData | null) => void;
   private onTelemetry?: (data: SceneTelemetry) => void;
+  private onStageChange?: (stage: DiveStage) => void;
   private inspectedLayerIdx: number | null = null;
 
   constructor(
@@ -208,6 +223,8 @@ export class SceneController {
     this.buildLayers();
     this.buildPedestal();
     this.buildRainMesh();
+    this.buildReticle();
+    this.buildSurroundingField();
     this.applyTier("high");
 
     const reduced = typeof matchMedia === "function" && matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -249,22 +266,84 @@ export class SceneController {
     this.onTelemetry = cb;
   }
 
+  setOnStageChange(cb: (stage: DiveStage) => void): void {
+    this.onStageChange = cb;
+  }
+
+  setDiveStage(stage: DiveStage, fromAutoSequence = false): void {
+    if (!fromAutoSequence) {
+      this.clearDiveTimeouts();
+    }
+    this.diveStage = stage;
+    this.isAnimatingCam = true;
+    this.targetCamAlpha = -Math.PI / 2;
+
+    if (stage === "field") {
+      this.targetCamBeta = 0.72;
+      this.targetCamRadius = 24;
+      this.targetCamTarget = new Vector3(0, 0, 0);
+      this.targetExplode = 0;
+      this.fieldGroundNode?.setEnabled(true);
+      this.reticleMesh?.setEnabled(true);
+      this.pedestalMesh?.setEnabled(false);
+      this.shadowMesh?.setEnabled(false);
+    } else if (stage === "underground") {
+      this.targetCamBeta = 1.25;
+      this.targetCamRadius = 13.5;
+      this.targetCamTarget = new Vector3(0, -2.8, 0);
+      this.targetExplode = 0;
+      this.fieldGroundNode?.setEnabled(false);
+      this.reticleMesh?.setEnabled(false);
+      this.pedestalMesh?.setEnabled(true);
+      this.shadowMesh?.setEnabled(true);
+    } else if (stage === "layers") {
+      this.targetCamBeta = 1.28;
+      this.targetCamRadius = 15.5;
+      this.targetCamTarget = new Vector3(0, -3.2, 0);
+      this.targetExplode = 1;
+      this.fieldGroundNode?.setEnabled(false);
+      this.reticleMesh?.setEnabled(false);
+      this.pedestalMesh?.setEnabled(true);
+      this.shadowMesh?.setEnabled(true);
+    }
+
+    if (this.onStageChange) this.onStageChange(stage);
+  }
+
+  getDiveStage(): DiveStage {
+    return this.diveStage;
+  }
+
+  replayDive(): void {
+    const reduced = typeof matchMedia === "function" && matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (reduced) {
+      this.setDiveStage("layers");
+      return;
+    }
+    this.clearDiveTimeouts();
+    this.setDiveStage("field", true);
+    this.diveTimeouts.push(
+      setTimeout(() => {
+        if (!this.disposed) this.setDiveStage("underground", true);
+      }, 2000),
+      setTimeout(() => {
+        if (!this.disposed) this.setDiveStage("layers", true);
+      }, 4200)
+    );
+  }
+
   setCameraPreset(preset: CameraPreset): void {
     this.introT = 1;
     this.isAnimatingCam = true;
     this.targetCamAlpha = -Math.PI / 2;
     if (preset === "perspective") {
-      this.targetCamBeta = 1.25;
-      this.targetCamRadius = 14;
-      this.camera.target = new Vector3(0, -2.6, 0);
+      this.setDiveStage("layers");
     } else if (preset === "cutaway") {
-      this.targetCamBeta = Math.PI / 2;
-      this.targetCamRadius = 11.5;
-      this.camera.target = new Vector3(0, -3.2, 0);
+      this.setDiveStage("underground");
     } else if (preset === "canopy") {
       this.targetCamBeta = 0.22;
       this.targetCamRadius = 12.5;
-      this.camera.target = new Vector3(0, 0, 0);
+      this.targetCamTarget = new Vector3(0, 0, 0);
     }
   }
 
@@ -363,11 +442,11 @@ export class SceneController {
 
   replay(): void {
     const reduced = typeof matchMedia === "function" && matchMedia("(prefers-reduced-motion: reduce)").matches;
-    this.introT = reduced ? 1 : 0;
-    this.explode = 0;
-    this.targetExplode = this.isExplodedManual ? 1 : 0;
-    this.camera.radius = reduced ? 14 : 24;
-    this.camera.beta = reduced ? 1.25 : 0.8;
+    if (reduced) {
+      this.setDiveStage("layers");
+      return;
+    }
+    this.replayDive();
   }
 
   getQuality(): Quality {
@@ -376,6 +455,7 @@ export class SceneController {
 
   dispose(): void {
     this.disposed = true;
+    this.clearDiveTimeouts();
     this.resizeObs?.disconnect();
     this.engine.stopRenderLoop();
     this.scene.dispose();
@@ -506,6 +586,62 @@ export class SceneController {
     drop.alwaysSelectAsActiveMesh = true;
     drop.setEnabled(false);
     this.rainMesh = drop;
+  }
+
+  private buildReticle(): void {
+    const halfW = W / 2 + 0.04;
+    const halfD = D / 2 + 0.04;
+    const y = 0.02;
+    const pts = [
+      new Vector3(-halfW, y, -halfD),
+      new Vector3(halfW, y, -halfD),
+      new Vector3(halfW, y, halfD),
+      new Vector3(-halfW, y, halfD),
+      new Vector3(-halfW, y, -halfD),
+    ];
+    const reticle = MeshBuilder.CreateLines("coreReticle", { points: pts }, this.scene);
+    reticle.color = new Color3(0.47, 0.88, 0.43);
+    reticle.setEnabled(false);
+    this.reticleMesh = reticle;
+  }
+
+  private buildSurroundingField(): void {
+    this.fieldGroundNode = new TransformNode("surroundingField", this.scene);
+    const sMat = new StandardMaterial("surroundingFieldMat", this.scene);
+    const sTex = new Texture("/textures/soil/layer_0.jpg", this.scene);
+    sTex.uScale = 4.0;
+    sTex.vScale = 4.0;
+    sTex.wrapU = Texture.WRAP_ADDRESSMODE;
+    sTex.wrapV = Texture.WRAP_ADDRESSMODE;
+    sMat.diffuseTexture = sTex;
+    sMat.diffuseColor = new Color3(0.55, 0.48, 0.38);
+    sMat.specularColor = Color3.Black();
+
+    const span = 24;
+    const h = 0.25;
+    const y = -h / 2;
+
+    const north = MeshBuilder.CreateBox("fieldNorth", { width: W + 2 * span, height: h, depth: span }, this.scene);
+    north.position.set(0, y, D / 2 + span / 2);
+    north.material = sMat;
+    north.parent = this.fieldGroundNode;
+
+    const south = MeshBuilder.CreateBox("fieldSouth", { width: W + 2 * span, height: h, depth: span }, this.scene);
+    south.position.set(0, y, -D / 2 - span / 2);
+    south.material = sMat;
+    south.parent = this.fieldGroundNode;
+
+    const east = MeshBuilder.CreateBox("fieldEast", { width: span, height: h, depth: D }, this.scene);
+    east.position.set(W / 2 + span / 2, y, 0);
+    east.material = sMat;
+    east.parent = this.fieldGroundNode;
+
+    const west = MeshBuilder.CreateBox("fieldWest", { width: span, height: h, depth: D }, this.scene);
+    west.position.set(-W / 2 - span / 2, y, 0);
+    west.material = sMat;
+    west.parent = this.fieldGroundNode;
+
+    this.fieldGroundNode.setEnabled(false);
   }
 
   private positionLayers(): void {
@@ -683,18 +819,28 @@ export class SceneController {
       this.rootNode.setEnabled(true);
     }
 
-    // Camera preset animation
+    // Camera preset animation & target lerp
     if (this.isAnimatingCam) {
       const k = Math.min(1, dt * 5.5);
       this.camera.alpha = lerp(this.camera.alpha, this.targetCamAlpha, k);
       this.camera.beta = lerp(this.camera.beta, this.targetCamBeta, k);
       this.camera.radius = lerp(this.camera.radius, this.targetCamRadius, k);
+      this.camera.target.x = lerp(this.camera.target.x, this.targetCamTarget.x, k);
+      this.camera.target.y = lerp(this.camera.target.y, this.targetCamTarget.y, k);
+      this.camera.target.z = lerp(this.camera.target.z, this.targetCamTarget.z, k);
       if (
         Math.abs(this.camera.radius - this.targetCamRadius) < 0.05 &&
-        Math.abs(this.camera.beta - this.targetCamBeta) < 0.01
+        Math.abs(this.camera.beta - this.targetCamBeta) < 0.01 &&
+        Vector3.Distance(this.camera.target, this.targetCamTarget) < 0.05
       ) {
         this.isAnimatingCam = false;
       }
+    }
+
+    // Reticle pulse on agricultural ground in field stage
+    if (this.reticleMesh && this.reticleMesh.isEnabled()) {
+      const pulse = 0.55 + 0.45 * Math.sin(this.time * 4.5);
+      this.reticleMesh.color = new Color3(0.3 * pulse, 0.85 * pulse, 0.3 * pulse);
     }
 
     // Explode smoothing

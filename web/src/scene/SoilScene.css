@@ -326,6 +326,74 @@
   color: var(--muted);
 }
 
+/* Bottom Bar: 3-Stage Excavation Stepper */
+.scene-bottom-bar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  inline-size: 100%;
+  margin-block-end: 4px;
+  pointer-events: none;
+  z-index: 4;
+}
+
+.scene-stages {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  padding: 3px 6px;
+  border-radius: 999px;
+  pointer-events: auto;
+  user-select: none;
+}
+
+.scene-stage-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 12px;
+  border-radius: 999px;
+  border: none;
+  background: transparent;
+  color: var(--muted);
+  font-size: 0.78rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 160ms cubic-bezier(0.16, 1, 0.3, 1);
+  min-block-size: 32px;
+}
+
+.scene-stage-btn:hover {
+  color: var(--ink);
+  background: color-mix(in srgb, var(--surface) 70%, transparent);
+}
+
+.scene-stage-btn.active,
+.scene-stage-btn[aria-current="step"] {
+  background: var(--accent);
+  color: var(--accent-ink);
+  font-weight: 600;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.18);
+}
+
+.scene-stage-btn svg {
+  inline-size: 14px;
+  block-size: 14px;
+  flex-shrink: 0;
+}
+
+.scene-stage-sep {
+  inline-size: 12px;
+  block-size: 12px;
+  color: var(--muted);
+  opacity: 0.55;
+  flex-shrink: 0;
+}
+
+[dir="rtl"] .scene-stage-sep {
+  transform: scaleX(-1);
+}
+
 /* Fallback message */
 .scene-fallback {
   position: absolute;
@@ -380,6 +448,23 @@
   }
   .scene-depth-ruler {
     display: none; /* hidden on small mobile */
+  }
+  .scene-stages {
+    padding: 2px 4px;
+    gap: 2px;
+  }
+  .scene-stage-btn {
+    padding: 3px 8px;
+    font-size: 0.72rem;
+    min-block-size: 28px;
+  }
+  .scene-stage-btn svg {
+    inline-size: 12px;
+    block-size: 12px;
+  }
+  .scene-stage-sep {
+    inline-size: 10px;
+    block-size: 10px;
   }
   /* Mobile Inspector Bottom Sheet */
   .scene-inspector {

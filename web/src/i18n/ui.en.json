@@ -163,5 +163,11 @@
  "ui.scene_telemetry_crop": "Crop",
  "ui.scene_telemetry_fallow": "Fallow (bare)",
  "ui.scene_telemetry_root": "Root depth",
- "ui.scene_telemetry_canopy": "Canopy cover"
+ "ui.scene_telemetry_canopy": "Canopy cover",
+ "ui.stage_field": "Field surface",
+ "ui.stage_underground": "Underground core",
+ "ui.stage_layers": "Stratified layers",
+ "ui.dive_into_soil": "Dive underground",
+ "ui.analyze_soil_core": "Extract Soil Core & Analyze",
+ "ui.parcel_selected": "{{feddan}} feddans ({{ha}} ha)"
 }

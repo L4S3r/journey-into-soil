@@ -163,5 +163,11 @@
  "ui.scene_telemetry_crop": "المحصول",
  "ui.scene_telemetry_fallow": "أرض بور",
  "ui.scene_telemetry_root": "عمق الجذور",
- "ui.scene_telemetry_canopy": "الغطاء النباتي"
+ "ui.scene_telemetry_canopy": "الغطاء النباتي",
+ "ui.stage_field": "سطح الحقل",
+ "ui.stage_underground": "عينة باطن الأرض",
+ "ui.stage_layers": "طبقات التربة",
+ "ui.dive_into_soil": "الغوص في باطن الأرض",
+ "ui.analyze_soil_core": "احفر عينة التربة وحلل",
+ "ui.parcel_selected": "{{feddan}} فدان ({{ha}} هكتار)"
 }

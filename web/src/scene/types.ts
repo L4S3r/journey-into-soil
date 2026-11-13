@@ -146,6 +146,7 @@ export interface CropInfo {
 }
 
 export type CameraPreset = "perspective" | "cutaway" | "canopy";
+export type DiveStage = "field" | "underground" | "layers";
 
 export interface LayerInspectData {
   layerIndex: number;
