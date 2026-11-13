@@ -144,3 +144,29 @@ export interface CropInfo {
   seasons: Season[];
   perennial?: boolean;
 }
+
+export type CameraPreset = "perspective" | "cutaway" | "canopy";
+
+export interface LayerInspectData {
+  layerIndex: number;
+  nameKey: string;
+  topCm: number;
+  bottomCm: number;
+  texture: string;
+  moisturePercent: number; // e.g. 78 (% of Field Capacity)
+  moistureStatus: "dry" | "stress" | "optimal" | "saturated";
+  salinityDsm: number; // e.g. 2.1 dS/m
+  salinityStatus: "low" | "moderate" | "high";
+  organicMatter: number; // % OM
+}
+
+export interface SceneTelemetry {
+  cropId: string | null;
+  season: Season | null;
+  rootCm: number;
+  canopyPct: number;
+  et0Mm: number;
+  rainMm: number;
+  tempC: number;
+}
+

@@ -11,24 +11,50 @@ import { MeshBuilder } from "@babylonjs/core/Meshes/meshBuilder";
 import { TransformNode } from "@babylonjs/core/Meshes/transformNode";
 import "@babylonjs/core/Meshes/thinInstanceMesh";
 import { Scene } from "@babylonjs/core/scene";
-import type { AnalysisResult, Layer, Quality, Strategy, StrategyId } from "./types";
+import type {
+  AnalysisResult,
+  CameraPreset,
+  Layer,
+  LayerInspectData,
+  Quality,
+  SceneTelemetry,
+  Strategy,
+  StrategyId,
+} from "./types";
 
 /**
  * Imperative scene API. React never touches Babylon objects: it only calls these methods.
- * Layout: a cutaway block seen from -z. Layers are data-driven (colour from texture + organic matter, darkness from
- * simulated moisture, salt speckle from ECe). Roots are drawn on the cut face; crop blades stand on the surface.
+ * Layout: a museum-grade cutaway monolith seen from -z. Layers are data-driven
+ * (colour from texture + OM, darkness + sheen from simulated moisture, salt crystallization from ECe).
+ * Roots grow with crop-specific morphology; canopy blades sway in field breezes.
  */
 
 const W = 8; // block width (x)
 const D = 4; // block depth (z)
-const GAP = 0.16; // gap between layers when exploded
-const LAYER_H = [1.3, 1.4, 1.6, 1.9]; // world height per layer (not to scale: the top layers need room)
+const GAP = 0.22; // gap between layers when exploded
+const LAYER_H = [1.3, 1.4, 1.6, 1.9]; // world height per layer
 
 const TIERS: Record<Quality, { scale: number; blades: number; roots: number }> = {
-  high: { scale: 1, blades: 1400, roots: 18 },
+  high: { scale: 1, blades: 1400, roots: 20 },
   medium: { scale: 1.25, blades: 600, roots: 12 },
   low: { scale: 1.75, blades: 220, roots: 7 },
 };
+
+const TAPROOT_CROPS = new Set([
+  "cotton",
+  "sugar_beet",
+  "sunflower",
+  "faba",
+  "lentil",
+  "soybean",
+  "cowpea",
+  "peanut",
+  "tomato",
+  "potato",
+  "pepper",
+  "squash",
+  "cucumber",
+]);
 
 const CROP_LOOK: Record<string, { h: number; c: [number, number, number] }> = {
   wheat: { h: 1.0, c: [0.62, 0.66, 0.22] },
@@ -91,11 +117,15 @@ export class SceneController {
   private camera: ArcRotateCamera;
   private sun: DirectionalLight;
   private ambient: HemisphericLight;
+  private rimLight: DirectionalLight;
   private layerMeshes: Mesh[] = [];
   private layerMats: StandardMaterial[] = [];
   private saltMats: StandardMaterial[] = [];
   private saltPlanes: Mesh[] = [];
   private layerBase: Color3[] = [];
+  private pedestalMesh: Mesh | null = null;
+  private shadowMesh: Mesh | null = null;
+  private rainMesh: Mesh | null = null;
   private fieldNode: TransformNode;
   private rootNode: TransformNode;
   private blade: Mesh | null = null;
@@ -107,6 +137,8 @@ export class SceneController {
   private currentCrop = "";
   private rootMaxCm = 100;
   private explode = 0;
+  private targetExplode = 0;
+  private isExplodedManual = false;
   private introT = 1;
   private tier: Quality = "high";
   private auto = true;
@@ -116,38 +148,76 @@ export class SceneController {
   private resizeObs: ResizeObserver | null = null;
   private time = 0;
 
-  constructor(canvas: HTMLCanvasElement, private onDay?: (day: number) => void) {
+  // Camera preset animation
+  private targetCamAlpha = -Math.PI / 2;
+  private targetCamBeta = 1.25;
+  private targetCamRadius = 14;
+  private isAnimatingCam = false;
+
+  // Inspection & Telemetry callbacks
+  private onDay?: (day: number) => void;
+  private onInspect?: (data: LayerInspectData | null) => void;
+  private onTelemetry?: (data: SceneTelemetry) => void;
+
+  constructor(
+    canvas: HTMLCanvasElement,
+    onDay?: (day: number) => void,
+  ) {
+    this.onDay = onDay;
     this.engine = new Engine(canvas, true, { preserveDrawingBuffer: false, stencil: false }, true);
     this.scene = new Scene(this.engine);
     this.scene.clearColor = new Color4(0.62, 0.78, 0.92, 1);
 
-    this.camera = new ArcRotateCamera("cam", -Math.PI / 2, 1.2, 22, new Vector3(0, -2.6, 0), this.scene);
+    this.camera = new ArcRotateCamera("cam", -Math.PI / 2, 1.25, 22, new Vector3(0, -2.6, 0), this.scene);
     this.camera.lowerRadiusLimit = 6;
     this.camera.upperRadiusLimit = 32;
-    this.camera.lowerBetaLimit = 0.35;
+    this.camera.lowerBetaLimit = 0.15;
     this.camera.upperBetaLimit = 1.75;
     this.camera.wheelPrecision = 30;
     this.camera.panningSensibility = 0;
     this.camera.attachControl(canvas, true);
 
+    // Three-point solar & studio lighting
     this.ambient = new HemisphericLight("amb", new Vector3(0, 1, -0.3), this.scene);
-    this.ambient.intensity = 0.75;
-    this.sun = new DirectionalLight("sun", new Vector3(-0.4, -1, 0.6), this.scene);
-    this.sun.intensity = 0.9;
+    this.ambient.intensity = 0.65;
+    this.ambient.diffuse = new Color3(0.75, 0.85, 0.96);
+    this.ambient.groundColor = new Color3(0.35, 0.28, 0.2);
+
+    this.sun = new DirectionalLight("sun", new Vector3(-0.45, -1, 0.65), this.scene);
+    this.sun.intensity = 0.95;
+    this.sun.diffuse = new Color3(1.0, 0.96, 0.88);
+
+    this.rimLight = new DirectionalLight("rim", new Vector3(0.3, 0.8, -1.0), this.scene);
+    this.rimLight.intensity = 0.35;
+    this.rimLight.diffuse = new Color3(0.85, 0.92, 1.0);
 
     this.fieldNode = new TransformNode("field", this.scene);
     this.rootNode = new TransformNode("roots", this.scene);
     this.bladeMat = new StandardMaterial("blade", this.scene);
     this.bladeMat.specularColor = Color3.Black();
     this.rootMat = new StandardMaterial("root", this.scene);
-    this.rootMat.emissiveColor = new Color3(0.92, 0.86, 0.68);
+    this.rootMat.emissiveColor = new Color3(0.95, 0.92, 0.84);
     this.rootMat.diffuseColor = Color3.Black();
 
     this.buildLayers();
+    this.buildPedestal();
+    this.buildRainMesh();
     this.applyTier("high");
 
     const reduced = typeof matchMedia === "function" && matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if (reduced) this.explode = 1;
+    if (reduced) {
+      this.explode = 0;
+      this.targetExplode = 0;
+      this.introT = 1;
+    }
+
+    // Pointer picking for interactive layer inspection
+    this.scene.onPointerDown = (_evt, pick) => {
+      if (pick && pick.hit && pick.pickedMesh && pick.pickedMesh.name.startsWith("layer")) {
+        const idx = parseInt(pick.pickedMesh.name.replace("layer", ""), 10);
+        if (!isNaN(idx)) this.inspectLayer(idx);
+      }
+    };
 
     this.scene.onBeforeRenderObservable.add(() => this.tick(this.engine.getDeltaTime() / 1000));
     this.engine.runRenderLoop(() => {
@@ -158,7 +228,84 @@ export class SceneController {
   }
 
   // ------------------------------------------------------------------ public API
-  /** `replay` re-runs the dive intro; pass false when only the numbers changed (e.g. a climate scenario). */
+  setOnInspect(cb: (data: LayerInspectData | null) => void): void {
+    this.onInspect = cb;
+  }
+
+  setOnTelemetry(cb: (data: SceneTelemetry) => void): void {
+    this.onTelemetry = cb;
+  }
+
+  setCameraPreset(preset: CameraPreset): void {
+    this.introT = 1;
+    this.isAnimatingCam = true;
+    this.targetCamAlpha = -Math.PI / 2;
+    if (preset === "perspective") {
+      this.targetCamBeta = 1.25;
+      this.targetCamRadius = 14;
+      this.camera.target = new Vector3(0, -2.6, 0);
+    } else if (preset === "cutaway") {
+      this.targetCamBeta = Math.PI / 2;
+      this.targetCamRadius = 11.5;
+      this.camera.target = new Vector3(0, -3.2, 0);
+    } else if (preset === "canopy") {
+      this.targetCamBeta = 0.22;
+      this.targetCamRadius = 12.5;
+      this.camera.target = new Vector3(0, 0, 0);
+    }
+  }
+
+  setExploded(exploded: boolean): void {
+    this.isExplodedManual = true;
+    this.targetExplode = exploded ? 1 : 0;
+  }
+
+  getExploded(): boolean {
+    return this.targetExplode > 0.5;
+  }
+
+  inspectLayer(idx: number): void {
+    if (!this.result || !this.strategy || idx < 0 || idx >= this.result.layers.length) {
+      this.clearInspection();
+      return;
+    }
+    const l = this.result.layers[idx];
+    const sim = this.strategy.sim;
+    const m = sim.moisture[idx]?.[this.dayIdx] ?? 0.5;
+    const ece = sim.ece[idx]?.[this.dayIdx] ?? 0;
+
+    const moisturePercent = Math.round(m * 100);
+    const moistureStatus =
+      m < 0.25 ? "dry" : m < 0.5 ? "stress" : m <= 1.05 ? "optimal" : "saturated";
+    const salinityDsm = Number(ece.toFixed(1));
+    const salinityStatus = ece < 2.0 ? "low" : ece < 4.0 ? "moderate" : "high";
+
+    // Highlight selected layer mesh
+    this.layerMats.forEach((mat, i) => {
+      mat.emissiveColor = i === idx ? new Color3(0.18, 0.16, 0.12) : Color3.Black();
+    });
+
+    this.onInspect?.({
+      layerIndex: idx,
+      nameKey: l.name_key,
+      topCm: l.top_cm,
+      bottomCm: l.bottom_cm,
+      texture: `${l.sand}% sand, ${l.silt}% silt, ${l.clay}% clay`,
+      moisturePercent,
+      moistureStatus,
+      salinityDsm,
+      salinityStatus,
+      organicMatter: l.om,
+    });
+  }
+
+  clearInspection(): void {
+    this.layerMats.forEach((mat) => {
+      mat.emissiveColor = Color3.Black();
+    });
+    this.onInspect?.(null);
+  }
+
   loadResult(result: AnalysisResult, replay = true): void {
     this.result = result;
     this.rebuildLayersFromResult();
@@ -171,11 +318,10 @@ export class SceneController {
     const s = this.result?.strategies.find((x) => x.id === id);
     if (!s) return;
     this.strategy = s;
-    this.currentCrop = "?"; // sentinel: force blades and roots to rebuild for the new strategy
+    this.currentCrop = "?"; // force blades and roots rebuild
     this.applyDay(this.dayIdx);
   }
 
-  /** t in 0..1 across the whole timeline. */
   setSeasonTime(t: number): void {
     if (!this.result) return;
     this.dayIdx = Math.round(clamp(t) * (this.result.timeline.days - 1));
@@ -200,8 +346,9 @@ export class SceneController {
   replay(): void {
     const reduced = typeof matchMedia === "function" && matchMedia("(prefers-reduced-motion: reduce)").matches;
     this.introT = reduced ? 1 : 0;
-    this.explode = reduced ? 1 : 0;
-    this.camera.radius = reduced ? 12 : 24;
+    this.explode = 0;
+    this.targetExplode = this.isExplodedManual ? 1 : 0;
+    this.camera.radius = reduced ? 14 : 24;
     this.camera.beta = reduced ? 1.25 : 0.8;
   }
 
@@ -218,29 +365,74 @@ export class SceneController {
   }
 
   // ------------------------------------------------------------------ construction
-  private specklePair(seed: number): { soil: DynamicTexture; salt: DynamicTexture } {
+  private specklePair(seed: number, textureStr = "loam", om = 1.5): { soil: DynamicTexture; salt: DynamicTexture } {
     const r = rng(seed);
-    const soil = new DynamicTexture(`soilTex${seed}`, { width: 256, height: 256 }, this.scene, true);
+    const size = 512;
+    const soil = new DynamicTexture(`soilTex${seed}`, { width: size, height: size }, this.scene, true);
     const ctx = soil.getContext();
-    ctx.fillStyle = "#d8d8d8";
-    ctx.fillRect(0, 0, 256, 256);
-    for (let i = 0; i < 2600; i++) {
-      const v = 150 + Math.floor(r() * 105);
-      ctx.fillStyle = `rgb(${v},${v},${v})`;
-      ctx.fillRect(r() * 256, r() * 256, 1 + r() * 3, 1 + r() * 3);
+
+    // 1. Natural horizontal strata base gradient
+    ctx.fillStyle = "#dfd8cc";
+    ctx.fillRect(0, 0, size, size);
+
+    for (let b = 0; b < 10; b++) {
+      const y = (b / 10) * size;
+      const bandH = (size / 10) * (0.8 + r() * 0.4);
+      const v = Math.floor(180 + (r() - 0.5) * 50);
+      ctx.fillStyle = `rgba(${v}, ${Math.floor(v * 0.92)}, ${Math.floor(v * 0.82)}, 0.45)`;
+      ctx.fillRect(0, y, size, bandH);
+    }
+
+    // 2. Micro-pores & aggregate crumb clusters
+    const isClay = textureStr.includes("clay");
+    const isSand = textureStr.includes("sand");
+    const particleCount = isSand ? 4600 : isClay ? 2200 : 3400;
+
+    for (let i = 0; i < particleCount; i++) {
+      const px = r() * size;
+      const py = r() * size;
+      const pSize = isSand ? 1.5 + r() * 3.2 : isClay ? 1.0 + r() * 1.8 : 1.2 + r() * 2.5;
+      const darkness = Math.floor(130 + r() * 110);
+      ctx.fillStyle = `rgb(${darkness}, ${Math.floor(darkness * 0.93)}, ${Math.floor(darkness * 0.85)})`;
+      ctx.beginPath();
+      ctx.arc(px, py, pSize, 0, Math.PI * 2);
+      ctx.fill();
+    }
+
+    // 3. Organic matter humus specks
+    const omSpecks = Math.floor(clamp(om, 0.5, 4.0) * 400);
+    for (let i = 0; i < omSpecks; i++) {
+      const px = r() * size;
+      const py = r() * size;
+      const s = 1.0 + r() * 2.5;
+      const shade = Math.floor(40 + r() * 45);
+      ctx.fillStyle = `rgba(${shade}, ${Math.floor(shade * 0.8)}, ${Math.floor(shade * 0.6)}, ${0.6 + r() * 0.35})`;
+      ctx.fillRect(px, py, s, s);
     }
     soil.update();
-    const salt = new DynamicTexture(`saltTex${seed}`, { width: 256, height: 256 }, this.scene, true);
+
+    // Salt efflorescence: dendritic crystalline clusters
+    const salt = new DynamicTexture(`saltTex${seed}`, { width: size, height: size }, this.scene, true);
     const sctx = salt.getContext();
-    sctx.clearRect(0, 0, 256, 256);
-    for (let i = 0; i < 700; i++) {
-      sctx.fillStyle = `rgba(255,255,255,${0.5 + r() * 0.5})`;
+    sctx.clearRect(0, 0, size, size);
+
+    for (let i = 0; i < 900; i++) {
+      const sx = r() * size;
+      const sy = r() * size;
+      const radius = 1.0 + r() * 3.0;
+      const alpha = 0.45 + r() * 0.55;
+      sctx.fillStyle = `rgba(255, 255, 255, ${alpha})`;
       sctx.beginPath();
-      sctx.arc(r() * 256, r() * 256, 0.8 + r() * 2.2, 0, Math.PI * 2);
+      sctx.arc(sx, sy, radius, 0, Math.PI * 2);
       sctx.fill();
+      if (r() < 0.28) {
+        sctx.fillRect(sx - radius * 1.4, sy - 0.5, radius * 2.8, 1);
+        sctx.fillRect(sx - 0.5, sy - radius * 1.4, 1, radius * 2.8);
+      }
     }
     salt.hasAlpha = true;
     salt.update();
+
     return { soil, salt };
   }
 
@@ -251,16 +443,19 @@ export class SceneController {
       const { soil, salt } = this.specklePair(11 + i);
       const mat = new StandardMaterial(`layerMat${i}`, this.scene);
       mat.diffuseTexture = soil;
-      mat.specularPower = 24;
+      mat.specularPower = 28;
       box.material = mat;
+
       const plane = MeshBuilder.CreatePlane(`salt${i}`, { width: W, height: h }, this.scene);
       const smat = new StandardMaterial(`saltMat${i}`, this.scene);
       smat.diffuseTexture = salt;
       smat.useAlphaFromDiffuseTexture = true;
-      smat.emissiveColor = new Color3(0.95, 0.95, 0.95);
-      smat.specularColor = Color3.Black();
+      smat.emissiveColor = new Color3(0.98, 0.98, 0.98);
+      smat.specularColor = new Color3(0.8, 0.8, 0.8);
+      smat.specularPower = 64;
       smat.alpha = 0;
       plane.material = smat;
+
       this.layerMeshes.push(box);
       this.layerMats.push(mat);
       this.saltPlanes.push(plane);
@@ -270,6 +465,60 @@ export class SceneController {
       top += h;
     });
     this.positionLayers();
+  }
+
+  private buildPedestal(): void {
+    const pedestal = MeshBuilder.CreateBox("pedestal", { width: W + 0.4, height: 0.25, depth: D + 0.4 }, this.scene);
+    const pMat = new StandardMaterial("pedestalMat", this.scene);
+    pMat.diffuseColor = new Color3(0.18, 0.17, 0.16);
+    pMat.specularColor = new Color3(0.1, 0.1, 0.1);
+    pedestal.material = pMat;
+    this.pedestalMesh = pedestal;
+
+    const shadowPlane = MeshBuilder.CreatePlane("groundShadow", { width: W + 2.4, height: D + 2.4 }, this.scene);
+    shadowPlane.rotation.x = Math.PI / 2;
+    const sMat = new StandardMaterial("groundShadowMat", this.scene);
+    const sTex = new DynamicTexture("shadowTex", { width: 128, height: 128 }, this.scene, true);
+    const sCtx = sTex.getContext();
+    const grad = sCtx.createRadialGradient(64, 64, 12, 64, 64, 64);
+    grad.addColorStop(0, "rgba(0, 0, 0, 0.55)");
+    grad.addColorStop(0.65, "rgba(0, 0, 0, 0.2)");
+    grad.addColorStop(1, "rgba(0, 0, 0, 0)");
+    sCtx.fillStyle = grad;
+    sCtx.fillRect(0, 0, 128, 128);
+    sTex.hasAlpha = true;
+    sTex.update();
+    sMat.diffuseTexture = sTex;
+    sMat.useAlphaFromDiffuseTexture = true;
+    sMat.specularColor = Color3.Black();
+    shadowPlane.material = sMat;
+    this.shadowMesh = shadowPlane;
+  }
+
+  private buildRainMesh(): void {
+    const n = 120;
+    const r = rng(99);
+    const buf = new Float32Array(n * 16);
+    for (let i = 0; i < n; i++) {
+      const x = (r() - 0.5) * (W + 1.2);
+      const y = r() * 5.5;
+      const z = (r() - 0.5) * (D + 1.2);
+      Matrix.Compose(
+        new Vector3(0.018, 0.38, 0.018),
+        Quaternion.Identity(),
+        new Vector3(x, y, z),
+      ).copyToArray(buf, i * 16);
+    }
+    const drop = MeshBuilder.CreateCylinder("raindrop", { height: 1, diameter: 1, tessellation: 3 }, this.scene);
+    const rMat = new StandardMaterial("rainMat", this.scene);
+    rMat.diffuseColor = new Color3(0.65, 0.82, 0.96);
+    rMat.emissiveColor = new Color3(0.5, 0.72, 0.92);
+    rMat.alpha = 0.5;
+    drop.material = rMat;
+    drop.thinInstanceSetBuffer("matrix", buf, 16, true);
+    drop.alwaysSelectAsActiveMesh = true;
+    drop.setEnabled(false);
+    this.rainMesh = drop;
   }
 
   private positionLayers(): void {
@@ -282,6 +531,13 @@ export class SceneController {
       this.saltPlanes[i].position.set(0, y, -D / 2 - 0.02);
       top += h;
     });
+    if (this.pedestalMesh) {
+      const pedY = -(top + 3 * gap + 0.13);
+      this.pedestalMesh.position.set(0, pedY, 0);
+      if (this.shadowMesh) {
+        this.shadowMesh.position.set(0, pedY - 0.14, 0);
+      }
+    }
   }
 
   private rebuildLayersFromResult(): void {
@@ -291,7 +547,6 @@ export class SceneController {
     });
   }
 
-  /** Map depth in cm to a world y on the cut face, using the exploded layout. */
   private cmToY(cm: number): number {
     const layers = this.result?.layers ?? [];
     let top = 0;
@@ -301,7 +556,7 @@ export class SceneController {
       const start = l ? l.top_cm : [0, 20, 50, 90][i];
       if (cm <= start + span || i === LAYER_H.length - 1) {
         const frac = clamp((cm - start) / span);
-        return -(top + frac * LAYER_H[i] + i * GAP);
+        return -(top + frac * LAYER_H[i] + i * GAP * this.explode);
       }
       top += LAYER_H[i];
     }
@@ -311,7 +566,7 @@ export class SceneController {
   private applyTier(q: Quality): void {
     this.tier = q;
     this.engine.setHardwareScalingLevel(TIERS[q].scale);
-    this.currentCrop = "?"; // blade and root counts depend on the tier
+    this.currentCrop = "?";
     if (this.strategy) this.applyDay(this.dayIdx);
   }
 
@@ -328,10 +583,15 @@ export class SceneController {
     if (!cropId) return;
     const look = CROP_LOOK[cropId] ?? DEFAULT_LOOK;
     this.bladeMat.diffuseColor = new Color3(...look.c);
-    const blade = MeshBuilder.CreateCylinder("blade", { height: 1, diameterTop: 0, diameterBottom: 0.09, tessellation: 4 }, this.scene);
+    const blade = MeshBuilder.CreateCylinder(
+      "blade",
+      { height: 1, diameterTop: 0, diameterBottom: 0.08, tessellation: 4 },
+      this.scene,
+    );
     blade.bakeTransformIntoVertices(Matrix.Translation(0, 0.5, 0));
     blade.material = this.bladeMat;
     blade.parent = this.fieldNode;
+
     const n = TIERS[this.tier].blades;
     const r = rng(7);
     const buf = new Float32Array(n * 16);
@@ -348,54 +608,125 @@ export class SceneController {
     this.blade = blade;
   }
 
+  private isTaproot(cropId: string): boolean {
+    return TAPROOT_CROPS.has(cropId);
+  }
+
   private buildRoots(cropId: string, maxCm: number): void {
     this.rootNode.getChildMeshes().forEach((m) => m.dispose());
     if (!cropId) return;
-    const r = rng(cropId.length * 131 + maxCm);
+
+    const isTap = this.isTaproot(cropId);
     const count = TIERS[this.tier].roots;
     const maxY = this.cmToY(maxCm);
     const z = -D / 2 - 0.06;
-    for (let i = 0; i < count; i++) {
-      const x0 = ((i + 0.5) / count - 0.5) * (W - 0.8) + (r() - 0.5) * 0.2;
-      const depth = maxY * (0.55 + r() * 0.45);
-      const pts: Vector3[] = [];
-      const steps = 16;
-      let x = x0;
-      for (let s = 0; s <= steps; s++) {
-        x += (r() - 0.5) * 0.14;
-        pts.push(new Vector3(x, (depth * s) / steps - 0.02, z - r() * 0.03));
+    const r = rng(cropId.length * 131 + maxCm);
+
+    if (isTap) {
+      // Taproot architecture: primary tapering taproot with lateral secondaries
+      const primaryCount = Math.max(3, Math.floor(count * 0.45));
+      for (let i = 0; i < primaryCount; i++) {
+        const x0 = ((i + 0.5) / primaryCount - 0.5) * (W - 1.2) + (r() - 0.5) * 0.25;
+        const depth = maxY * (0.8 + r() * 0.2);
+        const pts: Vector3[] = [];
+        const steps = 18;
+        let x = x0;
+        for (let s = 0; s <= steps; s++) {
+          x += (r() - 0.5) * 0.1;
+          pts.push(new Vector3(x, (depth * s) / steps - 0.02, z - r() * 0.02));
+        }
+        const tap = MeshBuilder.CreateTube(`taproot${i}`, { path: pts, radius: 0.042, tessellation: 6 }, this.scene);
+        tap.material = this.rootMat;
+        tap.parent = this.rootNode;
+
+        const branchCount = 3 + Math.floor(r() * 2);
+        for (let b = 0; b < branchCount; b++) {
+          const fromStep = 3 + Math.floor(r() * 9);
+          const from = pts[fromStep] ?? pts[0];
+          const dir = (b % 2 === 0 ? 1 : -1) * (0.7 + r() * 0.5);
+          const bdepth = from.y + (depth - from.y) * 0.35 * (0.6 + r() * 0.4);
+          const bp: Vector3[] = [];
+          for (let s = 0; s <= 7; s++) {
+            const frac = s / 7;
+            bp.push(new Vector3(from.x + dir * frac * 0.32, from.y + (bdepth - from.y) * frac, z - 0.01));
+          }
+          const bt = MeshBuilder.CreateTube(`tapbranch${i}_${b}`, { path: bp, radius: 0.018, tessellation: 4 }, this.scene);
+          bt.material = this.rootMat;
+          bt.parent = this.rootNode;
+        }
       }
-      const tube = MeshBuilder.CreateTube(`root${i}`, { path: pts, radius: 0.035, tessellation: 5 }, this.scene);
-      tube.material = this.rootMat;
-      tube.parent = this.rootNode;
-      const branches = i % 2 === 0 ? 2 : 1;
-      for (let b = 0; b < branches; b++) {
-        const from = pts[4 + Math.floor(r() * 8)];
-        const dir = r() < 0.5 ? -1 : 1;
-        const bp: Vector3[] = [];
-        for (let s = 0; s <= 6; s++) bp.push(new Vector3(from.x + dir * s * 0.18, from.y + (depth - from.y) * 0.1 * s * 0.5, z - 0.01));
-        const bt = MeshBuilder.CreateTube(`rootb${i}_${b}`, { path: bp, radius: 0.018, tessellation: 4 }, this.scene);
-        bt.material = this.rootMat;
-        bt.parent = this.rootNode;
+    } else {
+      // Fibrous crown root system: dense network spreading laterally
+      for (let i = 0; i < count; i++) {
+        const plantCenter = Math.floor(i / 3);
+        const plantCount = Math.ceil(count / 3);
+        const x0 = ((plantCenter + 0.5) / plantCount - 0.5) * (W - 1.0) + (r() - 0.5) * 0.15;
+        const spreadAngle = ((i % 3) - 1) * 0.32 + (r() - 0.5) * 0.12;
+        const depth = maxY * (0.65 + r() * 0.35);
+        const pts: Vector3[] = [];
+        const steps = 16;
+        for (let s = 0; s <= steps; s++) {
+          const frac = s / steps;
+          const x = x0 + spreadAngle * frac * 0.75 + (r() - 0.5) * 0.07;
+          pts.push(new Vector3(x, depth * frac - 0.02, z - r() * 0.025));
+        }
+        const fibrous = MeshBuilder.CreateTube(`fibroot${i}`, { path: pts, radius: 0.032, tessellation: 5 }, this.scene);
+        fibrous.material = this.rootMat;
+        fibrous.parent = this.rootNode;
       }
     }
   }
 
-  // ------------------------------------------------------------------ per-frame and per-day updates
+  // ------------------------------------------------------------------ per-frame updates
   private tick(dt: number): void {
     this.time += dt;
+
+    // Intro camera dive
     if (this.introT < 1) {
       this.introT = Math.min(1, this.introT + dt / 3.4);
       const t = smooth(this.introT);
-      this.camera.radius = lerp(24, 12, t);
+      this.camera.radius = lerp(24, 14, t);
       this.camera.beta = lerp(0.8, 1.25, t);
-      this.explode = smooth((this.introT - 0.35) / 0.65);
-      this.positionLayers();
+      if (!this.isExplodedManual) {
+        this.explode = smooth((this.introT - 0.35) / 0.65);
+        this.positionLayers();
+      }
       this.rootNode.setEnabled(this.introT > 0.92);
     } else if (!this.rootNode.isEnabled() && this.strategy) {
       this.rootNode.setEnabled(true);
     }
-    this.fieldNode.rotation.z = 0.015 * Math.sin(this.time * 1.4);
+
+    // Camera preset animation
+    if (this.isAnimatingCam) {
+      const k = Math.min(1, dt * 5.5);
+      this.camera.alpha = lerp(this.camera.alpha, this.targetCamAlpha, k);
+      this.camera.beta = lerp(this.camera.beta, this.targetCamBeta, k);
+      this.camera.radius = lerp(this.camera.radius, this.targetCamRadius, k);
+      if (
+        Math.abs(this.camera.radius - this.targetCamRadius) < 0.05 &&
+        Math.abs(this.camera.beta - this.targetCamBeta) < 0.01
+      ) {
+        this.isAnimatingCam = false;
+      }
+    }
+
+    // Explode smoothing
+    if (Math.abs(this.explode - this.targetExplode) > 0.005) {
+      this.explode = lerp(this.explode, this.targetExplode, Math.min(1, dt * 6));
+      this.positionLayers();
+    }
+
+    // Multi-frequency wind breeze
+    const breeze = Math.sin(this.time * 2.2) * 0.012 + Math.cos(this.time * 1.1) * 0.006;
+    this.fieldNode.rotation.z = breeze;
+
+    // Falling rain streaks
+    if (this.rainMesh && this.rainMesh.isEnabled()) {
+      this.rainMesh.position.y -= dt * 8.5;
+      if (this.rainMesh.position.y < -3.2) {
+        this.rainMesh.position.y = 0;
+      }
+    }
 
     if (this.auto && ++this.frames === 150) {
       const fps = this.engine.getFps();
@@ -409,17 +740,25 @@ export class SceneController {
     const res = this.result;
     if (!s || !res) return;
     const sim = s.sim;
+
+    // Soil moisture & salinity visuals
     for (let i = 0; i < this.layerMats.length; i++) {
       const m = sim.moisture[i]?.[day] ?? 0.5;
       const wet = clamp(m / 1.1);
       const base = this.layerBase[i];
-      const k = 1 - 0.5 * wet;
+      const k = 1 - 0.48 * wet;
       this.layerMats[i].diffuseColor = new Color3(base.r * k, base.g * k, base.b * k);
-      this.layerMats[i].specularColor = new Color3(0.05 + 0.25 * wet, 0.05 + 0.25 * wet, 0.05 + 0.25 * wet);
+
+      // Specular sheen on damp soil
+      const wetSheen = 0.04 + 0.32 * Math.pow(wet, 2);
+      this.layerMats[i].specularColor = new Color3(wetSheen, wetSheen, wetSheen);
+      this.layerMats[i].specularPower = lerp(16, 64, wet);
+
       const ece = sim.ece[i]?.[day] ?? 0;
       this.saltMats[i].alpha = clamp((ece - 2.0) / 10, 0, 0.9);
     }
 
+    // Crop lifecycle & root updates
     const cropId = this.currentCropId();
     if (cropId !== (this.currentCrop || null)) {
       const rootMax = cropId ? Math.max(...sim.root_cm.filter((_, d) => sim.crop_idx[d] === sim.crop_idx[day])) : 0;
@@ -433,7 +772,17 @@ export class SceneController {
     const look = cropId ? (CROP_LOOK[cropId] ?? DEFAULT_LOOK) : DEFAULT_LOOK;
     this.fieldNode.scaling.y = cropId ? Math.max(0.05, (sim.canopy[day] ?? 0) * look.h) : 0.001;
 
-    // Weather mood from the climate series.
+    // Root stress coloration
+    const cropIdx = sim.crop_idx[day];
+    const ws = cropIdx >= 0 ? s.seasons[cropIdx]?.indicators?.water_stress ?? 0 : 0;
+    const ss = cropIdx >= 0 ? s.seasons[cropIdx]?.indicators?.salinity_stress ?? 0 : 0;
+    const stress = clamp(Math.max(ws, ss));
+    const rootR = lerp(0.95, 0.85, stress);
+    const rootG = lerp(0.92, 0.62, stress);
+    const rootB = lerp(0.84, 0.38, stress);
+    this.rootMat.emissiveColor = new Color3(rootR, rootG, rootB);
+
+    // Weather ambiance
     const tmax = res.climate.tmax[day] ?? 28;
     const rain = res.climate.rain[day] ?? 0;
     const heat = clamp((tmax - 24) / 14);
@@ -441,10 +790,30 @@ export class SceneController {
     const warm = this.theme === "dark" ? [0.12, 0.1, 0.09] : [0.9, 0.82, 0.68];
     const grey = this.theme === "dark" ? [0.1, 0.11, 0.13] : [0.55, 0.6, 0.66];
     const mix = (a: number[], b: number[], t: number) => a.map((v, i) => lerp(v, b[i], t));
+
     let c = mix(base, warm, heat * 0.7);
     if (rain > 1) c = mix(c, grey, clamp(rain / 12) * 0.8 + 0.2);
     this.scene.clearColor = new Color4(c[0], c[1], c[2], 1);
     this.sun.intensity = (this.theme === "dark" ? 0.55 : 0.95) * (rain > 1 ? 0.65 : 1);
+
+    if (this.rainMesh) {
+      this.rainMesh.setEnabled(rain > 2.0 && this.tier !== "low");
+    }
+
+    // Emit live telemetry
+    if (this.onTelemetry) {
+      const activeSeason = cropIdx >= 0 ? s.seasons[cropIdx]?.season ?? null : null;
+      this.onTelemetry({
+        cropId,
+        season: activeSeason,
+        rootCm: Math.round(root),
+        canopyPct: Math.round((sim.canopy[day] ?? 0) * 100),
+        et0Mm: Number((res.climate.et0[day] ?? 0).toFixed(1)),
+        rainMm: Number(rain.toFixed(1)),
+        tempC: Math.round(tmax),
+      });
+    }
+
     this.onDay?.(day);
   }
 }

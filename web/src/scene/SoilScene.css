@@ -1,0 +1,298 @@
+/* 3D Soil Scene Glassmorphic Overlays & Controls */
+
+.scene-container {
+  position: relative;
+  block-size: min(64vh, 580px);
+  min-block-size: 340px;
+  border-radius: var(--radius);
+  overflow: hidden;
+  border: 1px solid var(--line);
+  background: #9ec7ea;
+}
+
+.scene-container canvas {
+  inline-size: 100%;
+  block-size: 100%;
+  display: block;
+  touch-action: none;
+  outline: none;
+}
+
+/* Base Glassmorphic Surface */
+.scene-glass {
+  background: color-mix(in srgb, var(--surface) 86%, transparent);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow);
+  border-radius: 8px;
+  color: var(--ink);
+}
+
+/* Overlay Frame (pointer-events pass-through) */
+.scene-overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 10px;
+  z-index: 2;
+}
+
+.scene-overlay > * {
+  pointer-events: auto;
+}
+
+/* Top Bar: Telemetry + Controls */
+.scene-top-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+/* Live Telemetry Chip */
+.scene-telemetry {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 12px;
+  font-size: 0.82rem;
+  font-weight: 500;
+  flex-wrap: wrap;
+}
+
+.scene-telemetry-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.scene-telemetry-badge {
+  padding: 1px 7px;
+  border-radius: 999px;
+  background: var(--bg);
+  border: 1px solid var(--line);
+  font-weight: 600;
+}
+
+/* Toolbar Buttons */
+.scene-toolbar {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.scene-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 10px;
+  min-block-size: 36px;
+  font-size: 0.8rem;
+  font-weight: 500;
+  cursor: pointer;
+  border-radius: 8px;
+  border: 1px solid var(--line);
+  background: color-mix(in srgb, var(--surface) 88%, transparent);
+  color: var(--ink);
+  transition: background 150ms ease, border-color 150ms ease, transform 100ms ease;
+}
+
+.scene-btn:hover {
+  background: var(--surface);
+  border-color: var(--accent);
+}
+
+.scene-btn:active {
+  transform: scale(0.97);
+}
+
+.scene-btn.active {
+  background: var(--accent);
+  color: var(--accent-ink);
+  border-color: var(--accent);
+}
+
+.scene-btn svg {
+  inline-size: 14px;
+  block-size: 14px;
+  flex-shrink: 0;
+}
+
+/* Vertical Depth Ruler (Left/Inline-Start) */
+.scene-depth-ruler {
+  position: absolute;
+  inset-inline-start: 12px;
+  inset-block-start: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 8px 10px;
+  font-size: 0.74rem;
+  font-variant-numeric: tabular-nums;
+  z-index: 3;
+}
+
+.scene-depth-tick {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--muted);
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 2px 4px;
+  border-radius: 4px;
+  text-align: start;
+}
+
+.scene-depth-tick:hover {
+  color: var(--ink);
+  background: color-mix(in srgb, var(--surface) 60%, transparent);
+}
+
+.scene-depth-tick i {
+  display: inline-block;
+  inline-size: 8px;
+  block-size: 1px;
+  background: var(--muted);
+}
+
+/* Layer Inspector Popup Card */
+.scene-inspector {
+  position: absolute;
+  inset-inline-end: 12px;
+  inset-block-start: 56px;
+  max-inline-size: 280px;
+  inline-size: calc(100% - 24px);
+  padding: 12px 14px;
+  display: grid;
+  gap: 8px;
+  font-size: 0.82rem;
+  z-index: 10;
+  animation: scene-fade-in 180ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes scene-fade-in {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.scene-inspector-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-block-end: 1px solid var(--line);
+  padding-block-end: 6px;
+}
+
+.scene-inspector-title {
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.scene-inspector-close {
+  background: none;
+  border: none;
+  font-size: 1.1rem;
+  line-height: 1;
+  padding: 2px 6px;
+  min-block-size: auto;
+  cursor: pointer;
+  color: var(--muted);
+  border-radius: 4px;
+}
+
+.scene-inspector-close:hover {
+  color: var(--bad);
+  background: color-mix(in srgb, var(--bad) 10%, transparent);
+}
+
+.scene-inspector-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+}
+
+.scene-inspector-label {
+  color: var(--muted);
+  font-size: 0.78rem;
+}
+
+.scene-status-pill {
+  padding: 1px 7px;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.scene-status-optimal {
+  background: color-mix(in srgb, var(--good) 15%, transparent);
+  color: var(--good);
+}
+
+.scene-status-stress,
+.scene-status-moderate {
+  background: color-mix(in srgb, var(--warn) 15%, transparent);
+  color: var(--warn);
+}
+
+.scene-status-dry,
+.scene-status-high {
+  background: color-mix(in srgb, var(--bad) 15%, transparent);
+  color: var(--bad);
+}
+
+.scene-status-low {
+  background: color-mix(in srgb, var(--muted) 15%, transparent);
+  color: var(--muted);
+}
+
+/* Fallback message */
+.scene-fallback {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 20px;
+  text-align: center;
+  background: var(--surface);
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 640px) {
+  .scene-container {
+    block-size: 400px;
+  }
+  .scene-top-bar {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .scene-telemetry {
+    font-size: 0.75rem;
+    padding: 4px 8px;
+  }
+  .scene-toolbar {
+    justify-content: flex-end;
+  }
+  .scene-btn {
+    padding: 4px 8px;
+    font-size: 0.76rem;
+  }
+  .scene-depth-ruler {
+    display: none; /* hide on very small phones to prevent screen crowding */
+  }
+}
