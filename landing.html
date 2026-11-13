@@ -191,19 +191,31 @@
 
       <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         
-        <!-- Tag / Eyebrow Badge -->
-        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold bg-earth-200/80 dark:bg-earth-900 text-earth-800 dark:text-earth-200 border border-earth-300 dark:border-earth-800 shadow-sm mb-6">
-          <span class="w-2 h-2 rounded-full bg-leaf-600 animate-ping"></span>
-          <span data-i18n="heroBadge">Precision Soil Intelligence • NASA Earth Data</span>
-        </div>
+        <!-- Hero Headline Showcase Container with Background Image -->
+        <div class="relative rounded-3xl overflow-hidden border border-earth-300/80 dark:border-earth-800 shadow-2xl p-8 sm:p-14 lg:p-16 mb-8 text-center">
+          <!-- Background Image Layer -->
+          <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 hover:scale-105" style="background-image: url('Gemini_Generated_Image_fzlkafzlkafzlkaf.jpeg');"></div>
+          
+          <!-- Frosted Glass Overlay for Contrast in Light & Dark Mode -->
+          <div class="absolute inset-0 bg-gradient-to-b from-white/75 via-white/65 to-white/80 dark:from-earth-950/80 dark:via-earth-950/75 dark:to-earth-950/85 backdrop-blur-[1px]"></div>
 
-        <!-- Main Catchy Headline -->
-        <h1 class="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-[1.2] text-earth-950 dark:text-earth-50 mb-8" data-i18n="heroTitle">
-          Where Space Data Meets the Root Zone: <br>
-          <span class="bg-gradient-to-r from-leaf-700 via-leaf-600 to-accentOrange dark:from-leaf-400 dark:via-accentGold dark:to-leaf-400 bg-clip-text text-transparent">
-            Precision Soil Intelligence
-          </span>
-        </h1>
+          <!-- Headline Content -->
+          <div class="relative z-10">
+            <!-- Tag / Eyebrow Badge -->
+            <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-semibold bg-white/85 dark:bg-earth-900/85 text-earth-800 dark:text-earth-200 border border-earth-300/80 dark:border-earth-700 shadow-sm mb-6 backdrop-blur-md">
+              <span class="w-2 h-2 rounded-full bg-leaf-600 animate-ping"></span>
+              <span data-i18n="heroBadge">Precision Soil Intelligence • NASA Earth Data</span>
+            </div>
+
+            <!-- Main Catchy Headline -->
+            <h1 class="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-[1.2] text-earth-950 dark:text-earth-50" data-i18n="heroTitle">
+              Where Space Data Meets the Root Zone: <br>
+              <span class="bg-gradient-to-r from-leaf-700 via-leaf-600 to-accentOrange dark:from-leaf-400 dark:via-accentGold dark:to-leaf-400 bg-clip-text text-transparent">
+                Precision Soil Intelligence
+              </span>
+            </h1>
+          </div>
+        </div>
 
         <!-- Why choose Journey into the Soil? Card -->
         <div class="mt-8 text-start rounded-3xl border border-earth-300/80 dark:border-earth-800 bg-white/85 dark:bg-earth-900/85 backdrop-blur-md p-6 sm:p-9 shadow-xl relative overflow-hidden">
