@@ -17,7 +17,7 @@ const GAP = 1.3;
 const SW = 60;
 const DEP = 60;
 const DUR = 9.6;
-const HAZE = [0.91, 0.81, 0.61];
+const HAZE = [0.84, 0.92, 0.98]; // clean clear sky blue mist (#d6ebfa)
 const DARK = [0.05, 0.035, 0.02];
 
 const sm = (x: number) => {
@@ -97,19 +97,20 @@ export class SceneController {
     this.renderer.setPixelRatio(Math.min(2, window.devicePixelRatio || 1));
 
     this.scene = new THREE.Scene();
-    this.scene.fog = new THREE.Fog(0xe8cf9b, 28, 105);
+    this.scene.fog = new THREE.Fog(0xd6ebfa, 35, 115);
 
     this.cam = new THREE.PerspectiveCamera(38, 1, 0.1, 120);
 
-    // Lighting
-    const amb = new THREE.AmbientLight(0xffffff, 0.85);
+    // Lighting (clean daylight without yellow glare)
+    const amb = new THREE.AmbientLight(0xffffff, 0.92);
     this.scene.add(amb);
 
-    const dl = new THREE.DirectionalLight(0xfff0d0, 0.95);
-    dl.position.set(-5, 8, 9);
+    const dl = new THREE.DirectionalLight(0xffffff, 0.98);
+    dl.position.set(-5, 9, 8);
     this.scene.add(dl);
 
-    const rim = new THREE.PointLight(0xffc37a, 0.7, 30);
+    // Cool sky-fill bounce light
+    const rim = new THREE.PointLight(0x98cbf8, 0.55, 35);
     rim.position.set(6, -2, 6);
     this.scene.add(rim);
 
@@ -206,10 +207,10 @@ export class SceneController {
     this.dust = new THREE.Points(
       pg,
       new THREE.PointsMaterial({
-        color: 0xffe6b0,
-        size: 0.06,
+        color: 0xdaf0ff,
+        size: 0.05,
         transparent: true,
-        opacity: 0.5,
+        opacity: 0.45,
         depthWrite: false,
       })
     );
