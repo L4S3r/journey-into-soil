@@ -11,3 +11,7 @@ data/app.db
 *.sqlite
 .DS_Store
 .netrc
+
+# local secrets and run logs
+.env.*
+logs/
