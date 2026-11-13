@@ -7,7 +7,7 @@ import sys
 from pathlib import Path
 
 root = Path(__file__).resolve().parents[1]
-load = lambda p: json.loads((root / p).read_text(encoding="utf-8"))  # noqa: E731
+load = lambda p: json.loads((root / p).read_text(encoding="utf-8"))
 engine_en, engine_ar = load("contracts/i18n/en.json"), load("contracts/i18n/ar.json")
 ui_en, ui_ar = load("web/src/i18n/ui.en.json"), load("web/src/i18n/ui.ar.json")
 errors = []

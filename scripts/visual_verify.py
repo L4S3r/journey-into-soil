@@ -3,10 +3,8 @@
 Captures screenshots of .scene-container at 1280px and 390px, en/ar, light/dark,
 with cutaway + explode + inspector open.
 """
-import os
-import sys
-import time
 from pathlib import Path
+
 from playwright.sync_api import sync_playwright
 
 OUT_DIR = Path("docs/screenshots")

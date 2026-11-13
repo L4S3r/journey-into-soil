@@ -14,10 +14,9 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "api"))
 
-from jsonschema import validate  # noqa: E402
-
-from app.engine.pipeline import run  # noqa: E402
-from app.schemas.request import AnalysisRequest  # noqa: E402
+from app.engine.pipeline import run
+from app.schemas.request import AnalysisRequest
+from jsonschema import validate
 
 
 def main() -> None:

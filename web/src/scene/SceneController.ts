@@ -36,7 +36,7 @@ import type {
 
 const W = 8; // block width (x)
 const D = 4; // block depth (z)
-const GAP = 0.22; // gap between layers when exploded
+const GAP = 0.65; // gap between layers when exploded
 const LAYER_H = [1.3, 1.4, 1.6, 1.9]; // world height per layer
 
 const TIERS: Record<Quality, { scale: number; blades: number; roots: number }> = {
@@ -227,6 +227,7 @@ export class SceneController {
     this.buildRainMesh();
     this.buildReticle();
     this.buildSurroundingField();
+    this.positionLayers();
     this.applyTier("high");
 
     const reduced = typeof matchMedia === "function" && matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -296,7 +297,7 @@ export class SceneController {
     } else if (stage === "underground") {
       this.targetCamBeta = 1.25;
       this.targetCamRadius = 13.5;
-      this.targetCamTarget = new Vector3(0, -2.8, 0);
+      this.targetCamTarget = new Vector3(0, -3.1, 0);
       this.targetExplode = 0;
       this.fieldGroundNode?.setEnabled(false);
       this.reticleMesh?.setEnabled(false);
@@ -304,14 +305,16 @@ export class SceneController {
       this.shadowMesh?.setEnabled(true);
     } else if (stage === "layers") {
       this.targetCamBeta = 1.28;
-      this.targetCamRadius = 15.5;
-      this.targetCamTarget = new Vector3(0, -3.2, 0);
+      this.targetCamRadius = 16.5;
+      this.targetCamTarget = new Vector3(0, -4.0, 0);
       this.targetExplode = 1;
       this.fieldGroundNode?.setEnabled(false);
       this.reticleMesh?.setEnabled(false);
       this.pedestalMesh?.setEnabled(true);
       this.shadowMesh?.setEnabled(true);
     }
+
+    this.positionLayers();
 
     if (this.onStageChange) this.onStageChange(stage);
   }
@@ -368,23 +371,42 @@ export class SceneController {
       return;
     }
 
-    if (this.diveStage === "field") {
+    if (this.diveStage !== "layers") {
       this.setDiveStage("layers");
     }
 
     this.focusedLayerIdx = idx;
     this.isAnimatingCam = true;
-    this.targetCamAlpha = -Math.PI / 2;
-    this.targetCamBeta = 1.30;
-    this.targetCamRadius = 8.5; // close-up zoom
+
+    const isRtl = typeof document !== "undefined" && document.documentElement.dir === "rtl";
+    const xSign = isRtl ? 1 : -1;
+    const isDesktop = typeof window !== "undefined" && window.innerWidth >= 768;
+    this.targetCamAlpha = isDesktop ? -Math.PI / 2 - xSign * 0.10 : -Math.PI / 2;
+    this.targetCamBeta = 1.34;
+    this.targetCamRadius = isDesktop ? 6.2 : 7.0;
 
     const box = this.layerMeshes[idx];
     const targetY = box ? box.position.y : -2.5;
-    this.targetCamTarget = new Vector3(0, targetY, 0);
+    const targetX = isDesktop ? xSign * 1.35 : 0;
+    this.targetCamTarget = new Vector3(targetX, targetY, 0);
 
     // Warm luminous highlight on the selected stratum; subtle darkening on others
     this.layerMats.forEach((mat, i) => {
-      mat.emissiveColor = i === idx ? new Color3(0.32, 0.28, 0.18) : new Color3(0.02, 0.02, 0.02);
+      mat.emissiveColor = i === idx ? new Color3(0.42, 0.36, 0.22) : new Color3(0.015, 0.015, 0.015);
+    });
+
+    this.saltPlanes.forEach((_, i) => {
+      const smat = this.saltMats[i];
+      if (smat) {
+        if (smat.metadata?.simAlpha === undefined) {
+          smat.metadata = { ...(smat.metadata || {}), simAlpha: smat.alpha };
+        }
+        if (i === idx) {
+          smat.alpha = Math.min(1.0, (smat.metadata?.simAlpha ?? 0.25) + 0.35);
+        } else {
+          smat.alpha = (smat.metadata?.simAlpha ?? 0.25) * 0.4;
+        }
+      }
     });
 
     this.inspectLayer(idx);
@@ -396,11 +418,18 @@ export class SceneController {
     this.isAnimatingCam = true;
     this.targetCamAlpha = -Math.PI / 2;
     this.targetCamBeta = this.targetExplode > 0.5 ? 1.28 : 1.25;
-    this.targetCamRadius = this.targetExplode > 0.5 ? 15.5 : 13.5;
-    this.targetCamTarget = new Vector3(0, this.targetExplode > 0.5 ? -3.2 : -2.8, 0);
+    this.targetCamRadius = this.targetExplode > 0.5 ? 16.5 : 13.5;
+    this.targetCamTarget = new Vector3(0, this.targetExplode > 0.5 ? -4.0 : -3.1, 0);
 
     this.layerMats.forEach((mat) => {
       mat.emissiveColor = Color3.Black();
+    });
+
+    this.saltPlanes.forEach((_, i) => {
+      const smat = this.saltMats[i];
+      if (smat && smat.metadata?.simAlpha !== undefined) {
+        smat.alpha = smat.metadata.simAlpha;
+      }
     });
 
     this.clearInspection();
@@ -434,9 +463,11 @@ export class SceneController {
       mat.emissiveColor =
         i === idx
           ? this.focusedLayerIdx === idx
-            ? new Color3(0.32, 0.28, 0.18)
+            ? new Color3(0.42, 0.36, 0.22)
             : new Color3(0.18, 0.16, 0.12)
-          : Color3.Black();
+          : this.focusedLayerIdx !== null
+            ? new Color3(0.015, 0.015, 0.015)
+            : Color3.Black();
     });
 
     this.onInspect?.({
@@ -624,6 +655,7 @@ export class SceneController {
     sMat.specularColor = Color3.Black();
     shadowPlane.material = sMat;
     this.shadowMesh = shadowPlane;
+    this.positionLayers();
   }
 
   private buildRainMesh(): void {
@@ -728,7 +760,10 @@ export class SceneController {
     if (this.focusedLayerIdx !== null) {
       const box = this.layerMeshes[this.focusedLayerIdx];
       if (box) {
-        this.targetCamTarget = new Vector3(0, box.position.y, 0);
+        const isRtl = typeof document !== "undefined" && document.documentElement.dir === "rtl";
+        const xSign = isRtl ? 1 : -1;
+        const isDesktop = typeof window !== "undefined" && window.innerWidth >= 768;
+        this.targetCamTarget = new Vector3(isDesktop ? xSign * 1.35 : 0, box.position.y, 0);
       }
     }
   }
@@ -957,7 +992,13 @@ export class SceneController {
       this.layerMats[i].specularPower = lerp(16, 64, wet);
 
       const ece = sim.ece[i]?.[day] ?? 0;
-      this.saltMats[i].alpha = clamp((ece - 2.0) / 10, 0, 0.9);
+      const baseAlpha = clamp((ece - 2.0) / 10, 0, 0.9);
+      this.saltMats[i].metadata = { ...(this.saltMats[i].metadata || {}), simAlpha: baseAlpha };
+      if (this.focusedLayerIdx !== null) {
+        this.saltMats[i].alpha = i === this.focusedLayerIdx ? Math.min(1.0, baseAlpha + 0.35) : baseAlpha * 0.4;
+      } else {
+        this.saltMats[i].alpha = baseAlpha;
+      }
     }
 
     // Crop lifecycle & root updates

@@ -426,6 +426,34 @@ export function SoilScene() {
                 </span>
               </div>
 
+              <div className="scene-inspector-texture-box">
+                <div
+                  className="scene-inspector-donut"
+                  style={{
+                    background: `conic-gradient(#e3cf9a 0 ${inspectedLayer.sand}%, #a89578 ${inspectedLayer.sand}% ${inspectedLayer.sand + inspectedLayer.silt}%, #c97a55 ${inspectedLayer.sand + inspectedLayer.silt}% 100%)`,
+                  }}
+                  role="img"
+                  aria-label={`${t("ui.layer_texture")}: ${inspectedLayer.sand}% ${t("ui.texture_sand")}, ${inspectedLayer.silt}% ${t("ui.texture_silt")}, ${inspectedLayer.clay}% ${t("ui.texture_clay")}`}
+                />
+                <div className="scene-inspector-texture-details">
+                  <div className="scene-inspector-texture-line">
+                    <span className="scene-texture-swatch" style={{ background: "#e3cf9a" }} />
+                    <span className="scene-texture-name">{t("ui.texture_sand")}</span>
+                    <b><bdi dir="ltr">{inspectedLayer.sand}%</bdi></b>
+                  </div>
+                  <div className="scene-inspector-texture-line">
+                    <span className="scene-texture-swatch" style={{ background: "#a89578" }} />
+                    <span className="scene-texture-name">{t("ui.texture_silt")}</span>
+                    <b><bdi dir="ltr">{inspectedLayer.silt}%</bdi></b>
+                  </div>
+                  <div className="scene-inspector-texture-line">
+                    <span className="scene-texture-swatch" style={{ background: "#c97a55" }} />
+                    <span className="scene-texture-name">{t("ui.texture_clay")}</span>
+                    <b><bdi dir="ltr">{inspectedLayer.clay}%</bdi></b>
+                  </div>
+                </div>
+              </div>
+
               <div className="scene-inspector-row">
                 <span className="scene-inspector-label">{t("ui.om_label")}:</span>
                 <span><bdi dir="ltr">{inspectedLayer.organicMatter}%</bdi></span>
