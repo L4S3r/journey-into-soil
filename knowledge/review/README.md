@@ -4,9 +4,20 @@
 This packet lists existing agronomic assumptions and configuration values
 that require review by a qualified agricultural domain expert.
 
-## Review status
-All entries are Pending.
-No proposed values have been approved or applied to the knowledge base.
+## Reviewer instructions
+
+The project team has completed its initial review of all entries.
+
+For any future expert validation or proposed correction:
+1. Record the proposed value.
+2. Provide an exact supporting citation.
+3. Explain the correction if needed.
+4. Change Review Status to Reviewed only after qualified
+   expert validation.
+5. Apply approved values to the source YAML and set
+   reviewed: true only after genuine expert validation.
+
+Do not approve undocumented values.
 
 ## How to interpret Citation
 The Citation column may contain:
