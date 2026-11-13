@@ -7,7 +7,7 @@ from datetime import date, datetime, timedelta, timezone
 
 from .. import knowledge
 from ..schemas.request import AnalysisRequest
-from ..services.climate import get_climate, get_historical_climate_series
+from ..services.climate import find_pack, get_historical_climate_series
 from ..sim.runner import run_timeline
 from ..sim.types import CropSeason, DayInput
 from . import explain, filters, profile, scoring, strategies, uncertainty
@@ -90,21 +90,24 @@ def _strategy_json(item: dict, cand: Cand, ctx: Ctx, existing: Cand, climate, in
 
 def _nasa_panel(climate) -> list[dict]:
     pack = climate.source == "pack"
+    has_soil = pack and bool(getattr(climate, "soil", None))
     return [
         {"id": "power", "name_key": "nasa.power", "role_key": "nasa.power_role", "status": "pack" if pack else "placeholder", "resolution_km": 50},
         {"id": "gpm", "name_key": "nasa.gpm", "role_key": "nasa.gpm_role", "status": "planned", "resolution_km": 10},
         {"id": "smap", "name_key": "nasa.smap", "role_key": "nasa.smap_role", "status": "planned", "resolution_km": 9},
         {"id": "ndvi", "name_key": "nasa.ndvi", "role_key": "nasa.ndvi_role", "status": "planned", "resolution_km": 0.03},
-        {"id": "soilgrids", "name_key": "nasa.soilgrids", "role_key": "nasa.soilgrids_role", "status": "planned", "resolution_km": 0.25},
+        {"id": "soilgrids", "name_key": "nasa.soilgrids", "role_key": "nasa.soilgrids_role", "status": "pack" if has_soil else "planned", "resolution_km": 0.25},
     ]
 
 
 def run(req: AnalysisRequest) -> dict:
     ref = req.reference_date or date.today()
     flags, input_status, hist = validate(req)
+    pack = find_pack(req.lat, req.lon)
+    pack_soil = pack.get("soil") if pack else None
     crops = knowledge.crops()
     hist_crops = [crops[h["crop"]] for h in hist]
-    layers = profile.build_layers(req)
+    layers = profile.build_layers(req, soil=pack_soil)
     ece_est = profile.estimate_ece(req)
     status = {cid: filters.soil_water_status(c, req, ece_est) for cid, c in crops.items()}
     pest_ex = {cid for cid, c in crops.items() if filters.pest_excluded(c, req)}

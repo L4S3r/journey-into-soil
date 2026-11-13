@@ -1,9 +1,9 @@
 from datetime import date, timedelta
-import pytest
-from app.services.climate import get_climate, get_historical_climate_series, _is_leap_year
+
 from app.engine import uncertainty
 from app.engine.pipeline import run
 from app.schemas.request import AnalysisRequest
+from app.services.climate import _is_leap_year, get_historical_climate_series
 
 
 def test_percentile_calculations():

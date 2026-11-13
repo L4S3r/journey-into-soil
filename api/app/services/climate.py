@@ -35,6 +35,7 @@ class Climate:
     pack_id: str | None = None
     resolution_km: float | None = None
     notes: list[str] = field(default_factory=list)
+    soil: dict | None = None
 
 
 def _seasonal(doy: int) -> float:
@@ -74,6 +75,11 @@ def _find_pack(lat: float, lon: float) -> dict | None:
     return best
 
 
+def find_pack(lat: float, lon: float) -> dict | None:
+    """Find the nearest demo pack for coordinates, or None if none within 0.15 deg."""
+    return _find_pack(lat, lon)
+
+
 def _analog_lookup(pack: dict) -> dict[str, dict[str, float]]:
     daily = pack["daily"]
     table: dict[str, dict[str, float]] = {}
@@ -107,11 +113,13 @@ def get_climate(lat: float, lon: float, dates: list[date], d_t: float = 0.0, d_p
     notes = []
     if source == "synthetic":
         notes.append("synthetic_climate")
+    soil = pack.get("soil") if (source == "pack" and pack) else None
     return Climate(
         dates=[d.isoformat() for d in dates], tmin=tmin, tmax=tmax, rain=rain, et0=et0, source=source,
         pack_id=(pack or {}).get("meta", {}).get("id") if source == "pack" else None,
         resolution_km=(pack or {}).get("meta", {}).get("resolution_km") if source == "pack" else None,
         notes=notes,
+        soil=soil,
     )
 
 

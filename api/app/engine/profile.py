@@ -12,9 +12,11 @@ def estimate_ece(req: AnalysisRequest) -> float:
     return req.soil_ec if req.soil_ec is not None else round(1.5 * req.water_ec, 2)
 
 
-def surface_om(req: AnalysisRequest) -> float:
+def surface_om(req: AnalysisRequest, soil_om: float | None = None) -> float:
     if req.organic_matter is not None:
         return req.organic_matter
+    if soil_om is not None:
+        return round(min(3.5, soil_om), 2)
     om = 1.5
     om += {"none": -0.2, "some": 0.3, "regular": 0.6}[req.organic_input]
     om += {"retained": 0.3, "burned": -0.2, "unknown": 0.0}[req.residues]
@@ -23,12 +25,14 @@ def surface_om(req: AnalysisRequest) -> float:
     return round(max(0.4, min(3.5, om)), 2)
 
 
-def build_layers(req: AnalysisRequest) -> list[SoilLayer]:
+def build_layers(req: AnalysisRequest, soil: dict | None = None) -> list[SoilLayer]:
     soils = knowledge.soils()
     base = soils["textures"][req.texture]
-    om0 = surface_om(req)
+    soil_om = soil.get("om") if soil else None
+    soil_ph = soil.get("ph") if soil else None
+    om0 = surface_om(req, soil_om)
     ece0 = estimate_ece(req)
-    ph0 = req.ph if req.ph is not None else 7.9
+    ph0 = req.ph if req.ph is not None else (soil_ph if soil_ph is not None else 7.9)
     status_tex = "measured" if req.texture_confirmed else "estimated"
     layers: list[SoilLayer] = []
     for i, t in enumerate(soils["layers"]):

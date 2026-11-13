@@ -69,3 +69,21 @@ def test_soilgrids_parser():
         {"name": "phh2o", "unit_measure": {"d_factor": 10}, "depths": [{"values": {"mean": 78}}]}]}}
     assert parse_soilgrids(payload) == {"sand": 40.0, "clay": 30.0, "om": 2.59, "ph": 7.8}
     assert parse_soilgrids({}) is None
+
+
+def test_every_demo_site_returns_200_with_own_region_and_preset():
+    import yaml
+
+    from app.config import ROOT
+
+    sites = yaml.safe_load((ROOT / "knowledge" / "demo_sites.yaml").read_text(encoding="utf-8"))["sites"]
+    for site in sites:
+        payload = {
+            "lat": site["lat"],
+            "lon": site["lon"],
+            "region": site.get("region"),
+            **site.get("preset", {}),
+        }
+        resp = client.post("/api/v1/analyses", json=payload)
+        assert resp.status_code == 200, f"Site {site['id']} failed with HTTP {resp.status_code}: {resp.text}"
+

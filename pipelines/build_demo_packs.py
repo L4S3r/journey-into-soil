@@ -26,6 +26,9 @@ from pathlib import Path
 import yaml
 
 ROOT = Path(__file__).resolve().parents[1]
+if str(ROOT / "api") not in sys.path:
+    sys.path.insert(0, str(ROOT / "api"))
+from app.services.soil import parse_soilgrids
 
 # POWER parameter -> pack key
 PARAMS = {
@@ -160,7 +163,13 @@ def close_pairs(sites: list[dict]) -> list[tuple[str, str, float]]:
     return out
 
 
-def build(sites: list[dict], raw_dir: Path, out_dir: Path, only: set[str] | None = None) -> dict:
+def build(
+    sites: list[dict],
+    raw_dir: Path,
+    out_dir: Path,
+    only: set[str] | None = None,
+    raw_soil_dir: Path | None = None,
+) -> dict:
     """Build packs. Returns {"built": [...], "skipped": [...], "failed": [(id, reason)], "warnings": [...]}."""
     result: dict = {"built": [], "skipped": [], "failed": [], "warnings": []}
     chosen = [s for s in sites if not only or s["id"] in only]
@@ -168,6 +177,11 @@ def build(sites: list[dict], raw_dir: Path, out_dir: Path, only: set[str] | None
         unknown = only - {s["id"] for s in sites}
         if unknown:
             result["failed"].extend((u, "unknown site id") for u in sorted(unknown))
+
+    if raw_soil_dir is None:
+        candidate_soil = raw_dir.parent / "soilgrids"
+        raw_soil_dir = candidate_soil if candidate_soil.exists() else (ROOT / "data" / "raw" / "soilgrids")
+
     for site in chosen:
         src = raw_dir / f"{site['id']}.json"
         if not src.exists():
@@ -178,6 +192,42 @@ def build(sites: list[dict], raw_dir: Path, out_dir: Path, only: set[str] | None
         except (PackError, json.JSONDecodeError) as exc:
             result["failed"].append((site["id"], str(exc)))
             continue
+
+        # Ingest SoilGrids data if available and non-null
+        soil_data = None
+        if raw_soil_dir:
+            soil_src = raw_soil_dir / f"{site['id']}.json"
+            if soil_src.exists():
+                try:
+                    raw_soil = json.loads(soil_src.read_text(encoding="utf-8"))
+                    soil_data = parse_soilgrids(raw_soil)
+                except (json.JSONDecodeError, OSError, KeyError, TypeError, ValueError):
+                    soil_data = None
+                if soil_data:
+                    meta_src = raw_soil_dir / f"{site['id']}.meta.json"
+                    meta: dict = {}
+                    if meta_src.exists():
+                        try:
+                            meta = json.loads(meta_src.read_text(encoding="utf-8"))
+                        except (json.JSONDecodeError, OSError):
+                            meta = {}
+                    s_lat = meta.get("sample_lat", raw_soil.get("sample_lat", site["lat"]))
+                    s_lon = meta.get("sample_lon", raw_soil.get("sample_lon", site["lon"]))
+                    dist_km = meta.get("offset_km", raw_soil.get("offset_km", 0.0))
+
+                    soil_data["sample_lat"] = s_lat
+                    soil_data["sample_lon"] = s_lon
+                    soil_data["offset_km"] = dist_km
+                    soil_data["source"] = "soilgrids_250m_model"
+                    soil_data["depth"] = "0-5cm"
+
+                    if dist_km > 5.0:
+                        result["warnings"].append(f"{site['id']}: SoilGrids sampled at offset {dist_km} km > 5 km")
+                else:
+                    result["warnings"].append(f"{site['id']}: no valid SoilGrids topsoil data; soil block omitted")
+
+        pack["soil"] = soil_data
+
         out_dir.mkdir(parents=True, exist_ok=True)
         (out_dir / f"{site['id']}.json").write_text(json.dumps(pack, separators=(",", ":"), ensure_ascii=False), encoding="utf-8")
         result["built"].append(site["id"])
@@ -192,12 +242,13 @@ def main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     ap.add_argument("--sites", type=Path, default=ROOT / "knowledge" / "demo_sites.yaml")
     ap.add_argument("--raw", type=Path, default=ROOT / "data" / "raw" / "power")
+    ap.add_argument("--raw-soil", type=Path, default=ROOT / "data" / "raw" / "soilgrids")
     ap.add_argument("--out", type=Path, default=ROOT / "data" / "packs" / "demo_sites")
     ap.add_argument("--only", help="comma-separated site ids")
     args = ap.parse_args(argv)
 
     only = {s.strip() for s in args.only.split(",") if s.strip()} if args.only else None
-    res = build(load_sites(args.sites), args.raw, args.out, only)
+    res = build(load_sites(args.sites), args.raw, args.out, only, raw_soil_dir=args.raw_soil)
     print(f"built {len(res['built'])}: {', '.join(res['built']) or '-'}")
     if res["skipped"]:
         print(f"skipped (no raw file): {', '.join(res['skipped'])}")
