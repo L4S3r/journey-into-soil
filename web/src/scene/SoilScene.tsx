@@ -94,7 +94,13 @@ export function SoilScene() {
               <div className="scene-telemetry scene-glass">
                 <span className="scene-telemetry-item">
                   <span className="scene-telemetry-badge">
-                    {telemetry.cropId ? t(`crop.${telemetry.cropId}`, telemetry.cropId) : t("ui.scene_telemetry_fallow")}
+                    <svg className="scene-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+                      <path d="M7 20h10" />
+                      <path d="M10 20c0-3.3 2.7-6 6-6a6 6 0 0 0 2-4.5" />
+                      <path d="M12 20v-8" />
+                      <path d="M12 12c-2.5 0-5-2-5-5 3.5 0 5 2 5 5z" />
+                    </svg>
+                    <span>{telemetry.cropId ? t(`crop.${telemetry.cropId}`, telemetry.cropId) : t("ui.scene_telemetry_fallow")}</span>
                   </span>
                 </span>
                 <span className="scene-telemetry-item">
@@ -104,7 +110,38 @@ export function SoilScene() {
                   {t("ui.scene_telemetry_canopy")}: <b>{telemetry.canopyPct}%</b>
                 </span>
                 <span className="scene-telemetry-item">
-                  {telemetry.tempC}°C · {telemetry.rainMm > 0 ? `🌧️ ${telemetry.rainMm} mm` : `☀️ ${telemetry.et0Mm} mm ET₀`}
+                  <svg className="scene-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+                    <path d="M14 14.76V3.5a2.5 2.5 0 0 0-5 0v11.26a4.5 4.5 0 1 0 5 0z" />
+                  </svg>
+                  <span>{telemetry.tempC}°C</span>
+                </span>
+                <span className="scene-telemetry-item">
+                  {telemetry.rainMm > 0 ? (
+                    <>
+                      <svg className="scene-icon scene-icon-rain" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+                        <path d="M20 16.58A5 5 0 0 0 18 7h-1.26A8 8 0 1 0 4 15.25" />
+                        <line x1="8" y1="19" x2="8" y2="21" />
+                        <line x1="12" y1="17" x2="12" y2="21" />
+                        <line x1="16" y1="19" x2="16" y2="21" />
+                      </svg>
+                      <span>{telemetry.rainMm} mm</span>
+                    </>
+                  ) : (
+                    <>
+                      <svg className="scene-icon scene-icon-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+                        <circle cx="12" cy="12" r="5" />
+                        <line x1="12" y1="1" x2="12" y2="3" />
+                        <line x1="12" y1="21" x2="12" y2="23" />
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+                        <line x1="1" y1="12" x2="3" y2="12" />
+                        <line x1="21" y1="12" x2="23" y2="12" />
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+                      </svg>
+                      <span>{telemetry.et0Mm} mm ET₀</span>
+                    </>
+                  )}
                 </span>
               </div>
             )}
@@ -217,7 +254,10 @@ export function SoilScene() {
                   }}
                   aria-label={t("ui.scene_inspect_close")}
                 >
-                  ✕
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+                    <line x1="18" y1="6" x2="6" y2="18" />
+                    <line x1="6" y1="6" x2="18" y2="18" />
+                  </svg>
                 </button>
               </div>
 
