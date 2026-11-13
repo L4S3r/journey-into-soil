@@ -439,62 +439,66 @@
 
   <main>
     <!-- ==========================================================================
-         2. ASTRYX HERO SECTION
+         2. FULL-SCREEN ASTRYX HERO SECTION (Whole Screen Background)
          ========================================================================== -->
-    <section class="relative overflow-hidden pt-8 pb-16 lg:pt-16 lg:pb-24">
-      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+    <section class="relative min-h-[90vh] lg:min-h-screen w-full flex flex-col justify-between overflow-hidden border-b border-[var(--astryx-color-border-subtle)]">
+      
+      <!-- Full-Screen Edge-to-Edge Background Image -->
+      <div class="absolute inset-0 w-full h-full bg-cover bg-center lg:bg-[center_top] bg-no-repeat transition-transform duration-1000 scale-[1.01]" style="background-image: url('Gemini_Generated_Image_fzlkafzlkafzlkaf.jpeg');"></div>
+
+      <!-- Astryx Multi-Layer Scrim & Atmospheric Gradient Overlays -->
+      <!-- Soft ambient wash for contrast in Light/Dark mode -->
+      <div class="absolute inset-0 bg-gradient-to-b from-[var(--astryx-color-bg)]/85 via-[var(--astryx-color-bg)]/70 to-[var(--astryx-color-bg)]/95 dark:from-[#0b0e0c]/85 dark:via-[#0b0e0c]/70 dark:to-[#0b0e0c]/95 backdrop-blur-[1px] pointer-events-none"></div>
+      <!-- Vignette depth -->
+      <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_transparent_20%,_var(--astryx-color-bg)_95%)] dark:bg-[radial-gradient(ellipse_at_center,_transparent_20%,_#0b0e0c_95%)] opacity-70 pointer-events-none"></div>
+
+      <!-- Hero Main Content (Directly on Full Screen, No Inner Bounding Box) -->
+      <div class="relative z-10 w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 pb-8 sm:pt-16 sm:pb-12 text-center flex-1 flex flex-col justify-center items-center">
         
         <!-- Eyebrow Pill -->
-        <div class="inline-flex items-center gap-2 astryx-badge astryx-badge--matcha py-1.5 px-4 mb-6 shadow-sm">
+        <div class="inline-flex items-center gap-2 astryx-badge astryx-badge--matcha py-1.5 px-4 mb-6 shadow-md backdrop-blur-md bg-[var(--astryx-color-surface-overlay)]">
           <span class="w-2 h-2 rounded-full bg-[var(--astryx-color-primary)] animate-ping"></span>
           <span data-i18n="heroBadge">Astryx Meta Design • NASA Earth Observations</span>
         </div>
 
-        <!-- Hero Card with Background Image -->
-        <div class="relative astryx-card overflow-hidden p-8 sm:p-14 lg:p-16 mb-8 text-center border border-[var(--astryx-color-border)] shadow-2xl">
-          <!-- Background Image Layer -->
-          <div class="absolute inset-0 bg-cover bg-center transition-transform duration-700 hover:scale-105" style="background-image: url('Gemini_Generated_Image_fzlkafzlkafzlkaf.jpeg');"></div>
-          
-          <!-- Astryx Scrim / Frosted Overlay -->
-          <div class="absolute inset-0 bg-gradient-to-b from-white/80 via-white/70 to-white/85 dark:from-[#0b0e0c]/85 dark:via-[#0b0e0c]/80 dark:to-[#0b0e0c]/90 backdrop-blur-[2px]"></div>
+        <!-- Grand Unbounded Full-Screen Headline -->
+        <h1 class="text-3xl sm:text-5xl lg:text-7xl font-black tracking-tight leading-[1.15] text-[var(--astryx-color-text-primary)] max-w-5xl mx-auto drop-shadow-sm" data-i18n="heroTitle">
+          Where Space Data Meets the Root Zone: <br>
+          <span class="bg-gradient-to-r from-[#1b4332] via-[#2d6a4f] to-[#d97706] dark:from-[#52b788] dark:via-[#74c69d] dark:to-[#f59e0b] bg-clip-text text-transparent">
+            Precision Soil Intelligence
+          </span>
+        </h1>
 
-          <!-- Headline Content -->
-          <div class="relative z-10 max-w-4xl mx-auto">
-            <h1 class="text-3xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-[1.2] text-[var(--astryx-color-text-primary)]" data-i18n="heroTitle">
-              Where Space Data Meets the Root Zone: <br>
-              <span class="bg-gradient-to-r from-[#1b4332] via-[#2d6a4f] to-[#d97706] dark:from-[#52b788] dark:via-[#74c69d] dark:to-[#f59e0b] bg-clip-text text-transparent">
-                Precision Soil Intelligence
-              </span>
-            </h1>
+        <!-- Subtitle -->
+        <p class="mt-6 text-base sm:text-lg lg:text-xl text-[var(--astryx-color-text-secondary)] font-medium leading-relaxed max-w-3xl mx-auto" data-i18n="heroSubtitle">
+          A physics-based agronomic advisory system empowering Egyptian farmers with NASA Earth data, multi-layer soil hydrology, and salt-resilient crop rotation planning.
+        </p>
 
-            <p class="mt-6 text-base sm:text-lg lg:text-xl text-[var(--astryx-color-text-secondary)] font-normal leading-relaxed max-w-3xl mx-auto" data-i18n="heroSubtitle">
-              A physics-based agronomic advisory system empowering Egyptian farmers with NASA Earth data, multi-layer soil hydrology, and salt-resilient crop rotation planning.
-            </p>
+        <!-- Hero Action Buttons -->
+        <div class="mt-8 sm:mt-10 flex flex-wrap items-center justify-center gap-3.5">
+          <a href="/index.html" class="astryx-btn astryx-btn--primary px-7 py-3.5 text-sm sm:text-base font-bold shadow-xl hover:scale-105 transition-all">
+            <i data-lucide="satellite" class="w-4 h-4"></i>
+            <span data-i18n="btnHeroLaunch">Launch Field Simulator</span>
+            <i data-lucide="arrow-right" class="w-4 h-4 rtl:rotate-180"></i>
+          </a>
 
-            <!-- Hero Action Buttons -->
-            <div class="mt-8 flex flex-wrap items-center justify-center gap-3.5">
-              <a href="/index.html" class="astryx-btn astryx-btn--primary px-6 py-3.5 text-sm font-bold shadow-lg">
-                <i data-lucide="satellite" class="w-4 h-4"></i>
-                <span data-i18n="btnHeroLaunch">Launch Field Simulator</span>
-                <i data-lucide="arrow-right" class="w-4 h-4 rtl:rotate-180"></i>
-              </a>
+          <a href="#map-section" class="astryx-btn astryx-btn--secondary px-6 py-3.5 text-sm sm:text-base font-bold backdrop-blur-md bg-[var(--astryx-color-surface-overlay)] shadow-md hover:scale-105 transition-all">
+            <i data-lucide="map-pin" class="w-4 h-4 text-[#ef4444]"></i>
+            <span data-i18n="btnHeroMap">Explore 27 Governorates</span>
+          </a>
 
-              <a href="#map-section" class="astryx-btn astryx-btn--secondary px-6 py-3.5 text-sm font-bold">
-                <i data-lucide="map-pin" class="w-4 h-4 text-[#ef4444]"></i>
-                <span data-i18n="btnHeroMap">Explore 27 Governorates</span>
-              </a>
-
-              <a href="#crop-talk" class="astryx-btn astryx-btn--ghost px-5 py-3.5 text-sm font-bold">
-                <i data-lucide="message-square" class="w-4 h-4 text-[var(--astryx-color-primary)]"></i>
-                <span data-i18n="btnHeroChat">Try Crop Talk AI</span>
-              </a>
-            </div>
-          </div>
+          <a href="#crop-talk" class="astryx-btn astryx-btn--ghost px-5 py-3.5 text-sm sm:text-base font-bold backdrop-blur-sm bg-[var(--astryx-color-surface-subtle)]/75 hover:scale-105 transition-all">
+            <i data-lucide="message-square" class="w-4 h-4 text-[var(--astryx-color-primary)]"></i>
+            <span data-i18n="btnHeroChat">Try Crop Talk AI</span>
+          </a>
         </div>
 
-        <!-- Astryx Telemetry Strip (4 Key Metrics) -->
-        <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mt-8">
-          <div class="astryx-card astryx-card--interactive p-4 sm:p-5 text-start flex items-center gap-3.5">
+      </div>
+
+      <!-- Astryx Floating Telemetry Strip Across Bottom of Screen -->
+      <div class="relative z-10 w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pb-10 sm:pb-14">
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+          <div class="astryx-card astryx-card--interactive p-4 sm:p-5 text-start flex items-center gap-3.5 backdrop-blur-md bg-[var(--astryx-color-surface-overlay)] shadow-lg border border-[var(--astryx-color-border)]">
             <div class="w-10 h-10 rounded-xl bg-[var(--astryx-color-primary-subtle)] text-[var(--astryx-color-primary)] flex items-center justify-center shrink-0">
               <i data-lucide="map" class="w-5 h-5"></i>
             </div>
@@ -504,7 +508,7 @@
             </div>
           </div>
 
-          <div class="astryx-card astryx-card--interactive p-4 sm:p-5 text-start flex items-center gap-3.5">
+          <div class="astryx-card astryx-card--interactive p-4 sm:p-5 text-start flex items-center gap-3.5 backdrop-blur-md bg-[var(--astryx-color-surface-overlay)] shadow-lg border border-[var(--astryx-color-border)]">
             <div class="w-10 h-10 rounded-xl bg-[var(--astryx-color-accent-subtle)] text-[var(--astryx-color-accent)] flex items-center justify-center shrink-0">
               <i data-lucide="satellite" class="w-5 h-5"></i>
             </div>
@@ -514,7 +518,7 @@
             </div>
           </div>
 
-          <div class="astryx-card astryx-card--interactive p-4 sm:p-5 text-start flex items-center gap-3.5">
+          <div class="astryx-card astryx-card--interactive p-4 sm:p-5 text-start flex items-center gap-3.5 backdrop-blur-md bg-[var(--astryx-color-surface-overlay)] shadow-lg border border-[var(--astryx-color-border)]">
             <div class="w-10 h-10 rounded-xl bg-[var(--astryx-color-primary-subtle)] text-[var(--astryx-color-primary)] flex items-center justify-center shrink-0">
               <i data-lucide="activity" class="w-5 h-5"></i>
             </div>
@@ -524,7 +528,7 @@
             </div>
           </div>
 
-          <div class="astryx-card astryx-card--interactive p-4 sm:p-5 text-start flex items-center gap-3.5">
+          <div class="astryx-card astryx-card--interactive p-4 sm:p-5 text-start flex items-center gap-3.5 backdrop-blur-md bg-[var(--astryx-color-surface-overlay)] shadow-lg border border-[var(--astryx-color-border)]">
             <div class="w-10 h-10 rounded-xl bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 flex items-center justify-center shrink-0">
               <i data-lucide="shield-check" class="w-5 h-5"></i>
             </div>
@@ -534,8 +538,8 @@
             </div>
           </div>
         </div>
-
       </div>
+
     </section>
 
     <!-- ==========================================================================
@@ -1307,8 +1311,9 @@
     };
 
     /* 4. Astryx State Management */
-    let currentLang = localStorage.getItem("shifter_lang") || "en";
-    let currentTheme = localStorage.getItem("shifter_theme") || 
+    const urlParams = new URLSearchParams(window.location.search);
+    let currentLang = urlParams.get("lang") || localStorage.getItem("shifter_lang") || "en";
+    let currentTheme = urlParams.get("theme") || localStorage.getItem("shifter_theme") || 
       (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
     let activeGovId = null;
     let selectedZone = "all";
