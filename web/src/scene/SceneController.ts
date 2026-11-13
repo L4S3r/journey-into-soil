@@ -40,9 +40,9 @@ const GAP = 0.65; // gap between layers when exploded
 const LAYER_H = [1.3, 1.4, 1.6, 1.9]; // world height per layer
 
 const TIERS: Record<Quality, { scale: number; blades: number; roots: number; outerCols: number; outerRows: number }> = {
-  high: { scale: 1, blades: 240, roots: 24, outerCols: 24, outerRows: 22 },
-  medium: { scale: 1.25, blades: 160, roots: 14, outerCols: 18, outerRows: 16 },
-  low: { scale: 1.75, blades: 90, roots: 8, outerCols: 12, outerRows: 12 },
+  high: { scale: 1, blades: 768, roots: 24, outerCols: 36, outerRows: 28 },
+  medium: { scale: 1.25, blades: 480, roots: 14, outerCols: 26, outerRows: 20 },
+  low: { scale: 1.75, blades: 240, roots: 8, outerCols: 18, outerRows: 14 },
 };
 
 const TAPROOT_CROPS = new Set([
@@ -157,6 +157,7 @@ export class SceneController {
   private frontGroundNode: TransformNode | null = null;
   private targetFrontGroundY = 0;
   private reticleMesh: LinesMesh | null = null;
+  private topsoilCap: Mesh | null = null;
   private diveStage: DiveStage = "field";
   private diveTimeouts: ReturnType<typeof setTimeout>[] = [];
 
@@ -594,6 +595,8 @@ export class SceneController {
     this.clearDiveTimeouts();
     this.resizeObs?.disconnect();
     this.engine.stopRenderLoop();
+    this.topsoilCap?.dispose();
+    this.topsoilCap = null;
     this.scene.dispose();
     this.engine.dispose();
   }
@@ -786,7 +789,7 @@ export class SceneController {
     sMat.specularPower = 16;
 
     const span = 48;
-    const h = 0.25;
+    const h = 8.0;
     const y = -h / 2;
 
     const north = MeshBuilder.CreateBox("fieldNorth", { width: W + 2 * span, height: h, depth: span }, this.scene);
@@ -808,6 +811,16 @@ export class SceneController {
     west.position.set(-W / 2 - span / 2, y, 0);
     west.material = sMat;
     west.parent = this.fieldGroundNode;
+
+    // Seamless topsoil cap covering the central monolith surface in field stage
+    if (this.layerMeshes[0]) {
+      const topsoilCap = MeshBuilder.CreatePlane("topsoilCap", { width: W + 0.04, height: D + 0.04 }, this.scene);
+      topsoilCap.rotation.x = Math.PI / 2;
+      topsoilCap.position.set(0, LAYER_H[0] / 2 + 0.002, 0);
+      topsoilCap.material = sMat;
+      topsoilCap.parent = this.layerMeshes[0];
+      this.topsoilCap = topsoilCap;
+    }
 
     this.fieldGroundNode.setEnabled(true);
   }
@@ -907,20 +920,40 @@ export class SceneController {
     this.bladeMat.diffuseColor = new Color3(...look.c);
     this.bladeMat.specularColor = new Color3(0.08, 0.12, 0.08);
 
-    // Compound 3-leaf crop tuft:
-    // b1: central erect shoot
-    const b1 = MeshBuilder.CreateCylinder("b1", { height: 1.0, diameterTop: 0, diameterBottom: 0.07, tessellation: 4 }, this.scene);
-    b1.bakeTransformIntoVertices(Matrix.Compose(new Vector3(1, 1, 1), Quaternion.FromEulerAngles(0.08, 0, 0), new Vector3(0, 0.5, 0)));
+    // Rich botanical wheat/crop tuft:
+    // 1. Central stem
+    const stem = MeshBuilder.CreateCylinder("stem", { height: 1.15, diameterTop: 0.035, diameterBottom: 0.065, tessellation: 5 }, this.scene);
+    stem.bakeTransformIntoVertices(Matrix.Compose(new Vector3(1, 1, 1), Quaternion.FromEulerAngles(0.04, 0, 0), new Vector3(0, 0.575, 0)));
 
-    // b2: lateral leaf arching left
-    const b2 = MeshBuilder.CreateCylinder("b2", { height: 0.85, diameterTop: 0, diameterBottom: 0.055, tessellation: 4 }, this.scene);
-    b2.bakeTransformIntoVertices(Matrix.Compose(new Vector3(0.9, 0.85, 0.9), Quaternion.FromEulerAngles(0.32, -0.7, 0.22), new Vector3(-0.06, 0.42, 0.02)));
+    // 2. Grain Ear / Spikelet head at the top
+    const ear = MeshBuilder.CreateCylinder("ear", { height: 0.38, diameterTop: 0.045, diameterBottom: 0.095, tessellation: 6 }, this.scene);
+    ear.bakeTransformIntoVertices(Matrix.Compose(new Vector3(1.3, 1, 1.3), Quaternion.FromEulerAngles(0.08, 0.4, 0), new Vector3(0.015, 1.05, 0)));
 
-    // b3: lateral leaf arching right
-    const b3 = MeshBuilder.CreateCylinder("b3", { height: 0.80, diameterTop: 0, diameterBottom: 0.055, tessellation: 4 }, this.scene);
-    b3.bakeTransformIntoVertices(Matrix.Compose(new Vector3(0.85, 0.80, 0.85), Quaternion.FromEulerAngles(-0.25, 0.8, -0.20), new Vector3(0.06, 0.40, -0.02)));
+    // 3-8. Broad curved leaves arching outward in 6 compass directions (flattened for wide blade profile)
+    const leafGeom = (h: number, rotY: number, lean: number, yOffset: number) => {
+      const l = MeshBuilder.CreateCylinder("l", { height: h, diameterTop: 0, diameterBottom: 0.08, tessellation: 4 }, this.scene);
+      l.bakeTransformIntoVertices(
+        Matrix.Compose(
+          new Vector3(2.4, 1.0, 0.45),
+          Quaternion.FromEulerAngles(lean, rotY, (lean * 0.3)),
+          new Vector3(Math.sin(rotY) * 0.06, yOffset, Math.cos(rotY) * 0.06)
+        )
+      );
+      return l;
+    };
 
-    const tuft = Mesh.MergeMeshes([b1, b2, b3], true, true, undefined, false, true);
+    const l1 = leafGeom(0.92, 0.35, 0.36, 0.46);
+    const l2 = leafGeom(0.88, 1.40, 0.38, 0.44);
+    const l3 = leafGeom(0.94, 2.45, 0.34, 0.48);
+    const l4 = leafGeom(0.86, 3.50, 0.38, 0.43);
+    const l5 = leafGeom(0.90, 4.55, 0.35, 0.45);
+    const l6 = leafGeom(0.84, 5.60, 0.40, 0.42);
+
+    // 9-10. Low basal spreading ground blades (dense understory to conceal soil gaps)
+    const b1 = leafGeom(0.58, 0.90, 0.56, 0.28);
+    const b2 = leafGeom(0.54, 3.90, 0.58, 0.26);
+
+    const tuft = Mesh.MergeMeshes([stem, ear, l1, l2, l3, l4, l5, l6, b1, b2], true, true, undefined, false, true);
     if (!tuft) return;
     tuft.name = "blade";
     tuft.material = this.bladeMat;
@@ -929,16 +962,16 @@ export class SceneController {
     const r = rng(7);
     const tierConfig = TIERS[this.tier];
 
-    // 1. Central Soil Monolith Canopy
-    const coreRows = 12;
-    const coreCols = Math.max(12, Math.round(tierConfig.blades / coreRows));
+    // 1. Central Soil Monolith Canopy (dense multi-row planting)
+    const coreRows = 24;
+    const coreCols = Math.max(20, Math.round(tierConfig.blades / coreRows));
     const coreTotal = coreRows * coreCols;
     const coreBuf = new Float32Array(coreTotal * 16);
     let cIdx = 0;
     for (let row = 0; row < coreRows; row++) {
-      const z0 = ((row + 0.5) / coreRows - 0.5) * (D - 0.28);
+      const z0 = ((row + 0.5) / coreRows - 0.5) * (D - 0.18);
       for (let col = 0; col < coreCols; col++) {
-        const x0 = ((col + 0.5) / coreCols - 0.5) * (W - 0.28);
+        const x0 = ((col + 0.5) / coreCols - 0.5) * (W - 0.18);
         const x = x0 + (r() - 0.5) * 0.08;
         const z = z0 + (r() - 0.5) * 0.06;
         const h = 0.85 + r() * 0.45;
@@ -973,7 +1006,7 @@ export class SceneController {
             flankCols.push(x0);
           }
         }
-        const flankSteps = 4;
+        const flankSteps = 6;
         const northTotal = nCols * nRows + flankCols.length * flankSteps;
         const northBuf = new Float32Array(northTotal * 16);
         let nIdx = 0;
@@ -981,7 +1014,7 @@ export class SceneController {
         for (let c = 0; c < nCols; c++) {
           const x0 = ((c + 0.5) / nCols - 0.5) * 44;
           for (let rStep = 0; rStep < nRows; rStep++) {
-            const z0 = D / 2 + 0.35 + (rStep / (nRows - 1)) * 22.0;
+            const z0 = D / 2 + 0.25 + (rStep / (nRows - 1)) * 22.0;
             const x = x0 + (r() - 0.5) * 0.22;
             const z = z0 + (r() - 0.5) * 0.18;
             const h = 0.80 + r() * 0.50;
@@ -1000,7 +1033,7 @@ export class SceneController {
         // Add flank instances flanking the monolith
         for (const x0 of flankCols) {
           for (let fStep = 0; fStep < flankSteps; fStep++) {
-            const z0 = -D / 2 + 0.4 + (fStep / (flankSteps - 1)) * (D - 0.8);
+            const z0 = -D / 2 + 0.3 + (fStep / (flankSteps - 1)) * (D - 0.6);
             const x = x0 + (r() - 0.5) * 0.22;
             const z = z0 + (r() - 0.5) * 0.18;
             const h = 0.80 + r() * 0.50;
@@ -1037,7 +1070,7 @@ export class SceneController {
         for (let c = 0; c < sCols; c++) {
           const x0 = ((c + 0.5) / sCols - 0.5) * 44;
           for (let rStep = 0; rStep < sRows; rStep++) {
-            const z0 = -D / 2 - 0.35 - (rStep / (sRows - 1)) * 22.0;
+            const z0 = -D / 2 - 0.25 - (rStep / (sRows - 1)) * 22.0;
             const x = x0 + (r() - 0.5) * 0.22;
             const z = z0 + (r() - 0.5) * 0.18;
             const h = 0.80 + r() * 0.50;
