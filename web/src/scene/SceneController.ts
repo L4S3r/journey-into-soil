@@ -31,7 +31,8 @@ export class SceneController {
   private scene!: THREE.Scene;
   private cam!: THREE.PerspectiveCamera;
   private grp!: THREE.Group;
-  private frontG!: THREE.Group;
+  private fieldGroup!: THREE.Group;
+  private profileGroup!: THREE.Group;
   private slabs: { g: THREE.Group; h: number; ph: number; mesh: THREE.Mesh }[] = [];
   private dust!: THREE.Points;
   private burst!: THREE.Points;
@@ -114,12 +115,19 @@ export class SceneController {
     rim.position.set(6, -2, 6);
     this.scene.add(rim);
 
-    // Root groups
+    // Root group
     this.grp = new THREE.Group();
     this.scene.add(this.grp);
 
-    this.frontG = new THREE.Group();
-    this.grp.add(this.frontG);
+    // Decoupled independent scene groups:
+    // fieldGroup: Act 1 surface farm environment (continuous terrain, centered cattle herd, date palm windbreaks)
+    // profileGroup: Act 2 & 3 subterranean soil cutaway profile (topsoil anchored at y = 0, deeper layers)
+    this.fieldGroup = new THREE.Group();
+    this.grp.add(this.fieldGroup);
+
+    this.profileGroup = new THREE.Group();
+    this.grp.add(this.profileGroup);
+    this.profileGroup.visible = false;
 
     // Textures & Slabs
     const ld = new THREE.TextureLoader();
@@ -144,6 +152,7 @@ export class SceneController {
         color: col || 0xffffff,
       });
 
+    // 1. Build subterranean soil profile slabs in profileGroup (for Act 2 & 3)
     this.slabs = [];
     HT.forEach((h, i) => {
       const side = new THREE.MeshStandardMaterial({ color: sc[i], roughness: 1 });
@@ -161,37 +170,41 @@ export class SceneController {
 
       const g = new THREE.Group();
       g.add(box);
-      this.grp.add(g);
+      this.profileGroup.add(g);
       this.slabs.push({ g, h, ph: i * 1.3, mesh: box });
     });
 
-    // Foreground drop block
-    const dk = new THREE.MeshStandardMaterial({ color: 0x241911, roughness: 1 });
-    const fbMat = [
-      dk,
-      dk,
-      makeMat(loadTex(0, SW / 7.5, 6), 0xcfc5ac),
-      dk,
-      dk,
-      dk,
-    ];
-    const fb = new THREE.Mesh(new THREE.BoxGeometry(SW, 6.2, 40), fbMat);
-    fb.position.set(0, -3.1, 20);
-    this.frontG.add(fb);
+    // Plant subtle surface vegetation along the cutaway top edge for Act 2/3
+    this.plantField(this.slabs[0].g, -28, 28, -20, 0, 0.65, 0.55, HT[0] / 2);
 
-    // Instanced lush agricultural vegetation (with pasture clearing for livestock)
-    this.plantField(this.slabs[0].g, -28, 28, -52, 0, 0.55, 0.45, HT[0] / 2);
-    this.plantField(this.frontG, -26, 26, 0, 14, 0.55, 0.45, 0, {
-      x0: -7.0,
-      x1: 7.0,
-      z0: 0,
-      z1: 6.2,
+    // 2. Build stable, continuous above-ground farm terrain in fieldGroup (for Act 1)
+    // Sits firmly at y = 0 and NEVER moves down with the camera
+    const sideSoilMat = new THREE.MeshStandardMaterial({ color: 0x241911, roughness: 1 });
+    const topGroundMat = makeMat(loadTex(0, SW / 7.5, 6), 0xcfc5ac);
+    const fieldGroundMat = [
+      sideSoilMat,
+      sideSoilMat,
+      topGroundMat,
+      sideSoilMat,
+      sideSoilMat,
+      sideSoilMat,
+    ];
+    const fieldGround = new THREE.Mesh(new THREE.BoxGeometry(SW + 4, 2.5, 76), fieldGroundMat);
+    fieldGround.position.set(0, -1.25, -16);
+    this.fieldGroup.add(fieldGround);
+
+    // Instanced lush agricultural crops across Egyptian farm with central pasture clearing for cattle
+    this.plantField(this.fieldGroup, -26, 26, -52, 14, 0.55, 0.45, 0, {
+      x0: -6.5,
+      x1: 6.5,
+      z0: -15.0,
+      z1: -7.0,
     });
 
     // Date Palm tree windbreaks (authentic Egyptian Nile Delta farm shelterbelts)
     this.plantDatePalms();
 
-    // Grazing cattle herd (official animated low-poly Cow model from three.js ecosystem)
+    // Centered grazing cattle herd (official animated low-poly Cow model from three.js ecosystem)
     this.loadAnimatedCows();
 
     // Dust motes particles
@@ -514,59 +527,50 @@ export class SceneController {
   }
 
   private plantDatePalms(): void {
-    // Left boundary canal line along main field (slabs[0])
-    for (let z = -50; z <= -4; z += 5.8) {
+    // Left boundary canal line along farm field (fieldGroup)
+    for (let z = -50; z <= 12; z += 5.8) {
       const s = 0.9 + Math.random() * 0.35;
       const palm = this.createDatePalmTree(s);
       const jx = (Math.random() - 0.5) * 1.2;
       const jz = (Math.random() - 0.5) * 1.0;
-      palm.group.position.set(-26.2 + jx, HT[0] / 2, z + jz);
+      palm.group.position.set(-25.5 + jx, 0, z + jz);
       palm.group.rotation.y = Math.random() * Math.PI * 2;
-      this.slabs[0].g.add(palm.group);
+      this.fieldGroup.add(palm.group);
       this.palms.push(palm);
     }
 
-    // Right boundary canal line along main field (slabs[0])
-    for (let z = -50; z <= -4; z += 5.8) {
+    // Right boundary canal line along farm field (fieldGroup)
+    for (let z = -50; z <= 12; z += 5.8) {
       const s = 0.9 + Math.random() * 0.35;
       const palm = this.createDatePalmTree(s);
       const jx = (Math.random() - 0.5) * 1.2;
       const jz = (Math.random() - 0.5) * 1.0;
-      palm.group.position.set(26.2 + jx, HT[0] / 2, z + jz);
+      palm.group.position.set(25.5 + jx, 0, z + jz);
       palm.group.rotation.y = Math.random() * Math.PI * 2;
-      this.slabs[0].g.add(palm.group);
+      this.fieldGroup.add(palm.group);
       this.palms.push(palm);
     }
 
-    // Horizon date palm grove along the rear edge of the field
-    for (let x = -26; x <= 26; x += 4.2) {
+    // Horizon date palm grove along the rear edge of the field (fieldGroup)
+    for (let x = -24; x <= 24; x += 4.2) {
       const s = 0.95 + Math.random() * 0.45;
       const palm = this.createDatePalmTree(s);
       const jx = (Math.random() - 0.5) * 1.0;
       const jz = (Math.random() - 0.5) * 1.4;
-      palm.group.position.set(x + jx, HT[0] / 2, -53 + jz);
+      palm.group.position.set(x + jx, 0, -53 + jz);
       palm.group.rotation.y = Math.random() * Math.PI * 2;
-      this.slabs[0].g.add(palm.group);
+      this.fieldGroup.add(palm.group);
       this.palms.push(palm);
     }
 
-    // Foreground date palms on frontG framing Act 1 camera view
-    for (let z = 3; z <= 14; z += 5.5) {
-      // Left foreground
-      const sL = 0.92 + Math.random() * 0.3;
-      const palmL = this.createDatePalmTree(sL);
-      palmL.group.position.set(-25.5 + (Math.random() - 0.5) * 1.0, 0, z);
-      palmL.group.rotation.y = Math.random() * Math.PI * 2;
-      this.frontG.add(palmL.group);
-      this.palms.push(palmL);
-
-      // Right foreground
-      const sR = 0.92 + Math.random() * 0.3;
-      const palmR = this.createDatePalmTree(sR);
-      palmR.group.position.set(25.5 + (Math.random() - 0.5) * 1.0, 0, z);
-      palmR.group.rotation.y = Math.random() * Math.PI * 2;
-      this.frontG.add(palmR.group);
-      this.palms.push(palmR);
+    // Scenic framing palms flanking the view in foreground
+    for (const side of [-1, 1]) {
+      const s = 0.95 + Math.random() * 0.25;
+      const palm = this.createDatePalmTree(s);
+      palm.group.position.set(side * 17.5, 0, 5.0 + Math.random() * 2.0);
+      palm.group.rotation.y = Math.random() * Math.PI * 2;
+      this.fieldGroup.add(palm.group);
+      this.palms.push(palm);
     }
   }
 
@@ -610,24 +614,19 @@ export class SceneController {
           }
         };
 
-        // 1. Immediate foreground pasture paddock (frontG, 5-7m from camera, right in Act 1 sweet spot)
-        // Mother Holstein Cow (majestic & prominent, center-left)
-        spawnCow(this.frontG, -1.8, 0, 2.5, 0.85, 0.42);
-        // Playful Calf grazing next to mother
-        spawnCow(this.frontG, -0.4, 0, 3.2, 1.25, 0.25);
-        // Companion Holstein Cow (grazing sideways, center-right)
-        spawnCow(this.frontG, 2.5, 0, 1.8, -2.1, 0.40);
-        // Second Cow in right foreground
-        spawnCow(this.frontG, 3.8, 0, 3.6, -1.2, 0.38);
-        // Cow in left foreground
-        spawnCow(this.frontG, -3.9, 0, 4.2, 2.4, 0.37);
-
-        // 2. Main agricultural field & grazing margins (slabs[0].g, tiered midground & horizon)
-        spawnCow(this.slabs[0].g, 4.8, HT[0] / 2, -4.5, -1.6, 0.35);
-        spawnCow(this.slabs[0].g, -5.2, HT[0] / 2, -7.0, 1.8, 0.34);
-        spawnCow(this.slabs[0].g, 9.0, HT[0] / 2, -14.0, -1.1, 0.32);
-        spawnCow(this.slabs[0].g, -9.5, HT[0] / 2, -18.0, 0.85, 0.31);
-        spawnCow(this.slabs[0].g, 2.2, HT[0] / 2, -26.0, -0.4, 0.29);
+        // Centered Egyptian cattle herd in the middle pasture meadow (fieldGroup, y = 0)
+        // Focal Center: Mother Holstein cow and calf
+        spawnCow(this.fieldGroup, -0.7, 0, -9.8, 0.75, 0.33);
+        spawnCow(this.fieldGroup, 0.6, 0, -9.2, 1.25, 0.20); // calf
+        // Flanking herd companions in central pasture
+        spawnCow(this.fieldGroup, 2.4, 0, -10.5, -1.9, 0.32);
+        spawnCow(this.fieldGroup, -2.5, 0, -11.2, 2.1, 0.31);
+        spawnCow(this.fieldGroup, 1.3, 0, -12.4, -0.7, 0.30);
+        spawnCow(this.fieldGroup, -1.6, 0, -12.8, 0.5, 0.30);
+        // Additional grazing cattle in mid-distance
+        spawnCow(this.fieldGroup, 5.0, 0, -16.5, -1.4, 0.28);
+        spawnCow(this.fieldGroup, -5.4, 0, -17.5, 1.5, 0.27);
+        spawnCow(this.fieldGroup, 0.2, 0, -22.0, 0.3, 0.24);
       },
       undefined,
       (err) => {
@@ -686,9 +685,9 @@ export class SceneController {
 
     // Camera keyframe interpolation
     const K: [number, [number, number, number], [number, number, number]][] = [
-      [0, [1, 1.7, 9.5], [0, 1.1, -30]],
-      [2.4, [0.4, 1.7, 10.6], [0, 0.9, -14]],
-      [5.4, [0, -2.6, this.D], [0, -3.1, 0]],
+      [0, [0, 2.5, 9.5], [0, 0.8, -10.0]],
+      [2.4, [0, 2.2, 8.5], [0, 0.6, -10.0]],
+      [4.8, [0, -3.8, this.D], [0, -3.8, 0]],
       [DUR, [0, -5.05, this.D], [0, -5.05, 0]],
     ];
 
@@ -705,10 +704,19 @@ export class SceneController {
     this.cam.position.set(cp[0], cp[1], cp[2]);
     this.cam.lookAt(la[0], la[1], la[2]);
 
-    // Foreground drop curtain
-    this.frontG.position.y = -15 * sm((ts - 2.4) / 2.8);
+    // Independent scene visibility switching
+    // Act 1 (ts < 3.2): above-ground farm scene is active
+    // Act 2 & 3 (ts >= 3.2): subterranean cutaway profile is active
+    if (ts < 3.2) {
+      this.fieldGroup.visible = true;
+      this.profileGroup.visible = false;
+    } else {
+      this.fieldGroup.visible = false;
+      this.profileGroup.visible = true;
+    }
 
-    // Slabs separation and organic bobbing
+    // Slabs separation and organic bobbing in profileGroup
+    // Topsoil (Layer 0, 0-20 cm) is firmly anchored at y = 0 to -1.5m and NEVER moves down.
     const gap = GAP * sm((ts - 5.4) / 3.4);
     const fl = gap / GAP;
     let top = 0;
@@ -716,13 +724,21 @@ export class SceneController {
     this.slabs.forEach((s, idx) => {
       const isFocused = this.focusedLayer === idx;
       const focusOffsetZ = isFocused ? 0.6 : 0;
-      s.g.position.set(
-        0,
-        top - s.h / 2 + Math.sin(tt * 0.9 + s.ph) * 0.07 * fl,
-        Math.sin(tt * 0.6 + s.ph) * 0.05 * fl + focusOffsetZ
-      );
-      s.g.rotation.z = Math.sin(tt * 0.55 + s.ph) * 0.006 * fl;
-      top -= s.h + gap;
+      if (idx === 0) {
+        // Topsoil: permanently anchored with top surface at y = 0
+        s.g.position.set(0, -s.h / 2, focusOffsetZ);
+        s.g.rotation.z = 0;
+        top = -s.h - gap;
+      } else {
+        // Subterranean layers expand downwards during exploded view
+        s.g.position.set(
+          0,
+          top - s.h / 2 + Math.sin(tt * 0.9 + s.ph) * 0.05 * fl,
+          Math.sin(tt * 0.6 + s.ph) * 0.04 * fl + focusOffsetZ
+        );
+        s.g.rotation.z = Math.sin(tt * 0.55 + s.ph) * 0.005 * fl;
+        top -= s.h + gap;
+      }
     });
 
     // Group horizontal rotation with damping
@@ -880,12 +896,18 @@ export class SceneController {
     if (stage === "field") {
       this.t0 = performance.now();
       this.finished = false;
+      this.fieldGroup.visible = true;
+      this.profileGroup.visible = false;
     } else if (stage === "underground") {
       this.t0 = performance.now() - 3500;
       this.finished = false;
+      this.fieldGroup.visible = false;
+      this.profileGroup.visible = true;
     } else if (stage === "layers") {
       this.t0 = performance.now() - DUR * 1000;
       this.finished = true;
+      this.fieldGroup.visible = false;
+      this.profileGroup.visible = true;
       this.onDiveProgressCb?.(null, false);
       this.updateInspectData();
     }
@@ -898,6 +920,8 @@ export class SceneController {
   public skipDive(): void {
     this.t0 = performance.now() - DUR * 1000;
     this.finished = true;
+    this.fieldGroup.visible = false;
+    this.profileGroup.visible = true;
     this.onDiveProgressCb?.(null, false);
     this.updateInspectData();
   }
@@ -908,6 +932,8 @@ export class SceneController {
     (this.burst.material as THREE.PointsMaterial).opacity = 0;
     this.t0 = performance.now();
     this.last = performance.now();
+    this.fieldGroup.visible = true;
+    this.profileGroup.visible = false;
   }
 
   public focusLayer(idx: number | null): void {
