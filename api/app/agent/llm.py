@@ -15,7 +15,7 @@ from __future__ import annotations
 
 import os
 
-import requests
+import httpx
 
 SYSTEM_PROMPT = (
     "You are an agricultural decision-support assistant for Egyptian farmers. "
@@ -65,7 +65,7 @@ def explain(facts: str, question: str, lang: str = "en", timeout: float = 30.0) 
         ],
     }
     try:
-        response = requests.post(
+        response = httpx.post(
             f"{base_url()}/chat/completions",
             json=payload,
             headers={"Authorization": f"Bearer {os.environ['OPENAI_API_KEY']}"},
