@@ -1,6 +1,6 @@
 import { create } from "zustand";
 import { api, type AuthUser } from "../api/client";
-import type { AnalysisRequest, AnalysisResult, DemoSite, Quality, StrategyId } from "../scene/types";
+import type { AnalysisRequest, AnalysisResult, DemoSite, Quality, StrategyId, WeatherMode } from "../scene/types";
 
 export const DEFAULT_REQUEST: AnalysisRequest = {
   lat: 30.79,
@@ -20,6 +20,7 @@ export const DEFAULT_REQUEST: AnalysisRequest = {
     { crop: "maize", season: "summer" },
   ],
   priorities: { water: 1, soil_health: 1, income: 1, risk: 1 },
+  use_live_weather: true,
 };
 
 const safeGet = (k: string): string | null => {
@@ -45,6 +46,7 @@ interface State {
   lang: "en" | "ar";
   theme: "light" | "dark";
   quality: Quality | "auto";
+  weatherMode: WeatherMode;
   loading: boolean;
   error: string | null;
   usingSample: boolean;
@@ -74,6 +76,7 @@ interface State {
   setLang: (l: "en" | "ar") => void;
   setTheme: (t: "light" | "dark") => void;
   setQuality: (q: Quality | "auto") => void;
+  setWeatherMode: (m: WeatherMode) => void;
 }
 
 export const useStore = create<State>((set, get) => ({
@@ -91,6 +94,7 @@ export const useStore = create<State>((set, get) => ({
     return "light";
   })(),
   quality: "auto",
+  weatherMode: "auto",
   loading: false,
   error: null,
   usingSample: false,
@@ -251,4 +255,5 @@ export const useStore = create<State>((set, get) => ({
     set({ theme });
   },
   setQuality: (quality) => set({ quality }),
+  setWeatherMode: (weatherMode) => set({ weatherMode }),
 }));

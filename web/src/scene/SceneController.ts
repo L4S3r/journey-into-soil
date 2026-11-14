@@ -7,9 +7,11 @@ import type {
   CameraPreset,
   DiveStage,
   LayerInspectData,
+  NasaEvidence,
   Quality,
   SceneTelemetry,
   StrategyId,
+  WeatherMode,
 } from "./types";
 
 const HT = [1.5, 1.5, 1.7, 1.5];
@@ -32,7 +34,13 @@ export class SceneController {
   private fieldGroup!: THREE.Group;
   private profileGroup!: THREE.Group;
   private slabs: { g: THREE.Group; h: number; ph: number; mesh: THREE.Mesh }[] = [];
+  private ambLight!: THREE.AmbientLight;
+  private dirLight!: THREE.DirectionalLight;
+  private rimLight!: THREE.PointLight;
   private dust!: THREE.Points;
+  private rainParticles!: THREE.Points;
+  private rainVelocities!: Float32Array;
+  private weatherMode: WeatherMode = "auto";
   private burst!: THREE.Points;
   private burstV!: Float32Array;
   private bst = -1;
@@ -101,17 +109,17 @@ export class SceneController {
     this.cam = new THREE.PerspectiveCamera(38, 1, 0.1, 120);
 
     // Natural daylight lighting (pure crisp daylight, zero yellow glare)
-    const amb = new THREE.AmbientLight(0xf0f7ff, 0.82);
-    this.scene.add(amb);
+    this.ambLight = new THREE.AmbientLight(0xf0f7ff, 0.82);
+    this.scene.add(this.ambLight);
 
-    const dl = new THREE.DirectionalLight(0xffffff, 0.94);
-    dl.position.set(-5, 9, 8);
-    this.scene.add(dl);
+    this.dirLight = new THREE.DirectionalLight(0xffffff, 0.94);
+    this.dirLight.position.set(-5, 9, 8);
+    this.scene.add(this.dirLight);
 
     // Cool sky-fill bounce light
-    const rim = new THREE.PointLight(0x7dc0f5, 0.45, 35);
-    rim.position.set(6, -2, 6);
-    this.scene.add(rim);
+    this.rimLight = new THREE.PointLight(0x7dc0f5, 0.45, 35);
+    this.rimLight.position.set(6, -2, 6);
+    this.scene.add(this.rimLight);
 
     // Root group
     this.grp = new THREE.Group();
@@ -226,6 +234,31 @@ export class SceneController {
       })
     );
     this.scene.add(this.dust);
+
+    // Weather rain particle system (450 dynamic falling raindrops)
+    const NR = 450;
+    const rp = new Float32Array(NR * 3);
+    this.rainVelocities = new Float32Array(NR);
+    for (let i = 0; i < NR; i++) {
+      rp[i * 3] = (Math.random() - 0.5) * 58;
+      rp[i * 3 + 1] = Math.random() * 24;
+      rp[i * 3 + 2] = (Math.random() - 0.6) * 52;
+      this.rainVelocities[i] = 0.38 + Math.random() * 0.28;
+    }
+    const rg = new THREE.BufferGeometry();
+    rg.setAttribute("position", new THREE.BufferAttribute(rp, 3));
+    this.rainParticles = new THREE.Points(
+      rg,
+      new THREE.PointsMaterial({
+        color: 0x8ec7f5,
+        size: 0.14,
+        transparent: true,
+        opacity: 0.7,
+        depthWrite: false,
+      })
+    );
+    this.rainParticles.visible = false;
+    this.scene.add(this.rainParticles);
 
     // Ground crack burst particles
     const NB = 200;
@@ -761,6 +794,21 @@ export class SceneController {
     }
     dp.needsUpdate = true;
 
+    // Falling raindrops animation
+    if (this.rainParticles && this.rainParticles.visible) {
+      const rpAttr = this.rainParticles.geometry.attributes.position as THREE.BufferAttribute;
+      for (let k = 0; k < rpAttr.count; k++) {
+        let yPos = rpAttr.getY(k) - this.rainVelocities[k];
+        if (yPos < -1) {
+          yPos = 20 + Math.random() * 4;
+          rpAttr.setX(k, (Math.random() - 0.5) * 58);
+          rpAttr.setZ(k, (Math.random() - 0.6) * 52);
+        }
+        rpAttr.setY(k, yPos);
+      }
+      rpAttr.needsUpdate = true;
+    }
+
     // Burst soil crumble particle trigger
     if (this.bst < 0 && ts > 2.5) {
       this.bst = 0;
@@ -874,6 +922,69 @@ export class SceneController {
       const maxDpr = this.quality === "high" || this.quality === "auto" ? 2 : this.quality === "medium" ? 1.5 : 1;
       this.renderer.setPixelRatio(Math.min(maxDpr, window.devicePixelRatio || 1));
     }
+  }
+
+  public setWeather(mode: WeatherMode, telemetry?: NasaEvidence["meteomatics"]): void {
+    this.weatherMode = mode;
+    let effective = mode;
+    if (mode === "auto") {
+      const params = telemetry?.parameters;
+      if (params?.precip_24h_mm && params.precip_24h_mm > 0.1) {
+        effective = "rain";
+      } else if (params?.t_2m_c && params.t_2m_c > 32) {
+        effective = "sunny";
+      } else if (params?.soil_moisture_deficit_mm && params.soil_moisture_deficit_mm > 70) {
+        effective = "sunny";
+      } else {
+        effective = "sunny";
+      }
+    }
+
+    if (effective === "rain") {
+      if (this.rainParticles) this.rainParticles.visible = true;
+      this.ambLight?.color.setHex(0xd0e3f5);
+      if (this.ambLight) this.ambLight.intensity = 0.68;
+      this.dirLight?.color.setHex(0xa8c4e0);
+      if (this.dirLight) this.dirLight.intensity = 0.62;
+      this.rimLight?.color.setHex(0x5d9dd8);
+      if (this.slabs[0]?.mesh) {
+        const mat = this.slabs[0].mesh.material;
+        if (Array.isArray(mat) && mat[2] instanceof THREE.MeshStandardMaterial) {
+          mat[2].roughness = 0.35;
+        }
+      }
+    } else if (effective === "dust") {
+      if (this.rainParticles) this.rainParticles.visible = false;
+      this.ambLight?.color.setHex(0xf5d496);
+      if (this.ambLight) this.ambLight.intensity = 0.82;
+      this.dirLight?.color.setHex(0xebb867);
+      if (this.dirLight) this.dirLight.intensity = 0.88;
+      this.rimLight?.color.setHex(0xd49b45);
+      if (this.slabs[0]?.mesh) {
+        const mat = this.slabs[0].mesh.material;
+        if (Array.isArray(mat) && mat[2] instanceof THREE.MeshStandardMaterial) {
+          mat[2].roughness = 0.95;
+        }
+      }
+    } else {
+      // "sunny" / default
+      if (this.rainParticles) this.rainParticles.visible = false;
+      this.ambLight?.color.setHex(0xf0f7ff);
+      if (this.ambLight) this.ambLight.intensity = 0.82;
+      this.dirLight?.color.setHex(0xffffff);
+      if (this.dirLight) this.dirLight.intensity = 0.94;
+      this.rimLight?.color.setHex(0x7dc0f5);
+      if (this.slabs[0]?.mesh) {
+        const mat = this.slabs[0].mesh.material;
+        if (Array.isArray(mat) && mat[2] instanceof THREE.MeshStandardMaterial) {
+          mat[2].roughness = 0.85;
+        }
+      }
+    }
+  }
+
+  public getWeather(): WeatherMode {
+    return this.weatherMode;
   }
 
   public setCameraPreset(preset: CameraPreset): void {

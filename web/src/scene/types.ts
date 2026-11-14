@@ -154,6 +154,24 @@ export interface NdviEvidence {
 export interface NasaEvidence {
   smap: SmapEvidence;
   ndvi: NdviEvidence;
+  meteomatics?: {
+    status: "live" | "demo_analog";
+    configured: boolean;
+    source: string;
+    timestamp: string;
+    coordinates: { lat: number; lon: number };
+    downscaling_model: string;
+    parameters: {
+      t_2m_c: number | null;
+      relative_humidity_pct: number | null;
+      precip_24h_mm: number | null;
+      evapotranspiration_24h_mm: number | null;
+      soil_moisture_index_5cm: number | null;
+      soil_moisture_index_50cm: number | null;
+      soil_moisture_deficit_mm: number | null;
+    };
+    notes: string[];
+  };
 }
 
 /** Answer returned by POST /api/v1/agent/ask. */
@@ -217,8 +235,11 @@ export interface AnalysisRequest {
   next_season: Season;
   priorities: Record<Priority, number>;
   scenario?: { dT: number; dP: number };
+  use_live_weather?: boolean;
   reference_date?: string | null;
 }
+
+export type WeatherMode = "auto" | "sunny" | "rain" | "dust";
 
 export interface DemoSite {
   id: string;

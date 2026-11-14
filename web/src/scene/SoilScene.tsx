@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useStore } from "../state/store";
 import { SceneController } from "./SceneController";
+import { WeatherAtmosphereHUD } from "../features/results/WeatherAtmosphereHUD";
 import { THM, LAYER_NAMES, LAYER_DEPTHS, LAYER_COLORS, ALT } from "./textures";
 import type { CameraPreset, DiveStage, LayerInspectData, SceneTelemetry } from "./types";
 import "./SoilScene.css";
@@ -38,7 +39,7 @@ export function SoilScene() {
   const cardRefs = useRef<(HTMLDivElement | null)[]>([]);
   const isRtl = i18n.dir() === "rtl";
 
-  const { result, strategyId, dayT, theme, quality, focusedLayer, setFocusedLayer } = useStore();
+  const { result, strategyId, dayT, theme, quality, focusedLayer, setFocusedLayer, weatherMode } = useStore();
 
   useEffect(() => {
     if (!canvasRef.current) return;
@@ -86,6 +87,10 @@ export function SoilScene() {
   useEffect(() => ctrl.current?.setSeasonTime(dayT), [dayT, result, strategyId, ready]);
   useEffect(() => ctrl.current?.setTheme(theme), [theme, ready]);
   useEffect(() => ctrl.current?.setQuality(quality), [quality, ready]);
+  useEffect(() => {
+    if (!ctrl.current || !ready) return;
+    ctrl.current.setWeather(weatherMode, result?.nasa_evidence?.meteomatics);
+  }, [weatherMode, ready, result]);
 
   useEffect(() => {
     if (!ctrl.current || !ready) return;
@@ -379,6 +384,11 @@ export function SoilScene() {
               </button>
             </div>
           </div>
+
+          {/* Floating Live Weather & Atmospheric HUD Bar */}
+          <WeatherAtmosphereHUD
+            onWeatherChange={(mode) => ctrl.current?.setWeather(mode, result?.nasa_evidence?.meteomatics)}
+          />
 
           {/* Act 1 Field Stage Hero Overlay & Dive Invitation */}
           {diveStage === "field" && (
