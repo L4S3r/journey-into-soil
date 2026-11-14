@@ -8,7 +8,6 @@ import { StrategyCards } from "./StrategyCards";
 import { Timeline } from "./Timeline";
 import { EvidencePanel } from "./EvidencePanel";
 import { LayerTable, Flags, ClimateSlider, NasaPanel, Glossary } from "./Panels";
-import { AgentPanel } from "./AgentPanel";
 import { NasaVsModelPanel, NdviTimelinePanel } from "./NasaEvidence";
 import "./ResultsDashboard.css";
 
@@ -20,9 +19,10 @@ interface ResultsDashboardProps {
 
 export function ResultsDashboard({ result, strategy, onEdit }: ResultsDashboardProps) {
   const { t } = useTranslation();
-  const { lang, usingSample, loading, setPdfModalOpen } = useStore();
+  const { lang, usingSample, loading, setPdfModalOpen, setAssistantOpen } = useStore();
   const [activeTab, setActiveTab] = useState<"root_zone" | "nasa_grounding" | "climate_ai">("root_zone");
   const [copied, setCopied] = useState(false);
+  const [scenarioQuery, setScenarioQuery] = useState("");
 
   const copyLink = async () => {
     const id = result.request_id || "sample";
@@ -307,7 +307,73 @@ export function ResultsDashboard({ result, strategy, onEdit }: ResultsDashboardP
           <div className="analytics-pane" role="tabpanel">
             <Flags result={result} />
             <ClimateSlider result={result} />
-            <AgentPanel result={result} />
+
+            {/* AI Agronomist Scenario Gateway Card */}
+            <div className="scenario-ai-card">
+              <div className="scenario-ai-header">
+                <div className="scenario-ai-icon-wrap" aria-hidden="true">
+                  <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+                  </svg>
+                </div>
+                <div className="scenario-ai-text">
+                  <h4>{t("ui.agent_scenario_title", "Ask AI Agronomist About This Scenario")}</h4>
+                  <p>{t("ui.agent_scenario_desc", "Questions entered here port directly into the AI chatbot, grounded in your field's soil, NASA telemetry, and crop rotation.")}</p>
+                </div>
+              </div>
+
+              <div className="scenario-ai-input-row">
+                <input
+                  type="text"
+                  className="scenario-ai-input"
+                  placeholder={t("ui.agent_placeholder", "e.g. Why was strategy 1 recommended for this farm?")}
+                  value={scenarioQuery}
+                  onChange={(e) => setScenarioQuery(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" && scenarioQuery.trim()) {
+                      setAssistantOpen(true, scenarioQuery.trim());
+                      setScenarioQuery("");
+                    }
+                  }}
+                  dir={lang === "ar" ? "rtl" : "ltr"}
+                />
+                <button
+                  type="button"
+                  className="action-btn primary"
+                  onClick={() => {
+                    setAssistantOpen(true, scenarioQuery.trim() || undefined);
+                    setScenarioQuery("");
+                  }}
+                >
+                  <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+                  </svg>
+                  <span>{t("ui.ask_in_chatbot", "Ask in Chatbot")}</span>
+                </button>
+              </div>
+
+              <div className="scenario-ai-chips-row" aria-label="Suggested scenario questions">
+                {[
+                  { en: "Why is this rotation recommended?", ar: "لماذا تم ترشيح هذه الدورة الزراعية؟" },
+                  { en: "How to reduce seasonal water demand?", ar: "كيف أخفض الاحتياج المائي الموسمي؟" },
+                  { en: "Is salt accumulating in root zone?", ar: "هل تتراكم الأملاح في منطقة الجذور؟" },
+                  { en: "What is my recommended leaching fraction?", ar: "ما هي نسبة غسيل الأملاح الموصى بها؟" },
+                ].map((chip, idx) => (
+                  <button
+                    key={idx}
+                    type="button"
+                    className="scenario-ai-chip"
+                    onClick={() => setAssistantOpen(true, lang === "ar" ? chip.ar : chip.en)}
+                  >
+                    <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                      <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+                    </svg>
+                    <span>{lang === "ar" ? chip.ar : chip.en}</span>
+                  </button>
+                ))}
+              </div>
+            </div>
+
             <Glossary />
           </div>
         )}

@@ -14,9 +14,17 @@ interface ChatMessage {
 
 export function FloatingAssistantWidget() {
   const { t } = useTranslation();
-  const { lang, result, request } = useStore();
+  const {
+    lang,
+    result,
+    request,
+    assistantOpen,
+    setAssistantOpen,
+    assistantInitialQuery,
+    assistantNotification,
+    dismissAssistantNotification,
+  } = useStore();
   const isAr = lang === "ar";
-  const [isOpen, setIsOpen] = useState(false);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
@@ -35,21 +43,31 @@ export function FloatingAssistantWidget() {
 
   // Auto-scroll on new message
   useEffect(() => {
-    if (isOpen) {
+    if (assistantOpen) {
       messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
     }
-  }, [messages, isOpen]);
+  }, [messages, assistantOpen]);
 
   // Handle escape key to close
   useEffect(() => {
     const onKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "Escape" && isOpen) {
-        setIsOpen(false);
+      if (e.key === "Escape" && assistantOpen) {
+        setAssistantOpen(false);
       }
     };
     window.addEventListener("keydown", onKeyDown);
     return () => window.removeEventListener("keydown", onKeyDown);
-  }, [isOpen]);
+  }, [assistantOpen, setAssistantOpen]);
+
+  // Auto-dismiss proactive notification after 15s
+  useEffect(() => {
+    if (assistantNotification) {
+      const timer = setTimeout(() => {
+        dismissAssistantNotification();
+      }, 15000);
+      return () => clearTimeout(timer);
+    }
+  }, [assistantNotification, dismissAssistantNotification]);
 
   const handleSend = async (questionText?: string) => {
     const text = (questionText || input).trim();
@@ -92,6 +110,14 @@ export function FloatingAssistantWidget() {
     }
   };
 
+  // Consume and execute initial query passed from Results tab
+  useEffect(() => {
+    if (assistantInitialQuery && assistantInitialQuery.trim()) {
+      void handleSend(assistantInitialQuery.trim());
+      setAssistantOpen(true, undefined);
+    }
+  }, [assistantInitialQuery]);
+
   // Scenario-specific quick prompt chips
   const scenarioChips = result
     ? [
@@ -129,17 +155,58 @@ export function FloatingAssistantWidget() {
 
   return (
     <aside className="floating-ai-container" aria-label="AI Agronomist Assistant">
+      {/* Proactive Popup Balloon when Simulation Ends */}
+      {assistantNotification && !assistantOpen && (
+        <div
+          className="fab-proactive-balloon"
+          role="status"
+          onClick={() => {
+            setAssistantOpen(true);
+            dismissAssistantNotification();
+          }}
+          aria-label={t("ui.assistant_popup_title", "Simulation Complete!")}
+        >
+          <div className="balloon-arrow" aria-hidden="true" />
+          <div className="balloon-icon-wrap" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+            </svg>
+          </div>
+          <div className="balloon-body">
+            <h4>{t("ui.assistant_popup_title", "Simulation Complete!")}</h4>
+            <p>{t("ui.assistant_popup_sub", "Ask me anything about your scenario")}</p>
+          </div>
+          <button
+            type="button"
+            className="balloon-dismiss-btn"
+            onClick={(e) => {
+              e.stopPropagation();
+              dismissAssistantNotification();
+            }}
+            title={isAr ? "إغلاق" : "Dismiss"}
+          >
+            <svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+              <line x1="18" y1="6" x2="6" y2="18" />
+              <line x1="6" y1="6" x2="18" y2="18" />
+            </svg>
+          </button>
+        </div>
+      )}
+
       {/* Floating Action Button (FAB) */}
       <button
         type="button"
         className="floating-ai-fab"
-        onClick={() => setIsOpen((prev) => !prev)}
-        aria-expanded={isOpen}
+        onClick={() => {
+          if (assistantNotification) dismissAssistantNotification();
+          setAssistantOpen(!assistantOpen);
+        }}
+        aria-expanded={assistantOpen}
         aria-label={t("ui.agent_title", "Ask AI Agronomist")}
         title={t("ui.agent_title", "Ask AI Agronomist")}
       >
         <span className="fab-beacon" />
-        {isOpen ? (
+        {assistantOpen ? (
           <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
             <line x1="18" y1="6" x2="6" y2="18" />
             <line x1="6" y1="6" x2="18" y2="18" />
@@ -153,7 +220,7 @@ export function FloatingAssistantWidget() {
       </button>
 
       {/* Interactive Chat Window */}
-      {isOpen && (
+      {assistantOpen && (
         <section className="floating-chat-window" role="dialog" aria-modal="false" aria-label="AI Agronomist Chat">
           {/* Header */}
           <div className="chat-window-header">
@@ -192,7 +259,7 @@ export function FloatingAssistantWidget() {
                   <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2" />
                 </svg>
               </button>
-              <button type="button" className="close-btn" onClick={() => setIsOpen(false)} title={isAr ? "إغلاق" : "Close"}>
+              <button type="button" className="close-btn" onClick={() => setAssistantOpen(false)} title={isAr ? "إغلاق" : "Close"}>
                 <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                   <line x1="18" y1="6" x2="6" y2="18" />
                   <line x1="6" y1="6" x2="18" y2="18" />

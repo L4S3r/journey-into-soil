@@ -109,6 +109,159 @@ html[dir="rtl"] .fab-tooltip {
   opacity: 1;
 }
 
+/* 1b. PROACTIVE POPUP BALLOON */
+.fab-proactive-balloon {
+  position: absolute;
+  bottom: 70px;
+  right: 0;
+  width: 290px;
+  background: var(--astryx-color-surface, #ffffff);
+  border: 1.5px solid #10b981;
+  border-radius: 16px;
+  padding: 12px 14px;
+  box-shadow: 0 12px 32px rgba(16, 185, 129, 0.25), 0 4px 12px rgba(0, 0, 0, 0.08);
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  cursor: pointer;
+  animation: balloonPop 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  transform-origin: bottom right;
+  z-index: 895;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+[data-theme="dark"] .fab-proactive-balloon,
+.dark .fab-proactive-balloon {
+  background: #141a16;
+  border-color: #10b981;
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.5), 0 0 16px rgba(16, 185, 129, 0.25);
+}
+
+[dir="rtl"] .fab-proactive-balloon,
+html[dir="rtl"] .fab-proactive-balloon {
+  right: auto;
+  left: 0;
+  transform-origin: bottom left;
+}
+
+.fab-proactive-balloon:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 14px 36px rgba(16, 185, 129, 0.32), 0 6px 16px rgba(0, 0, 0, 0.12);
+}
+
+@keyframes balloonPop {
+  from {
+    opacity: 0;
+    transform: scale(0.85) translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.balloon-arrow {
+  position: absolute;
+  bottom: -7px;
+  right: 22px;
+  width: 12px;
+  height: 12px;
+  background: var(--astryx-color-surface, #ffffff);
+  border-right: 1.5px solid #10b981;
+  border-bottom: 1.5px solid #10b981;
+  transform: rotate(45deg);
+}
+
+[data-theme="dark"] .balloon-arrow,
+.dark .balloon-arrow {
+  background: #141a16;
+}
+
+[dir="rtl"] .balloon-arrow,
+html[dir="rtl"] .balloon-arrow {
+  right: auto;
+  left: 22px;
+  border-right: none;
+  border-left: 1.5px solid #10b981;
+}
+
+.balloon-icon-wrap {
+  width: 32px;
+  height: 32px;
+  border-radius: 9px;
+  background: rgba(16, 185, 129, 0.14);
+  color: #10b981;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+[data-theme="dark"] .balloon-icon-wrap,
+.dark .balloon-icon-wrap {
+  background: rgba(16, 185, 129, 0.22);
+}
+
+.balloon-body {
+  flex: 1;
+}
+
+.balloon-body h4 {
+  margin: 0 0 2px;
+  font-size: 13px;
+  font-weight: 800;
+  color: var(--astryx-color-text-primary, #151a17);
+}
+
+[data-theme="dark"] .balloon-body h4,
+.dark .balloon-body h4 {
+  color: #f2f6f4;
+}
+
+.balloon-body p {
+  margin: 0;
+  font-size: 11px;
+  color: var(--astryx-color-text-secondary, #4a544e);
+  line-height: 1.35;
+}
+
+[data-theme="dark"] .balloon-body p,
+.dark .balloon-body p {
+  color: #a7b5ad;
+}
+
+.balloon-dismiss-btn {
+  background: transparent;
+  border: none;
+  width: 22px;
+  height: 22px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--astryx-color-text-secondary, #4a544e);
+  cursor: pointer;
+  flex-shrink: 0;
+  padding: 0;
+  transition: all 0.15s ease;
+}
+
+[data-theme="dark"] .balloon-dismiss-btn,
+.dark .balloon-dismiss-btn {
+  color: #a7b5ad;
+}
+
+.balloon-dismiss-btn:hover {
+  background: rgba(0, 0, 0, 0.08);
+  color: var(--astryx-color-text-primary, #151a17);
+}
+
+[data-theme="dark"] .balloon-dismiss-btn:hover,
+.dark .balloon-dismiss-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+}
+
 /* 2. CHAT DRAWER / WINDOW */
 .floating-chat-window {
   position: absolute;

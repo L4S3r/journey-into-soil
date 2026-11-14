@@ -426,5 +426,10 @@
   "ui.kpi_water_demand": "الاحتياج المائي الموسمي",
   "ui.kpi_stress_index": "ملوحة منطقة الجذور وصحة التربة",
   "ui.optimized_rotation": "دورة زراعية محسنة",
-  "ui.bare_days": "أيام بوار"
+  "ui.bare_days": "أيام بوار",
+  "ui.assistant_popup_title": "اكتملت المحاكاة!",
+  "ui.assistant_popup_sub": "اسألني أي شيء عن سيناريو حقلك",
+  "ui.agent_scenario_title": "اسأل المستشار الزراعي الذكي عن هذا السيناريو",
+  "ui.agent_scenario_desc": "أي سؤال تطرحه هنا ينتقل مباشرة إلى المساعد الذكي، مدعوماً ببيانات تربتك وأقمار ناسا والدورة الزراعية.",
+  "ui.ask_in_chatbot": "اسأل في المحادثة"
 }

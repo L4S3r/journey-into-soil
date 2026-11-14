@@ -404,3 +404,141 @@
     justify-content: flex-start;
   }
 }
+
+/* 5. SCENARIO AI AGRONOMIST GATEWAY CARD */
+.scenario-ai-card {
+  background: var(--astryx-color-surface, #ffffff);
+  border: 1.5px solid var(--astryx-color-border, rgba(21, 26, 23, 0.14));
+  border-radius: 16px;
+  padding: 18px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+}
+
+[data-theme="dark"] .scenario-ai-card,
+.dark .scenario-ai-card {
+  background: rgba(18, 23, 20, 0.88);
+  border-color: rgba(255, 255, 255, 0.12);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
+}
+
+.scenario-ai-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.scenario-ai-icon-wrap {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #1b4332 0%, #2d6a4f 100%);
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 3px 10px rgba(27, 67, 50, 0.25);
+}
+
+.scenario-ai-text h4 {
+  margin: 0 0 2px;
+  font-size: 15px;
+  font-weight: 800;
+  color: var(--astryx-color-text-primary, #151a17);
+}
+
+[data-theme="dark"] .scenario-ai-text h4,
+.dark .scenario-ai-text h4 {
+  color: #f2f6f4;
+}
+
+.scenario-ai-text p {
+  margin: 0;
+  font-size: 12px;
+  color: var(--astryx-color-text-secondary, #4a544e);
+}
+
+[data-theme="dark"] .scenario-ai-text p,
+.dark .scenario-ai-text p {
+  color: #a7b5ad;
+}
+
+.scenario-ai-input-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.scenario-ai-input {
+  flex: 1;
+  background: var(--astryx-color-surface-subtle, #f7f4ee);
+  border: 1.5px solid var(--astryx-color-border, rgba(21, 26, 23, 0.16));
+  border-radius: 12px;
+  padding: 9px 14px;
+  font-size: 13px;
+  color: var(--astryx-color-text-primary, #151a17);
+  outline: none;
+  font-family: inherit;
+  transition: all 0.15s ease;
+}
+
+[data-theme="dark"] .scenario-ai-input,
+.dark .scenario-ai-input {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.14);
+  color: #f2f6f4;
+}
+
+.scenario-ai-input:focus {
+  border-color: #1b4332;
+  box-shadow: 0 0 0 3px rgba(27, 67, 50, 0.12);
+}
+
+[data-theme="dark"] .scenario-ai-input:focus,
+.dark .scenario-ai-input:focus {
+  border-color: #52b788;
+  box-shadow: 0 0 0 3px rgba(82, 183, 136, 0.2);
+}
+
+.scenario-ai-chips-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.scenario-ai-chip {
+  background: var(--astryx-color-surface-subtle, #f7f4ee);
+  border: 1px solid var(--astryx-color-border, rgba(21, 26, 23, 0.12));
+  border-radius: 8px;
+  padding: 5px 10px;
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--astryx-color-text-secondary, #4a544e);
+  cursor: pointer;
+  transition: all 0.15s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
+[data-theme="dark"] .scenario-ai-chip,
+.dark .scenario-ai-chip {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: rgba(255, 255, 255, 0.1);
+  color: #a7b5ad;
+}
+
+.scenario-ai-chip:hover {
+  background: var(--astryx-color-border-subtle, #eeeae1);
+  color: var(--astryx-color-text-primary, #151a17);
+  transform: translateY(-1px);
+}
+
+[data-theme="dark"] .scenario-ai-chip:hover,
+.dark .scenario-ai-chip:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+}

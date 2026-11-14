@@ -57,6 +57,9 @@ interface State {
   authModalOpen: boolean;
   pdfModalOpen: boolean;
   nasaModalOpen: boolean;
+  assistantOpen: boolean;
+  assistantInitialQuery: string | null;
+  assistantNotification: string | null;
   setRequest: (patch: Partial<AnalysisRequest>) => void;
   applySite: (site: DemoSite) => void;
   openDemoSite: (site: DemoSite) => Promise<void>;
@@ -71,6 +74,8 @@ interface State {
   setAuthModalOpen: (open: boolean) => void;
   setPdfModalOpen: (open: boolean) => void;
   setNasaModalOpen: (open: boolean) => void;
+  setAssistantOpen: (open: boolean, initialQuery?: string) => void;
+  dismissAssistantNotification: () => void;
   setStrategy: (id: StrategyId) => void;
   setDayT: (t: number) => void;
   setLang: (l: "en" | "ar") => void;
@@ -120,6 +125,16 @@ export const useStore = create<State>((set, get) => ({
   authModalOpen: false,
   pdfModalOpen: false,
   nasaModalOpen: false,
+  assistantOpen: false,
+  assistantInitialQuery: null,
+  assistantNotification: null,
+  setAssistantOpen: (assistantOpen, initialQuery) =>
+    set({
+      assistantOpen,
+      assistantInitialQuery: initialQuery ?? null,
+      assistantNotification: assistantOpen ? null : get().assistantNotification,
+    }),
+  dismissAssistantNotification: () => set({ assistantNotification: null }),
   setUser: (user, token) => {
     if (user) {
       safeSet("shifter_user", JSON.stringify(user));
@@ -160,7 +175,7 @@ export const useStore = create<State>((set, get) => ({
       if (typeof window !== "undefined" && result.request_id) {
         window.history.pushState({ id: result.request_id }, "", `/a/${result.request_id}`);
       }
-      set({ result, strategyId: "primary", dayT: 0, loading: false });
+      set({ result, strategyId: "primary", dayT: 0, loading: false, assistantNotification: "ready" });
     } catch {
       // Offline fallback for demo: load sample
       try {
@@ -168,7 +183,7 @@ export const useStore = create<State>((set, get) => ({
         if (typeof window !== "undefined" && sample.request_id) {
           window.history.pushState({ id: sample.request_id }, "", `/a/${sample.request_id}`);
         }
-        set({ result: sample, strategyId: "primary", dayT: 0, loading: false, usingSample: true });
+        set({ result: sample, strategyId: "primary", dayT: 0, loading: false, usingSample: true, assistantNotification: "ready" });
       } catch (err) {
         set({ loading: false, error: err instanceof Error ? err.message : String(err) });
       }
@@ -181,7 +196,7 @@ export const useStore = create<State>((set, get) => ({
       if (typeof window !== "undefined" && result.request_id) {
         window.history.pushState({ id: result.request_id }, "", `/a/${result.request_id}`);
       }
-      set({ result, strategyId: "primary", dayT: 0, loading: false });
+      set({ result, strategyId: "primary", dayT: 0, loading: false, assistantNotification: "ready" });
     } catch (e) {
       set({ loading: false, error: e instanceof Error ? e.message : String(e) });
     }
@@ -231,7 +246,7 @@ export const useStore = create<State>((set, get) => ({
     if (typeof window !== "undefined" && (window.location.pathname.startsWith("/a/") || window.location.hash.startsWith("#/a/"))) {
       window.history.pushState(null, "", "/");
     }
-    set({ result: null, error: null, usingSample: false, focusedLayer: null });
+    set({ result: null, error: null, usingSample: false, focusedLayer: null, assistantNotification: null });
   },
   setFocusedLayer: (focusedLayer) => set({ focusedLayer }),
   setStrategy: (strategyId) => set({ strategyId }),

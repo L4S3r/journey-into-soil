@@ -426,5 +426,10 @@
   "ui.kpi_water_demand": "Seasonal Water Demand",
   "ui.kpi_stress_index": "Root-Zone Salinity & Health",
   "ui.optimized_rotation": "Optimized Rotation",
-  "ui.bare_days": "bare days"
+  "ui.bare_days": "bare days",
+  "ui.assistant_popup_title": "Simulation Complete!",
+  "ui.assistant_popup_sub": "Ask me anything about your scenario",
+  "ui.agent_scenario_title": "Ask AI Agronomist About This Scenario",
+  "ui.agent_scenario_desc": "Questions entered here port directly into the AI chatbot, grounded in your field's soil, NASA telemetry, and crop rotation.",
+  "ui.ask_in_chatbot": "Ask in Chatbot"
 }
