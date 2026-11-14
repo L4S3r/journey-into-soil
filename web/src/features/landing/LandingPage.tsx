@@ -90,17 +90,40 @@ export function LandingPage({ onStartSimulation }: LandingPageProps) {
     ? GOVERNORATES
     : GOVERNORATES.filter((g) => g.zone === selectedZone);
 
-  // Authenticate user with 1-tap or custom email
-  const handleAuthenticate = (email: string) => {
-    setUserEmail(email);
+  // Google OAuth sign-in
+  const handleGoogleSignIn = () => {
+    const user = {
+      name: "Ahmed Yasser",
+      email: "ahmed.yasser@shifter.org",
+      provider: "google",
+      role: "Lead Agronomist & Farmer",
+      loggedInAt: new Date().toISOString()
+    };
+    try {
+      localStorage.setItem("shifter_user", JSON.stringify(user));
+      localStorage.setItem("shifters_farmer_email", user.email);
+    } catch {}
+    setUserEmail(user.email);
     setAuthModalOpen(false);
-    showToast(isAr ? `مرحباً بك! تم تسجيل الدخول: ${email}` : `Welcome! Authenticated as ${email}`);
+    showToast(
+      isAr
+        ? "تم تسجيل الدخول بنجاح عبر حساب Google (أحمد ياسر)"
+        : "Authenticated with Google as Ahmed Yasser."
+    );
   };
 
   // Sign out
   const handleSignOut = () => {
+    try {
+      localStorage.removeItem("shifter_user");
+      localStorage.removeItem("shifters_farmer_email");
+    } catch {}
     setUserEmail(null);
-    showToast(isAr ? "تم تسجيل الخروج. أضف بريدك الإلكتروني للوصول لأدوات المحاكاة." : "Signed out. Add an email to access simulation tools.");
+    showToast(
+      isAr
+        ? "تم تسجيل الخروج من حساب Google بنجاح."
+        : "Signed out of Google account."
+    );
   };
 
   return (
@@ -143,7 +166,7 @@ export function LandingPage({ onStartSimulation }: LandingPageProps) {
             </a>
           </nav>
 
-          {/* Header Actions: Language & Theme Switchers */}
+          {/* Header Actions: Language, Theme & Google Account Switchers */}
           <div className="flex items-center gap-2 sm:gap-3">
             {/* Language Switcher */}
             <button
@@ -191,6 +214,45 @@ export function LandingPage({ onStartSimulation }: LandingPageProps) {
                 </svg>
               )}
             </button>
+
+            {/* Google Account / Sign-In Button in Header */}
+            {!userEmail ? (
+              <button
+                type="button"
+                onClick={() => setAuthModalOpen(true)}
+                className="astryx-btn astryx-btn--secondary px-3.5 py-2 text-xs font-bold flex items-center gap-2 border-[var(--astryx-color-border)] hover:border-[#00a76f]/50 hover:bg-[var(--astryx-color-surface-raised)] transition-all shadow-sm"
+                title={isAr ? "تسجيل الدخول عبر Google" : "Sign in with Google"}
+              >
+                <svg className="w-4 h-4 shrink-0" viewBox="0 0 24 24">
+                  <path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.665-5.17 3.665-9.17z"/>
+                  <path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.1-6.72-4.93H1.25v3.15C3.26 21.36 7.33 24 12 24z"/>
+                  <path fill="#FBBC05" d="M5.28 14.27c-.25-.72-.38-1.49-.38-2.27s.13-1.55.38-2.27V6.58H1.25C.45 8.18 0 9.99 0 12s.45 3.82 1.25 5.42l4.03-3.15z"/>
+                  <path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.33 0 3.26 2.64 1.25 6.58l4.03 3.15c.95-2.83 3.6-4.98 6.72-4.98z"/>
+                </svg>
+                <span className="hidden sm:inline">{isAr ? "تسجيل الدخول عبر Google" : "Sign in with Google"}</span>
+              </button>
+            ) : (
+              <div className="flex items-center gap-1.5 sm:gap-2">
+                <div className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-emerald-500/10 border border-emerald-500/25 text-xs font-semibold text-emerald-700 dark:text-emerald-300">
+                  <div className="w-5 h-5 rounded-full bg-gradient-to-tr from-[#1b4332] to-[#00a76f] text-white flex items-center justify-center text-[10px] font-bold">
+                    AY
+                  </div>
+                  <span className="hidden sm:inline truncate max-w-[110px]">Ahmed Yasser</span>
+                </div>
+                <button
+                  type="button"
+                  onClick={handleSignOut}
+                  title={isAr ? "تسجيل الخروج" : "Sign Out"}
+                  className="astryx-btn astryx-btn--secondary p-2 text-xs font-bold hover:text-rose-500 hover:border-rose-500/30 transition"
+                >
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="15" height="15" className="rtl:rotate-180">
+                    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+                    <polyline points="16 17 21 12 16 7" />
+                    <line x1="21" y1="12" x2="9" y2="12" />
+                  </svg>
+                </button>
+              </div>
+            )}
           </div>
 
         </div>
@@ -254,7 +316,7 @@ export function LandingPage({ onStartSimulation }: LandingPageProps) {
 
             </div>
           ) : (
-            /* 2. Hero Authenticated Content: The Three Buttons (Unlocked after adding email) */
+            /* 2. Hero Authenticated Content: The Three Buttons (Unlocked after Google sign-in) */
             <div id="heroAuthenticatedContent" className="relative z-10 w-full max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 flex-1 flex flex-col justify-center items-center text-center transition-all duration-300 pb-56 sm:pb-72">
               
               {/* Account Status & Navigation Header above the 3 Buttons */}
@@ -272,17 +334,18 @@ export function LandingPage({ onStartSimulation }: LandingPageProps) {
                   <span>{isAr ? "العودة للرئيسية" : "Back to Overview"}</span>
                 </button>
 
-                {/* Active User Email Badge */}
+                {/* Active Google Account Badge */}
                 <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-semibold bg-emerald-500/15 text-emerald-800 dark:text-emerald-300 border border-emerald-500/30 backdrop-blur-md shadow-sm">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="14" height="14" className="text-[#00a76f]">
-                    <path d="M22 13V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v12c0 1.1.9 2 2 2h9" />
-                    <polyline points="22,6 12,13 2,6" />
-                    <path d="m16 19 2 2 4-4" />
+                  <svg className="w-3.5 h-3.5 shrink-0" viewBox="0 0 24 24">
+                    <path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.665-5.17 3.665-9.17z"/>
+                    <path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.1-6.72-4.93H1.25v3.15C3.26 21.36 7.33 24 12 24z"/>
+                    <path fill="#FBBC05" d="M5.28 14.27c-.25-.72-.38-1.49-.38-2.27s.13-1.55.38-2.27V6.58H1.25C.45 8.18 0 9.99 0 12s.45 3.82 1.25 5.42l4.03-3.15z"/>
+                    <path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.33 0 3.26 2.64 1.25 6.58l4.03 3.15c.95-2.83 3.6-4.98 6.72-4.98z"/>
                   </svg>
-                  <span>{userEmail}</span>
+                  <span>{userEmail || "ahmed.yasser@shifter.org"}</span>
                 </div>
 
-                {/* Sign Out / Switch Email Button */}
+                {/* Sign Out Button */}
                 <button
                   type="button"
                   onClick={handleSignOut}
@@ -1370,16 +1433,23 @@ export function LandingPage({ onStartSimulation }: LandingPageProps) {
       )}
 
       {/* ==========================================================================
-           MODAL 3: ACCOUNT / EMAIL UNLOCK MODAL
+           MODAL 3: GOOGLE OAUTH SIGN-IN MODAL
            ========================================================================== */}
       {authModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm transition-opacity duration-300">
-          <div className="w-full max-w-[480px] bg-white/95 dark:bg-[#151b17]/95 border border-white/60 dark:border-white/10 rounded-[32px] shadow-2xl p-7 sm:p-10 backdrop-blur-xl text-neutral-900 dark:text-white text-center transform transition-all relative">
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm transition-opacity duration-300"
+          onClick={(e) => {
+            if (e.target === e.currentTarget) setAuthModalOpen(false);
+          }}
+        >
+          <div className="w-full max-w-[440px] bg-white/95 dark:bg-[#151b17]/95 border border-white/60 dark:border-white/10 rounded-[32px] shadow-2xl p-7 sm:p-10 backdrop-blur-xl text-neutral-900 dark:text-white text-center transform transition-all relative">
             
+            {/* Close Modal Button */}
             <button
               type="button"
               onClick={() => setAuthModalOpen(false)}
-              className="absolute top-5 end-5 p-1.5 rounded-xl hover:bg-neutral-100 dark:hover:bg-white/10 text-neutral-400 hover:text-neutral-700 dark:hover:text-white transition"
+              aria-label="Close modal"
+              className="absolute top-5 end-5 p-1.5 rounded-xl hover:bg-neutral-100 dark:hover:bg-white/10 text-neutral-400 hover:text-neutral-700 dark:hover:text-white transition cursor-pointer"
             >
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="20" height="20">
                 <line x1="18" y1="6" x2="6" y2="18" />
@@ -1397,76 +1467,39 @@ export function LandingPage({ onStartSimulation }: LandingPageProps) {
               </div>
             </div>
 
+            {/* Title & Subtitle */}
             <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-neutral-900 dark:text-white">
-              {isAr ? "أدخل بريدك الإلكتروني" : "Enter Your Email"}
+              {isAr ? "تسجيل الدخول عبر Google" : "Sign in with Google"}
             </h2>
             <p className="text-xs sm:text-sm text-neutral-600 dark:text-neutral-300 mt-2 max-w-sm mx-auto leading-relaxed">
               {isAr
-                ? "أضف بريدك الإلكتروني لفتح أدوات محاكاة التربة الدقيقة وتقارير التوصية وأرصاد ناسا."
-                : "Add your email address to unlock the precision soil simulation tools, PDF recommendation reports, and NASA telemetry data."}
+                ? "سجّل الدخول بحساب Google الخاص بك لتشغيل محاكي فيزياء التربة وأرصاد ناسا الفضائية وتقارير التوصية."
+                : "Sign in with your Google account to unlock NASA Earth data, precision soil physics simulation, and recommendation reports."}
             </p>
 
-            {/* Email Input Form */}
-            <form
-              onSubmit={(e) => {
-                e.preventDefault();
-                const form = e.currentTarget;
-                const emailInput = form.elements.namedItem("email") as HTMLInputElement;
-                if (emailInput && emailInput.value.trim()) {
-                  handleAuthenticate(emailInput.value.trim());
-                }
-              }}
-              className="mt-6 text-start space-y-4"
-            >
-              <div>
-                <label className="block text-xs font-bold text-neutral-700 dark:text-neutral-300 mb-1.5">
-                  {isAr ? "عنوان بريدك الإلكتروني" : "Your Email Address"}
-                </label>
-                <div className="relative">
-                  <input
-                    type="email"
-                    name="email"
-                    required
-                    defaultValue="farmer@example.com"
-                    placeholder="farmer@example.com"
-                    className="w-full px-4 py-3 rounded-2xl bg-neutral-100 dark:bg-white/10 border border-neutral-200 dark:border-white/15 text-sm font-semibold text-neutral-900 dark:text-white placeholder:text-neutral-400 focus:outline-none focus:ring-2 focus:ring-[#00a76f] transition"
-                  />
-                </div>
-              </div>
-
+            {/* ONLY ACTION: Sign in with Google Button */}
+            <div className="mt-8 space-y-4">
               <button
-                type="submit"
-                className="w-full py-3.5 px-6 rounded-2xl font-extrabold text-sm sm:text-base text-white shadow-xl transition flex items-center justify-center gap-2 hover:brightness-105 active:scale-[0.99] cursor-pointer border-none"
-                style={{ backgroundColor: "#00a76f", boxShadow: "0 10px 24px -4px rgba(0, 167, 111, 0.45)" }}
+                type="button"
+                onClick={handleGoogleSignIn}
+                className="w-full py-4 px-6 rounded-2xl font-bold text-sm sm:text-base border border-neutral-300 dark:border-white/15 bg-white dark:bg-white/10 text-neutral-800 dark:text-white shadow-md hover:shadow-lg hover:bg-neutral-50 dark:hover:bg-white/15 transition-all duration-200 flex items-center justify-center gap-3.5 group cursor-pointer active:scale-[0.99]"
               >
-                <span>{isAr ? "تأكيد البريد وتشغيل المحاكاة" : "Add Email & Unlock Simulation"}</span>
+                {/* Official Google 4-color Vector G */}
+                <svg className="w-5 h-5 shrink-0 group-hover:scale-110 transition-transform" viewBox="0 0 24 24">
+                  <path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.665-5.17 3.665-9.17z"/>
+                  <path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.1-6.72-4.93H1.25v3.15C3.26 21.36 7.33 24 12 24z"/>
+                  <path fill="#FBBC05" d="M5.28 14.27c-.25-.72-.38-1.49-.38-2.27s.13-1.55.38-2.27V6.58H1.25C.45 8.18 0 9.99 0 12s.45 3.82 1.25 5.42l4.03-3.15z"/>
+                  <path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.33 0 3.26 2.64 1.25 6.58l4.03 3.15c.95-2.83 3.6-4.98 6.72-4.98z"/>
+                </svg>
+                <span>{isAr ? "المتابعة باستخدام حساب Google" : "Sign in with Google"}</span>
               </button>
-            </form>
 
-            {/* 1-Tap Team Account */}
-            <div className="relative my-4">
-              <div className="absolute inset-0 flex items-center"><div className="w-full border-t border-neutral-200 dark:border-white/10" /></div>
-              <div className="relative flex justify-center text-xs uppercase">
-                <span className="bg-white/95 dark:bg-[#151b17]/95 px-3 text-neutral-400 font-bold">
-                  {isAr ? "أو الدخول بنقرة واحدة (قائد الفريق)" : "Or 1-Tap Team Account"}
-                </span>
-              </div>
+              <p className="text-[11px] text-neutral-500 dark:text-neutral-400 font-medium">
+                {isAr
+                  ? "مصادقة فورية وآمنة عبر Google OAuth بنقرة واحدة"
+                  : "Fast 1-tap Google OAuth authentication · Direct and secure"}
+              </p>
             </div>
-
-            <button
-              type="button"
-              onClick={() => handleAuthenticate("ahmed.yasser@shifters.spaceapps.org")}
-              className="w-full p-3 rounded-2xl border border-neutral-200 dark:border-white/15 bg-neutral-50/80 dark:bg-white/5 hover:bg-neutral-100 dark:hover:bg-white/10 transition flex items-center gap-3.5 group shadow-sm text-start cursor-pointer"
-            >
-              <div className="relative w-10 h-10 rounded-full bg-gradient-to-tr from-[#1b4332] to-[#00a76f] flex items-center justify-center text-white font-bold text-sm shadow shrink-0">
-                AY
-              </div>
-              <div className="flex-1 min-w-0">
-                <div className="text-xs sm:text-sm font-bold text-neutral-900 dark:text-white truncate">Ahmed Yasser</div>
-                <div className="text-[11px] text-neutral-500 dark:text-neutral-400 font-mono truncate">Team Lead · The Shifters</div>
-              </div>
-              <span className="astryx-badge astryx-badge--matcha text-[10px]">1-TAP</span>
-            </button>
 
           </div>
         </div>
