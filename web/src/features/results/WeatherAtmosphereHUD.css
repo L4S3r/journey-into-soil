@@ -1,4 +1,7 @@
-/* Atmospheric & Sensor Telemetry HUD Popover */
+/* ==========================================================================
+   ATMOSPHERIC & SENSOR TELEMETRY HUD POPOVER
+   Dark & Light Mode WCAG AAA High Contrast
+   ========================================================================== */
 
 .weather-hud-wrap {
   position: absolute;
@@ -30,7 +33,7 @@
 }
 
 .weather-hud-bar {
-  background: rgba(15, 23, 42, 0.9);
+  background: rgba(15, 23, 42, 0.92);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
   border: 1px solid rgba(255, 255, 255, 0.14);
@@ -284,4 +287,162 @@
 .weather-btn-svg {
   width: 14px;
   height: 14px;
+}
+
+/* ==========================================================================
+   LIGHT MODE OVERRIDES: WCAG AAA HIGH CONTRAST
+   ========================================================================== */
+:root:not([data-theme="dark"]) .weather-hud-bar,
+[data-theme="light"] .weather-hud-bar,
+.scene-container[data-theme="light"] .weather-hud-bar {
+  background: rgba(255, 255, 255, 0.96);
+  border: 1.5px solid rgba(21, 26, 23, 0.18);
+  box-shadow: 0 14px 36px -4px rgba(0, 0, 0, 0.16), 0 0 0 1px rgba(21, 26, 23, 0.06);
+  color: #151a17;
+}
+
+:root:not([data-theme="dark"]) .weather-hud-header,
+[data-theme="light"] .weather-hud-header,
+.scene-container[data-theme="light"] .weather-hud-header {
+  border-bottom-color: rgba(21, 26, 23, 0.1);
+}
+
+:root:not([data-theme="dark"]) .weather-beacon-label,
+[data-theme="light"] .weather-beacon-label,
+.scene-container[data-theme="light"] .weather-beacon-label {
+  color: #4a544e;
+  font-weight: 800;
+}
+
+:root:not([data-theme="dark"]) .weather-hud-collapse-btn,
+[data-theme="light"] .weather-hud-collapse-btn,
+.scene-container[data-theme="light"] .weather-hud-collapse-btn {
+  color: #4a544e;
+}
+
+:root:not([data-theme="dark"]) .weather-hud-collapse-btn:hover,
+[data-theme="light"] .weather-hud-collapse-btn:hover,
+.scene-container[data-theme="light"] .weather-hud-collapse-btn:hover {
+  background: rgba(0, 0, 0, 0.06);
+  color: #151a17;
+}
+
+:root:not([data-theme="dark"]) .weather-chip,
+[data-theme="light"] .weather-chip,
+.scene-container[data-theme="light"] .weather-chip {
+  background: var(--astryx-color-surface-subtle, #f7f4ee);
+  border: 1px solid var(--astryx-color-border, rgba(21, 26, 23, 0.14));
+}
+
+:root:not([data-theme="dark"]) .weather-chip.warning,
+[data-theme="light"] .weather-chip.warning,
+.scene-container[data-theme="light"] .weather-chip.warning {
+  border-color: rgba(217, 119, 6, 0.4);
+  background: rgba(217, 119, 6, 0.08);
+}
+
+:root:not([data-theme="dark"]) .weather-svg,
+[data-theme="light"] .weather-svg,
+.scene-container[data-theme="light"] .weather-svg {
+  color: #0284c7;
+}
+
+:root:not([data-theme="dark"]) .weather-chip.warning .weather-svg,
+[data-theme="light"] .weather-chip.warning .weather-svg,
+.scene-container[data-theme="light"] .weather-chip.warning .weather-svg {
+  color: #d97706;
+}
+
+:root:not([data-theme="dark"]) .weather-chip-val,
+[data-theme="light"] .weather-chip-val,
+.scene-container[data-theme="light"] .weather-chip-val {
+  color: #151a17;
+  font-weight: 800;
+}
+
+:root:not([data-theme="dark"]) .weather-chip-sub,
+[data-theme="light"] .weather-chip-sub,
+.scene-container[data-theme="light"] .weather-chip-sub {
+  color: #4a544e;
+  font-weight: 600;
+}
+
+:root:not([data-theme="dark"]) .weather-hud-sim-toggle,
+[data-theme="light"] .weather-hud-sim-toggle,
+.scene-container[data-theme="light"] .weather-hud-sim-toggle {
+  background: var(--astryx-color-surface-subtle, #f7f4ee);
+  border-color: rgba(21, 26, 23, 0.12);
+}
+
+:root:not([data-theme="dark"]) .weather-toggle-label,
+[data-theme="light"] .weather-toggle-label,
+.scene-container[data-theme="light"] .weather-toggle-label {
+  color: #151a17;
+  font-weight: 700;
+}
+
+:root:not([data-theme="dark"]) .weather-toggle-btn,
+[data-theme="light"] .weather-toggle-btn,
+.scene-container[data-theme="light"] .weather-toggle-btn {
+  background: #ffffff;
+  border: 1.5px solid rgba(21, 26, 23, 0.18);
+}
+
+:root:not([data-theme="dark"]) .weather-toggle-btn.active,
+[data-theme="light"] .weather-toggle-btn.active,
+.scene-container[data-theme="light"] .weather-toggle-btn.active {
+  background: rgba(27, 67, 50, 0.1);
+  border-color: #1b4332;
+}
+
+:root:not([data-theme="dark"]) .weather-toggle-btn.active .toggle-switch-thumb,
+[data-theme="light"] .weather-toggle-btn.active .toggle-switch-thumb,
+.scene-container[data-theme="light"] .weather-toggle-btn.active .toggle-switch-thumb {
+  background: #1b4332;
+  box-shadow: 0 0 6px rgba(27, 67, 50, 0.4);
+}
+
+:root:not([data-theme="dark"]) .toggle-text,
+[data-theme="light"] .toggle-text,
+.scene-container[data-theme="light"] .toggle-text {
+  color: #151a17;
+  font-weight: 700;
+}
+
+:root:not([data-theme="dark"]) .weather-hud-presets,
+[data-theme="light"] .weather-hud-presets,
+.scene-container[data-theme="light"] .weather-hud-presets {
+  border-top-color: rgba(21, 26, 23, 0.1);
+}
+
+:root:not([data-theme="dark"]) .weather-presets-label,
+[data-theme="light"] .weather-presets-label,
+.scene-container[data-theme="light"] .weather-presets-label {
+  color: #4a544e;
+  font-weight: 700;
+}
+
+:root:not([data-theme="dark"]) .weather-btn,
+[data-theme="light"] .weather-btn,
+.scene-container[data-theme="light"] .weather-btn {
+  background: var(--astryx-color-surface-subtle, #f7f4ee);
+  border: 1px solid var(--astryx-color-border, rgba(21, 26, 23, 0.14));
+  color: #4a544e;
+}
+
+:root:not([data-theme="dark"]) .weather-btn:hover,
+[data-theme="light"] .weather-btn:hover,
+.scene-container[data-theme="light"] .weather-btn:hover {
+  background: #eeeae1;
+  border-color: rgba(21, 26, 23, 0.25);
+  color: #151a17;
+}
+
+:root:not([data-theme="dark"]) .weather-btn.active,
+[data-theme="light"] .weather-btn.active,
+.scene-container[data-theme="light"] .weather-btn.active {
+  background: #1b4332;
+  border-color: #1b4332;
+  color: #ffffff;
+  box-shadow: 0 2px 8px rgba(27, 67, 50, 0.3);
 }

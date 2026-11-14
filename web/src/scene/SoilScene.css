@@ -171,30 +171,74 @@
 .telemetry-expand-btn {
   display: inline-flex;
   align-items: center;
-  gap: 5px;
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  color: #cbd5e1;
-  font-size: 0.75rem;
+  gap: 6px;
+  background: rgba(16, 185, 129, 0.14);
+  border: 1px solid rgba(16, 185, 129, 0.35);
+  color: #34d399;
+  font-size: 0.74rem;
   font-weight: 700;
-  padding: 3px 8px;
+  letter-spacing: 0.01em;
+  padding: 3px 10px;
   border-radius: 9999px;
   cursor: pointer;
   transition: all 0.15s ease;
   margin-inline-start: 4px;
+  white-space: nowrap;
 }
 
-:root:not([data-theme="dark"]) .telemetry-expand-btn {
-  background: #f1f5f9;
-  border-color: rgba(0, 0, 0, 0.12);
-  color: #374151;
+.telemetry-expand-btn:hover {
+  background: #10b981;
+  border-color: #10b981;
+  color: #0b1510;
 }
 
-.telemetry-expand-btn:hover,
 .telemetry-expand-btn.active {
   background: #10b981;
   border-color: #10b981;
+  color: #0b1510;
+  box-shadow: 0 0 10px rgba(16, 185, 129, 0.4);
+}
+
+:root:not([data-theme="dark"]) .telemetry-expand-btn,
+[data-theme="light"] .telemetry-expand-btn,
+.scene-container[data-theme="light"] .telemetry-expand-btn {
+  background: rgba(27, 67, 50, 0.08);
+  border: 1.5px solid rgba(27, 67, 50, 0.24);
+  color: #1b4332;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+:root:not([data-theme="dark"]) .telemetry-expand-btn:hover,
+[data-theme="light"] .telemetry-expand-btn:hover,
+.scene-container[data-theme="light"] .telemetry-expand-btn:hover {
+  background: #1b4332;
+  border-color: #1b4332;
   color: #ffffff;
+}
+
+:root:not([data-theme="dark"]) .telemetry-expand-btn.active,
+[data-theme="light"] .telemetry-expand-btn.active,
+.scene-container[data-theme="light"] .telemetry-expand-btn.active {
+  background: #1b4332;
+  border-color: #1b4332;
+  color: #ffffff;
+  box-shadow: 0 2px 8px rgba(27, 67, 50, 0.3);
+}
+
+.telemetry-btn-text {
+  font-weight: 700;
+  letter-spacing: 0.01em;
+}
+
+.telemetry-chevron {
+  width: 10px;
+  height: 10px;
+  transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  margin-inline-start: 2px;
+}
+
+.telemetry-chevron.rotated {
+  transform: rotate(180deg);
 }
 
 /* Right Cluster: 3D Scene Controls */
