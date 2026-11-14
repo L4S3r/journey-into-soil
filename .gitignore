@@ -12,3 +12,7 @@ data/app.db
 .DS_Store
 .netrc
 powershell.bat
+
+# local secrets and run logs
+.env.*
+logs/

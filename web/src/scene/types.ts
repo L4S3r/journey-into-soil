@@ -91,6 +91,83 @@ export interface NasaItem {
   status: "pack" | "live" | "planned" | "placeholder";
   resolution_km: number;
 }
+export interface SmapComparison {
+  n_pairs: number;
+  status: string;
+  bias_m3m3: number | null;
+  rmse_m3m3: number | null;
+  mae_m3m3: number | null;
+  pearson_r: number | null;
+  pairs?: { date: string; observed_m3m3: number; modeled_m3m3: number }[];
+}
+export interface SmapEvidence {
+  status: "pack" | "planned";
+  product: string;
+  version: string;
+  product_title?: string;
+  doi?: string;
+  variable?: string;
+  depth?: string | null;
+  root_zone_available?: boolean;
+  units?: string;
+  resolution_km?: number;
+  indicative?: boolean;
+  reason?: string;
+  n_accepted?: number;
+  n_observations_total?: number;
+  observations: { date: string; overpass: string; time_utc?: string | null; soil_moisture_m3m3: number | null; uncertainty_m3m3?: number | null; pixel?: { lat: number | null; lon: number | null; distance_km: number | null } }[];
+  comparison: Record<string, SmapComparison>;
+  limitations: string[];
+}
+export interface NdviTimelineItem {
+  start: string;
+  end: string;
+  midpoint?: string;
+  ndvi: number;
+  expected: "crop" | "fallow";
+  expected_crop?: string | null;
+  observed?: "vegetated" | "low_cover" | "uncertain";
+  agreement?: "ok" | "check" | "uncertain";
+}
+export interface NdviEvidence {
+  status: "pack" | "planned";
+  product: string;
+  version: string;
+  product_title?: string;
+  variable?: string;
+  units?: string;
+  resolution_km?: number;
+  reason?: string;
+  observations: { start: string; end: string; midpoint?: string; ndvi: number | null; quality?: Record<string, string | number | null> }[];
+  regional_series?: { start: string; end: string; ndvi: number | null; p25?: number | null; p75?: number | null; vegetated_fraction?: number | null }[];
+  timeline_check: {
+    basis?: string;
+    classification_used: boolean;
+    threshold_ndvi?: number | null;
+    separation_ndvi?: number | null;
+    expected_periods?: { start: string; end: string; crop: string; season: Season }[];
+    items: NdviTimelineItem[];
+    summary: { n_composites?: number; n_ok?: number; n_check?: number; n_uncertain?: number };
+  };
+  limitations: string[];
+}
+export interface NasaEvidence {
+  smap: SmapEvidence;
+  ndvi: NdviEvidence;
+}
+
+/** Answer returned by POST /api/v1/agent/ask. */
+export interface AgentAnswer {
+  question: string;
+  grounded: boolean;
+  scope: "general" | "site_specific" | "insufficient";
+  answer: { text: string; generated_by: string; sentences?: Msg[] };
+  citations: { source: string; passage_id?: string; key?: string; title?: string }[];
+  notes: string[];
+  request_id?: string;
+  knowledge?: { grounded: boolean; passages: { id: string; title: string }[] };
+}
+
 export interface AnalysisResult {
   schema_version: string;
   request_id: string;
@@ -101,6 +178,7 @@ export interface AnalysisResult {
   flags: { field: string; key: string; severity: "info" | "warn" | "error"; params: Record<string, string | number> }[];
   input_status: Record<string, "measured" | "estimated">;
   nasa_data: NasaItem[];
+  nasa_evidence?: NasaEvidence;
   layers: Layer[];
   climate: {
     dates: string[];

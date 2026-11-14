@@ -21,14 +21,30 @@ def _load_dotenv() -> None:
         os.environ.setdefault(k, v)  # real environment still wins
 
 
+def _dir(env_key: str, default: Path) -> Path:
+    """Configured directory, or the repo-local default when the configured one is absent.
+
+    `.env` may hold container paths (for example /srv/knowledge). Running the API or the tests
+    outside the container should still work, so an unreachable path falls back to the repo copy.
+    """
+    configured = os.environ.get(env_key)
+    if configured:
+        path = Path(configured)
+        if path.exists():
+            return path
+    return default
+
+
 class Settings:
     def __init__(self) -> None:
         _load_dotenv()
-        self.knowledge_dir = Path(os.environ.get("KNOWLEDGE_DIR", ROOT / "knowledge"))
-        self.contracts_dir = Path(os.environ.get("CONTRACTS_DIR", ROOT / "contracts"))
-        self.packs_dir = Path(os.environ.get("PACKS_DIR", ROOT / "data" / "packs"))
+        self.knowledge_dir = _dir("KNOWLEDGE_DIR", ROOT / "knowledge")
+        self.contracts_dir = _dir("CONTRACTS_DIR", ROOT / "contracts")
+        self.packs_dir = _dir("PACKS_DIR", ROOT / "data" / "packs")
         db = os.environ.get("DATABASE_URL", f"sqlite:///{ROOT / 'data' / 'app.db'}")
         self.db_path = db.replace("sqlite:///", "", 1)
+        if not Path(self.db_path).parent.exists():
+            self.db_path = str(ROOT / "data" / "app.db")
         self.cors_origins = [o.strip() for o in os.environ.get("CORS_ORIGINS", "http://localhost:5173").split(",") if o.strip()]
 
 

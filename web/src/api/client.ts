@@ -1,4 +1,4 @@
-import type { AnalysisRequest, AnalysisResult, CropInfo, DemoSite } from "../scene/types";
+import type { AgentAnswer, AnalysisRequest, AnalysisResult, CropInfo, DemoSite } from "../scene/types";
 
 const BASE = "/api/v1";
 
@@ -33,4 +33,10 @@ export const api = {
       }>(r),
     ),
   sample: () => fetch("/mock_result.json").then((r) => json<AnalysisResult>(r)),
+  ask: (question: string, farmer: AnalysisRequest, analysisId: string) =>
+    fetch(`${BASE}/agent/ask`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ question, farmer, analysis_id: analysisId }),
+    }).then((r) => json<AgentAnswer>(r)),
 };

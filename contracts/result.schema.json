@@ -24,6 +24,15 @@
       "type": "array",
       "items": { "type": "object", "required": ["id", "name_key", "role_key", "status", "resolution_km"], "properties": { "status": { "enum": ["pack", "live", "planned", "placeholder"] } } }
     },
+    "nasa_evidence": {
+      "type": "object",
+      "description": "Site-specific NASA observations (demo pack). SMAP comparisons are always labelled indicative; missing products carry status 'planned' with a reason and never break the result.",
+      "properties": {
+        "smap": { "$ref": "#/$defs/smapEvidence" },
+        "ndvi": { "$ref": "#/$defs/ndviEvidence" }
+      },
+      "additionalProperties": true
+    },
     "layers": {
       "type": "array", "minItems": 4, "maxItems": 4,
       "items": {
@@ -51,6 +60,39 @@
     "disclaimers": { "type": "array", "minItems": 1, "items": { "type": "string" } }
   },
   "$defs": {
+    "smapEvidence": {
+      "type": "object",
+      "required": ["status", "product", "version", "indicative"],
+      "properties": {
+        "status": { "enum": ["pack", "planned"] },
+        "product": { "type": "string" },
+        "version": { "type": "string" },
+        "depth": { "type": ["string", "null"] },
+        "depth_cm": { "type": ["array", "null"] },
+        "root_zone_available": { "type": "boolean" },
+        "units": { "type": "string" },
+        "indicative": { "type": "boolean" },
+        "n_accepted": { "type": "integer" },
+        "observations": { "type": "array", "items": { "type": "object" } },
+        "comparison": { "type": "object" },
+        "limitations": { "type": "array", "items": { "type": "string" } }
+      },
+      "additionalProperties": true
+    },
+    "ndviEvidence": {
+      "type": "object",
+      "required": ["status", "product", "version"],
+      "properties": {
+        "status": { "enum": ["pack", "planned"] },
+        "product": { "type": "string" },
+        "version": { "type": "string" },
+        "units": { "type": "string" },
+        "observations": { "type": "array", "items": { "type": "object" } },
+        "timeline_check": { "type": "object" },
+        "limitations": { "type": "array", "items": { "type": "string" } }
+      },
+      "additionalProperties": true
+    },
     "msg": { "type": "object", "required": ["key", "params"], "properties": { "key": { "type": "string" }, "params": { "type": "object" } } },
     "flag": { "type": "object", "required": ["field", "key", "severity", "params"], "properties": { "severity": { "enum": ["info", "warn", "error"] } } },
     "evidence": { "type": "object", "required": ["source", "key", "params"], "properties": { "source": { "type": "string" }, "key": { "type": "string" }, "params": { "type": "object" } } },
