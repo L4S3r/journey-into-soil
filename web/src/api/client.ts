@@ -126,6 +126,25 @@ export interface AuthResponse {
   user: AuthUser;
 }
 
+export interface MeteomaticsTelemetry {
+  status: "live" | "demo_analog";
+  configured: boolean;
+  source: string;
+  timestamp: string;
+  coordinates: { lat: number; lon: number };
+  downscaling_model: string;
+  parameters: {
+    t_2m_c: number | null;
+    relative_humidity_pct: number | null;
+    precip_24h_mm: number | null;
+    evapotranspiration_24h_mm: number | null;
+    soil_moisture_index_5cm: number | null;
+    soil_moisture_index_50cm: number | null;
+    soil_moisture_deficit_mm: number | null;
+  };
+  notes: string[];
+}
+
 async function json<T>(res: Response): Promise<T> {
   if (!res.ok) {
     const detail = await res.text().catch(() => "");
@@ -176,6 +195,8 @@ export const api = {
       }>(r),
     ),
   sample: () => fetch("/mock_result.json").then((r) => json<AnalysisResult>(r)),
+  meteomatics: (lat: number, lon: number) =>
+    fetch(`${BASE}/telemetry/meteomatics?lat=${lat}&lon=${lon}`).then((r) => json<MeteomaticsTelemetry>(r)),
   ask: (question: string, farmer?: AnalysisRequest, analysisId?: string) =>
     fetch(`${BASE}/agent/ask`, {
       method: "POST",

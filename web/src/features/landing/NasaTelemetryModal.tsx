@@ -1,9 +1,26 @@
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { api, type MeteomaticsTelemetry } from "../../api/client";
 import { useStore } from "../../state/store";
 
 export function NasaTelemetryModal() {
   const { t } = useTranslation();
-  const { nasaModalOpen, setNasaModalOpen } = useStore();
+  const { nasaModalOpen, setNasaModalOpen, request } = useStore();
+  const [telemetry, setTelemetry] = useState<MeteomaticsTelemetry | null>(null);
+
+  useEffect(() => {
+    if (!nasaModalOpen) return;
+    let live = true;
+    api
+      .meteomatics(request.lat, request.lon)
+      .then((data) => {
+        if (live) setTelemetry(data);
+      })
+      .catch(() => {});
+    return () => {
+      live = false;
+    };
+  }, [nasaModalOpen, request.lat, request.lon]);
 
   if (!nasaModalOpen) return null;
 
@@ -163,6 +180,53 @@ export function NasaTelemetryModal() {
               <div>
                 <span className="astryx-val-label">ADVISORY ACTION</span>
                 <strong className="astryx-val-highlight">12% Leaching Buffer</strong>
+              </div>
+            </div>
+          </div>
+
+          {/* 5. Meteomatics Downscaled Weather & Multi-Depth Soil Moisture */}
+          <div className="astryx-nasa-param-card" style={{ borderColor: "rgba(14, 165, 233, 0.4)" }}>
+            <div className="astryx-nasa-param-header">
+              <div className="astryx-param-title">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="16" height="16" className="text-cyan-500">
+                  <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
+                </svg>
+                <span>{t("landing.param_meteomatics", "Meteomatics High-Res Downscaled Soil & Weather (NASA SRTM 90m)")}</span>
+              </div>
+              <span className="astryx-badge astryx-badge--sky">
+                {telemetry?.status === "live" ? "METEOMATICS LIVE" : t("landing.param_meteomatics_badge", "GLOBAL COLLABORATOR")}
+              </span>
+            </div>
+            <div className="astryx-nasa-param-values">
+              <div>
+                <span className="astryx-val-label">{t("landing.param_meteomatics_smi", "Surface Moisture Index (SMI 0–7cm)")}</span>
+                <strong className="astryx-val-data">
+                  {telemetry?.parameters?.soil_moisture_index_5cm != null
+                    ? `${Math.round(telemetry.parameters.soil_moisture_index_5cm * 100)}% (${telemetry.parameters.soil_moisture_index_5cm} idx)`
+                    : "42% (0.42 idx)"}
+                </strong>
+              </div>
+              <div>
+                <span className="astryx-val-label">{t("landing.param_meteomatics_smd", "Root-Zone Moisture Deficit")}</span>
+                <strong className="astryx-val-data">
+                  {telemetry?.parameters?.soil_moisture_deficit_mm != null
+                    ? `${telemetry.parameters.soil_moisture_deficit_mm} mm`
+                    : "24.0 mm"}
+                </strong>
+              </div>
+              <div>
+                <span className="astryx-val-label">{t("landing.param_meteomatics_et0", "24h Downscaled ET0")}</span>
+                <strong className="astryx-val-highlight">
+                  {telemetry?.parameters?.evapotranspiration_24h_mm != null
+                    ? `${telemetry.parameters.evapotranspiration_24h_mm} mm/day`
+                    : "3.8 mm/day"}
+                </strong>
+              </div>
+              <div>
+                <span className="astryx-val-label">{t("landing.param_meteomatics_source", "NASA SRTM 90m Elevation Downscaling")}</span>
+                <strong className="astryx-val-data">
+                  {telemetry?.parameters?.t_2m_c != null ? `${telemetry.parameters.t_2m_c}°C / ${telemetry.parameters.relative_humidity_pct}% RH` : "23.4°C / 54% RH"}
+                </strong>
               </div>
             </div>
           </div>

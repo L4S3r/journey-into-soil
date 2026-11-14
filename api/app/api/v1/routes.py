@@ -14,6 +14,7 @@ from ...engine.validate import in_delta_box, infer_region
 from ...rag import retriever
 from ...schemas.request import AnalysisRequest, Scenario
 from ...services import climate as climate_service
+from ...services import meteomatics as meteomatics_service
 from ...services.soil import fetch_soilgrids
 
 router = APIRouter()
@@ -127,3 +128,9 @@ def geo_lookup(lat: float = Query(..., ge=22, le=32), lon: float = Query(..., ge
     if soilgrids:
         out["soilgrids"] = fetch_soilgrids(lat, lon)
     return out
+
+
+@router.get("/telemetry/meteomatics")
+async def get_meteomatics_telemetry(lat: float = Query(..., ge=22, le=32), lon: float = Query(..., ge=24, le=37)) -> dict:
+    """Fetch high-resolution downscaled meteorological and multi-depth soil moisture data from Meteomatics."""
+    return await meteomatics_service.fetch_telemetry(lat, lon)
