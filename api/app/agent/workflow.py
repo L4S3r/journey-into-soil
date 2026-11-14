@@ -23,6 +23,7 @@ from ..engine import pipeline
 from ..rag import answer as rag_answer
 from ..rag import retriever
 from ..schemas.request import AnalysisRequest
+from ..services import meteomatics
 from . import llm
 
 PRIORITIES = ("water", "soil_health", "income", "risk")
@@ -132,6 +133,22 @@ def _facts(result: dict, ranking: list[dict], comparison: dict, evidence: dict) 
         )
     else:
         lines.append("NASA NDVI: not available for this location.")
+    mm = evidence.get("meteomatics", {})
+    if mm and mm.get("parameters"):
+        params = mm["parameters"]
+        lines.append(
+            "METEOMATICS TELEMETRY (NASA SRTM 90m downscaled): status=%s, temp=%.1fC, RH=%.0f%%, ET0=%.2f mm/day, "
+            "surface_SMI=%.2f, root_zone_SMI=%.2f, deficit=%.1f mm."
+            % (
+                mm.get("status"),
+                params.get("t_2m_c") or 0.0,
+                params.get("relative_humidity_pct") or 0.0,
+                params.get("evapotranspiration_24h_mm") or 0.0,
+                params.get("soil_moisture_index_5cm") or 0.0,
+                params.get("soil_moisture_index_50cm") or 0.0,
+                params.get("soil_moisture_deficit_mm") or 0.0,
+            )
+        )
     return "\n".join(lines)
 
 
@@ -179,7 +196,8 @@ def recommend(farmer: AnalysisRequest, question: str | None = None, lang: str = 
     store.save(result["request_id"], farmer.model_dump(mode="json"), result)
     ranking = rank_strategies(result["strategies"])
     comparison = comparison_table(result["strategies"])
-    evidence = result.get("nasa_evidence", {})
+    evidence = dict(result.get("nasa_evidence", {}))
+    evidence["meteomatics"] = meteomatics.get_telemetry_sync(farmer.lat, farmer.lon)
     hits = retriever.search(question or _priority_question(farmer), k=5)
     knowledge = {
         "passages": [h.to_json() for h in hits],
@@ -253,6 +271,8 @@ def _site_answer(result: dict, index: int | None, question: str) -> dict:
         + delta
     )
     citations = [{"source": item["source"], "key": item["key"]} for item in target.get("evidence", [])]
+    site_evidence = dict(result.get("nasa_evidence", {}))
+    site_evidence["meteomatics"] = meteomatics.get_telemetry_sync(result["field"]["lat"], result["field"]["lon"])
     return {
         "grounded": True,
         "scope": "site_specific",
@@ -264,7 +284,7 @@ def _site_answer(result: dict, index: int | None, question: str) -> dict:
             "total": target["scores"]["total"],
             "scores": target["scores"],
             "irrigation_mm": comparison["irrigation_mm"],
-            "nasa_evidence": result.get("nasa_evidence", {}),
+            "nasa_evidence": site_evidence,
         },
         "passages": [],
         "notes": ["rag.general_not_site"],

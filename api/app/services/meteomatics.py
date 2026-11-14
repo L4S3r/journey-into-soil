@@ -86,6 +86,16 @@ def generate_analog_telemetry(lat: float, lon: float, reason: str = "unconfigure
     }
 
 
+def get_telemetry_sync(lat: float, lon: float) -> dict[str, Any]:
+    """Synchronous accessor returning cached telemetry or generating physical analog."""
+    cached = _get_cached(lat, lon)
+    if cached:
+        return cached
+    data = generate_analog_telemetry(lat, lon, reason="sync_eval")
+    _set_cached(lat, lon, data)
+    return data
+
+
 async def fetch_telemetry(lat: float, lon: float) -> dict[str, Any]:
     """Fetch live Meteomatics meteorological and multi-depth soil moisture data."""
     cached = _get_cached(lat, lon)
