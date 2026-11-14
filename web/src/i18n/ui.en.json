@@ -409,5 +409,22 @@
   "ui.select_site": "Select Profile",
   "ui.area_feddan": "Farm Area (Feddan)",
   "ui.coordinates": "Coordinates",
-  "ui.active": "Active System"
+  "ui.active": "Active System",
+  "ui.nile_delta": "Nile Delta",
+  "ui.feddans": "feddans",
+  "ui.sandy_clay_loam": "Sandy Clay Loam",
+  "ui.suitability": "Suitability",
+  "ui.confidence_short": "confidence",
+  "ui.vs_baseline": "vs baseline rotation",
+  "ui.resilient_core": "Resilient soil core",
+  "ui.leaching_required": "Active salinity management required",
+  "ui.tab_rootzone": "Root-Zone & Soil Horizons",
+  "ui.tab_satellite": "NASA Satellite Validation",
+  "ui.tab_climate_ai": "Climate Stress & AI Agronomist",
+  "ui.kpi_succession": "Recommended Succession",
+  "ui.kpi_margin": "Estimated Net Margin",
+  "ui.kpi_water_demand": "Seasonal Water Demand",
+  "ui.kpi_stress_index": "Root-Zone Salinity & Health",
+  "ui.optimized_rotation": "Optimized Rotation",
+  "ui.bare_days": "bare days"
 }

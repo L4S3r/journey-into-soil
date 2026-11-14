@@ -41,6 +41,8 @@ export class SceneController {
   private rainParticles!: THREE.Points;
   private rainVelocities!: Float32Array;
   private weatherMode: WeatherMode = "auto";
+  private saltCrustMesh!: THREE.Mesh;
+  private rootGroup!: THREE.Group;
   private burst!: THREE.Points;
   private burstV!: Float32Array;
   private bst = -1;
@@ -182,6 +184,26 @@ export class SceneController {
 
     // Plant subtle surface vegetation along the cutaway top edge for Act 2/3
     this.plantField(this.slabs[0].g, -28, 28, -20, 0, 0.65, 0.55, HT[0] / 2);
+
+    // Surface Salinity Crust Mesh on Slab 0 (topsoil)
+    const saltGeo = new THREE.PlaneGeometry(SW * 0.98, DEP * 0.98);
+    const saltMat = new THREE.MeshStandardMaterial({
+      color: 0xfcfbfa,
+      roughness: 0.2,
+      metalness: 0.15,
+      transparent: true,
+      opacity: 0,
+      depthWrite: false,
+    });
+    this.saltCrustMesh = new THREE.Mesh(saltGeo, saltMat);
+    this.saltCrustMesh.rotation.x = -Math.PI / 2;
+    this.saltCrustMesh.position.set(0, HT[0] / 2 + 0.02, -DEP / 2);
+    this.slabs[0].g.add(this.saltCrustMesh);
+
+    // Procedural Root System growing along the front subterranean cutaway face
+    this.rootGroup = this.buildRootSystem();
+    this.rootGroup.position.set(0, HT[0] / 2, 0.06);
+    this.slabs[0].g.add(this.rootGroup);
 
     // 2. Build stable, continuous above-ground farm terrain in fieldGroup (for Act 1)
     // Sits firmly at y = 0 and NEVER moves down with the camera
@@ -380,6 +402,55 @@ export class SceneController {
       m.frustumCulled = false;
       parent.add(m);
     }
+  }
+
+  private buildRootSystem(): THREE.Group {
+    const rootGrp = new THREE.Group();
+    const rootMat = new THREE.MeshStandardMaterial({
+      color: 0xf3ede2,
+      roughness: 0.75,
+      metalness: 0.08,
+    });
+
+    // Main primary taproot (descending vertically along the cutaway face)
+    const seg1 = new THREE.Mesh(new THREE.CylinderGeometry(0.09, 0.07, 1.4, 7), rootMat);
+    seg1.position.y = -0.7;
+    rootGrp.add(seg1);
+
+    const seg2 = new THREE.Mesh(new THREE.CylinderGeometry(0.07, 0.05, 1.6, 7), rootMat);
+    seg2.position.set(0.04, -2.1, 0);
+    seg2.rotation.z = -0.05;
+    rootGrp.add(seg2);
+
+    const seg3 = new THREE.Mesh(new THREE.CylinderGeometry(0.05, 0.02, 1.8, 6), rootMat);
+    seg3.position.set(0.02, -3.7, 0);
+    seg3.rotation.z = 0.04;
+    rootGrp.add(seg3);
+
+    // Lateral feeder roots branching outward
+    const lateralData = [
+      { y: -0.4, len: 1.1, rotZ: 0.65, thick: 0.045 },
+      { y: -0.5, len: 0.95, rotZ: -0.62, thick: 0.045 },
+      { y: -0.9, len: 1.4, rotZ: 0.58, thick: 0.04 },
+      { y: -1.1, len: 1.3, rotZ: -0.55, thick: 0.04 },
+      { y: -1.7, len: 1.5, rotZ: 0.48, thick: 0.035 },
+      { y: -1.9, len: 1.4, rotZ: -0.5, thick: 0.035 },
+      { y: -2.6, len: 1.2, rotZ: 0.38, thick: 0.03 },
+      { y: -2.8, len: 1.1, rotZ: -0.42, thick: 0.03 },
+      { y: -3.4, len: 0.8, rotZ: 0.28, thick: 0.02 },
+      { y: -3.6, len: 0.75, rotZ: -0.32, thick: 0.02 },
+    ];
+
+    lateralData.forEach((lat) => {
+      const g = new THREE.CylinderGeometry(lat.thick, lat.thick * 0.3, lat.len, 5);
+      g.translate(0, -lat.len / 2, 0);
+      const m = new THREE.Mesh(g, rootMat);
+      m.position.set(0, lat.y, 0);
+      m.rotation.z = lat.rotZ;
+      rootGrp.add(m);
+    });
+
+    return rootGrp;
   }
 
   private createDatePalmTree(scale = 1): { group: THREE.Group; crown: THREE.Group; phase: number } {
@@ -886,6 +957,7 @@ export class SceneController {
 
   public loadResult(result: AnalysisResult, forceReload = false): void {
     this.result = result;
+    this.updateSoilVisuals();
     if (forceReload) {
       this.replay();
     } else {
@@ -896,13 +968,82 @@ export class SceneController {
 
   public setStrategy(strategyId: StrategyId | null): void {
     if (strategyId) this.strategyId = strategyId;
+    this.updateSoilVisuals();
     this.updateInspectData();
     this.emitTelemetry();
   }
 
   public setSeasonTime(dayT: number): void {
     this.dayT = dayT;
+    this.updateSoilVisuals();
     this.emitTelemetry();
+  }
+
+  private updateSoilVisuals(): void {
+    if (!this.result) return;
+    const strat =
+      this.result.strategies.find((s) => s.id === this.strategyId) ||
+      this.result.strategies[0];
+    const totalDays = strat?.sim?.moisture?.[0]?.length || 365;
+    const day = Math.min(Math.floor(this.dayT * totalDays), totalDays - 1);
+
+    // 1. Texture Palette Driven by Input Texture & Layer Chemistry
+    const texture = this.result.input?.texture || "loam";
+    const TEXTURE_PALETTES: Record<string, number[]> = {
+      sand: [0x8f724a, 0xa38357, 0xb89566, 0xc7a675],
+      sandy_loam: [0x735334, 0x82603e, 0x946f49, 0xa37d54],
+      loam: [0x422d1e, 0x543b27, 0x664832, 0x75563d],
+      silt_loam: [0x483a30, 0x5a4b40, 0x6b5c50, 0x7c6d61],
+      clay_loam: [0x361f15, 0x482c20, 0x593a2c, 0x694738],
+      clay: [0x26140d, 0x331c12, 0x422519, 0x523021],
+    };
+    const palette = TEXTURE_PALETTES[texture] || TEXTURE_PALETTES.loam;
+
+    // 2. Modulate Each Horizon Slabs by Simulated Layer Moisture & Texture
+    this.slabs.forEach((slab, i) => {
+      const moist = strat?.sim?.moisture?.[i]?.[day] ?? 0.5;
+      // Darken with moisture: factor from 0.72 (very wet/dark) to 1.15 (very dry/pale)
+      const factor = 1.12 - moist * 0.42;
+
+      const baseHex = palette[i] || 0x422d1e;
+      const baseColor = new THREE.Color(baseHex);
+      baseColor.multiplyScalar(factor);
+
+      if (slab.mesh && Array.isArray(slab.mesh.material)) {
+        // Update side materials
+        const sideMat = slab.mesh.material[0];
+        if (sideMat instanceof THREE.MeshStandardMaterial) {
+          sideMat.color.copy(baseColor);
+          sideMat.roughness = moist > 0.65 ? 0.65 : 0.95;
+        }
+        // Update front face material
+        const frontMat = slab.mesh.material[4];
+        if (frontMat instanceof THREE.MeshStandardMaterial) {
+          frontMat.color.copy(baseColor);
+          frontMat.roughness = moist > 0.65 ? 0.7 : 0.92;
+        }
+      }
+    });
+
+    // 3. Modulate Surface Salinity Crust Efflorescence on Topsoil
+    if (this.saltCrustMesh && this.saltCrustMesh.material instanceof THREE.MeshStandardMaterial) {
+      const ece = strat?.sim?.ece?.[0]?.[day] ?? this.result.input?.water_ec ?? 1.0;
+      if (ece > 2.8) {
+        // High salinity causes crystalline white salt crust
+        this.saltCrustMesh.material.opacity = Math.min(0.82, (ece - 2.5) * 0.24);
+      } else {
+        this.saltCrustMesh.material.opacity = 0;
+      }
+    }
+
+    // 4. Modulate 3D Root Depth & Branching Spread
+    if (this.rootGroup) {
+      const rootCm = strat?.sim?.root_cm?.[day] ?? 20;
+      // Map rootCm (5 to 140cm) to vertical scale
+      const rootDepthScale = Math.max(0.25, Math.min(1.6, rootCm / 80));
+      const rootSpreadScale = Math.max(0.4, Math.min(1.4, 0.5 + rootCm / 120));
+      this.rootGroup.scale.set(rootSpreadScale, rootDepthScale, rootSpreadScale);
+    }
   }
 
   public setTheme(theme: "light" | "dark"): void {
@@ -1046,6 +1187,7 @@ export class SceneController {
     this.fieldGroup.visible = true;
     this.profileGroup.visible = false;
     this.scene.fog = null;
+    this.updateSoilVisuals();
   }
 
   public focusLayer(idx: number | null): void {

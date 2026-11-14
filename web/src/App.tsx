@@ -6,15 +6,9 @@ import { AuthModal } from "./features/landing/AuthModal";
 import { LandingPage } from "./features/landing/LandingPage";
 import { NasaTelemetryModal } from "./features/landing/NasaTelemetryModal";
 import { PdfReportModal } from "./features/landing/PdfReportModal";
-import { AgentPanel } from "./features/results/AgentPanel";
-import { EvidencePanel } from "./features/results/EvidencePanel";
-import { NasaVsModelPanel, NdviTimelinePanel } from "./features/results/NasaEvidence";
-import { ClimateSlider, Flags, Glossary, LayerTable, NasaPanel } from "./features/results/Panels";
-import { StrategyCards } from "./features/results/StrategyCards";
-import { Timeline } from "./features/results/Timeline";
+import { ResultsDashboard } from "./features/results/ResultsDashboard";
 import i18n from "./i18n";
 import { msgText } from "./lib/msg";
-import { SoilScene } from "./scene/SoilScene";
 import { useStore } from "./state/store";
 
 function parseAnalysisId(): string | null {
@@ -108,63 +102,15 @@ function SimulatorView({ onBack }: { onBack: () => void }) {
 
 function Results() {
   const { t } = useTranslation();
-  const { result, strategyId, reset, loading, error, usingSample, setPdfModalOpen } = useStore();
-  const [copied, setCopied] = useState(false);
+  const { result, strategyId, reset, error } = useStore();
 
   if (!result) return null;
   const strategy = result.strategies.find((s) => s.id === strategyId) ?? result.strategies[0];
 
-  const copyLink = async () => {
-    const id = result.request_id || "sample";
-    const url = `${window.location.origin}/a/${id}`;
-    try {
-      if (navigator?.clipboard?.writeText) {
-        await navigator.clipboard.writeText(url);
-      } else {
-        throw new Error("Clipboard API unavailable");
-      }
-      setCopied(true);
-      setTimeout(() => setCopied(false), 2000);
-    } catch {
-      window.prompt(t("ui.copy_link_prompt"), url);
-    }
-  };
-
   return (
-    <main className="results">
-      <div className="bar">
-        <button className="ghost" onClick={reset}>{t("ui.edit")}</button>
-        <button className="ghost" onClick={() => void copyLink()}>
-          {copied ? t("ui.link_copied") : t("ui.copy_link")}
-        </button>
-        <button className="ghost" onClick={() => setPdfModalOpen(true)}>
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="14" height="14" style={{ marginInlineEnd: 6, verticalAlign: "middle" }}>
-            <polyline points="6 9 6 2 18 2 18 9" />
-            <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2" />
-            <rect x="6" y="14" width="12" height="8" />
-          </svg>
-          {t("landing.btn_print_pdf", "Export PDF Report")}
-        </button>
-        {usingSample && <span className="badge warn">{t("ui.sample_badge")}</span>}
-        {loading && <span className="badge">{t("ui.analyzing")}</span>}
-      </div>
-      {error && <p className="error" role="alert">{t("ui.error")} {error}</p>}
-      <Flags result={result} />
-      <StrategyCards result={result} />
-      <SoilScene />
-      <Timeline result={result} strategy={strategy} />
-      <NasaVsModelPanel result={result} strategy={strategy} />
-      <NdviTimelinePanel result={result} />
-      <div className="grid">
-        <EvidencePanel result={result} strategy={strategy} />
-        <div className="side">
-          <ClimateSlider result={result} />
-          <AgentPanel result={result} />
-          <NasaPanel result={result} />
-          <LayerTable result={result} />
-          <Glossary />
-        </div>
-      </div>
+    <main className="results-wrapper">
+      {error && <p className="error" role="alert" style={{ maxWidth: 1400, margin: "16px auto", padding: "12px 18px" }}>{t("ui.error")} {error}</p>}
+      <ResultsDashboard result={result} strategy={strategy} onEdit={reset} />
     </main>
   );
 }

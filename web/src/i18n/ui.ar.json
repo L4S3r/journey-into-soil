@@ -409,5 +409,22 @@
   "ui.select_site": "اختيار النموذج",
   "ui.area_feddan": "مساحة المزرعة (فدان)",
   "ui.coordinates": "الإحداثيات",
-  "ui.active": "النظام الفعال"
+  "ui.active": "النظام الفعال",
+  "ui.nile_delta": "دلتا النيل",
+  "ui.feddans": "فدان",
+  "ui.sandy_clay_loam": "طمي طيني رملي",
+  "ui.suitability": "الملاءمة",
+  "ui.confidence_short": "ثقة",
+  "ui.vs_baseline": "مقارنة بالدورة الحالية",
+  "ui.resilient_core": "تربة عالية المقاومة",
+  "ui.leaching_required": "تتطلب إدارة نشطة لغسيل الأملاح",
+  "ui.tab_rootzone": "منطقة الجذور وطبقات التربة",
+  "ui.tab_satellite": "التحقق من بيانات أقمار ناسا",
+  "ui.tab_climate_ai": "الإجهاد المناخي والمستشار الذكي",
+  "ui.kpi_succession": "التعاقب المحصولي الموصى به",
+  "ui.kpi_margin": "صافي العائد المقدر",
+  "ui.kpi_water_demand": "الاحتياج المائي الموسمي",
+  "ui.kpi_stress_index": "ملوحة منطقة الجذور وصحة التربة",
+  "ui.optimized_rotation": "دورة زراعية محسنة",
+  "ui.bare_days": "أيام بوار"
 }
