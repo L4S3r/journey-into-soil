@@ -51,13 +51,14 @@ interface LandingPageProps {
 }
 
 export function LandingPage({ onStartSimulation }: LandingPageProps) {
-  const { lang, setLang, theme, setTheme, userEmail, setUserEmail, openDemoSite } = useStore();
+  const { lang, setLang, theme, setTheme, user, setUser, userEmail, openDemoSite } = useStore();
   const isAr = lang === "ar";
 
   // Modals state
   const [pdfModalOpen, setPdfModalOpen] = useState(false);
   const [nasaModalOpen, setNasaModalOpen] = useState(false);
   const [authModalOpen, setAuthModalOpen] = useState(false);
+  const [isAuthenticating, setIsAuthenticating] = useState(false);
 
   // Map state
   const [activeGovId, setActiveGovId] = useState<string>("beheira");
@@ -84,45 +85,93 @@ export function LandingPage({ onStartSimulation }: LandingPageProps) {
     setTimeout(() => setToastText(null), 3200);
   };
 
+  // Listen for Google OAuth callback parameters (?code=... or ?credential=...)
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const code = params.get("code");
+    const credential = params.get("credential");
+    if (code || credential) {
+      window.history.replaceState({}, document.title, window.location.pathname);
+      setIsAuthenticating(true);
+      api
+        .exchangeGoogleAuth({
+          code: code || undefined,
+          credential: credential || undefined,
+          redirect_uri: window.location.origin,
+        })
+        .then((res) => {
+          if (res.success && res.user) {
+            setUser(res.user, res.token);
+            setAuthModalOpen(false);
+            showToast(
+              isAr
+                ? `مرحباً بعودتك ${res.user.name}! تم تسجيل الدخول بنجاح عبر Google`
+                : `Welcome back ${res.user.name}! Authenticated with Google.`,
+            );
+          }
+        })
+        .catch((err) => {
+          showToast(
+            isAr
+              ? `تعذر إتمام تسجيل الدخول عبر Google: ${err.message}`
+              : `Google sign-in failed: ${err.message}`,
+          );
+        })
+        .finally(() => {
+          setIsAuthenticating(false);
+        });
+    }
+  }, []);
+
   const activeGov = GOVERNORATES.find((g) => g.id === activeGovId) || GOVERNORATES[2];
 
   const filteredGovs = selectedZone === "all"
     ? GOVERNORATES
     : GOVERNORATES.filter((g) => g.zone === selectedZone);
 
-  // Google OAuth sign-in
-  const handleGoogleSignIn = () => {
-    const user = {
-      name: "Ahmed Yasser",
-      email: "ahmed.yasser@shifter.org",
-      provider: "google",
-      role: "Lead Agronomist & Farmer",
-      loggedInAt: new Date().toISOString()
-    };
+  // Google OAuth sign-in via backend
+  const handleGoogleSignIn = async () => {
+    setIsAuthenticating(true);
     try {
-      localStorage.setItem("shifter_user", JSON.stringify(user));
-      localStorage.setItem("shifters_farmer_email", user.email);
-    } catch {}
-    setUserEmail(user.email);
-    setAuthModalOpen(false);
-    showToast(
-      isAr
-        ? "تم تسجيل الدخول بنجاح عبر حساب Google (أحمد ياسر)"
-        : "Authenticated with Google as Ahmed Yasser."
-    );
+      const data = await api.getGoogleAuthUrl(window.location.origin);
+      if (data.configured && data.auth_url) {
+        window.location.href = data.auth_url;
+      } else {
+        const authRes = await api.exchangeGoogleAuth({
+          code: "dev_mock_oauth",
+          redirect_uri: window.location.origin,
+        });
+        if (authRes.success && authRes.user) {
+          setUser(authRes.user, authRes.token);
+          setAuthModalOpen(false);
+          showToast(
+            isAr
+              ? `مرحباً بك ${authRes.user.name}! تم تسجيل الدخول بنجاح عبر Google`
+              : `Welcome ${authRes.user.name}! Authenticated with Google.`,
+          );
+        }
+      }
+    } catch (err: any) {
+      showToast(
+        isAr
+          ? `خطأ في المصادقة: ${err.message}`
+          : `Authentication error: ${err.message}`,
+      );
+    } finally {
+      setIsAuthenticating(false);
+    }
   };
 
-  // Sign out
-  const handleSignOut = () => {
+  // Sign out via backend & local state
+  const handleSignOut = async () => {
     try {
-      localStorage.removeItem("shifter_user");
-      localStorage.removeItem("shifters_farmer_email");
+      await api.logout();
     } catch {}
-    setUserEmail(null);
+    setUser(null);
     showToast(
       isAr
         ? "تم تسجيل الخروج من حساب Google بنجاح."
-        : "Signed out of Google account."
+        : "Signed out of Google account.",
     );
   };
 
@@ -216,7 +265,7 @@ export function LandingPage({ onStartSimulation }: LandingPageProps) {
             </button>
 
             {/* Google Account / Sign-In Button in Header */}
-            {!userEmail ? (
+            {!user ? (
               <button
                 type="button"
                 onClick={() => setAuthModalOpen(true)}
@@ -234,10 +283,14 @@ export function LandingPage({ onStartSimulation }: LandingPageProps) {
             ) : (
               <div className="flex items-center gap-1.5 sm:gap-2">
                 <div className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-emerald-500/10 border border-emerald-500/25 text-xs font-semibold text-emerald-700 dark:text-emerald-300">
-                  <div className="w-5 h-5 rounded-full bg-gradient-to-tr from-[#1b4332] to-[#00a76f] text-white flex items-center justify-center text-[10px] font-bold">
-                    AY
-                  </div>
-                  <span className="hidden sm:inline truncate max-w-[110px]">Ahmed Yasser</span>
+                  {user.picture ? (
+                    <img src={user.picture} alt={user.name} className="w-5 h-5 rounded-full object-cover" />
+                  ) : (
+                    <div className="w-5 h-5 rounded-full bg-gradient-to-tr from-[#1b4332] to-[#00a76f] text-white flex items-center justify-center text-[10px] font-bold">
+                      {(user.name || "U").charAt(0).toUpperCase()}
+                    </div>
+                  )}
+                  <span className="hidden sm:inline truncate max-w-[110px]">{user.name || user.email}</span>
                 </div>
                 <button
                   type="button"
@@ -274,8 +327,8 @@ export function LandingPage({ onStartSimulation }: LandingPageProps) {
           <div className="absolute inset-0 bg-gradient-to-b from-[var(--astryx-color-bg)]/85 via-[var(--astryx-color-bg)]/70 to-[var(--astryx-color-bg)]/95 dark:from-[#0b0e0c]/85 dark:via-[#0b0e0c]/70 dark:to-[#0b0e0c]/95 backdrop-blur-[1px] pointer-events-none" />
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_transparent_20%,_var(--astryx-color-bg)_95%)] dark:bg-[radial-gradient(ellipse_at_center,_transparent_20%,_#0b0e0c_95%)] opacity-70 pointer-events-none" />
 
-          {/* 1. Hero Guest Content: Shown when userEmail is null */}
-          {!userEmail ? (
+          {/* 1. Hero Guest Content: Shown when user is null */}
+          {!user ? (
             <div id="heroGuestContent" className="relative z-10 w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 pb-8 sm:pt-16 sm:pb-12 text-center flex-1 flex flex-col justify-center items-center transition-all duration-300">
               
               {/* Grand Unbounded Full-Screen Headline */}
@@ -336,13 +389,17 @@ export function LandingPage({ onStartSimulation }: LandingPageProps) {
 
                 {/* Active Google Account Badge */}
                 <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-semibold bg-emerald-500/15 text-emerald-800 dark:text-emerald-300 border border-emerald-500/30 backdrop-blur-md shadow-sm">
-                  <svg className="w-3.5 h-3.5 shrink-0" viewBox="0 0 24 24">
-                    <path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.665-5.17 3.665-9.17z"/>
-                    <path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.1-6.72-4.93H1.25v3.15C3.26 21.36 7.33 24 12 24z"/>
-                    <path fill="#FBBC05" d="M5.28 14.27c-.25-.72-.38-1.49-.38-2.27s.13-1.55.38-2.27V6.58H1.25C.45 8.18 0 9.99 0 12s.45 3.82 1.25 5.42l4.03-3.15z"/>
-                    <path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.33 0 3.26 2.64 1.25 6.58l4.03 3.15c.95-2.83 3.6-4.98 6.72-4.98z"/>
-                  </svg>
-                  <span>{userEmail || "ahmed.yasser@shifter.org"}</span>
+                  {user.picture ? (
+                    <img src={user.picture} alt={user.name} className="w-4 h-4 rounded-full object-cover" />
+                  ) : (
+                    <svg className="w-3.5 h-3.5 shrink-0" viewBox="0 0 24 24">
+                      <path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.665-5.17 3.665-9.17z"/>
+                      <path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.1-6.72-4.93H1.25v3.15C3.26 21.36 7.33 24 12 24z"/>
+                      <path fill="#FBBC05" d="M5.28 14.27c-.25-.72-.38-1.49-.38-2.27s.13-1.55.38-2.27V6.58H1.25C.45 8.18 0 9.99 0 12s.45 3.82 1.25 5.42l4.03-3.15z"/>
+                      <path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.33 0 3.26 2.64 1.25 6.58l4.03 3.15c.95-2.83 3.6-4.98 6.72-4.98z"/>
+                    </svg>
+                  )}
+                  <span>{user.name} ({user.email})</span>
                 </div>
 
                 {/* Sign Out Button */}
@@ -1482,16 +1539,27 @@ export function LandingPage({ onStartSimulation }: LandingPageProps) {
               <button
                 type="button"
                 onClick={handleGoogleSignIn}
-                className="w-full py-4 px-6 rounded-2xl font-bold text-sm sm:text-base border border-neutral-300 dark:border-white/15 bg-white dark:bg-white/10 text-neutral-800 dark:text-white shadow-md hover:shadow-lg hover:bg-neutral-50 dark:hover:bg-white/15 transition-all duration-200 flex items-center justify-center gap-3.5 group cursor-pointer active:scale-[0.99]"
+                disabled={isAuthenticating}
+                className="w-full py-4 px-6 rounded-2xl font-bold text-sm sm:text-base border border-neutral-300 dark:border-white/15 bg-white dark:bg-white/10 text-neutral-800 dark:text-white shadow-md hover:shadow-lg hover:bg-neutral-50 dark:hover:bg-white/15 transition-all duration-200 flex items-center justify-center gap-3.5 group cursor-pointer active:scale-[0.99] disabled:opacity-60"
               >
-                {/* Official Google 4-color Vector G */}
-                <svg className="w-5 h-5 shrink-0 group-hover:scale-110 transition-transform" viewBox="0 0 24 24">
-                  <path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.665-5.17 3.665-9.17z"/>
-                  <path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.1-6.72-4.93H1.25v3.15C3.26 21.36 7.33 24 12 24z"/>
-                  <path fill="#FBBC05" d="M5.28 14.27c-.25-.72-.38-1.49-.38-2.27s.13-1.55.38-2.27V6.58H1.25C.45 8.18 0 9.99 0 12s.45 3.82 1.25 5.42l4.03-3.15z"/>
-                  <path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.33 0 3.26 2.64 1.25 6.58l4.03 3.15c.95-2.83 3.6-4.98 6.72-4.98z"/>
-                </svg>
-                <span>{isAr ? "المتابعة باستخدام حساب Google" : "Sign in with Google"}</span>
+                {isAuthenticating ? (
+                  <svg className="animate-spin w-5 h-5 text-emerald-500" viewBox="0 0 24 24" fill="none">
+                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"></path>
+                  </svg>
+                ) : (
+                  <svg className="w-5 h-5 shrink-0 group-hover:scale-110 transition-transform" viewBox="0 0 24 24">
+                    <path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.665-5.17 3.665-9.17z"/>
+                    <path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.1-6.72-4.93H1.25v3.15C3.26 21.36 7.33 24 12 24z"/>
+                    <path fill="#FBBC05" d="M5.28 14.27c-.25-.72-.38-1.49-.38-2.27s.13-1.55.38-2.27V6.58H1.25C.45 8.18 0 9.99 0 12s.45 3.82 1.25 5.42l4.03-3.15z"/>
+                    <path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.33 0 3.26 2.64 1.25 6.58l4.03 3.15c.95-2.83 3.6-4.98 6.72-4.98z"/>
+                  </svg>
+                )}
+                <span>
+                  {isAuthenticating
+                    ? (isAr ? "جاري الاتصال بـ Google..." : "Connecting to Google...")
+                    : (isAr ? "المتابعة باستخدام حساب Google" : "Sign in with Google")}
+                </span>
               </button>
 
               <p className="text-[11px] text-neutral-500 dark:text-neutral-400 font-medium">

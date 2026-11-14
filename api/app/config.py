@@ -46,6 +46,10 @@ class Settings:
         if not Path(self.db_path).parent.exists():
             self.db_path = str(ROOT / "data" / "app.db")
         self.cors_origins = [o.strip() for o in os.environ.get("CORS_ORIGINS", "http://localhost:5173").split(",") if o.strip()]
+        self.google_client_id = os.environ.get("GOOGLE_CLIENT_ID", "")
+        self.google_client_secret = os.environ.get("GOOGLE_CLIENT_SECRET", "")
+        self.google_redirect_uri = os.environ.get("GOOGLE_REDIRECT_URI", "http://localhost:5173")
+        self.auth_secret_key = os.environ.get("AUTH_SECRET_KEY", "journey-into-the-soil-secret-key-2026")
 
 
 @lru_cache

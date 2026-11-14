@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { api } from "../api/client";
+import { api, type AuthUser } from "../api/client";
 import type { AnalysisRequest, AnalysisResult, DemoSite, Quality, StrategyId } from "../scene/types";
 
 export const DEFAULT_REQUEST: AnalysisRequest = {
@@ -49,6 +49,8 @@ interface State {
   error: string | null;
   usingSample: boolean;
   focusedLayer: number | null;
+  user: AuthUser | null;
+  authToken: string | null;
   userEmail: string | null;
   authModalOpen: boolean;
   pdfModalOpen: boolean;
@@ -62,6 +64,7 @@ interface State {
   applyScenario: (dT: number, dP: number) => Promise<void>;
   reset: () => void;
   setFocusedLayer: (idx: number | null) => void;
+  setUser: (user: AuthUser | null, token?: string | null) => void;
   setUserEmail: (email: string | null) => void;
   setAuthModalOpen: (open: boolean) => void;
   setPdfModalOpen: (open: boolean) => void;
@@ -92,10 +95,42 @@ export const useStore = create<State>((set, get) => ({
   error: null,
   usingSample: false,
   focusedLayer: null,
-  userEmail: safeGet("shifters_farmer_email") || null,
+  user: (() => {
+    try {
+      const saved = safeGet("shifter_user");
+      return saved ? JSON.parse(saved) : null;
+    } catch {
+      return null;
+    }
+  })(),
+  authToken: safeGet("shifter_auth_token") || null,
+  userEmail: (() => {
+    try {
+      const savedUser = safeGet("shifter_user");
+      if (savedUser) return JSON.parse(savedUser).email;
+      return safeGet("shifters_farmer_email") || null;
+    } catch {
+      return safeGet("shifters_farmer_email") || null;
+    }
+  })(),
   authModalOpen: false,
   pdfModalOpen: false,
   nasaModalOpen: false,
+  setUser: (user, token) => {
+    if (user) {
+      safeSet("shifter_user", JSON.stringify(user));
+      safeSet("shifters_farmer_email", user.email);
+      if (token) safeSet("shifter_auth_token", token);
+      set({ user, userEmail: user.email, authToken: token || get().authToken });
+    } else {
+      try {
+        localStorage.removeItem("shifter_user");
+        localStorage.removeItem("shifters_farmer_email");
+        localStorage.removeItem("shifter_auth_token");
+      } catch {}
+      set({ user: null, userEmail: null, authToken: null });
+    }
+  },
   setUserEmail: (userEmail) => {
     if (userEmail) safeSet("shifters_farmer_email", userEmail);
     else try { localStorage.removeItem("shifters_farmer_email"); } catch {}
