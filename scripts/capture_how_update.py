@@ -55,14 +55,16 @@ try:
 
             async def snap(url, scroll_selector, filename):
                 await call("Page.navigate", {"url": url})
-                await asyncio.sleep(1.2)
+                await asyncio.sleep(2.0)
                 await call("Runtime.evaluate", {
                     "expression": f'''
                         const el = document.querySelector("{scroll_selector}");
-                        if (el) el.scrollIntoView({{ behavior: "instant", block: "start" }});
+                        if (el) {{
+                            el.scrollIntoView({{ behavior: "instant", block: "start" }});
+                        }}
                     '''
                 })
-                await asyncio.sleep(0.8)
+                await asyncio.sleep(1.0)
                 res = await call("Page.captureScreenshot", {"format": "png"})
                 data = base64.b64decode(res["data"])
                 out = os.path.join(ARTIFACT_DIR, filename)

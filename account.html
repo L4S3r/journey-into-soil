@@ -92,54 +92,67 @@
       </div>
 
       <!-- Title & Subtitle -->
-      <h1 class="text-2xl sm:text-3xl font-extrabold tracking-tight text-neutral-900 dark:text-white" data-i18n="authModalGoogleTitle">
-        Sign in with Google
+      <h1 class="text-2xl sm:text-3xl font-extrabold tracking-tight text-neutral-900 dark:text-white" data-i18n="accountPageTitle">
+        Enter Your Email
       </h1>
-      <p class="text-xs sm:text-sm text-neutral-600 dark:text-neutral-300 mt-2 max-w-sm mx-auto leading-relaxed" data-i18n="authModalGoogleSubtitle">
-        Sign in with your Google account to unlock NASA Earth data and precision soil simulation.
+      <p class="text-xs sm:text-sm text-neutral-600 dark:text-neutral-300 mt-2 max-w-sm mx-auto leading-relaxed" data-i18n="accountPageSubtitle">
+        Add your email address to unlock the precision soil simulation tools, PDF recommendation reports, and NASA telemetry data.
       </p>
 
-      <!-- Google Account SSO Section -->
-      <div class="mt-7 space-y-3.5 text-start">
-        
-        <!-- Primary 1-Tap Google Account (Ahmed Yasser) -->
-        <button type="button" id="btnGooglePrimaryAccount" class="w-full p-4 rounded-2xl border border-neutral-200 dark:border-white/15 bg-neutral-50/80 dark:bg-white/5 hover:bg-neutral-100 dark:hover:bg-white/10 transition flex items-center gap-3.5 group shadow-sm">
-          <div class="relative w-12 h-12 rounded-full bg-gradient-to-tr from-[#1b4332] to-[#00a76f] flex items-center justify-center text-white font-bold text-base shadow flex-shrink-0">
+      <!-- Email Input Form Section -->
+      <div class="mt-7 text-start">
+        <form id="emailAuthForm" class="space-y-4">
+          <div>
+            <label for="inputEmail" class="block text-xs font-bold text-neutral-700 dark:text-neutral-300 mb-1.5" data-i18n="labelYourEmail">
+              Your Email Address
+            </label>
+            <div class="relative">
+              <div class="absolute inset-y-0 start-0 ps-3.5 flex items-center pointer-events-none text-neutral-400">
+                <i data-lucide="mail" class="w-4 h-4 text-[#00a76f]"></i>
+              </div>
+              <input 
+                type="email" 
+                id="inputEmail" 
+                required 
+                placeholder="farmer@example.com" 
+                class="w-full ps-10 pe-4 py-3.5 rounded-2xl bg-neutral-100 dark:bg-white/10 border border-neutral-200 dark:border-white/15 text-sm font-semibold text-neutral-900 dark:text-white placeholder:text-neutral-400 focus:outline-none focus:ring-2 focus:ring-[#00a76f] transition"
+              />
+            </div>
+            <div id="emailErrorMsg" class="hidden text-xs text-rose-500 font-semibold mt-1.5 ps-1" data-i18n="errorInvalidEmail">
+              Please enter a valid email address.
+            </div>
+          </div>
+
+          <!-- Primary Submit Button -->
+          <button type="submit" id="btnSubmitEmail" class="w-full py-4 px-6 rounded-2xl font-extrabold text-sm sm:text-base text-white shadow-xl transition flex items-center justify-center gap-2 hover:brightness-105 active:scale-[0.99]" style="background-color: #00a76f; box-shadow: 0 10px 24px -4px rgba(0, 167, 111, 0.45);">
+            <i data-lucide="check-circle" class="w-5 h-5"></i>
+            <span data-i18n="btnAddEmailSubmit">Add Email & Unlock Simulation</span>
+          </button>
+        </form>
+
+        <!-- Divider -->
+        <div class="relative my-5">
+          <div class="absolute inset-0 flex items-center"><div class="w-full border-t border-neutral-200 dark:border-white/10"></div></div>
+          <div class="relative flex justify-center text-xs uppercase">
+            <span class="bg-white/95 dark:bg-[#151b17]/95 px-3 text-neutral-400 font-bold" data-i18n="quickSelectDivider">Or 1-Tap Team Account</span>
+          </div>
+        </div>
+
+        <!-- 1-Tap Team Account (Ahmed Yasser) -->
+        <button type="button" id="btnGooglePrimaryAccount" class="w-full p-3.5 rounded-2xl border border-neutral-200 dark:border-white/15 bg-neutral-50/80 dark:bg-white/5 hover:bg-neutral-100 dark:hover:bg-white/10 transition flex items-center gap-3.5 group shadow-sm">
+          <div class="relative w-11 h-11 rounded-full bg-gradient-to-tr from-[#1b4332] to-[#00a76f] flex items-center justify-center text-white font-bold text-sm shadow flex-shrink-0">
             AY
-            <!-- Google G tiny emblem -->
-            <div class="absolute -bottom-1 -end-1 w-5 h-5 rounded-full bg-white dark:bg-neutral-800 shadow flex items-center justify-center p-0.5">
-              <svg class="w-3.5 h-3.5" viewBox="0 0 24 24">
-                <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
-                <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
-                <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
-                <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
-              </svg>
+            <div class="absolute -bottom-1 -end-1 w-4 h-4 rounded-full bg-emerald-500 text-white shadow flex items-center justify-center p-0.5">
+              <i data-lucide="check" class="w-2.5 h-2.5"></i>
             </div>
           </div>
           <div class="flex-1 min-w-0">
-            <div class="text-sm font-bold text-neutral-900 dark:text-white truncate">Ahmed Yasser</div>
-            <div class="text-xs text-neutral-500 dark:text-neutral-400 truncate">ahmed.yasser@shifter.org</div>
+            <div class="text-xs sm:text-sm font-bold text-neutral-900 dark:text-white truncate">Ahmed Yasser</div>
+            <div class="text-[11px] text-neutral-500 dark:text-neutral-400 truncate">ahmed.yasser@shifter.org</div>
           </div>
-          <i data-lucide="chevron-right" class="w-5 h-5 text-neutral-400 group-hover:text-[#00a76f] transition rtl:rotate-180"></i>
-        </button>
-
-        <!-- Primary Emerald Sign In Button (#00a76f) -->
-        <button id="btnGoogleSignInAction" type="button" class="w-full py-4 px-6 rounded-xl font-bold text-sm sm:text-base text-white shadow-xl transition flex items-center justify-center gap-3 hover:brightness-105 active:scale-[0.99]" style="background-color: #00a76f; box-shadow: 0 10px 24px -4px rgba(0, 167, 111, 0.45);">
-          <div class="w-6 h-6 rounded-full bg-white flex items-center justify-center p-1 shadow-sm">
-            <svg class="w-4 h-4" viewBox="0 0 24 24">
-              <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
-              <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
-              <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/>
-              <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/>
-            </svg>
-          </div>
-          <span data-i18n="authBtnGoogleOnly">Sign in with Google Account</span>
-        </button>
-
-        <!-- Secondary "Use another Google account" Button -->
-        <button type="button" id="btnGoogleOtherAccount" class="w-full py-3.5 px-4 rounded-xl text-xs sm:text-sm font-semibold text-neutral-700 dark:text-neutral-200 bg-neutral-100 dark:bg-white/5 hover:bg-neutral-200 dark:hover:bg-white/10 transition border border-neutral-200 dark:border-white/10 flex items-center justify-center gap-2">
-          <i data-lucide="user-plus" class="w-4 h-4 text-[#00a76f]"></i>
-          <span data-i18n="authUseAnotherGoogle">Use another Google account</span>
+          <span class="text-xs font-bold text-[#00a76f] group-hover:underline flex items-center gap-1" data-i18n="btnSelectAccount">
+            Select <i data-lucide="chevron-right" class="w-4 h-4 rtl:rotate-180"></i>
+          </span>
         </button>
 
       </div>
@@ -165,21 +178,27 @@
       en: {
         brandSubtitle: "Journey into the Soil",
         backToLanding: "Back to Overview",
-        authModalGoogleTitle: "Sign in with Google",
-        authModalGoogleSubtitle: "Sign in with your Google account to unlock NASA Earth data and precision soil simulation.",
-        authBtnGoogleOnly: "Sign in with Google Account",
-        authUseAnotherGoogle: "Use another Google account",
-        authGoogleToastSuccess: "Authenticated with Google as Ahmed Yasser. Launching Crop Talk AI and simulation...",
+        accountPageTitle: "Enter Your Email",
+        accountPageSubtitle: "Add your email address to unlock the precision soil simulation tools, PDF recommendation reports, and NASA telemetry data.",
+        labelYourEmail: "Your Email Address",
+        errorInvalidEmail: "Please enter a valid email address.",
+        btnAddEmailSubmit: "Add Email & Unlock Simulation",
+        quickSelectDivider: "Or 1-Tap Team Account",
+        btnSelectAccount: "Select",
+        authEmailToastSuccess: "Email verified successfully! Unlocking simulation tools...",
         footerDisclaimer: "Developed for NASA Space Apps Challenge 2026 (Field Shift: Adapting Farms with NASA Data). Advisory decision-support system only."
       },
       ar: {
         brandSubtitle: "رحلة في أعماق التربة",
         backToLanding: "العودة للرئيسية",
-        authModalGoogleTitle: "تسجيل الدخول عبر Google",
-        authModalGoogleSubtitle: "سجّل الدخول بحساب Google الخاص بك لتشغيل محاكي فيزياء التربة وحديث المحصول التفاعلي.",
-        authBtnGoogleOnly: "تسجيل الدخول باستخدام حساب Google",
-        authUseAnotherGoogle: "استخدام حساب Google آخر",
-        authGoogleToastSuccess: "تم تسجيل الدخول بنجاح عبر حساب Google (أحمد ياسر). جاري تشغيل المحاكي الزراعي...",
+        accountPageTitle: "أدخل بريدك الإلكتروني",
+        accountPageSubtitle: "أضف عنوان بريدك الإلكتروني لفتح أدوات محاكاة التربة الدقيقة، تقارير التوصيات PDF، وبيانات ناسا الفضائية.",
+        labelYourEmail: "عنوان بريدك الإلكتروني",
+        errorInvalidEmail: "يرجى إدخال عنوان بريد إلكتروني صالح ومكتمل.",
+        btnAddEmailSubmit: "إضافة البريد وفتح أدوات المحاكاة",
+        quickSelectDivider: "أو حساب فريق العمل بضغطة واحدة",
+        btnSelectAccount: "اختيار",
+        authEmailToastSuccess: "تم تأكيد البريد الإلكتروني بنجاح! جاري فتح أدوات المحاكاة...",
         footerDisclaimer: "تم التطوير لتحدي ناسا لتطبيقات الفضاء 2026. نظام دعم قرارات استرشادي فقط."
       }
     };
@@ -187,7 +206,7 @@
     const urlParams = new URLSearchParams(window.location.search);
     let currentLang = urlParams.get("lang") || localStorage.getItem("shifter_lang") || "en";
     let currentTheme = urlParams.get("theme") || localStorage.getItem("shifter_theme") || "dark";
-    const destinationUrl = urlParams.get("redirect") || "/index.html?feature=croptalk";
+    const destinationUrl = urlParams.get("redirect") || "/landing.html";
 
     function showToast(msg) {
       const toast = document.getElementById("toast");
@@ -234,6 +253,12 @@
           el.textContent = translations[lang][key];
         }
       });
+      
+      const inputEmail = document.getElementById("inputEmail");
+      if (inputEmail) {
+        inputEmail.placeholder = lang === "ar" ? "farmer.egypt@domain.com" : "farmer@example.com";
+      }
+
       lucide.createIcons();
     }
 
@@ -241,16 +266,28 @@
       applyLanguage(currentLang === "en" ? "ar" : "en");
     }
 
-    function loginWithGoogle(name = "Ahmed Yasser", email = "ahmed.yasser@shifter.org") {
+    function loginWithEmail(email, name = "") {
+      const trimmed = email.trim();
+      if (!trimmed || !trimmed.includes("@")) {
+        const errorEl = document.getElementById("emailErrorMsg");
+        if (errorEl) errorEl.classList.remove("hidden");
+        return;
+      }
+
+      if (!name) {
+        const userPart = trimmed.split("@")[0].replace(/[._]/g, " ");
+        name = userPart.charAt(0).toUpperCase() + userPart.slice(1);
+      }
+
       const user = {
         name: name,
-        email: email,
-        provider: "google",
+        email: trimmed,
+        provider: "email",
         role: "Lead Agronomist & Farmer",
         loggedInAt: new Date().toISOString()
       };
       localStorage.setItem("shifter_user", JSON.stringify(user));
-      showToast(translations[currentLang].authGoogleToastSuccess);
+      showToast(translations[currentLang].authEmailToastSuccess);
       setTimeout(() => {
         window.location.href = destinationUrl;
       }, 700);
@@ -263,22 +300,21 @@
       document.getElementById("themeToggle")?.addEventListener("click", toggleTheme);
       document.getElementById("langToggle")?.addEventListener("click", toggleLanguage);
 
-      document.getElementById("btnGooglePrimaryAccount")?.addEventListener("click", () => {
-        loginWithGoogle("Ahmed Yasser", "ahmed.yasser@shifter.org");
-      });
-
-      document.getElementById("btnGoogleSignInAction")?.addEventListener("click", () => {
-        loginWithGoogle("Ahmed Yasser", "ahmed.yasser@shifter.org");
-      });
-
-      document.getElementById("btnGoogleOtherAccount")?.addEventListener("click", () => {
-        const promptMsg = currentLang === "ar" ? "أدخل بريد Google الإلكتروني:" : "Enter your Google Email:";
-        const customEmail = prompt(promptMsg, "farmer.egypt@gmail.com");
-        if (customEmail && customEmail.includes("@")) {
-          const userPart = customEmail.split("@")[0].replace(/[._]/g, " ");
-          const customName = userPart.charAt(0).toUpperCase() + userPart.slice(1);
-          loginWithGoogle(customName, customEmail);
+      // Email form submission
+      const emailForm = document.getElementById("emailAuthForm");
+      emailForm?.addEventListener("submit", (e) => {
+        e.preventDefault();
+        const emailInput = document.getElementById("inputEmail");
+        if (emailInput) {
+          loginWithEmail(emailInput.value);
         }
+      });
+
+      // Quick 1-tap select Ahmed Yasser
+      document.getElementById("btnGooglePrimaryAccount")?.addEventListener("click", () => {
+        const emailInput = document.getElementById("inputEmail");
+        if (emailInput) emailInput.value = "ahmed.yasser@shifter.org";
+        loginWithEmail("ahmed.yasser@shifter.org", "Ahmed Yasser");
       });
 
       lucide.createIcons();
