@@ -6,6 +6,7 @@ import { AuthModal } from "./features/landing/AuthModal";
 import { LandingPage } from "./features/landing/LandingPage";
 import { NasaTelemetryModal } from "./features/landing/NasaTelemetryModal";
 import { PdfReportModal } from "./features/landing/PdfReportModal";
+import { FloatingAssistantWidget } from "./features/assistant/FloatingAssistantWidget";
 import { ResultsDashboard } from "./features/results/ResultsDashboard";
 import i18n from "./i18n";
 import { msgText } from "./lib/msg";
@@ -155,33 +156,31 @@ export default function App() {
     return () => window.removeEventListener("popstate", onPopState);
   }, [loadAnalysis, reset]);
 
-  if (result) {
-    return (
-      <>
-        <TopNavBar onBackToLanding={() => { reset(); setShowSimulator(false); }} currentView="results" />
-        <Disclaimer />
-        <Results />
-        <Footer />
-        <AuthModal />
-        <PdfReportModal />
-        <NasaTelemetryModal />
-      </>
-    );
-  }
+  return (
+    <>
+      {result ? (
+        <>
+          <TopNavBar onBackToLanding={() => { reset(); setShowSimulator(false); }} currentView="results" />
+          <Disclaimer />
+          <Results />
+          <Footer />
+        </>
+      ) : showSimulator ? (
+        <>
+          <TopNavBar onBackToLanding={() => setShowSimulator(false)} currentView="simulator" />
+          <Disclaimer />
+          <SimulatorView onBack={() => setShowSimulator(false)} />
+          <Footer />
+        </>
+      ) : (
+        <LandingPage onStartSimulation={() => setShowSimulator(true)} />
+      )}
 
-  if (showSimulator) {
-    return (
-      <>
-        <TopNavBar onBackToLanding={() => setShowSimulator(false)} currentView="simulator" />
-        <Disclaimer />
-        <SimulatorView onBack={() => setShowSimulator(false)} />
-        <Footer />
-        <AuthModal />
-        <PdfReportModal />
-        <NasaTelemetryModal />
-      </>
-    );
-  }
-
-  return <LandingPage onStartSimulation={() => setShowSimulator(true)} />;
+      {/* Global Persistent Floating AI Assistant & Modals */}
+      <FloatingAssistantWidget />
+      <AuthModal />
+      <PdfReportModal />
+      <NasaTelemetryModal />
+    </>
+  );
 }
