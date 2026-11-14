@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { api } from "./api/client";
 import { FieldForm } from "./features/inputs/FieldForm";
@@ -12,9 +12,19 @@ import { Timeline } from "./features/results/Timeline";
 import i18n from "./i18n";
 import { msgText } from "./lib/msg";
 import { SoilScene } from "./scene/SoilScene";
-import { useStore } from "./state/store";
-import { useState } from "react";
 import type { DemoSite } from "./scene/types";
+import { useStore } from "./state/store";
+
+function parseAnalysisId(): string | null {
+  if (typeof window === "undefined") return null;
+  const path = window.location.pathname;
+  const match = path.match(/^\/a\/([^/?#]+)/);
+  if (match) return decodeURIComponent(match[1]);
+  const hash = window.location.hash;
+  const hashMatch = hash.match(/^#\/a\/([^/?#]+)/);
+  if (hashMatch) return decodeURIComponent(hashMatch[1]);
+  return null;
+}
 
 function Header() {
   const { t } = useTranslation();
@@ -51,22 +61,85 @@ function Disclaimer() {
 
 function Landing() {
   const { t } = useTranslation();
-  const { analyze, loadSample, loading, error, applySite, lang } = useStore();
+  const { analyze, loadSample, openDemoSite, applySite, loading, error, lang } = useStore();
   const [sites, setSites] = useState<DemoSite[]>([]);
+  const [pickerMode, setPickerMode] = useState<"demo" | "custom">("demo");
+
   useEffect(() => {
     api.demoSites().then(setSites).catch(() => setSites([]));
   }, []);
+
   return (
     <main className="landing">
       <section className="panel">
         <h2>{t("ui.step_field")}</h2>
-        {sites.length > 0 && (
-          <div className="chips" aria-label={t("ui.demo_sites")}>
-            {sites.map((s) => <button key={s.id} className="chip" onClick={() => applySite(s)}>{lang === "ar" ? s.name_ar : s.name_en}</button>)}
+        
+        <div className="picker-tabs" role="tablist" aria-label={t("ui.step_field")}>
+          <button
+            type="button"
+            role="tab"
+            aria-selected={pickerMode === "demo"}
+            className={`chip ${pickerMode === "demo" ? "primary" : ""}`}
+            onClick={() => setPickerMode("demo")}
+          >
+            {t("ui.demo_sites")}
+          </button>
+          <button
+            type="button"
+            role="tab"
+            aria-selected={pickerMode === "custom"}
+            className={`chip ${pickerMode === "custom" ? "primary" : ""}`}
+            onClick={() => setPickerMode("custom")}
+          >
+            {t("ui.click_own_field")}
+          </button>
+        </div>
+
+        {pickerMode === "demo" && sites.length > 0 && (
+          <div className="demo-picker">
+            <p className="hint">{t("ui.demo_sites_intro")}</p>
+            <div className="demo-cards" aria-label={t("ui.demo_sites")}>
+              {sites.map((s) => (
+                <div key={s.id} className="demo-card">
+                  <div>
+                    <h4>{lang === "ar" ? s.name_ar : s.name_en}</h4>
+                    <span className="badge">{t(`ui.region.${s.region}`)}</span>
+                  </div>
+                  <div className="demo-card-actions">
+                    <button
+                      type="button"
+                      className="primary"
+                      disabled={loading}
+                      onClick={() => void openDemoSite(s)}
+                    >
+                      {t("ui.open_demo_result")}
+                    </button>
+                    <button
+                      type="button"
+                      className="ghost"
+                      disabled={loading}
+                      onClick={() => {
+                        applySite(s);
+                        setPickerMode("custom");
+                      }}
+                    >
+                      {t("ui.edit")}
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         )}
-        <FieldMap />
+
+        {(pickerMode === "custom" || sites.length === 0) && (
+          <div className="custom-field">
+            <p className="hint">{t("ui.or_custom_field")}</p>
+            <FieldMap />
+          </div>
+        )}
       </section>
+
       <section className="panel">
         <h2>{t("ui.step_inputs")}</h2>
         <FieldForm />
@@ -91,12 +164,34 @@ function Landing() {
 function Results() {
   const { t } = useTranslation();
   const { result, strategyId, reset, loading, error, usingSample } = useStore();
+  const [copied, setCopied] = useState(false);
+
   if (!result) return null;
   const strategy = result.strategies.find((s) => s.id === strategyId) ?? result.strategies[0];
+
+  const copyLink = async () => {
+    const id = result.request_id || "sample";
+    const url = `${window.location.origin}/a/${id}`;
+    try {
+      if (navigator?.clipboard?.writeText) {
+        await navigator.clipboard.writeText(url);
+      } else {
+        throw new Error("Clipboard API unavailable");
+      }
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch {
+      window.prompt(t("ui.copy_link_prompt"), url);
+    }
+  };
+
   return (
     <main className="results">
       <div className="bar">
         <button className="ghost" onClick={reset}>{t("ui.edit")}</button>
+        <button className="ghost" onClick={() => void copyLink()}>
+          {copied ? t("ui.link_copied") : t("ui.copy_link")}
+        </button>
         {usingSample && <span className="badge warn">{t("ui.sample_badge")}</span>}
         {loading && <span className="badge">{t("ui.analyzing")}</span>}
       </div>
@@ -122,15 +217,35 @@ function Results() {
 }
 
 export default function App() {
-  const { lang, theme, result } = useStore();
+  const { lang, theme, result, loadAnalysis, reset } = useStore();
+
   useEffect(() => {
     void i18n.changeLanguage(lang);
     document.documentElement.lang = lang;
     document.documentElement.dir = lang === "ar" ? "rtl" : "ltr";
   }, [lang]);
+
   useEffect(() => {
     document.documentElement.dataset.theme = theme;
   }, [theme]);
+
+  useEffect(() => {
+    const id = parseAnalysisId();
+    if (id) {
+      void loadAnalysis(id);
+    }
+    const onPopState = () => {
+      const currentId = parseAnalysisId();
+      if (currentId) {
+        void loadAnalysis(currentId);
+      } else {
+        reset();
+      }
+    };
+    window.addEventListener("popstate", onPopState);
+    return () => window.removeEventListener("popstate", onPopState);
+  }, [loadAnalysis, reset]);
+
   return (
     <>
       <Header />

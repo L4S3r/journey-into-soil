@@ -38,6 +38,16 @@ input[type="range"] { inline-size: 100%; accent-color: var(--accent); }
 main { padding: var(--gutter); max-inline-size: 1280px; margin-inline: auto; display: grid; gap: var(--gutter); }
 .landing { grid-template-columns: 1fr; }
 .panel { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 14px; box-shadow: var(--shadow); min-inline-size: 0; }
+
+.picker-tabs { display: flex; flex-wrap: wrap; gap: 8px; margin-block-end: 12px; }
+.picker-tabs .chip { min-block-size: 38px; }
+.demo-picker { display: grid; gap: 8px; }
+.demo-cards { display: grid; gap: 10px; margin-block-start: 4px; }
+.demo-card { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 10px; padding: 12px; border: 1px solid var(--line); border-radius: var(--radius); background: var(--bg); }
+.demo-card h4 { margin: 0 0 4px; font-size: .95rem; }
+.demo-card-actions { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+.custom-field { display: grid; gap: 8px; }
+
 .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-block-end: 10px; }
 .chip { border-radius: 999px; font-size: .88rem; }
 .map { block-size: 300px; border-radius: 10px; overflow: hidden; border: 1px solid var(--line); }
@@ -75,6 +85,7 @@ legend { padding-inline: 6px; font-weight: 600; }
 
 .timeline { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 10px; }
 .timeline svg { inline-size: 100%; block-size: auto; touch-action: none; cursor: ew-resize; display: block; }
+.timeline svg:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; border-radius: 8px; }
 .tl-label { font-size: 11px; fill: var(--muted); } .tl-axis { font-size: 10px; fill: var(--muted); }
 .legend { display: flex; flex-wrap: wrap; gap: 6px 14px; padding: 0; margin: 6px 0 0; list-style: none; font-size: .8rem; color: var(--muted); }
 .legend i { display: inline-block; inline-size: 14px; block-size: 4px; margin-inline-end: 5px; border-radius: 2px; vertical-align: middle; }

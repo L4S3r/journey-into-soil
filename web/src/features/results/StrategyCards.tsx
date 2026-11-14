@@ -8,11 +8,31 @@ const PRIOS: Priority[] = ["water", "soil_health", "income", "risk"];
 export function StrategyCards({ result }: { result: AnalysisResult }) {
   const { t } = useTranslation();
   const { strategyId, setStrategy, lang } = useStore();
+
+  const handleKeyDown = (e: React.KeyboardEvent, idx: number) => {
+    if (e.key === "ArrowRight") {
+      e.preventDefault();
+      const next = (idx + 1) % result.strategies.length;
+      setStrategy(result.strategies[next].id);
+    } else if (e.key === "ArrowLeft") {
+      e.preventDefault();
+      const prev = (idx - 1 + result.strategies.length) % result.strategies.length;
+      setStrategy(result.strategies[prev].id);
+    }
+  };
+
   return (
     <div className="cards" role="tablist" aria-label={t("ui.strategies")}>
-      {result.strategies.map((s) => (
-        <button key={s.id} role="tab" aria-selected={strategyId === s.id} className={`card ${strategyId === s.id ? "on" : ""}`}
-          onClick={() => setStrategy(s.id)}>
+      {result.strategies.map((s, idx) => (
+        <button
+          key={s.id}
+          role="tab"
+          aria-selected={strategyId === s.id}
+          tabIndex={strategyId === s.id ? 0 : -1}
+          className={`card ${strategyId === s.id ? "on" : ""}`}
+          onClick={() => setStrategy(s.id)}
+          onKeyDown={(e) => handleKeyDown(e, idx)}
+        >
           <h3>{t(s.label_key)}</h3>
           {s.archetype !== "existing" && <span className="badge">{t(`priority.${s.archetype}`)}</span>}
           <ol className="seq">

@@ -1,0 +1,1979 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr" data-theme="dark" class="scroll-smooth dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>The Shifter - Journey into the Soil | Astryx Meta Design System</title>
+  <meta name="description" content="Precision soil intelligence bridging NASA Earth observations with root zone physics. Decision support for NASA Space Apps 2026.">
+
+  <!-- Google Fonts: Inter, Cairo (Arabic), JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- ==========================================================================
+       ASTRYX META DESIGN SYSTEM SPECIFICATION (Matcha + Stone / Soil Earth Theme)
+       ========================================================================== -->
+  <style>
+    @layer astryx.tokens, astryx.base, astryx.components, astryx.utilities;
+
+    @layer astryx.tokens {
+      /* Astryx Design Tokens: Global / Light Mode */
+      :root, [data-theme="light"] {
+        --astryx-theme-name: "matcha-stone-light";
+
+        /* Surfaces */
+        --astryx-color-bg: #fbf9f5;
+        --astryx-color-bg-subtle: #f3efe8;
+        --astryx-color-surface: #ffffff;
+        --astryx-color-surface-subtle: #f7f4ee;
+        --astryx-color-surface-raised: #ffffff;
+        --astryx-color-surface-overlay: rgba(255, 255, 255, 0.88);
+        --astryx-color-surface-contrast: #151a17;
+
+        /* Typography */
+        --astryx-color-text-primary: #151a17;
+        --astryx-color-text-secondary: #4a544e;
+        --astryx-color-text-tertiary: #718076;
+        --astryx-color-text-muted: #95a399;
+        --astryx-color-text-inverse: #fbf9f5;
+
+        /* Brand / Primary: Astryx Botanical Matcha */
+        --astryx-color-primary: #1b4332;
+        --astryx-color-primary-hover: #2d6a4f;
+        --astryx-color-primary-active: #143526;
+        --astryx-color-primary-subtle: rgba(45, 106, 79, 0.1);
+        --astryx-color-primary-border: rgba(45, 106, 79, 0.25);
+        --astryx-color-primary-text: #ffffff;
+
+        /* Brand Accent: Solar Amber / Harvest Gold */
+        --astryx-color-accent: #d97706;
+        --astryx-color-accent-hover: #b45309;
+        --astryx-color-accent-subtle: rgba(217, 119, 6, 0.12);
+        --astryx-color-accent-border: rgba(217, 119, 6, 0.32);
+
+        /* Borders */
+        --astryx-color-border: rgba(21, 26, 23, 0.12);
+        --astryx-color-border-subtle: rgba(21, 26, 23, 0.06);
+        --astryx-color-border-hover: rgba(21, 26, 23, 0.22);
+        --astryx-color-border-focus: #2d6a4f;
+
+        /* Semantic Status */
+        --astryx-color-status-success: #10b981;
+        --astryx-color-status-warning: #f59e0b;
+        --astryx-color-status-error: #ef4444;
+        --astryx-color-status-info: #0284c7;
+
+        /* Shadows */
+        --astryx-shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.04);
+        --astryx-shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.04);
+        --astryx-shadow-md: 0 4px 10px -2px rgba(0, 0, 0, 0.08), 0 2px 4px -2px rgba(0, 0, 0, 0.04);
+        --astryx-shadow-lg: 0 12px 24px -4px rgba(0, 0, 0, 0.09), 0 4px 8px -2px rgba(0, 0, 0, 0.04);
+        --astryx-shadow-xl: 0 24px 36px -8px rgba(0, 0, 0, 0.12), 0 8px 16px -4px rgba(0, 0, 0, 0.05);
+        --astryx-shadow-glow: 0 0 24px rgba(45, 106, 79, 0.22);
+
+        --astryx-grain-opacity: 0.035;
+      }
+
+      /* Astryx Design Tokens: Dark Mode (Obsidian Root Zone & Luminous Matcha) */
+      [data-theme="dark"], .dark {
+        --astryx-theme-name: "matcha-stone-dark";
+
+        /* Surfaces */
+        --astryx-color-bg: #0b0e0c;
+        --astryx-color-bg-subtle: #121714;
+        --astryx-color-surface: #151b17;
+        --astryx-color-surface-subtle: #1b231e;
+        --astryx-color-surface-raised: #222b25;
+        --astryx-color-surface-overlay: rgba(21, 27, 23, 0.88);
+        --astryx-color-surface-contrast: #fbf9f5;
+
+        /* Typography */
+        --astryx-color-text-primary: #f2f6f4;
+        --astryx-color-text-secondary: #a7b5ad;
+        --astryx-color-text-tertiary: #6e7f74;
+        --astryx-color-text-muted: #49574e;
+        --astryx-color-text-inverse: #0b0e0c;
+
+        /* Brand / Primary: Astryx Luminous Matcha */
+        --astryx-color-primary: #52b788;
+        --astryx-color-primary-hover: #74c69d;
+        --astryx-color-primary-active: #40916c;
+        --astryx-color-primary-subtle: rgba(82, 183, 136, 0.16);
+        --astryx-color-primary-border: rgba(82, 183, 136, 0.35);
+        --astryx-color-primary-text: #0b0e0c;
+
+        /* Brand Accent: Solar Flare Amber */
+        --astryx-color-accent: #f59e0b;
+        --astryx-color-accent-hover: #fbbf24;
+        --astryx-color-accent-subtle: rgba(245, 158, 11, 0.18);
+        --astryx-color-accent-border: rgba(245, 158, 11, 0.38);
+
+        /* Borders */
+        --astryx-color-border: rgba(255, 255, 255, 0.08);
+        --astryx-color-border-subtle: rgba(255, 255, 255, 0.05);
+        --astryx-color-border-hover: rgba(255, 255, 255, 0.18);
+        --astryx-color-border-focus: #52b788;
+
+        /* Semantic Status */
+        --astryx-color-status-success: #34d399;
+        --astryx-color-status-warning: #fbbf24;
+        --astryx-color-status-error: #f87171;
+        --astryx-color-status-info: #38bdf8;
+
+        /* Shadows */
+        --astryx-shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.3);
+        --astryx-shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.4), 0 1px 2px rgba(0, 0, 0, 0.3);
+        --astryx-shadow-md: 0 4px 12px -2px rgba(0, 0, 0, 0.5), 0 2px 4px -2px rgba(0, 0, 0, 0.35);
+        --astryx-shadow-lg: 0 14px 24px -4px rgba(0, 0, 0, 0.65), 0 4px 8px -2px rgba(0, 0, 0, 0.4);
+        --astryx-shadow-xl: 0 28px 42px -8px rgba(0, 0, 0, 0.75), 0 8px 16px -4px rgba(0, 0, 0, 0.5);
+        --astryx-shadow-glow: 0 0 32px rgba(82, 183, 136, 0.28);
+
+        --astryx-grain-opacity: 0.025;
+      }
+
+      /* Layout, Radii, Typography, Durations */
+      :root {
+        --astryx-radius-xs: 4px;
+        --astryx-radius-sm: 6px;
+        --astryx-radius-md: 10px;
+        --astryx-radius-lg: 16px;
+        --astryx-radius-xl: 22px;
+        --astryx-radius-2xl: 30px;
+        --astryx-radius-full: 9999px;
+
+        --astryx-font-sans: 'Inter', 'Cairo', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        --astryx-font-arabic: 'Cairo', 'Inter', sans-serif;
+        --astryx-font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, monospace;
+
+        --astryx-duration-fast: 150ms;
+        --astryx-duration-normal: 250ms;
+        --astryx-duration-slow: 400ms;
+        --astryx-ease-default: cubic-bezier(0.16, 1, 0.3, 1);
+      }
+    }
+
+    @layer astryx.base {
+      body {
+        background-color: var(--astryx-color-bg);
+        color: var(--astryx-color-text-primary);
+        font-family: var(--astryx-font-sans);
+        transition: background-color var(--astryx-duration-normal) var(--astryx-ease-default),
+                    color var(--astryx-duration-normal) var(--astryx-ease-default);
+      }
+
+      /* Subtle tactile grain */
+      .astryx-grain-bg {
+        background-image: radial-gradient(rgba(0, 0, 0, 0.07) 1px, transparent 0);
+        background-size: 24px 24px;
+      }
+      .dark .astryx-grain-bg {
+        background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 0);
+      }
+
+      /* Custom Scrollbar */
+      ::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+      }
+      ::-webkit-scrollbar-track {
+        background: var(--astryx-color-bg);
+      }
+      ::-webkit-scrollbar-thumb {
+        background: var(--astryx-color-surface-raised);
+        border: 2px solid var(--astryx-color-bg);
+        border-radius: var(--astryx-radius-full);
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: var(--astryx-color-text-tertiary);
+      }
+    }
+
+    @layer astryx.components {
+      /* Astryx Card Component */
+      .astryx-card {
+        background-color: var(--astryx-color-surface);
+        border: 1px solid var(--astryx-color-border);
+        border-radius: var(--astryx-radius-2xl);
+        box-shadow: var(--astryx-shadow-md);
+        transition: transform var(--astryx-duration-normal) var(--astryx-ease-default),
+                    box-shadow var(--astryx-duration-normal) var(--astryx-ease-default),
+                    border-color var(--astryx-duration-normal) var(--astryx-ease-default);
+      }
+      .astryx-card--interactive:hover {
+        transform: translateY(-3px);
+        border-color: var(--astryx-color-border-hover);
+        box-shadow: var(--astryx-shadow-lg);
+      }
+
+      /* Astryx Button Component */
+      .astryx-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        font-weight: 600;
+        border-radius: var(--astryx-radius-xl);
+        transition: all var(--astryx-duration-fast) var(--astryx-ease-default);
+        cursor: pointer;
+        user-select: none;
+      }
+      .astryx-btn:active {
+        transform: scale(0.98);
+      }
+
+      .astryx-btn--primary {
+        background-color: var(--astryx-color-primary);
+        color: var(--astryx-color-primary-text);
+        box-shadow: var(--astryx-shadow-sm);
+        border: 1px solid transparent;
+      }
+      .astryx-btn--primary:hover {
+        background-color: var(--astryx-color-primary-hover);
+        box-shadow: var(--astryx-shadow-glow);
+      }
+
+      .astryx-btn--secondary {
+        background-color: var(--astryx-color-surface-subtle);
+        color: var(--astryx-color-text-primary);
+        border: 1px solid var(--astryx-color-border);
+        box-shadow: var(--astryx-shadow-xs);
+      }
+      .astryx-btn--secondary:hover {
+        background-color: var(--astryx-color-surface-raised);
+        border-color: var(--astryx-color-border-hover);
+      }
+
+      .astryx-btn--ghost {
+        background-color: transparent;
+        color: var(--astryx-color-text-secondary);
+        border: 1px solid transparent;
+      }
+      .astryx-btn--ghost:hover {
+        background-color: var(--astryx-color-surface-subtle);
+        color: var(--astryx-color-text-primary);
+      }
+
+      /* Astryx Badge Component */
+      .astryx-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.375rem;
+        padding: 0.25rem 0.75rem;
+        border-radius: var(--astryx-radius-full);
+        font-size: 0.75rem;
+        font-weight: 600;
+        line-height: 1rem;
+        letter-spacing: 0.01em;
+        border: 1px solid transparent;
+      }
+
+      .astryx-badge--matcha {
+        background-color: var(--astryx-color-primary-subtle);
+        color: var(--astryx-color-primary);
+        border-color: var(--astryx-color-primary-border);
+      }
+      .dark .astryx-badge--matcha {
+        color: var(--astryx-color-primary);
+      }
+
+      .astryx-badge--accent {
+        background-color: var(--astryx-color-accent-subtle);
+        color: var(--astryx-color-accent);
+        border-color: var(--astryx-color-accent-border);
+      }
+
+      .astryx-badge--neutral {
+        background-color: var(--astryx-color-surface-subtle);
+        color: var(--astryx-color-text-secondary);
+        border-color: var(--astryx-color-border);
+      }
+
+      /* Pin Beacon Animation */
+      @keyframes astryxBeacon {
+        0% { transform: scale(0.6); opacity: 0.95; }
+        70% { transform: scale(2.3); opacity: 0; }
+        100% { transform: scale(0.6); opacity: 0; }
+      }
+      .astryx-pin-beacon {
+        animation: astryxBeacon 2.4s infinite ease-out;
+      }
+
+      /* Map strictly LTR */
+      .map-lock-ltr {
+        direction: ltr !important;
+      }
+
+      /* Governorates interactive markers */
+      .gov-marker {
+        transform: translate(-50%, -50%);
+        transition: z-index 0.2s ease;
+      }
+      .gov-marker:hover,
+      .gov-marker.active,
+      .gov-marker:focus-visible {
+        z-index: 50;
+      }
+      .gov-marker:hover .pin-dot,
+      .gov-marker.active .pin-dot,
+      .gov-marker:focus-visible .pin-dot {
+        transform: scale(1.4);
+        background-color: #ef4444;
+        border-color: #ffd54a;
+        box-shadow: 0 0 16px rgba(255, 213, 74, 0.95), 0 0 8px #ef4444;
+      }
+      .gov-marker .pin-badge {
+        transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      .gov-marker:hover .pin-badge,
+      .gov-marker.active .pin-badge,
+      .gov-marker:focus-visible .pin-badge {
+        background-color: #991b1b;
+        border-color: #ffd54a;
+        box-shadow: 0 0 14px rgba(255, 213, 74, 0.85), 0 4px 12px rgba(0, 0, 0, 0.6);
+      }
+
+      /* Crop Talk Mock Chat Bubble */
+      .astryx-chat-bubble-user {
+        background-color: var(--astryx-color-primary-subtle);
+        border: 1px solid var(--astryx-color-primary-border);
+        color: var(--astryx-color-text-primary);
+      }
+      .astryx-chat-bubble-ai {
+        background-color: var(--astryx-color-surface-subtle);
+        border: 1px solid var(--astryx-color-border);
+        color: var(--astryx-color-text-primary);
+      }
+    }
+  </style>
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'Cairo', 'sans-serif'],
+            arabic: ['Cairo', 'sans-serif'],
+            mono: ['JetBrains Mono', 'monospace'],
+          },
+          colors: {
+            astryx: {
+              matcha: '#52b788',
+              matchaDark: '#1b4332',
+              stone: '#151b17',
+              amber: '#f59e0b',
+            }
+          }
+        }
+      }
+    };
+  </script>
+</head>
+<body class="astryx-grain-bg min-h-screen selection:bg-[#52b788] selection:text-[#0b0e0c]">
+
+  <!-- ==========================================================================
+       1. ASTRYX NAVBAR (HEADER)
+       ========================================================================== -->
+  <header class="sticky top-0 z-40 border-b border-[var(--astryx-color-border-subtle)] bg-[var(--astryx-color-surface-overlay)] backdrop-blur-xl transition-colors duration-300">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex items-center justify-between">
+      
+      <!-- Brand Identity / The Shifter / Journey into the Soil -->
+      <a href="#" class="flex items-center gap-3.5 group text-start focus:outline-none focus:ring-2 focus:ring-[var(--astryx-color-border-focus)] rounded-xl p-1">
+        <div class="flex items-center justify-center bg-transparent">
+          <img src="Gemini_Generated_Image_42gudn42gudn42gu.svg" alt="The Shifters Logo" class="h-14 sm:h-16 w-auto object-contain group-hover:scale-105 transition-transform duration-300 select-none" />
+        </div>
+        <div class="flex flex-col justify-center">
+          <h1 class="font-extrabold text-xl sm:text-2xl tracking-tight text-[var(--astryx-color-text-primary)]" data-i18n="brandTitle">
+            The Shifter
+          </h1>
+          <span class="text-xs sm:text-sm text-[var(--astryx-color-primary)] font-bold tracking-wide" data-i18n="brandSubtitle">
+            Journey into the Soil
+          </span>
+        </div>
+      </a>
+
+      <!-- Desktop Nav Anchors -->
+      <nav class="hidden md:flex items-center gap-1 text-xs font-semibold text-[var(--astryx-color-text-secondary)]">
+        <a href="#how-it-works" class="px-3 py-2 rounded-xl hover:text-[var(--astryx-color-text-primary)] hover:bg-[var(--astryx-color-surface-subtle)] transition" data-i18n="navHow">How It Works</a>
+        <a href="#battlefield" class="px-3 py-2 rounded-xl hover:text-[var(--astryx-color-text-primary)] hover:bg-[var(--astryx-color-surface-subtle)] transition" data-i18n="navBattlefield">Root Zone</a>
+        <a href="#crop-talk" class="px-3 py-2 rounded-xl hover:text-[var(--astryx-color-text-primary)] hover:bg-[var(--astryx-color-surface-subtle)] transition" data-i18n="navCropTalk">Crop Talk AI</a>
+        <a href="#map-section" class="px-3 py-2 rounded-xl hover:text-[var(--astryx-color-text-primary)] hover:bg-[var(--astryx-color-surface-subtle)] transition" data-i18n="navMap">Egypt Map</a>
+      </nav>
+
+      <!-- Header Actions: Language & Theme Switchers -->
+      <div class="flex items-center gap-2 sm:gap-3">
+        <!-- Language Switcher -->
+        <button id="langToggle" aria-label="Toggle Language" class="astryx-btn astryx-btn--secondary px-3 py-2 text-xs font-bold">
+          <i data-lucide="languages" class="w-4 h-4 text-[var(--astryx-color-primary)]"></i>
+          <span id="langLabel">العربية</span>
+        </button>
+
+        <!-- Theme Switcher -->
+        <button id="themeToggle" aria-label="Toggle Dark/Light Mode" class="astryx-btn astryx-btn--secondary p-2.5">
+          <i id="themeIcon" data-lucide="sun" class="w-4 h-4 text-[var(--astryx-color-accent)]"></i>
+        </button>
+      </div>
+
+    </div>
+  </header>
+
+  <main>
+    <!-- ==========================================================================
+         2. FULL-SCREEN ASTRYX HERO SECTION (Whole Screen Background)
+         ========================================================================== -->
+    <section class="relative min-h-[90vh] lg:min-h-screen w-full flex flex-col justify-between overflow-hidden border-b border-[var(--astryx-color-border-subtle)]">
+      
+      <!-- Full-Screen Edge-to-Edge Background Image -->
+      <div class="absolute inset-0 w-full h-full bg-cover bg-center lg:bg-[center_top] bg-no-repeat transition-transform duration-1000 scale-[1.01]" style="background-image: url('Gemini_Generated_Image_fzlkafzlkafzlkaf.jpeg');"></div>
+
+      <!-- Astryx Multi-Layer Scrim & Atmospheric Gradient Overlays -->
+      <!-- Soft ambient wash for contrast in Light/Dark mode -->
+      <div class="absolute inset-0 bg-gradient-to-b from-[var(--astryx-color-bg)]/85 via-[var(--astryx-color-bg)]/70 to-[var(--astryx-color-bg)]/95 dark:from-[#0b0e0c]/85 dark:via-[#0b0e0c]/70 dark:to-[#0b0e0c]/95 backdrop-blur-[1px] pointer-events-none"></div>
+      <!-- Vignette depth -->
+      <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_transparent_20%,_var(--astryx-color-bg)_95%)] dark:bg-[radial-gradient(ellipse_at_center,_transparent_20%,_#0b0e0c_95%)] opacity-70 pointer-events-none"></div>
+
+      <!-- 1. Hero Guest Content: "Where Space Data Meets the Root Zone: Precision Soil Intelligence" with all details (shown when not logged in) -->
+      <div id="heroGuestContent" class="relative z-10 w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 pb-8 sm:pt-16 sm:pb-12 text-center flex-1 flex flex-col justify-center items-center transition-all duration-300">
+        
+        <!-- Grand Unbounded Full-Screen Headline -->
+        <h1 class="text-3xl sm:text-5xl lg:text-7xl font-black tracking-tight leading-[1.15] text-[var(--astryx-color-text-primary)] max-w-5xl mx-auto drop-shadow-sm" data-i18n="heroTitle">
+          Where Space Data Meets the Root Zone: <br>
+          <span class="bg-gradient-to-r from-[#1b4332] via-[#2d6a4f] to-[#d97706] dark:from-[#52b788] dark:via-[#74c69d] dark:to-[#f59e0b] bg-clip-text text-transparent">
+            Precision Soil Intelligence
+          </span>
+        </h1>
+
+        <!-- Subtitle -->
+        <p class="mt-6 text-base sm:text-lg lg:text-xl text-[var(--astryx-color-text-secondary)] font-medium leading-relaxed max-w-3xl mx-auto" data-i18n="heroSubtitle">
+          A physics-based agronomic advisory system empowering Egyptian farmers with NASA Earth data, multi-layer soil hydrology, and salt-resilient crop rotation planning.
+        </p>
+
+        <!-- Unified Hero Action Button (Account-Gated) -->
+        <div class="mt-8 sm:mt-12 flex items-center justify-center">
+          <button id="btnHeroTryCropTalkLaunch" type="button" class="astryx-btn px-8 sm:px-11 py-4 sm:py-5 text-base sm:text-lg font-extrabold text-white shadow-2xl hover:scale-105 active:scale-95 transition-all flex items-center gap-3.5 rounded-2xl group" style="background-color: #00a76f; box-shadow: 0 16px 36px -6px rgba(0, 167, 111, 0.45);">
+            <div class="w-7 h-7 rounded-xl bg-white/20 flex items-center justify-center text-white shrink-0 group-hover:rotate-12 transition-transform">
+              <i data-lucide="sparkles" class="w-4 h-4"></i>
+            </div>
+            <span data-i18n="btnTryCropTalkLaunch">crop talk ai and launch simulation</span>
+            <i data-lucide="arrow-right" class="w-5 h-5 rtl:rotate-180 group-hover:translate-x-1.5 rtl:group-hover:-translate-x-1.5 transition-transform"></i>
+          </button>
+        </div>
+
+      </div>
+
+      <!-- 2. Hero Authenticated Content: The Three Buttons (Unlocked after adding email) -->
+      <div id="heroAuthenticatedContent" class="hidden relative z-10 w-full max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 flex-1 flex-col justify-center items-center text-center transition-all duration-300 pb-56 sm:pb-72">
+        
+        <!-- Account Status & Navigation Header above the 3 Buttons -->
+        <div class="mb-6 sm:mb-8 flex flex-wrap items-center justify-center gap-2.5 sm:gap-3">
+          <!-- Back to Overview Button -->
+          <button type="button" id="btnBackToHeroOverview" class="inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-semibold bg-white/85 dark:bg-black/60 hover:bg-white dark:hover:bg-black/80 text-neutral-800 dark:text-neutral-200 border border-neutral-200 dark:border-white/10 backdrop-blur-md shadow-sm transition hover:scale-105">
+            <i data-lucide="arrow-left" class="w-3.5 h-3.5 rtl:rotate-180 text-[#00a76f]"></i>
+            <span data-i18n="btnBackToOverview">Back to Overview</span>
+          </button>
+
+          <!-- Active User Email Badge -->
+          <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-semibold bg-emerald-500/15 text-emerald-800 dark:text-emerald-300 border border-emerald-500/30 backdrop-blur-md shadow-sm">
+            <i data-lucide="mail-check" class="w-3.5 h-3.5 text-[#00a76f]"></i>
+            <span id="userEmailDisplay">farmer@example.com</span>
+          </div>
+
+          <!-- Sign Out / Switch Email Button -->
+          <button type="button" id="btnSignOut" class="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full text-xs font-semibold bg-rose-500/10 hover:bg-rose-500/20 text-rose-700 dark:text-rose-400 border border-rose-500/20 backdrop-blur-md transition hover:scale-105">
+            <i data-lucide="log-out" class="w-3.5 h-3.5 rtl:rotate-180"></i>
+            <span data-i18n="btnSignOut">Sign Out</span>
+          </button>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-5 sm:gap-6 w-full max-w-4xl mx-auto">
+          
+          <!-- BUTTON 1: "start the journey simulation " -->
+          <a href="/index.html" id="btnStartSimulation" class="px-6 py-5 sm:py-6 rounded-3xl text-white font-extrabold text-sm sm:text-base shadow-2xl transition-all duration-300 hover:scale-[1.03] active:scale-[0.98] flex items-center justify-center gap-3 text-center group" style="background: linear-gradient(135deg, #00a76f 0%, #1b4332 100%); box-shadow: 0 14px 32px -4px rgba(0, 167, 111, 0.55);">
+            <div class="w-8 h-8 rounded-xl bg-white/20 text-white flex items-center justify-center shrink-0 shadow-inner group-hover:scale-110 transition-transform">
+              <i data-lucide="play" class="w-4 h-4 fill-current"></i>
+            </div>
+            <span data-i18n="btnStartJourney">start the journey simulation </span>
+          </a>
+
+          <!-- BUTTON 2: "print analysis and reccomendation PDF" -->
+          <button type="button" id="btnPrintPdf" class="px-6 py-5 sm:py-6 rounded-3xl bg-white/95 dark:bg-[#151c17]/95 hover:bg-white dark:hover:bg-white/10 text-neutral-900 dark:text-white border-2 border-emerald-500/50 hover:border-emerald-500 font-extrabold text-sm sm:text-base shadow-2xl backdrop-blur-xl transition-all duration-300 hover:scale-[1.03] active:scale-[0.98] flex items-center justify-center gap-3 text-center group">
+            <div class="w-8 h-8 rounded-xl bg-emerald-500/15 text-[#00a76f] flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
+              <i data-lucide="printer" class="w-4 h-4"></i>
+            </div>
+            <span data-i18n="btnPrintPdf">print analysis and reccomendation PDF</span>
+          </button>
+
+          <!-- BUTTON 3: "comparing the data with nasa's data" -->
+          <button type="button" id="btnCompareNasa" class="px-6 py-5 sm:py-6 rounded-3xl bg-white/95 dark:bg-[#151c17]/95 hover:bg-white dark:hover:bg-white/10 text-neutral-900 dark:text-white border-2 border-sky-500/50 hover:border-sky-500 font-extrabold text-sm sm:text-base shadow-2xl backdrop-blur-xl transition-all duration-300 hover:scale-[1.03] active:scale-[0.98] flex items-center justify-center gap-3 text-center group">
+            <div class="w-8 h-8 rounded-xl bg-sky-500/15 text-sky-500 flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
+              <i data-lucide="satellite" class="w-4 h-4"></i>
+            </div>
+            <span data-i18n="btnCompareNasa">comparing the data with nasa's data</span>
+          </button>
+
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- ==========================================================================
+         3. HOW DOES IT WORK? (ASTRYX 3-STEP PIPELINE)
+         ========================================================================== -->
+    <section id="how-it-works" class="py-16 sm:py-24 border-t border-[var(--astryx-color-border-subtle)] bg-[var(--astryx-color-bg-subtle)]/40">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div class="text-center max-w-3xl mx-auto mb-16">
+          <h2 class="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-[var(--astryx-color-text-primary)] mb-4" data-i18n="howTitle">
+            How does it work?
+          </h2>
+          <p class="text-base sm:text-lg text-[var(--astryx-color-text-secondary)] leading-relaxed" data-i18n="howLead">
+            From field sample inputs to resilient rotation plans through physics-based simulation.
+          </p>
+        </div>
+
+        <!-- 3-Step Cards Pipeline -->
+        <div class="relative mt-8">
+          <!-- Connecting dashed line across desktop -->
+          <div class="hidden lg:block absolute top-10 inset-x-14 h-0.5 border-t-2 border-dashed border-[var(--astryx-color-border)] z-0" aria-hidden="true"></div>
+
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6 relative z-10">
+            
+            <!-- Step 1 -->
+            <div class="group astryx-card astryx-card--interactive p-3 sm:p-3.5 flex flex-col justify-between relative overflow-hidden min-h-[480px] sm:min-h-[520px]">
+              <!-- Clear Background Image anchored to showcase the people and DATA folder -->
+              <div class="absolute inset-0 bg-cover bg-bottom transition-transform duration-500 group-hover:scale-105" style="background-image: url('data_collection.jpeg');"></div>
+
+              <!-- Upper Part: Badge & Clear Text shifted all the way up -->
+              <div class="relative z-10 flex flex-col items-start w-full">
+                <!-- Text in Upper Part with Astryx Luminous Plate -->
+                <div class="p-3 sm:p-3.5 rounded-2xl bg-white/95 dark:bg-white/95 backdrop-blur-md border border-white/90 shadow-md w-full">
+                  <div class="flex items-center gap-2.5 mb-1.5">
+                    <div class="w-8 h-8 rounded-xl bg-stone-900 text-white flex items-center justify-center font-black text-sm shadow-sm shrink-0">
+                      1
+                    </div>
+                    <h3 class="text-base sm:text-lg font-bold text-stone-900 leading-tight" data-i18n="howStep1Title">
+                      input the land data
+                    </h3>
+                  </div>
+                  <p class="text-xs sm:text-sm text-stone-800 leading-snug font-medium" data-i18n="howStep1Desc">
+                    Input field location, water salinity, irrigation method, and recent crop rotation history in the form of the simulation 
+                  </p>
+                </div>
+              </div>
+
+              <!-- Lower Part: Open space giving full clarity to the people & DATA folder in background image -->
+              <div class="relative z-10 w-full pt-12"></div>
+            </div>
+
+            <!-- Step 2 -->
+            <div class="group astryx-card astryx-card--interactive p-3 sm:p-3.5 flex flex-col justify-between relative overflow-hidden min-h-[480px] sm:min-h-[520px]">
+              <!-- Background Image showing Earth's Soil Layers -->
+              <div class="absolute inset-0 bg-cover bg-bottom transition-transform duration-500 group-hover:scale-105" style="background-image: url('soil%20layer%20how%20it%20work.jpeg'), url('soil_layer_how_it_work.jpeg');"></div>
+
+              <!-- Upper Part: Badge & Clear Text shifted all the way up -->
+              <div class="relative z-10 flex flex-col items-start w-full">
+                <!-- Text in Upper Part with Astryx Luminous Plate -->
+                <div class="p-3 sm:p-3.5 rounded-2xl bg-white/95 dark:bg-white/95 backdrop-blur-md border border-white/90 shadow-md w-full">
+                  <div class="flex items-center gap-2.5 mb-1.5">
+                    <div class="w-8 h-8 rounded-xl bg-stone-900 text-white flex items-center justify-center font-black text-sm shadow-sm shrink-0">
+                      2
+                    </div>
+                    <h3 class="text-base sm:text-lg font-bold text-stone-900 leading-tight" data-i18n="howStep2Title">
+                      Simulate Soil Physics
+                    </h3>
+                  </div>
+                  <p class="text-xs sm:text-sm text-stone-800 leading-snug font-medium" data-i18n="howStep2Desc">
+                    Each of Earth's layers is shown separately, with details on its components, pH, organic matter, moisture, and salinity.
+                  </p>
+                </div>
+              </div>
+
+              <!-- Lower Part: Open space giving full clarity to the soil layers in background image -->
+              <div class="relative z-10 w-full pt-12"></div>
+            </div>
+
+            <!-- Step 3 -->
+            <div class="group astryx-card astryx-card--interactive p-3 sm:p-3.5 flex flex-col justify-between relative overflow-hidden min-h-[480px] sm:min-h-[520px]">
+              <!-- Background Image showing Crop Recommendations and Advisory -->
+              <div class="absolute inset-0 bg-cover bg-bottom transition-transform duration-500 group-hover:scale-105" style="background-image: url('crop_recommendation_background.jpeg');"></div>
+
+              <!-- Upper Part: Badge & Clear Text shifted all the way up -->
+              <div class="relative z-10 flex flex-col items-start w-full">
+                <!-- Text in Upper Part with Astryx Luminous Plate -->
+                <div class="p-3 sm:p-3.5 rounded-2xl bg-white/95 dark:bg-white/95 backdrop-blur-md border border-white/90 shadow-md w-full">
+                  <div class="flex items-center gap-2.5 mb-1.5">
+                    <div class="w-8 h-8 rounded-xl bg-stone-900 text-white flex items-center justify-center font-black text-sm shadow-sm shrink-0">
+                      3
+                    </div>
+                    <h3 class="text-base sm:text-lg font-bold text-stone-900 leading-tight" data-i18n="howStep3Title">
+                      Deliver Recommendations
+                    </h3>
+                  </div>
+                  <p class="text-xs sm:text-sm text-stone-800 leading-snug font-medium" data-i18n="howStep3Desc">
+                    Generate ranked crop rotation strategies matching farmer priorities for water saving, soil health, risk mitigation and highest profit.
+                  </p>
+                </div>
+              </div>
+
+              <!-- Lower Part: Open space giving full clarity to the agricultural field in background image -->
+              <div class="relative z-10 w-full pt-12"></div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         4. THE HIDDEN BATTLEFIELD IN THE SOIL
+         ========================================================================== -->
+    <section id="battlefield" class="relative py-16 sm:py-24 border-t border-[var(--astryx-color-border-subtle)] overflow-hidden">
+      <!-- Background Picture: Soil Horizons & Root Zone Cross-Section -->
+      <div class="absolute inset-0 bg-cover bg-center bg-no-repeat pointer-events-none" style="background-image: url('battle_background.jpeg');"></div>
+
+      <div class="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <!-- Tactical Battlefield Mission Briefing Banner -->
+        <div class="astryx-card p-6 sm:p-8 mb-8 backdrop-blur-md bg-[var(--astryx-color-surface)]/90 border border-[var(--astryx-color-border)] shadow-xl">
+          <div class="flex flex-col md:flex-row md:items-center justify-between gap-6">
+            <div class="max-w-2xl">
+              <h2 class="text-2xl sm:text-3xl lg:text-4xl font-black tracking-tight text-[var(--astryx-color-text-primary)] leading-tight" data-i18n="battlefieldTitle">
+                The Hidden Battlefield in the Soil
+              </h2>
+            </div>
+            <p class="text-sm sm:text-base text-[var(--astryx-color-text-secondary)] max-w-md leading-relaxed md:border-l md:border-[var(--astryx-color-border)] md:pl-6 rtl:md:border-l-0 rtl:md:border-r rtl:md:pl-0 rtl:md:pr-6" data-i18n="battlefieldMissionDesc">
+              Deep beneath the green crops, an invisible war threatens every harvest. Here are the three critical underground battles raging in the soil.
+            </p>
+          </div>
+        </div>
+
+        <!-- 3 Battlefield Threat Cards Summarized in Clean 2 Lines -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+          <!-- Battle Card 1 -->
+          <div class="astryx-card astryx-card--interactive p-6 flex flex-col justify-between backdrop-blur-md bg-[var(--astryx-color-surface)]/92 border border-[var(--astryx-color-border)] shadow-xl relative overflow-hidden group">
+            <div class="space-y-4">
+              <!-- Combat Phase Header -->
+              <div class="flex items-center justify-between">
+                <span class="px-2.5 py-1 rounded-lg text-xs font-black bg-rose-500/15 text-rose-600 dark:text-rose-400 border border-rose-500/30 font-mono" data-i18n="battle1Badge">
+                  BATTLE 01 · SALINITY SIEGE
+                </span>
+                <i data-lucide="flame" class="w-5 h-5 text-rose-500"></i>
+              </div>
+
+              <!-- Title -->
+              <h3 class="text-lg font-bold text-[var(--astryx-color-text-primary)] leading-tight" data-i18n="battle1Title">
+                Salt Strangulation
+              </h3>
+
+              <!-- Summarized in 2 Lines (Plain understandable language, no scientific jargon) -->
+              <ul class="space-y-2.5 text-xs text-[var(--astryx-color-text-secondary)] font-medium">
+                <li class="flex items-start gap-2">
+                  <i data-lucide="crosshair" class="w-3.5 h-3.5 text-rose-500 shrink-0 mt-0.5"></i>
+                  <span data-i18n="battle1Line1">Salt builds up around the roots and stops them from drinking water.</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <i data-lucide="crosshair" class="w-3.5 h-3.5 text-rose-500 shrink-0 mt-0.5"></i>
+                  <span data-i18n="battle1Line2">The plant dries out and dies of thirst, even when the soil is wet.</span>
+                </li>
+              </ul>
+            </div>
+
+            <!-- Threat Footer -->
+            <div class="mt-5 pt-3 border-t border-[var(--astryx-color-border-subtle)] flex items-center justify-between text-[11px] font-mono text-[var(--astryx-color-text-tertiary)]">
+              <span>COMBAT IMPACT</span>
+              <span class="text-rose-500 font-bold" data-i18n="battle1Threat">Threat: Plants Thirsty in Wet Soil</span>
+            </div>
+          </div>
+
+          <!-- Battle Card 2 -->
+          <div class="astryx-card astryx-card--interactive p-6 flex flex-col justify-between backdrop-blur-md bg-[var(--astryx-color-surface)]/92 border border-[var(--astryx-color-border)] shadow-xl relative overflow-hidden group">
+            <div class="space-y-4">
+              <!-- Combat Phase Header -->
+              <div class="flex items-center justify-between">
+                <span class="px-2.5 py-1 rounded-lg text-xs font-black bg-amber-500/15 text-amber-600 dark:text-amber-400 border border-amber-500/30 font-mono" data-i18n="battle2Badge">
+                  BATTLE 02 · NUTRIENT AMBUSH
+                </span>
+                <i data-lucide="layers" class="w-5 h-5 text-amber-500"></i>
+              </div>
+
+              <!-- Title -->
+              <h3 class="text-lg font-bold text-[var(--astryx-color-text-primary)] leading-tight" data-i18n="battle2Title">
+                Nutrient Exhaustion
+              </h3>
+
+              <!-- Summarized in 2 Lines (Plain understandable language, no scientific jargon) -->
+              <ul class="space-y-2.5 text-xs text-[var(--astryx-color-text-secondary)] font-medium">
+                <li class="flex items-start gap-2">
+                  <i data-lucide="crosshair" class="w-3.5 h-3.5 text-amber-500 shrink-0 mt-0.5"></i>
+                  <span data-i18n="battle2Line1">Planting the same crop year after year eats up all food in the dirt.</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <i data-lucide="crosshair" class="w-3.5 h-3.5 text-amber-500 shrink-0 mt-0.5"></i>
+                  <span data-i18n="battle2Line2">The soil gets tired and empty, leaving new crops nothing to grow on.</span>
+                </li>
+              </ul>
+            </div>
+
+            <!-- Threat Footer -->
+            <div class="mt-5 pt-3 border-t border-[var(--astryx-color-border-subtle)] flex items-center justify-between text-[11px] font-mono text-[var(--astryx-color-text-tertiary)]">
+              <span>COMBAT IMPACT</span>
+              <span class="text-amber-500 font-bold" data-i18n="battle2Threat">Threat: Soil Running Out of Food</span>
+            </div>
+          </div>
+
+          <!-- Battle Card 3 -->
+          <div class="astryx-card astryx-card--interactive p-6 flex flex-col justify-between backdrop-blur-md bg-[var(--astryx-color-surface)]/92 border border-[var(--astryx-color-border)] shadow-xl relative overflow-hidden group">
+            <div class="space-y-4">
+              <!-- Combat Phase Header -->
+              <div class="flex items-center justify-between">
+                <span class="px-2.5 py-1 rounded-lg text-xs font-black bg-sky-500/15 text-sky-600 dark:text-sky-400 border border-sky-500/30 font-mono" data-i18n="battle3Badge">
+                  BATTLE 03 · MOISTURE LOCKOUT
+                </span>
+                <i data-lucide="droplets" class="w-5 h-5 text-sky-500"></i>
+              </div>
+
+              <!-- Title -->
+              <h3 class="text-lg font-bold text-[var(--astryx-color-text-primary)] leading-tight" data-i18n="battle3Title">
+                Hardpan Drought
+              </h3>
+
+              <!-- Summarized in 2 Lines (Plain understandable language, no scientific jargon) -->
+              <ul class="space-y-2.5 text-xs text-[var(--astryx-color-text-secondary)] font-medium">
+                <li class="flex items-start gap-2">
+                  <i data-lucide="crosshair" class="w-3.5 h-3.5 text-sky-500 shrink-0 mt-0.5"></i>
+                  <span data-i18n="battle3Line1">Strong sun and dry heat bake the ground into a crust like concrete.</span>
+                </li>
+                <li class="flex items-start gap-2">
+                  <i data-lucide="crosshair" class="w-3.5 h-3.5 text-sky-500 shrink-0 mt-0.5"></i>
+                  <span data-i18n="battle3Line2">Water cannot soak deep down, and young roots hit a solid wall.</span>
+                </li>
+              </ul>
+            </div>
+
+            <!-- Threat Footer -->
+            <div class="mt-5 pt-3 border-t border-[var(--astryx-color-border-subtle)] flex items-center justify-between text-[11px] font-mono text-[var(--astryx-color-text-tertiary)]">
+              <span>COMBAT IMPACT</span>
+              <span class="text-sky-500 font-bold" data-i18n="battle3Threat">Threat: Roots Trapped by Hard Ground</span>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         6. CROP TALK: PLANT A QUESTION, GROW AN ANSWER (ASTRYX DIALOGUE SHOWCASE)
+         ========================================================================== -->
+    <section id="crop-talk" class="py-16 sm:py-24 border-t border-[var(--astryx-color-border-subtle)]">
+      <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h2 class="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-[var(--astryx-color-text-primary)] mb-8 leading-tight max-w-3xl" data-i18n="cropTalkTitle">
+          Crop Talk: Plant a Question, Grow an Answer
+        </h2>
+
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
+          
+          <!-- Chatbot Visibility Spotlight (Beside Chatbot Box) -->
+          <div class="lg:col-span-5 space-y-4">
+            <div class="w-12 h-12 rounded-2xl bg-emerald-500/15 text-emerald-500 flex items-center justify-center shadow-sm border border-emerald-500/20">
+              <i data-lucide="bot" class="w-6 h-6"></i>
+            </div>
+            <h3 class="text-2xl sm:text-3xl lg:text-4xl font-black bg-gradient-to-r from-[#1b4332] via-[#2d6a4f] to-[#d97706] dark:from-[#52b788] dark:via-[#74c69d] dark:to-[#f59e0b] bg-clip-text text-transparent leading-tight tracking-tight inline-block" data-i18n="cropyTitle">
+              What cropy the chatbot does:
+            </h3>
+            <p class="text-base sm:text-lg text-[var(--astryx-color-text-secondary)] font-medium leading-relaxed" data-i18n="cropySummaryLine">
+              Cropy can answer questions and talk about anything related to the simulation or recommendations.
+            </p>
+          </div>
+
+          <!-- Interactive Dialogue Showcase UI -->
+          <div class="lg:col-span-7">
+            <div class="astryx-card overflow-hidden shadow-xl border border-[var(--astryx-color-border)]">
+              <!-- Chat Header -->
+              <div class="px-5 py-4 border-b border-[var(--astryx-color-border-subtle)] bg-[var(--astryx-color-surface-subtle)] flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                  <div class="w-9 h-9 rounded-xl bg-[var(--astryx-color-primary-subtle)] text-[var(--astryx-color-primary)] flex items-center justify-center font-bold">
+                    <i data-lucide="bot" class="w-5 h-5"></i>
+                  </div>
+                  <div>
+                    <h3 class="text-sm font-bold text-[var(--astryx-color-text-primary)]" data-i18n="cropyBotName">cropy the chatbot</h3>
+                    <p class="text-[11px] text-[var(--astryx-color-text-tertiary)]" data-i18n="cropyBotSubtitle">Calibrated with Egypt SoilGrids & NASA Data</p>
+                  </div>
+                </div>
+                <span class="astryx-badge astryx-badge--matcha text-[10px] py-0.5 px-2 font-mono">
+                  ● ACTIVE ADVISORY
+                </span>
+              </div>
+
+              <!-- Chat Message Stream -->
+              <div class="p-5 space-y-4 max-h-[380px] overflow-y-auto">
+                <!-- User Message -->
+                <div class="flex items-start gap-3 justify-end">
+                  <div id="chatUserMsg" class="astryx-chat-bubble-user p-3.5 rounded-2xl rounded-tr-none text-xs sm:text-sm max-w-md shadow-sm">
+                    Why was chickpea recommended after wheat in Beheira with 2.8 dS/m canal water?
+                  </div>
+                  <div class="w-8 h-8 rounded-full bg-[var(--astryx-color-surface-subtle)] border border-[var(--astryx-color-border)] flex items-center justify-center text-xs font-bold shrink-0">
+                    👨‍🌾
+                  </div>
+                </div>
+
+                <!-- AI Response -->
+                <div class="flex items-start gap-3 justify-start">
+                  <div class="w-8 h-8 rounded-full bg-[var(--astryx-color-primary-subtle)] text-[var(--astryx-color-primary)] flex items-center justify-center text-xs font-bold shrink-0">
+                    🌱
+                  </div>
+                  <div id="chatAiMsg" class="astryx-chat-bubble-ai p-3.5 rounded-2xl rounded-tl-none text-xs sm:text-sm max-w-lg space-y-2 shadow-sm leading-relaxed">
+                    <p>
+                      <strong>Agronomic rationale:</strong> In Beheira's clay-loam soil, back-to-back cereal crops heavily exhaust available root-zone nitrogen. Chickpea fixes atmospheric nitrogen (approx. 40–60 kg N/ha), revitalizing soil biology.
+                    </p>
+                    <p>
+                      <strong>Salinity buffer:</strong> Chickpea handles moderate root ECe thresholds up to 1.7 dS/m. With 2.8 dS/m irrigation water, our FAO-56 simulation mandates a 12% leaching fraction during winter rains to flush accumulated salts below the 45 cm root perimeter.
+                    </p>
+                    <div class="pt-1 text-[11px] font-mono text-[var(--astryx-color-text-tertiary)]">
+                      Advisory note: Always verify local drainage capacity before planting.
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Interactive Prompt Input Bar Mockup -->
+              <div class="p-3 border-t border-[var(--astryx-color-border-subtle)] bg-[var(--astryx-color-surface-subtle)]/50 flex items-center gap-2">
+                <input id="chatInputMock" type="text" readonly value="Ask cropy the chatbot about your soil, crops, or irrigation..." class="flex-1 bg-[var(--astryx-color-surface)] border border-[var(--astryx-color-border)] rounded-xl px-3.5 py-2 text-xs text-[var(--astryx-color-text-secondary)] focus:outline-none select-none cursor-pointer">
+                <button type="button" aria-label="Send" class="astryx-btn astryx-btn--primary p-2 rounded-xl">
+                  <i data-lucide="send" class="w-3.5 h-3.5"></i>
+                </button>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- ==========================================================================
+         7. INTERACTIVE AGROCLIMATOLOGY MAP OF EGYPT (ASTRYX SECTION 5)
+         ========================================================================== -->
+    <section id="map-section" class="py-16 sm:py-24 border-t border-[var(--astryx-color-border-subtle)] bg-[var(--astryx-color-bg-subtle)]/40">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div class="text-center max-w-3xl mx-auto mb-14">
+          <h2 class="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-[var(--astryx-color-text-primary)] mb-4" data-i18n="mapTitle">
+            Agroclimatology Map of Egypt
+          </h2>
+          <p class="text-base sm:text-lg text-[var(--astryx-color-text-secondary)] leading-relaxed" data-i18n="mapCaption">
+            An interactive map of Egypt highlighting the governorates and agricultural regions where our NASA agroclimatology and soil data are calibrated.
+          </p>
+        </div>
+
+        <div class="astryx-card p-4 sm:p-7 shadow-2xl">
+          <!-- Interactive Map Container (Locked to LTR so Egypt geography is never flipped) -->
+          <div class="map-lock-ltr relative w-full rounded-2xl overflow-hidden border border-[var(--astryx-color-border)] bg-[#0b0e0c] shadow-inner">
+            <div class="relative w-full max-w-[1100px] mx-auto aspect-[1451/1084]">
+              <!-- Base Map Image -->
+              <img src="Unlabeled Relief Map of Egypt.png" onerror="this.src='egypt_map.png'" alt="Agroclimatology Relief Map of Egypt" class="w-full h-full block object-cover select-none pointer-events-none" />
+              
+              <!-- Red Pins & Labels Layer -->
+              <div id="mapPinsLayer" class="absolute inset-0 pointer-events-none" role="region" aria-label="Egyptian Governorates Pins">
+                <!-- 27 Governorates dynamically rendered here -->
+              </div>
+            </div>
+          </div>
+
+          <!-- Governorates Tags List Beneath Map -->
+          <div class="mt-8 pt-6 border-t border-[var(--astryx-color-border-subtle)]">
+            <div class="flex items-center justify-between mb-4">
+              <h4 class="text-xs sm:text-sm font-bold uppercase tracking-wider text-[var(--astryx-color-text-secondary)]" data-i18n="mapTagsLabel">
+                Calibrated Governorates & Agricultural Zones
+              </h4>
+              <span id="activeGovCount" class="text-xs font-mono font-semibold text-[var(--astryx-color-primary)]">
+                27 Governorates
+              </span>
+            </div>
+            <ul id="govTagsList" class="flex flex-wrap gap-2 list-none" role="list">
+              <!-- Dynamically populated tags -->
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ==========================================================================
+       9. ASTRYX FOOTER (COMPLIANT WITH RULE #1 NON-NEGOTIABLE)
+       ========================================================================== -->
+  <footer class="border-t border-[var(--astryx-color-border-subtle)] bg-[var(--astryx-color-surface-subtle)] py-12 transition-colors duration-300">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center space-y-4">
+      <div class="flex items-center justify-center gap-3">
+        <img src="Gemini_Generated_Image_42gudn42gudn42gu.svg" alt="The Shifters Logo" class="h-10 sm:h-12 w-auto object-contain bg-transparent" />
+        <span class="font-extrabold text-[var(--astryx-color-text-primary)] text-base" data-i18n="brandTitle">The Shifter</span>
+        <span class="text-[var(--astryx-color-text-tertiary)]">·</span>
+        <span class="font-medium text-[var(--astryx-color-text-secondary)] text-sm" data-i18n="brandSubtitle">Journey into the Soil</span>
+        <span class="text-[var(--astryx-color-text-tertiary)]">·</span>
+        <span class="astryx-badge astryx-badge--neutral text-[10px] py-0.5 px-2 font-mono">Astryx Design System</span>
+      </div>
+
+      <p class="text-xs sm:text-sm text-[var(--astryx-color-text-tertiary)] max-w-3xl mx-auto leading-relaxed" data-i18n="footerDisclaimer">
+        Developed for NASA Space Apps Challenge 2026 (Field Shift: Adapting Farms with NASA Data). Advisory decision-support system only. Does not replace local soil laboratory testing or agronomic expert judgment. No fertilizer rates or yield guarantees provided.
+      </p>
+
+      <div class="pt-4 flex items-center justify-center gap-4 text-xs text-[var(--astryx-color-text-tertiary)]">
+        <span>Team The Shifters</span>
+        <span>•</span>
+        <a href="#" class="hover:text-[var(--astryx-color-text-primary)] underline">Back to Top</a>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ==========================================================================
+       MODAL 1: PRINT ANALYSIS AND RECOMMENDATION PDF
+       ========================================================================== -->
+  <div id="pdfModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-300">
+    <div class="w-full max-w-3xl bg-white dark:bg-[#141b17] border border-neutral-200 dark:border-white/15 rounded-3xl shadow-2xl p-6 sm:p-8 text-neutral-900 dark:text-white max-h-[90vh] overflow-y-auto" id="printReportSection">
+      
+      <!-- Report Header -->
+      <div class="flex items-start justify-between pb-4 border-b border-neutral-200 dark:border-white/10">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-emerald-500/15 flex items-center justify-center p-1.5">
+            <img src="the_shifters_logo_transparent.png" alt="The Shifters" class="w-full h-full object-contain" />
+          </div>
+          <div>
+            <h3 class="text-lg sm:text-xl font-black text-neutral-900 dark:text-white leading-tight">
+              Agronomic Soil Analysis & Rotation Recommendation
+            </h3>
+            <p class="text-xs text-neutral-500 dark:text-neutral-400 font-mono">
+              Calibrated via NASA POWER & Egypt SoilGrids · Farmer: Ahmed Yasser
+            </p>
+          </div>
+        </div>
+        <button type="button" id="btnClosePdfModal" class="p-1.5 rounded-xl hover:bg-neutral-100 dark:hover:bg-white/10 text-neutral-400 hover:text-neutral-700 dark:hover:text-white transition no-print">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <!-- Report Body Content -->
+      <div class="space-y-6 py-6 text-xs sm:text-sm">
+        
+        <!-- Summary Strip -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 p-4 rounded-2xl bg-neutral-50 dark:bg-white/5 border border-neutral-200 dark:border-white/10">
+          <div>
+            <div class="text-[11px] text-neutral-500 font-mono">LOCATION</div>
+            <div class="font-bold text-neutral-900 dark:text-white">Beheira, Nile Delta (31.0°N, 30.5°E)</div>
+          </div>
+          <div>
+            <div class="text-[11px] text-neutral-500 font-mono">WATER SALINITY</div>
+            <div class="font-bold text-amber-600 dark:text-amber-400">2.8 dS/m (ECw)</div>
+          </div>
+          <div>
+            <div class="text-[11px] text-neutral-500 font-mono">CALIBRATION STATUS</div>
+            <div class="font-bold text-emerald-600 dark:text-emerald-400">NASA POWER Daily Feed Verified</div>
+          </div>
+        </div>
+
+        <!-- Section: Soil Physics Simulation Profile -->
+        <div>
+          <h4 class="text-sm font-bold text-neutral-900 dark:text-white mb-2 flex items-center gap-2">
+            <i data-lucide="layers" class="w-4 h-4 text-[#00a76f]"></i>
+            1. Multi-Layer Soil Physics & Salinity Profile
+          </h4>
+          <div class="overflow-x-auto">
+            <table class="w-full text-start border-collapse text-xs">
+              <thead>
+                <tr class="border-b border-neutral-200 dark:border-white/10 text-neutral-500 font-mono text-[11px]">
+                  <th class="py-2 text-start">HORIZON (DEPTH)</th>
+                  <th class="py-2 text-start">TEXTURE</th>
+                  <th class="py-2 text-start">ORGANIC MATTER</th>
+                  <th class="py-2 text-start">BULK DENSITY</th>
+                  <th class="py-2 text-start">SATURATION (ECe)</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-neutral-100 dark:divide-white/5">
+                <tr>
+                  <td class="py-2.5 font-bold">Topsoil (0–15 cm)</td>
+                  <td>Clay Loam</td>
+                  <td>1.8%</td>
+                  <td>1.28 g/cm³</td>
+                  <td class="text-amber-600 dark:text-amber-400 font-bold">2.4 dS/m (Safe)</td>
+                </tr>
+                <tr>
+                  <td class="py-2.5 font-bold">Root Zone (15–45 cm)</td>
+                  <td>Silty Clay</td>
+                  <td>1.1%</td>
+                  <td>1.34 g/cm³</td>
+                  <td class="text-amber-600 dark:text-amber-400 font-bold">3.1 dS/m (Moderate)</td>
+                </tr>
+                <tr>
+                  <td class="py-2.5 font-bold">Subsoil (45–100 cm)</td>
+                  <td>Heavy Alluvial Clay</td>
+                  <td>0.6%</td>
+                  <td>1.42 g/cm³</td>
+                  <td class="text-red-500 font-bold">4.2 dS/m (Threshold)</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Section: Recommended Rotation Strategy -->
+        <div>
+          <h4 class="text-sm font-bold text-neutral-900 dark:text-white mb-2 flex items-center gap-2">
+            <i data-lucide="sprout" class="w-4 h-4 text-[#00a76f]"></i>
+            2. Recommended Multi-Year Salt-Resilient Rotation Plan
+          </h4>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+            <div class="p-3.5 rounded-2xl bg-emerald-500/10 border border-emerald-500/30">
+              <span class="text-[10px] font-mono text-emerald-600 dark:text-emerald-400 font-bold">YEAR 1 (WINTER → SUMMER)</span>
+              <div class="font-bold text-sm text-neutral-900 dark:text-white mt-1">Wheat → Chickpea</div>
+              <p class="text-[11px] text-neutral-600 dark:text-neutral-400 mt-1">
+                Chickpea restores root-zone nitrogen (45 kg N/ha) and buffers against 2.8 dS/m irrigation salts.
+              </p>
+            </div>
+            <div class="p-3.5 rounded-2xl bg-sky-500/10 border border-sky-500/30">
+              <span class="text-[10px] font-mono text-sky-600 dark:text-sky-400 font-bold">YEAR 2 (WINTER → SUMMER)</span>
+              <div class="font-bold text-sm text-neutral-900 dark:text-white mt-1">Barley → Sorghum</div>
+              <p class="text-[11px] text-neutral-600 dark:text-neutral-400 mt-1">
+                Highest osmotic tolerance; reduces summer irrigation demand by 28% while extracting deep moisture.
+              </p>
+            </div>
+            <div class="p-3.5 rounded-2xl bg-amber-500/10 border border-amber-500/30">
+              <span class="text-[10px] font-mono text-amber-600 dark:text-amber-400 font-bold">YEAR 3 (WINTER → SUMMER)</span>
+              <div class="font-bold text-sm text-neutral-900 dark:text-white mt-1">Faba Bean → Sunflower</div>
+              <p class="text-[11px] text-neutral-600 dark:text-neutral-400 mt-1">
+                Deep taproots break subsoil hardpan crust; incorporates green manure before next cereal cycle.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Section: Leaching Fraction & Water Budget -->
+        <div class="p-4 rounded-2xl bg-neutral-100 dark:bg-white/5 border border-neutral-200 dark:border-white/10 flex items-center justify-between">
+          <div>
+            <div class="text-xs font-bold text-neutral-900 dark:text-white">Required Leaching Fraction (LF)</div>
+            <div class="text-[11px] text-neutral-500">FAO-56 Dual Kc Water Balance Calculation</div>
+          </div>
+          <div class="text-end">
+            <span class="text-lg font-black text-emerald-600 dark:text-emerald-400">12%</span>
+            <span class="text-[11px] text-neutral-500 block">Extra volume during winter flushing</span>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Modal Footer -->
+      <div class="pt-4 border-t border-neutral-200 dark:border-white/10 flex items-center justify-end gap-3 no-print">
+        <button type="button" id="btnCancelPdfModal" class="px-4 py-2.5 rounded-xl border border-neutral-200 dark:border-white/15 text-xs font-bold hover:bg-neutral-100 dark:hover:bg-white/10 transition">
+          Close
+        </button>
+        <button type="button" id="btnExecutePrint" class="px-5 py-2.5 rounded-xl text-white font-bold text-xs shadow-md transition flex items-center gap-2 hover:brightness-105" style="background-color: #00a76f;">
+          <i data-lucide="printer" class="w-4 h-4"></i>
+          <span>Print / Save as PDF</span>
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ==========================================================================
+       MODAL 2: COMPARING DATA WITH NASA'S DATA
+       ========================================================================== -->
+  <div id="nasaModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-300">
+    <div class="w-full max-w-3xl bg-white dark:bg-[#141b17] border border-sky-500/30 rounded-3xl shadow-2xl p-6 sm:p-8 text-neutral-900 dark:text-white max-h-[90vh] overflow-y-auto">
+      
+      <!-- Modal Header -->
+      <div class="flex items-start justify-between pb-4 border-b border-neutral-200 dark:border-white/10">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-sky-500/15 text-sky-500 flex items-center justify-center p-1.5">
+            <i data-lucide="satellite" class="w-6 h-6"></i>
+          </div>
+          <div>
+            <h3 class="text-lg sm:text-xl font-black text-neutral-900 dark:text-white leading-tight">
+              NASA Earth Observation Telemetry vs Ground Truth
+            </h3>
+            <p class="text-xs text-neutral-500 dark:text-neutral-400 font-mono">
+              Field Station: Beheira Delta (31.0°N, 30.5°E) · Updated Daily
+            </p>
+          </div>
+        </div>
+        <button type="button" id="btnCloseNasaModal" class="p-1.5 rounded-xl hover:bg-neutral-100 dark:hover:bg-white/10 text-neutral-400 hover:text-neutral-700 dark:hover:text-white transition">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <!-- Telemetry Comparison Body -->
+      <div class="space-y-4 py-6 text-xs sm:text-sm">
+        
+        <!-- Parameter 1: Solar Radiation & ET0 -->
+        <div class="p-4 rounded-2xl bg-neutral-50 dark:bg-white/5 border border-neutral-200 dark:border-white/10 space-y-2">
+          <div class="flex items-center justify-between">
+            <div class="font-bold flex items-center gap-2 text-neutral-900 dark:text-white">
+              <i data-lucide="sun" class="w-4 h-4 text-amber-500"></i>
+              Solar Irradiance & Evapotranspiration (ET0)
+            </div>
+            <span class="px-2 py-0.5 rounded-full bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 text-[10px] font-mono font-bold">98.5% MATCH</span>
+          </div>
+          <div class="grid grid-cols-2 sm:grid-cols-3 gap-2 pt-1 text-[11px]">
+            <div>
+              <span class="text-neutral-500 block font-mono">NASA POWER (CERES)</span>
+              <strong class="text-neutral-900 dark:text-white">19.4 MJ/m²/day</strong>
+            </div>
+            <div>
+              <span class="text-neutral-500 block font-mono">GROUND SENSOR</span>
+              <strong class="text-neutral-900 dark:text-white">19.1 MJ/m²/day</strong>
+            </div>
+            <div class="col-span-2 sm:col-span-1">
+              <span class="text-neutral-500 block font-mono">COMPUTED ET0</span>
+              <strong class="text-[#00a76f]">4.2 mm/day (FAO-56)</strong>
+            </div>
+          </div>
+        </div>
+
+        <!-- Parameter 2: Precipitation & Soil Infiltration -->
+        <div class="p-4 rounded-2xl bg-neutral-50 dark:bg-white/5 border border-neutral-200 dark:border-white/10 space-y-2">
+          <div class="flex items-center justify-between">
+            <div class="font-bold flex items-center gap-2 text-neutral-900 dark:text-white">
+              <i data-lucide="cloud-rain" class="w-4 h-4 text-sky-500"></i>
+              Precipitation & Daily Rainfall Accumulation
+            </div>
+            <span class="px-2 py-0.5 rounded-full bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 text-[10px] font-mono font-bold">96.2% MATCH</span>
+          </div>
+          <div class="grid grid-cols-2 sm:grid-cols-3 gap-2 pt-1 text-[11px]">
+            <div>
+              <span class="text-neutral-500 block font-mono">NASA GPM (IMERG)</span>
+              <strong class="text-neutral-900 dark:text-white">18.5 mm (Monthly)</strong>
+            </div>
+            <div>
+              <span class="text-neutral-500 block font-mono">LOCAL RAIN GAUGE</span>
+              <strong class="text-neutral-900 dark:text-white">17.8 mm (Monthly)</strong>
+            </div>
+            <div class="col-span-2 sm:col-span-1">
+              <span class="text-neutral-500 block font-mono">LEACHING POTENTIAL</span>
+              <strong class="text-sky-500">+1.2 mm effective flush</strong>
+            </div>
+          </div>
+        </div>
+
+        <!-- Parameter 3: Root-Zone Volumetric Soil Moisture (SMAP) -->
+        <div class="p-4 rounded-2xl bg-neutral-50 dark:bg-white/5 border border-neutral-200 dark:border-white/10 space-y-2">
+          <div class="flex items-center justify-between">
+            <div class="font-bold flex items-center gap-2 text-neutral-900 dark:text-white">
+              <i data-lucide="droplets" class="w-4 h-4 text-emerald-500"></i>
+              Root-Zone Moisture Profile (0–100 cm)
+            </div>
+            <span class="px-2 py-0.5 rounded-full bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 text-[10px] font-mono font-bold">97.0% MATCH</span>
+          </div>
+          <div class="grid grid-cols-2 sm:grid-cols-3 gap-2 pt-1 text-[11px]">
+            <div>
+              <span class="text-neutral-500 block font-mono">NASA SMAP L4 RADAR</span>
+              <strong class="text-neutral-900 dark:text-white">0.32 m³/m³ (Root Zone)</strong>
+            </div>
+            <div>
+              <span class="text-neutral-500 block font-mono">FIELD FDR PROBE</span>
+              <strong class="text-neutral-900 dark:text-white">0.31 m³/m³ (at 30 cm)</strong>
+            </div>
+            <div class="col-span-2 sm:col-span-1">
+              <span class="text-neutral-500 block font-mono">HYDROLOGIC STATUS</span>
+              <strong class="text-emerald-600 dark:text-emerald-400">Optimal Field Capacity</strong>
+            </div>
+          </div>
+        </div>
+
+        <!-- Parameter 4: Salinity Hazard & Vegetation Stress (Sentinel/Landsat) -->
+        <div class="p-4 rounded-2xl bg-neutral-50 dark:bg-white/5 border border-neutral-200 dark:border-white/10 space-y-2">
+          <div class="flex items-center justify-between">
+            <div class="font-bold flex items-center gap-2 text-neutral-900 dark:text-white">
+              <i data-lucide="activity" class="w-4 h-4 text-purple-500"></i>
+              Normalized Difference Salinity Index (NDSI)
+            </div>
+            <span class="px-2 py-0.5 rounded-full bg-sky-500/15 text-sky-600 dark:text-sky-400 text-[10px] font-mono font-bold">CROSS-VALIDATED</span>
+          </div>
+          <div class="grid grid-cols-2 sm:grid-cols-3 gap-2 pt-1 text-[11px]">
+            <div>
+              <span class="text-neutral-500 block font-mono">SENTINEL-2 / LANDSAT</span>
+              <strong class="text-neutral-900 dark:text-white">NDSI = 0.18 (Mild Crust)</strong>
+            </div>
+            <div>
+              <span class="text-neutral-500 block font-mono">SOIL WATER ECw</span>
+              <strong class="text-amber-500 font-bold">2.8 dS/m</strong>
+            </div>
+            <div class="col-span-2 sm:col-span-1">
+              <span class="text-neutral-500 block font-mono">ADVISORY ACTION</span>
+              <strong class="text-amber-500">12% Leaching Buffer</strong>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Modal Footer -->
+      <div class="pt-4 border-t border-neutral-200 dark:border-white/10 flex items-center justify-end gap-3">
+        <button type="button" id="btnDismissNasaModal" class="px-5 py-2.5 rounded-xl border border-neutral-200 dark:border-white/15 text-xs font-bold hover:bg-neutral-100 dark:hover:bg-white/10 transition">
+          Close & Return
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Astryx Floating Toast Notification -->
+  <div id="toast" class="fixed bottom-6 end-6 z-50 flex items-center gap-3 px-4 py-3 rounded-2xl bg-[var(--astryx-color-surface-contrast)] text-[var(--astryx-color-text-inverse)] border border-[var(--astryx-color-border)] shadow-2xl backdrop-blur-md transition-all duration-300 transform translate-y-24 opacity-0 pointer-events-none">
+    <i data-lucide="info" class="w-4 h-4 text-[var(--astryx-color-primary)]"></i>
+    <span id="toastMsg" class="text-xs sm:text-sm font-semibold">Notification</span>
+  </div>
+
+  <!-- ==========================================================================
+       10. CLIENT SCRIPT (ASTRYX STATE, I18N, INTERACTIVE MAP, CROP TALK)
+       ========================================================================== -->
+  <script>
+    /* 1. Complete Translation Dictionary (English & Arabic Parity) */
+    const translations = {
+      en: {
+        brandTitle: "The Shifter",
+        brandSubtitle: "Journey into the Soil",
+        navWhy: "Why Us",
+        navBattlefield: "Root Zone",
+        navHow: "How It Works",
+        navCropTalk: "Crop Talk AI",
+        navMap: "Egypt Map",
+        btnHeaderAccount: "Sign in with Google",
+        btnHeaderSignOut: "Sign Out",
+        btnLaunchSimulator: "Launch Simulator",
+        heroTitle: 'Where Space Data Meets the Root Zone: <br><span class="bg-gradient-to-r from-[#1b4332] via-[#2d6a4f] to-[#d97706] dark:from-[#52b788] dark:via-[#74c69d] dark:to-[#f59e0b] bg-clip-text text-transparent">Precision Soil Intelligence</span>',
+        heroSubtitle: "A physics-based agronomic advisory system empowering Egyptian farmers with NASA Earth data, multi-layer soil hydrology, and salt-resilient crop rotation planning.",
+        btnTryCropTalkLaunch: "crop talk ai and launch simulation",
+        btnBackToOverview: "Back to Overview",
+        btnHeroLaunch: "Launch Field Simulator",
+        btnHeroMap: "Explore 27 Governorates",
+        btnHeroChat: "Try Crop Talk AI",
+        statGovernorates: "Egyptian Governorates",
+        statSatellite: "Daily Solar & Rain Streams",
+        statPhysics: "Hydrology & Salinity Engine",
+        statOffline: "Field Pack Ready",
+        battlefieldTitle: "The Hidden Battlefield in the Soil",
+        battlefieldMissionDesc: "Deep beneath the green crops, an invisible war threatens every harvest. Here are the three critical underground battles raging in the soil.",
+        battle1Badge: "BATTLE 01 · SALINITY SIEGE",
+        battle1Title: "Salt Strangulation",
+        battle1Line1: "Salt builds up around the roots and stops them from drinking water.",
+        battle1Line2: "The plant dries out and dies of thirst, even when the soil is wet.",
+        battle1Threat: "Threat: Plants Thirsty in Wet Soil",
+        battle2Badge: "BATTLE 02 · NUTRIENT AMBUSH",
+        battle2Title: "Nutrient Exhaustion",
+        battle2Line1: "Planting the same crop year after year eats up all food in the dirt.",
+        battle2Line2: "The soil gets tired and empty, leaving new crops nothing to grow on.",
+        battle2Threat: "Threat: Soil Running Out of Food",
+        battle3Badge: "BATTLE 03 · MOISTURE LOCKOUT",
+        battle3Title: "Hardpan Drought",
+        battle3Line1: "Strong sun and dry heat bake the ground into a crust like concrete.",
+        battle3Line2: "Water cannot soak deep down, and young roots hit a solid wall.",
+        battle3Threat: "Threat: Roots Trapped by Hard Ground",
+        howEyebrow: "HOW IT WORKS",
+        howTitle: "How does it work?",
+        howLead: "From field sample inputs to resilient rotation plans through physics-based simulation.",
+        howStep1Title: "input the land data",
+        howStep1Desc: "Input field location, water salinity, irrigation method, and recent crop rotation history in the form of the simulation",
+        howStep2Title: "Simulate Soil Physics",
+        howStep2Desc: "Each of Earth's layers is shown separately, with details on its components, pH, organic matter, moisture, and salinity.",
+        howStep3Title: "Deliver Recommendations",
+        howStep3Desc: "Generate ranked crop rotation strategies matching farmer priorities for water saving, soil health, risk mitigation and highest profit.",
+        cropTalkEyebrow: "Interactive Advisory",
+        cropTalkTitle: "Crop Talk: Plant a Question, Grow an Answer",
+        cropyTitle: "What cropy the chatbot does:",
+        cropySummaryLine: "Cropy can answer questions and talk about anything related to the simulation or recommendations.",
+        cropyBotName: "cropy the chatbot",
+        cropyBotSubtitle: "Calibrated with Egypt SoilGrids & NASA Data",
+        cropTalkSampleLabel: "Sample Farmer Inquiries",
+        prompt1: "Chickpea after wheat in Beheira?",
+        prompt2: "Managing 2.8 dS/m water salinity?",
+        prompt3: "How NASA POWER helps my field?",
+        mapEyebrow: "National Coverage",
+        mapTitle: "Agroclimatology Map of Egypt",
+        mapCaption: "An interactive map of Egypt highlighting the governorates and agricultural regions where our NASA agroclimatology and soil data are calibrated.",
+        zoneAll: "All 27 Governorates",
+        zoneDelta: "Nile Delta",
+        zoneUpper: "Upper Egypt",
+        zoneDesert: "Desert & Oases",
+        zoneCanal: "Canal & Sinai",
+        mapDataStation: "NASA Climate & Soil Data Node",
+        mapTagsLabel: "Calibrated Governorates & Agricultural Zones",
+        footerDisclaimer: "Developed for NASA Space Apps Challenge 2026 (Field Shift: Adapting Farms with NASA Data). Advisory decision-support system only. Does not replace local soil laboratory testing or agronomic expert judgment. No fertilizer rates or yield guarantees provided.",
+        authModalSignInTitle: "Sign in with Google",
+        authModalSignUpTitle: "Sign in with Google",
+        authModalGoogleTitle: "Sign in with Google",
+        authModalSubtitleSignIn: "Sign in with your Google account to unlock NASA Earth data and precision soil simulation.",
+        authModalSubtitleSignUp: "Sign in with your Google account to unlock NASA Earth data and precision soil simulation.",
+        authModalGoogleSubtitle: "Sign in with your Google account to unlock NASA Earth data and precision soil simulation.",
+        authBtnGoogleOnly: "Sign in with Google Account",
+        authUseAnotherGoogle: "Use another Google account",
+        authGoogleToastSuccess: "Authenticated with Google as Ahmed Yasser.",
+        authLabelFullName: "Full Name",
+        authLabelEmail: "Email address",
+        authLabelPassword: "Password",
+        authRememberMe: "Remember me",
+        authForgotPassword: "Forgot password?",
+        authSubmitSignIn: "Sign in with Google",
+        authSubmitSignUp: "Sign in with Google",
+        authGuestAccess: "Continue as Ahmed Yasser (Google)",
+        authNoAccount: "Need help?",
+        authHaveAccount: "Signed in with Google",
+        authActionSignUp: "Google Support",
+        authActionSignIn: "Google Support",
+        authToastRequired: "Please sign in with your Google account to launch the simulation.",
+        authToastWelcome: "Welcome! Authenticated via Google. Launching simulation...",
+        authToastSignedOut: "You have signed out.",
+        btnStartJourney: "start the journey simulation ",
+        btnPrintPdf: "print analysis and reccomendation PDF",
+        btnCompareNasa: "comparing the data with nasa's data",
+        btnSignOut: "Sign Out",
+        toastSignedOut: "Signed out. Add an email to access simulation tools.",
+        toastAccountRequired: "Please enter your email on the account page to access the simulation.",
+        toastPrintLaunched: "Opening Analysis & Recommendation report...",
+        toastNasaLoaded: "Loaded live NASA Earth Data comparison."
+      },
+      ar: {
+        brandTitle: "The Shifter",
+        brandSubtitle: "رحلة في أعماق التربة",
+        navWhy: "لماذا منصتنا",
+        navBattlefield: "باطن التربة",
+        navHow: "آلية العمل",
+        navCropTalk: "حديث المحصول",
+        navMap: "خريطة مصر",
+        btnHeaderAccount: "تسجيل الدخول عبر Google",
+        btnHeaderSignOut: "تسجيل الخروج",
+        btnLaunchSimulator: "تشغيل المحاكي",
+        heroTitle: 'حيث تلتقي بيانات الفضاء بمنطقة الجذور: <br><span class="bg-gradient-to-r from-[#1b4332] via-[#2d6a4f] to-[#d97706] dark:from-[#52b788] dark:via-[#74c69d] dark:to-[#f59e0b] bg-clip-text text-transparent">ذكاء التربة الدقيق</span>',
+        heroSubtitle: "نظام إرشادي قائم على فيزياء التربة يُمكّن المزارع المصري من استثمار أرصاد ناسا الفضائية، وهيدرولوجيا الطبقات، والتخطيط لدورات زراعية صامدة للملوحة.",
+        btnTryCropTalkLaunch: "حديث المحصول وتشغيل المحاكي",
+        btnBackToOverview: "العودة للرئيسية",
+        btnHeroLaunch: "تشغيل محاكي الحقل",
+        btnHeroMap: "استكشف 27 محافظة",
+        btnHeroChat: "جرّب حديث المحصول",
+        statGovernorates: "محافظة مصرية معايرة",
+        statSatellite: "تدفق يومي للإشعاع والأمطار",
+        statPhysics: "محرك هيدرولوجيا وملوحة FAO-56",
+        statOffline: "جاهز بدون اتصال بالإنترنت",
+        battlefieldTitle: "المعركة الخفية في باطن التربة",
+        battlefieldMissionDesc: "في أعماق التربة الخضراء، تدور حرب غير مرئية تهدد كل محصول. إليك المعارك الثلاث الحاسمة الدائرة في باطن الأرض.",
+        battle1Badge: "المعركة 01 · حصار الملوحة",
+        battle1Title: "خنق الجذور بالأملاح",
+        battle1Line1: "تتراكم الأملاح حول الجذور وتمنع النبات تماماً من شرب المياه.",
+        battle1Line2: "يعطش المحصول ويجف حتى لو كانت الأرض مروية بالكامل.",
+        battle1Threat: "التهديد: عطش النباتات في وفرة الماء",
+        battle2Badge: "المعركة 02 · كمين استنزاف الخصوبة",
+        battle2Title: "استنزاف العناصر والمغذيات",
+        battle2Line1: "تكرار زراعة نفس المحصول يسحب كل الغذاء المفيد من الأرض.",
+        battle2Line2: "تتعب التربة وتفرغ قوتها فلا يجد الزرع الجديد ما يكفيه لينمو.",
+        battle2Threat: "التهديد: نفاد الغذاء من الأرض",
+        battle3Badge: "المعركة 03 · حصار الجفاف الباطني",
+        battle3Title: "الجفاف وتصلب الطبقات الصماء",
+        battle3Line1: "حرارة الشمس القوية تجفف الأرض وتحول باطنها لطبقة قاسية كالحجر.",
+        battle3Line2: "يعجز الماء عن النزول في العمق وتصطدم الجذور بجدار صلب يوقف نموها.",
+        battle3Threat: "التهديد: حبس الجذور في أرض صلبة",
+        howEyebrow: "آلية العمل",
+        howTitle: "كيف يعمل النظام؟",
+        howLead: "من عينات وبيانات الحقل إلى خطط دورات زراعية مرنة عبر المحاكاة الفيزيائية.",
+        howStep1Title: "إدخال بيانات الأرض",
+        howStep1Desc: "إدخال موقع الحقل، وملوحة مياه الري، ونوع نظام الري، وتاريخ المحاصيل في المواسم السابقة في نموذج المحاكاة.",
+        howStep2Title: "محاكاة فيزياء التربة",
+        howStep2Desc: "تُعرض كل طبقة من طبقات الأرض بشكل منفصل، مع تفاصيل مكوناتها ودرجة الحموضة (pH) والمادة العضوية والرطوبة والملوحة.",
+        howStep3Title: "تقديم التوصيات الاسترشادية",
+        howStep3Desc: "إنشاء استراتيجيات تتابع محصولي مرتبة وفق أولويات المزارع في توفير المياه، وصحة التربة، والحد من المخاطر، وتحقيق أعلى ربحية.",
+        cropTalkEyebrow: "الإرشاد التفاعلي",
+        cropTalkTitle: "حديث المحصول: ازرع سؤالاً، تحصد إجابة",
+        cropyTitle: "ما يمكن أن يقدمه لك كروبي:",
+        cropySummaryLine: "يمكن لكروبي الإجابة ومناقشة أي استفسار متعلق بالمحاكاة أو التوصيات الزراعية.",
+        cropyBotName: "cropy the chatbot",
+        cropyBotSubtitle: "معاير ببيانات ناسا والتربة المصرية",
+        cropTalkSampleLabel: "استفسارات نموذجية من المزارعين",
+        prompt1: "لماذا الحمص بعد القمح بالبحيرة؟",
+        prompt2: "كيف أتعامل مع ملوحة ري 2.8 ديسيمنز؟",
+        prompt3: "كيف تساعدني بيانات أقمار ناسا؟",
+        mapEyebrow: "تغطية شاملة",
+        mapTitle: "خريطة المناخ الزراعي في مصر",
+        mapCaption: "خريطة تفاعلية لجمهورية مصر العربية تُبرز المحافظات والمناطق الزراعية التي تمت معايرة بيانات ناسا المناخية وفيزياء التربة فيها.",
+        zoneAll: "كافة المحافظات الـ 27",
+        zoneDelta: "الدلتا والوجه البحري",
+        zoneUpper: "الصعيد ومصر العليا",
+        zoneDesert: "الواحات والصحراء",
+        zoneCanal: "القناة وسيناء",
+        mapDataStation: "محطة بيانات المناخ والتربة (ناسا)",
+        mapTagsLabel: "المحافظات والمناطق الزراعية المشمولة بالمعايرة",
+        footerDisclaimer: "تم التطوير لتحدي ناسا لتطبيقات الفضاء 2026 (NASA Space Apps). نظام دعم قرارات استرشادي فقط، ولا يغني عن التحليل المعملي للتربة أو استشارة المهندس الزراعي المختص. لا يتضمن توصيات أسمدة كمية أو وعوداً إنتاجية.",
+        authModalSignInTitle: "تسجيل الدخول عبر Google",
+        authModalSignUpTitle: "تسجيل الدخول عبر Google",
+        authModalGoogleTitle: "تسجيل الدخول عبر Google",
+        authModalSubtitleSignIn: "سجّل الدخول بحساب Google الخاص بك لتشغيل محاكي فيزياء التربة وحديث المحصول التفاعلي.",
+        authModalSubtitleSignUp: "سجّل الدخول بحساب Google الخاص بك لتشغيل محاكي فيزياء التربة وحديث المحصول التفاعلي.",
+        authModalGoogleSubtitle: "سجّل الدخول بحساب Google الخاص بك لتشغيل محاكي فيزياء التربة وحديث المحصول التفاعلي.",
+        authBtnGoogleOnly: "تسجيل الدخول باستخدام حساب Google",
+        authUseAnotherGoogle: "استخدام حساب Google آخر",
+        authGoogleToastSuccess: "تم تسجيل الدخول بنجاح عبر حساب Google (أحمد ياسر).",
+        authLabelFullName: "الاسم الكامل",
+        authLabelEmail: "البريد الإلكتروني",
+        authLabelPassword: "كلمة المرور",
+        authRememberMe: "تذكر بياناتي",
+        authForgotPassword: "نسيت كلمة المرور؟",
+        authSubmitSignIn: "تسجيل الدخول عبر Google",
+        authSubmitSignUp: "تسجيل الدخول عبر Google",
+        authGuestAccess: "المتابعة بحساب أحمد ياسر (Google)",
+        authNoAccount: "تحتاج لمساعدة؟",
+        authHaveAccount: "تم تسجيل الدخول عبر Google",
+        authActionSignUp: "دعم Google",
+        authActionSignIn: "دعم Google",
+        authToastRequired: "يرجى تسجيل الدخول بحساب Google لتشغيل المحاكي الزراعي.",
+        authToastWelcome: "مرحباً بعودتك! تم تسجيل الدخول عبر Google. جاري تشغيل المحاكي...",
+        authToastSignedOut: "تم تسجيل الخروج بنجاح.",
+        btnStartJourney: "تشغيل محاكاة الرحلة ",
+        btnPrintPdf: "طباعة تقرير التحليل والتوصيات PDF",
+        btnCompareNasa: "مقارنة البيانات مع بيانات ناسا",
+        btnSignOut: "تسجيل الخروج",
+        toastSignedOut: "تم تسجيل الخروج. أضف بريدك الإلكتروني للوصول لأدوات المحاكاة.",
+        toastAccountRequired: "يرجى إدخال بريدك الإلكتروني في صفحة الحساب للوصول إلى المحاكاة.",
+        toastPrintLaunched: "جاري فتح تقرير التحليل والتوصيات...",
+        toastNasaLoaded: "تم تحميل مقارنة بيانات أقمار ناسا الفضائية."
+      }
+    };
+
+    /* 2. Complete 27 Governorates Data with calibrated coordinates, agro-zones, and soil profiles */
+    const governorates = [
+      { id: "alexandria", name_en: "Alexandria", name_ar: "الإسكندرية", zone: "delta", x: 37.0, y: 15.4, align: "left", soil_en: "Sandy Loam to Clay", soil_ar: "طميية رملية إلى طينية", et0: "4.8 mm/d" },
+      { id: "matrouh", name_en: "Matrouh", name_ar: "مطروح", zone: "desert", x: 12.9, y: 13.9, align: "right", soil_en: "Calcareous Sand", soil_ar: "رملية جيرية", et0: "5.1 mm/d" },
+      { id: "beheira", name_en: "Beheira", name_ar: "البحيرة", zone: "delta", x: 41.9, y: 17.0, align: "left", soil_en: "Clay & Reclaimed Sand", soil_ar: "طميية ورملية مستصلحة", et0: "4.9 mm/d" },
+      { id: "nubaria", name_en: "Nubaria", name_ar: "النوبارية", zone: "desert", x: 38.3, y: 20.5, align: "left", soil_en: "Sandy Reclaimed Loam", soil_ar: "رملية مستصلحة", et0: "5.2 mm/d" },
+      { id: "kafr_el_sheikh", name_en: "Kafr El Sheikh", name_ar: "كفر الشيخ", zone: "delta", x: 46.1, y: 16.3, align: "top", soil_en: "Heavy Alluvial Clay", soil_ar: "طينية رسوبية ثقيلة", et0: "4.7 mm/d" },
+      { id: "gharbia", name_en: "Gharbia", name_ar: "الغربية", zone: "delta", x: 46.6, y: 19.3, align: "right", soil_en: "Rich Silty Clay", soil_ar: "طينية سلتية خصبة", et0: "4.8 mm/d" },
+      { id: "damietta", name_en: "Damietta", name_ar: "دمياط", zone: "delta", x: 54.2, y: 13.4, align: "top", soil_en: "Coastal Clay & Saline", soil_ar: "طينية ساحلية مالحة", et0: "4.6 mm/d" },
+      { id: "dakahlia", name_en: "Dakahlia", name_ar: "الدقهلية", zone: "delta", x: 50.3, y: 17.0, align: "right", soil_en: "Deep Fertile Clay", soil_ar: "طينية رسوبية عميقة", et0: "4.8 mm/d" },
+      { id: "port_said", name_en: "Port Said", name_ar: "بورسعيد", zone: "canal", x: 58.7, y: 14.8, align: "right", soil_en: "Saline Coastal Silt", soil_ar: "سلتية ساحلية مالحة", et0: "4.7 mm/d" },
+      { id: "sharqia", name_en: "Sharqia", name_ar: "الشرقية", zone: "delta", x: 51.4, y: 21.3, align: "bottom", soil_en: "Clay Loam & Eastern Sand", soil_ar: "طميية طينية ورملية", et0: "5.0 mm/d" },
+      { id: "ismailia", name_en: "Ismailia", name_ar: "الإسماعيلية", zone: "canal", x: 58.5, y: 21.2, align: "right", soil_en: "Sandy Loam to Sand", soil_ar: "طميية رملية خفيفة", et0: "5.3 mm/d" },
+      { id: "qalyubia", name_en: "Qalyubia", name_ar: "القليوبية", zone: "delta", x: 48.2, y: 22.8, align: "left", soil_en: "Alluvial Clay Loam", soil_ar: "طميية طينية رسوبية", et0: "4.9 mm/d" },
+      { id: "cairo", name_en: "Cairo", name_ar: "القاهرة", zone: "delta", x: 48.9, y: 26.3, align: "right", soil_en: "Floodplain Loam", soil_ar: "طميية نهرية", et0: "5.2 mm/d" },
+      { id: "giza", name_en: "Giza", name_ar: "الجيزة", zone: "upper", x: 48.0, y: 26.9, align: "left", soil_en: "Clay Loam & Sand Margin", soil_ar: "طميية طينية وأطراف رملية", et0: "5.3 mm/d" },
+      { id: "suez", name_en: "Suez", name_ar: "السويس", zone: "canal", x: 61.0, y: 27.1, align: "right", soil_en: "Gravelly Desert Loam", soil_ar: "طميية رملية وحصوية", et0: "5.6 mm/d" },
+      { id: "fayoum", name_en: "Fayoum", name_ar: "الفيوم", zone: "upper", x: 45.2, y: 33.3, align: "left", soil_en: "Depression Clay Loam", soil_ar: "طميية طينية لمنخفض مغلق", et0: "5.4 mm/d" },
+      { id: "beni_suef", name_en: "Beni Suef", name_ar: "بني سويف", zone: "upper", x: 47.5, y: 35.5, align: "right", soil_en: "Nile Valley Clay Loam", soil_ar: "طميية طينية لوادي النيل", et0: "5.6 mm/d" },
+      { id: "minya", name_en: "Minya", name_ar: "المنيا", zone: "upper", x: 44.4, y: 44.9, align: "left", soil_en: "Silty Clay & West Sands", soil_ar: "طينية سلتية وأراضٍ غربية", et0: "5.8 mm/d" },
+      { id: "asyut", name_en: "Asyut", name_ar: "أسيوط", zone: "upper", x: 48.2, y: 53.6, align: "left", soil_en: "Alluvial Clay & Reclaimed", soil_ar: "طينية رسوبية ومستصلحة", et0: "6.0 mm/d" },
+      { id: "sohag", name_en: "Sohag", name_ar: "سوهاج", zone: "upper", x: 52.8, y: 59.5, align: "left", soil_en: "Fine Alluvial Clay", soil_ar: "طينية رسوبية ناعمة", et0: "6.2 mm/d" },
+      { id: "qena", name_en: "Qena", name_ar: "قنا", zone: "upper", x: 62.4, y: 63.3, align: "right", soil_en: "Dense Alluvium", soil_ar: "رسوبية نيلية", et0: "6.5 mm/d" },
+      { id: "luxor", name_en: "Luxor", name_ar: "الأقصر", zone: "upper", x: 61.7, y: 67.8, align: "right", soil_en: "Sandy Clay Loam", soil_ar: "طميية طينية رملية", et0: "6.6 mm/d" },
+      { id: "aswan", name_en: "Aswan", name_ar: "أسوان", zone: "upper", x: 64.1, y: 83.0, align: "right", soil_en: "Coarse Loamy Sand", soil_ar: "رملية خشنة وطميية", et0: "7.1 mm/d" },
+      { id: "new_valley", name_en: "New Valley", name_ar: "الوادي الجديد", zone: "desert", x: 42.4, y: 70.0, align: "left", soil_en: "Deep Oasis Sand & Clay", soil_ar: "رملية عميقة وطينية بواحات", et0: "6.8 mm/d" },
+      { id: "north_sinai", name_en: "North Sinai", name_ar: "شمال سيناء", zone: "canal", x: 70.5, y: 22.0, align: "right", soil_en: "Coastal Sand Dunes", soil_ar: "كثبان رملية ساحلية", et0: "5.1 mm/d" },
+      { id: "south_sinai", name_en: "South Sinai", name_ar: "جنوب سيناء", zone: "canal", x: 72.3, y: 41.0, align: "right", soil_en: "Wadi Gravel & Sand", soil_ar: "حصوية ورملية بالأودية", et0: "5.7 mm/d" },
+      { id: "red_sea", name_en: "Red Sea", name_ar: "البحر الأحمر", zone: "desert", x: 74.3, y: 57.3, align: "right", soil_en: "Arid Coastal Gravel", soil_ar: "حصوية ساحلية جافة", et0: "6.3 mm/d" }
+    ];
+
+    /* 3. Sample Crop Talk Prompts & Responses */
+    const cropTalkDemos = {
+      q1: {
+        en: {
+          user: "Why was chickpea recommended after wheat in Beheira with 2.8 dS/m canal water?",
+          ai: "<strong>Agronomic rationale:</strong> In Beheira's clay-loam soil, back-to-back cereal crops heavily exhaust available root-zone nitrogen. Chickpea fixes atmospheric nitrogen (approx. 40–60 kg N/ha), revitalizing soil biology.<br><br><strong>Salinity buffer:</strong> Chickpea handles moderate root ECe thresholds up to 1.7 dS/m. With 2.8 dS/m irrigation water, our FAO-56 simulation mandates a 12% leaching fraction during winter rains to flush accumulated salts below the 45 cm root perimeter."
+        },
+        ar: {
+          user: "لماذا تم ترشيح محصول الحمص بعد القمح في البحيرة مع ملوحة مياه 2.8 ديسيمنز؟",
+          ai: "<strong>الأساس الزراعي:</strong> في أراضي البحيرة الطميية، يؤدي تكرار زراعة الحبوب إلى استنزاف نيتروجين منطقة الجذور. يثبت الحمص النيتروجين الجوي بمعدل 40-60 كجم/هكتار مما يستعيد خصوبة التربة.<br><br><strong>مقاومة الملوحة:</strong> يتحمل الحمص ملوحة جذور حتى 1.7 ديسيمنز/م. ولمياه ري بملوحة 2.8، توصي محاكاة FAO-56 بنسبة غسيل 12% مع أمطار الشتاء لتصريف الأملاح تحت عمق 45 سم."
+        }
+      },
+      q2: {
+        en: {
+          user: "How do I manage high water salinity (2.8 dS/m) without burning sensitive crops?",
+          ai: "<strong>Leaching fraction protocol:</strong> Calculate leaching requirement: LR = ECw / (5 * ECe_target - ECw). For moderate crops, apply an extra 15% water depth during pre-sowing irrigation.<br><br><strong>Bed morphology:</strong> Plant seeds on the shoulder of double-row furrows rather than the top ridge, where evaporating salts concentrate heavily."
+        },
+        ar: {
+          user: "كيف أدير ملوحة مياه ري مرتفعة (2.8 ديسيمنز) لتجنب حرق المحاصيل الحساسة؟",
+          ai: "<strong>معادلة نسبة الغسيل:</strong> يتم حساب احتياج الغسيل (LR = ECw / (5 * ECe - ECw)). للمحاصيل متوسطة التحمل، أضف 15% زيادة في عمق ريّة الزراعة.<br><br><strong>هندسة الخطوط:</strong> ازرع البذور على أكتاف المصاطب بدلاً من قمة الخط حيث تتجمع الأملاح المتبخرة بكثافة شديدة."
+        }
+      },
+      q3: {
+        en: {
+          user: "How do NASA POWER daily streams improve my farm's irrigation scheduling?",
+          ai: "<strong>Real-time evaporative demand:</strong> NASA POWER delivers daily solar irradiance (ALLSKY_SFC_SW_DWN), vapor pressure deficit, and wind speed. Our engine computes daily FAO-56 Penman-Monteith reference ET0.<br><br><strong>Root-zone balance:</strong> Instead of fixed interval watering, irrigation intervals flex with actual atmospheric thirst, conserving 18–25% canal water across Egyptian summer cycles."
+        },
+        ar: {
+          user: "كيف تسهم بيانات NASA POWER اليومية في ضبط مواعيد ري حقلي بدقة؟",
+          ai: "<strong>حساب الطلب التبخري الفعلي:</strong> توفر ناسا بيانات الإشعاع الشمسي اليومي، والرطوبة النسبية، وسرعة الرياح. يحسب محركنا التبخر-نتح المرجعي اليومي بدقة وفق معادلة بينمان-مونتيث.<br><br><strong>ميزان منطقة الجذور:</strong> بدلاً من الري بمواعيد ثابتة، يتكيف جدول الري مع الاحتياج الجوي الفعلي، مما يوفر 18–25% من مياه الترع صيفاً."
+        }
+      }
+    };
+
+    /* 4. Astryx State Management */
+    const urlParams = new URLSearchParams(window.location.search);
+    let currentLang = urlParams.get("lang") || localStorage.getItem("shifter_lang") || "en";
+    let currentTheme = urlParams.get("theme") || localStorage.getItem("shifter_theme") || 
+      (window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light");
+    let activeGovId = null;
+    let selectedZone = "all";
+
+    function applyTheme(theme) {
+      currentTheme = theme;
+      localStorage.setItem("shifter_theme", theme);
+      const htmlEl = document.documentElement;
+      const themeIcon = document.getElementById("themeIcon");
+
+      htmlEl.setAttribute("data-theme", theme);
+      if (theme === "dark") {
+        htmlEl.classList.add("dark");
+        themeIcon.setAttribute("data-lucide", "sun");
+      } else {
+        htmlEl.classList.remove("dark");
+        themeIcon.setAttribute("data-lucide", "moon");
+      }
+      lucide.createIcons();
+    }
+
+    function toggleTheme() {
+      const newTheme = currentTheme === "light" ? "dark" : "light";
+      applyTheme(newTheme);
+      showToast(newTheme === "dark" 
+        ? (currentLang === "ar" ? "تم تفعيل الوضع الليلي (أستريكس)" : "Switched to Astryx Dark Mode")
+        : (currentLang === "ar" ? "تم تفعيل الوضع النهاري (أستريكس)" : "Switched to Astryx Light Mode")
+      );
+    }
+
+    function applyLanguage(lang) {
+      currentLang = lang;
+      localStorage.setItem("shifter_lang", lang);
+      const htmlEl = document.documentElement;
+
+      if (lang === "ar") {
+        htmlEl.setAttribute("dir", "rtl");
+        htmlEl.setAttribute("lang", "ar");
+        document.getElementById("langLabel").textContent = "English";
+      } else {
+        htmlEl.setAttribute("dir", "ltr");
+        htmlEl.setAttribute("lang", "en");
+        document.getElementById("langLabel").textContent = "العربية";
+      }
+
+      // Update text in data-i18n elements
+      document.querySelectorAll("[data-i18n]").forEach(el => {
+        const key = el.getAttribute("data-i18n");
+        if (translations[lang] && translations[lang][key]) {
+          if (translations[lang][key].includes("<")) {
+            el.innerHTML = translations[lang][key];
+          } else {
+            el.textContent = translations[lang][key];
+          }
+        }
+      });
+
+      const chatInput = document.getElementById("chatInputMock");
+      if (chatInput) {
+        chatInput.value = lang === "ar" 
+          ? "اسأل كروبي (cropy the chatbot) عن تربتك أو محاصيلك أو الري..." 
+          : "Ask cropy the chatbot about your soil, crops, or irrigation...";
+      }
+
+      renderMapPins();
+      renderGovernoratesTags();
+      updateStatusBanner(activeGovId);
+      lucide.createIcons();
+    }
+
+    function toggleLanguage() {
+      const newLang = currentLang === "en" ? "ar" : "en";
+      applyLanguage(newLang);
+      showToast(newLang === "ar" ? "تم تحويل اللغة إلى العربية" : "Switched to English");
+    }
+
+    /* 5. Interactive Map & Governorates Pins */
+    function renderMapPins() {
+      const pinsLayer = document.getElementById("mapPinsLayer");
+      if (!pinsLayer) return;
+      pinsLayer.innerHTML = "";
+
+      const filtered = selectedZone === "all" 
+        ? governorates 
+        : governorates.filter(g => g.zone === selectedZone);
+
+      filtered.forEach(gov => {
+        const marker = document.createElement("div");
+        marker.className = `gov-marker absolute cursor-pointer pointer-events-auto z-10 ${gov.id === activeGovId ? 'active' : ''}`;
+        marker.style.left = `${gov.x}%`;
+        marker.style.top = `${gov.y}%`;
+        marker.setAttribute("tabindex", "0");
+        marker.setAttribute("role", "button");
+        marker.setAttribute("data-id", gov.id);
+        const govName = currentLang === "ar" ? gov.name_ar : gov.name_en;
+        marker.setAttribute("aria-label", govName);
+        marker.setAttribute("title", govName);
+
+        // Positioning class for label relative to dot
+        let alignClass = "start-full ms-1.5 top-1/2 -translate-y-1/2";
+        if (gov.align === "left") alignClass = "end-full me-1.5 top-1/2 -translate-y-1/2";
+        if (gov.align === "top") alignClass = "start-1/2 -translate-x-1/2 bottom-full mb-1.5 align-top";
+        if (gov.align === "bottom") alignClass = "start-1/2 -translate-x-1/2 top-full mt-1.5 align-bottom";
+
+        marker.innerHTML = `
+          <div class="relative w-4 h-4 sm:w-5 sm:h-5 flex items-center justify-center">
+            <div class="astryx-pin-beacon absolute inset-0 rounded-full bg-red-500 opacity-60"></div>
+            <div class="pin-dot relative z-10 w-2 sm:w-2.5 h-2 sm:h-2.5 rounded-full bg-red-600 border-2 border-white shadow-md transition-all"></div>
+          </div>
+          <span class="pin-badge absolute ${alignClass} px-1.5 py-0.5 rounded-md text-[9px] sm:text-[10px] md:text-[11px] font-bold bg-red-600/95 text-white border border-white/70 shadow-md backdrop-blur-sm whitespace-nowrap select-none" dir="${currentLang === 'ar' ? 'rtl' : 'ltr'}">
+            ${govName}
+          </span>
+        `;
+
+        marker.addEventListener("mouseenter", () => highlightGovernorate(gov.id));
+        marker.addEventListener("focus", () => highlightGovernorate(gov.id));
+        marker.addEventListener("click", (e) => {
+          e.stopPropagation();
+          highlightGovernorate(gov.id);
+        });
+
+        pinsLayer.appendChild(marker);
+      });
+    }
+
+    function renderGovernoratesTags() {
+      const listEl = document.getElementById("govTagsList");
+      const countEl = document.getElementById("activeGovCount");
+      if (!listEl) return;
+      listEl.innerHTML = "";
+
+      const filtered = selectedZone === "all" 
+        ? governorates 
+        : governorates.filter(g => g.zone === selectedZone);
+
+      if (countEl) {
+        countEl.textContent = `${filtered.length} ${currentLang === 'ar' ? 'محافظة' : 'Governorates'}`;
+      }
+
+      filtered.forEach(gov => {
+        const li = document.createElement("li");
+        const btn = document.createElement("button");
+        btn.type = "button";
+        btn.setAttribute("data-id", gov.id);
+        const isActive = gov.id === activeGovId;
+        
+        btn.className = `gov-tag px-3 py-1.5 rounded-full text-xs font-semibold border transition-all flex items-center gap-2 select-none ${
+          isActive 
+            ? 'astryx-btn--primary shadow-md'
+            : 'astryx-btn--secondary'
+        }`;
+
+        const dot = document.createElement("span");
+        dot.className = `w-1.5 h-1.5 rounded-full ${isActive ? 'bg-[#ffd54a]' : 'bg-[#ef4444]'}`;
+
+        const text = document.createElement("span");
+        text.textContent = currentLang === "ar" ? gov.name_ar : gov.name_en;
+
+        btn.appendChild(dot);
+        btn.appendChild(text);
+
+        btn.addEventListener("click", () => highlightGovernorate(gov.id));
+        btn.addEventListener("mouseenter", () => highlightGovernorate(gov.id));
+
+        li.appendChild(btn);
+        listEl.appendChild(li);
+      });
+    }
+
+    function highlightGovernorate(id) {
+      activeGovId = id;
+
+      // Update pins
+      document.querySelectorAll(".gov-marker").forEach(marker => {
+        if (marker.getAttribute("data-id") === id) {
+          marker.classList.add("active");
+        } else {
+          marker.classList.remove("active");
+        }
+      });
+
+      // Update tags
+      document.querySelectorAll(".gov-tag").forEach(tag => {
+        const dot = tag.querySelector("span:first-child");
+        if (tag.getAttribute("data-id") === id) {
+          tag.className = "gov-tag px-3 py-1.5 rounded-full text-xs font-semibold border transition-all flex items-center gap-2 select-none astryx-btn--primary shadow-md";
+          if (dot) dot.className = "w-1.5 h-1.5 rounded-full bg-[#ffd54a]";
+        } else {
+          tag.className = "gov-tag px-3 py-1.5 rounded-full text-xs font-semibold border transition-all flex items-center gap-2 select-none astryx-btn--secondary";
+          if (dot) dot.className = "w-1.5 h-1.5 rounded-full bg-[#ef4444]";
+        }
+      });
+
+      updateStatusBanner(id);
+    }
+
+    function updateStatusBanner(id) {
+      const bannerGov = document.getElementById("mapStatusGov");
+      const bannerDetails = document.getElementById("mapStatusDetails");
+      if (!bannerGov) return;
+
+      if (!id) {
+        bannerGov.textContent = currentLang === "ar" 
+          ? "شبكة المناخ الزراعي والتربة (مصر)" 
+          : "Egypt Agroclimatology Network";
+        if (bannerDetails) {
+          bannerDetails.innerHTML = currentLang === "ar"
+            ? `<span>التربة: معايرة معتمدة</span><span>•</span><span>التبخر-نتح: ناسا POWER</span>`
+            : `<span>Soil: Calibrated</span><span>•</span><span>ET0: NASA POWER</span>`;
+        }
+        return;
+      }
+
+      const gov = governorates.find(g => g.id === id);
+      if (gov) {
+        const name = currentLang === "ar" ? gov.name_ar : gov.name_en;
+        const soil = currentLang === "ar" ? gov.soil_ar : gov.soil_en;
+        bannerGov.textContent = currentLang === "ar"
+          ? `${name} • محطة معايرة معتمدة`
+          : `${name} • Calibrated Node`;
+        if (bannerDetails) {
+          bannerDetails.innerHTML = currentLang === "ar"
+            ? `<span>التربة: ${soil}</span><span>•</span><span>ET0: ${gov.et0}</span>`
+            : `<span>Soil: ${soil}</span><span>•</span><span>ET0: ${gov.et0}</span>`;
+        }
+      }
+    }
+
+    /* 6. Zone Filter Click Handlers */
+    function setupZoneFilters() {
+      document.querySelectorAll(".zone-filter-btn").forEach(btn => {
+        btn.addEventListener("click", () => {
+          selectedZone = btn.getAttribute("data-zone");
+          document.querySelectorAll(".zone-filter-btn").forEach(b => {
+            b.className = "zone-filter-btn px-3 py-1.5 rounded-full text-xs font-bold border transition-all astryx-btn--secondary";
+          });
+          btn.className = "zone-filter-btn px-3 py-1.5 rounded-full text-xs font-bold border transition-all astryx-btn--primary";
+          renderMapPins();
+          renderGovernoratesTags();
+        });
+      });
+    }
+
+    /* 7. Crop Talk Sample Prompts */
+    function setupCropTalkPrompts() {
+      document.querySelectorAll(".sample-prompt-btn").forEach(btn => {
+        btn.addEventListener("click", () => {
+          const qId = btn.getAttribute("data-prompt-id");
+          const data = cropTalkDemos[qId];
+          if (!data) return;
+
+          const localized = data[currentLang] || data.en;
+          const userMsgEl = document.getElementById("chatUserMsg");
+          const aiMsgEl = document.getElementById("chatAiMsg");
+
+          if (userMsgEl) userMsgEl.innerHTML = localized.user;
+          if (aiMsgEl) aiMsgEl.innerHTML = localized.ai;
+
+          showToast(currentLang === "ar" ? "تم تحديث استفسار حديث المحصول" : "Crop Talk inquiry updated");
+        });
+      });
+    }
+
+    /* 8. Astryx Toast System */
+    const toast = document.getElementById("toast");
+    const toastMsg = document.getElementById("toastMsg");
+    let toastTimeout = null;
+
+    function showToast(message) {
+      if (!toast || !toastMsg) return;
+      toastMsg.textContent = message;
+      toast.classList.remove("translate-y-24", "opacity-0", "pointer-events-none");
+      toast.classList.add("translate-y-0", "opacity-100");
+      if (toastTimeout) clearTimeout(toastTimeout);
+      toastTimeout = setTimeout(() => {
+        toast.classList.remove("translate-y-0", "opacity-100");
+        toast.classList.add("translate-y-24", "opacity-0", "pointer-events-none");
+      }, 3000);
+    }
+
+    /* 9. Astryx Account & Auth System */
+    function getSavedUser() {
+      try {
+        const raw = localStorage.getItem("shifter_user");
+        return raw ? JSON.parse(raw) : null;
+      } catch (e) {
+        return null;
+      }
+    }
+
+    /* Hero Three Buttons Controller (Email-Gated) */
+    function showThreeButtons(email) {
+      const user = getSavedUser();
+      const activeEmail = email || (user ? user.email : null);
+      if (!activeEmail) {
+        // Nobody can access the three buttons unless adding their email
+        window.location.href = "/account.html";
+        return;
+      }
+
+      const guestHero = document.getElementById("heroGuestContent");
+      const authHero = document.getElementById("heroAuthenticatedContent");
+      if (!guestHero || !authHero) return;
+
+      guestHero.classList.add("hidden");
+      authHero.classList.remove("hidden");
+      authHero.classList.add("flex");
+
+      const userEmailDisplay = document.getElementById("userEmailDisplay");
+      if (userEmailDisplay) {
+        userEmailDisplay.textContent = activeEmail;
+      }
+
+      lucide.createIcons();
+    }
+
+    function hideThreeButtons() {
+      const guestHero = document.getElementById("heroGuestContent");
+      const authHero = document.getElementById("heroAuthenticatedContent");
+      if (!guestHero || !authHero) return;
+
+      guestHero.classList.remove("hidden");
+      authHero.classList.add("hidden");
+      authHero.classList.remove("flex");
+      lucide.createIcons();
+    }
+
+    /* Modal Controllers for Print PDF and NASA Telemetry */
+    function openModal(id) {
+      const modal = document.getElementById(id);
+      if (!modal) return;
+      modal.classList.remove("opacity-0", "pointer-events-none");
+      modal.classList.add("opacity-100", "pointer-events-auto");
+      document.body.style.overflow = "hidden";
+      lucide.createIcons();
+    }
+
+    function closeModal(id) {
+      const modal = document.getElementById(id);
+      if (!modal) return;
+      modal.classList.remove("opacity-100", "pointer-events-auto");
+      modal.classList.add("opacity-0", "pointer-events-none");
+      document.body.style.overflow = "";
+    }
+
+    function setupActionListeners() {
+      // Main Trigger: "crop talk ai and launch simulation"
+      // If user added email, reveals the three buttons; otherwise opens account page
+      document.getElementById("btnHeroTryCropTalkLaunch")?.addEventListener("click", () => {
+        const user = getSavedUser();
+        if (user && user.email) {
+          showThreeButtons(user.email);
+        } else {
+          window.location.href = "/account.html";
+        }
+      });
+
+      // Back to Overview button returns to headline
+      document.getElementById("btnBackToHeroOverview")?.addEventListener("click", () => {
+        hideThreeButtons();
+      });
+
+      // Sign Out / Switch Email button
+      document.getElementById("btnSignOut")?.addEventListener("click", () => {
+        localStorage.removeItem("shifter_user");
+        hideThreeButtons();
+        showToast(translations[currentLang].toastSignedOut);
+      });
+
+      // Button 2: Print Analysis & Recommendation PDF
+      document.getElementById("btnPrintPdf")?.addEventListener("click", () => {
+        openModal("pdfModal");
+        showToast(translations[currentLang].toastPrintLaunched);
+      });
+
+      document.getElementById("btnClosePdfModal")?.addEventListener("click", () => closeModal("pdfModal"));
+      document.getElementById("btnCancelPdfModal")?.addEventListener("click", () => closeModal("pdfModal"));
+      
+      document.getElementById("btnExecutePrint")?.addEventListener("click", () => {
+        window.print();
+      });
+
+      // Button 3: Comparing data with NASA's data
+      document.getElementById("btnCompareNasa")?.addEventListener("click", () => {
+        openModal("nasaModal");
+        showToast(translations[currentLang].toastNasaLoaded);
+      });
+
+      document.getElementById("btnCloseNasaModal")?.addEventListener("click", () => closeModal("nasaModal"));
+      document.getElementById("btnDismissNasaModal")?.addEventListener("click", () => closeModal("nasaModal"));
+
+      // Click outside modals to close
+      document.getElementById("pdfModal")?.addEventListener("click", (e) => {
+        if (e.target === document.getElementById("pdfModal")) closeModal("pdfModal");
+      });
+      document.getElementById("nasaModal")?.addEventListener("click", (e) => {
+        if (e.target === document.getElementById("nasaModal")) closeModal("nasaModal");
+      });
+
+      // Escape key to close modals
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") {
+          closeModal("pdfModal");
+          closeModal("nasaModal");
+        }
+      });
+
+      // Crop talk input mock click: if logged in, reveals three buttons; else redirects to account page
+      document.getElementById("chatInputMock")?.addEventListener("click", () => {
+        const user = getSavedUser();
+        if (user && user.email) {
+          showThreeButtons(user.email);
+          window.scrollTo({ top: 0, behavior: "smooth" });
+        } else {
+          window.location.href = "/account.html";
+        }
+      });
+    }
+
+    /* 10. Initialization */
+    document.addEventListener("DOMContentLoaded", () => {
+      // Setup Theme
+      applyTheme(currentTheme);
+      document.getElementById("themeToggle").addEventListener("click", toggleTheme);
+
+      // Setup Language
+      applyLanguage(currentLang);
+      document.getElementById("langToggle").addEventListener("click", toggleLanguage);
+
+      // Setup Zone Filters
+      setupZoneFilters();
+
+      // Setup Crop Talk Prompts
+      setupCropTalkPrompts();
+
+      // Render Pins & Tags
+      renderMapPins();
+      renderGovernoratesTags();
+
+      // Setup Action Listeners
+      setupActionListeners();
+
+      // Check if user has already added email
+      const user = getSavedUser();
+      if (user && user.email) {
+        showThreeButtons(user.email);
+      } else {
+        hideThreeButtons();
+      }
+
+      // Lucide Icons
+      lucide.createIcons();
+
+      // System Theme Observer
+      window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", e => {
+        if (!localStorage.getItem("shifter_theme")) {
+          applyTheme(e.matches ? "dark" : "light");
+        }
+      });
+    });
+  </script>
+</body>
+</html>
