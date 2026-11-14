@@ -1,4 +1,4 @@
-// Mirrors contracts/result.schema.json (schema_version 1.0.0). Change the schema first, then this file.
+// Mirrors contracts/result.schema.json (schema_version 1.1.0). Change the schema first, then this file.
 export type Season = "winter" | "summer" | "nili";
 export type StrategyId = "existing" | "primary" | "contrast";
 export type Priority = "water" | "soil_health" | "income" | "risk";
@@ -53,6 +53,20 @@ export interface Sim {
   irrigation_mm: number[];
   crop_idx: number[]; // index into non-fallow seasons, -1 when bare
 }
+export interface UncertaintyMetrics {
+  irrigation_mm: number;
+  water_stress: number;
+  salinity_stress: number;
+  heat_days: number;
+  total_score: number;
+}
+export interface StrategyUncertainty {
+  rank_stability: number;
+  years_evaluated: number;
+  p10: UncertaintyMetrics;
+  p50: UncertaintyMetrics;
+  p90: UncertaintyMetrics;
+}
 export interface Strategy {
   id: StrategyId;
   label_key: string;
@@ -67,6 +81,7 @@ export interface Strategy {
   gaps: Msg[];
   risks: Msg[];
   confidence: { level: "low" | "medium" | "high"; score: number; factors: Msg[] };
+  uncertainty: StrategyUncertainty;
   sim: Sim;
 }
 export interface NasaItem {
@@ -76,6 +91,101 @@ export interface NasaItem {
   status: "pack" | "live" | "planned" | "placeholder";
   resolution_km: number;
 }
+export interface SmapComparison {
+  n_pairs: number;
+  status: string;
+  bias_m3m3: number | null;
+  rmse_m3m3: number | null;
+  mae_m3m3: number | null;
+  pearson_r: number | null;
+  pairs?: { date: string; observed_m3m3: number; modeled_m3m3: number }[];
+}
+export interface SmapEvidence {
+  status: "pack" | "planned";
+  product: string;
+  version: string;
+  product_title?: string;
+  doi?: string;
+  variable?: string;
+  depth?: string | null;
+  root_zone_available?: boolean;
+  units?: string;
+  resolution_km?: number;
+  indicative?: boolean;
+  reason?: string;
+  n_accepted?: number;
+  n_observations_total?: number;
+  observations: { date: string; overpass: string; time_utc?: string | null; soil_moisture_m3m3: number | null; uncertainty_m3m3?: number | null; pixel?: { lat: number | null; lon: number | null; distance_km: number | null } }[];
+  comparison: Record<string, SmapComparison>;
+  limitations: string[];
+}
+export interface NdviTimelineItem {
+  start: string;
+  end: string;
+  midpoint?: string;
+  ndvi: number;
+  expected: "crop" | "fallow";
+  expected_crop?: string | null;
+  observed?: "vegetated" | "low_cover" | "uncertain";
+  agreement?: "ok" | "check" | "uncertain";
+}
+export interface NdviEvidence {
+  status: "pack" | "planned";
+  product: string;
+  version: string;
+  product_title?: string;
+  variable?: string;
+  units?: string;
+  resolution_km?: number;
+  reason?: string;
+  observations: { start: string; end: string; midpoint?: string; ndvi: number | null; quality?: Record<string, string | number | null> }[];
+  regional_series?: { start: string; end: string; ndvi: number | null; p25?: number | null; p75?: number | null; vegetated_fraction?: number | null }[];
+  timeline_check: {
+    basis?: string;
+    classification_used: boolean;
+    threshold_ndvi?: number | null;
+    separation_ndvi?: number | null;
+    expected_periods?: { start: string; end: string; crop: string; season: Season }[];
+    items: NdviTimelineItem[];
+    summary: { n_composites?: number; n_ok?: number; n_check?: number; n_uncertain?: number };
+  };
+  limitations: string[];
+}
+export interface NasaEvidence {
+  smap: SmapEvidence;
+  ndvi: NdviEvidence;
+  meteomatics?: {
+    status: "live" | "demo_analog";
+    configured: boolean;
+    source: string;
+    timestamp: string;
+    coordinates: { lat: number; lon: number };
+    downscaling_model: string;
+    parameters: {
+      t_2m_c: number | null;
+      relative_humidity_pct: number | null;
+      precip_24h_mm: number | null;
+      evapotranspiration_24h_mm: number | null;
+      soil_moisture_index_5cm: number | null;
+      soil_moisture_index_50cm: number | null;
+      soil_moisture_deficit_mm: number | null;
+    };
+    notes: string[];
+  };
+}
+
+/** Answer returned by POST /api/v1/agent/ask. */
+export interface AgentAnswer {
+  question: string;
+  grounded: boolean;
+  scope: "general" | "site_specific" | "insufficient";
+  answer: { text: string; generated_by: string; sentences?: Msg[] };
+  citations: { source: string; passage_id?: string; key?: string; title?: string }[];
+  notes: string[];
+  request_id?: string;
+  knowledge?: { grounded: boolean; passages: { id: string; title: string }[] };
+}
+
 export interface AnalysisResult {
   schema_version: string;
   request_id: string;
@@ -86,6 +196,7 @@ export interface AnalysisResult {
   flags: { field: string; key: string; severity: "info" | "warn" | "error"; params: Record<string, string | number> }[];
   input_status: Record<string, "measured" | "estimated">;
   nasa_data: NasaItem[];
+  nasa_evidence?: NasaEvidence;
   layers: Layer[];
   climate: {
     dates: string[];
@@ -124,8 +235,11 @@ export interface AnalysisRequest {
   next_season: Season;
   priorities: Record<Priority, number>;
   scenario?: { dT: number; dP: number };
+  use_live_weather?: boolean;
   reference_date?: string | null;
 }
+
+export type WeatherMode = "auto" | "sunny" | "rain" | "dust";
 
 export interface DemoSite {
   id: string;
@@ -144,3 +258,34 @@ export interface CropInfo {
   seasons: Season[];
   perennial?: boolean;
 }
+
+export type CameraPreset = "perspective" | "cutaway" | "canopy";
+export type DiveStage = "field" | "underground" | "layers";
+
+export interface LayerInspectData {
+  layerIndex: number;
+  nameKey: string;
+  topCm: number;
+  bottomCm: number;
+  sand: number;
+  silt: number;
+  clay: number;
+  availableWaterPct: number; // Share of plant-available water (0 at wilting point, 100 at field capacity)
+  moistureStatus: "dry" | "stress" | "optimal" | "saturated";
+  salinityDsm: number; // e.g. 2.1 dS/m
+  salinityStatus: "low" | "moderate" | "high";
+  organicMatter: number; // % OM
+}
+
+export interface SceneTelemetry {
+  cropId: string | null;
+  season: Season | null;
+  rootCm: number;
+  canopyPct: number;
+  et0Mm: number;
+  rainMm: number;
+  tempC: number;
+  date: string;
+  isSynthetic: boolean;
+}
+

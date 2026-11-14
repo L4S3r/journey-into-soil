@@ -14,8 +14,8 @@ def clip(x: float, lo: float = 0.0, hi: float = 1.0) -> float:
     return max(lo, min(hi, x))
 
 
-def sim_metrics(c: Cand) -> dict:
-    tl = c.sim
+def sim_metrics(c: Cand, tl=None) -> dict:
+    tl = tl or c.sim
     seasons = tl.seasons
     last = max((s.harvest_idx for s in seasons), default=0)
     bare = sum(1 for i in range(0, last + 1) if tl.crop_idx[i] == -1)
@@ -38,8 +38,8 @@ def _minmax_inv(x: float, lo: float, hi: float) -> float:
     return 1.0 - (x - lo) / (hi - lo) if hi > lo else 0.5
 
 
-def components(c: Cand, stats: dict[str, float]) -> dict[str, float]:
-    m = c.metrics
+def components(c: Cand, stats: dict[str, float], metrics: dict | None = None) -> dict[str, float]:
+    m = metrics if metrics is not None else c.metrics
     # Water: half total applied water, half water per day of actual crop growth, so leaving land bare is not "saving water".
     water = 0.5 * _minmax_inv(m["irrigation_mm"], stats["irr_min"], stats["irr_max"]) + 0.5 * _minmax_inv(
         m["irr_per_crop_day"], stats["ipd_min"], stats["ipd_max"]

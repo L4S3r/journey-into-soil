@@ -7,11 +7,14 @@ from datetime import date, timedelta
 from fastapi import APIRouter, Depends, HTTPException, Query, Request
 
 from ... import knowledge
+from ...agent import workflow as agent
 from ...db import store
 from ...engine import pipeline
 from ...engine.validate import in_delta_box, infer_region
+from ...rag import retriever
 from ...schemas.request import AnalysisRequest, Scenario
 from ...services import climate as climate_service
+from ...services import meteomatics as meteomatics_service
 from ...services.soil import fetch_soilgrids
 
 router = APIRouter()
@@ -80,6 +83,32 @@ def apply_scenario(analysis_id: str, scenario: Scenario) -> dict:
     return result
 
 
+@router.post("/agent/recommend", dependencies=[Depends(rate_limit)])
+def agent_recommend(farmer: AnalysisRequest, question: str | None = Query(None), lang: str = Query("en")) -> dict:
+    """Agent workflow: farmer input -> engine -> NASA evidence -> RAG -> grounded explanation."""
+    return agent.recommend(farmer, question=question, lang=lang)
+
+
+@router.post("/agent/ask", dependencies=[Depends(rate_limit)])
+def agent_ask(payload: dict) -> dict:
+    """Ask a question. Pass `farmer` (or `analysis_id`) for site-specific answers."""
+    question = str(payload.get("question", "")).strip()
+    if not question:
+        raise HTTPException(status_code=422, detail="A question is required")
+    farmer = AnalysisRequest.model_validate(payload["farmer"]) if payload.get("farmer") else None
+    analysis_id = payload.get("analysis_id")
+    if analysis_id and not store.load(analysis_id):
+        raise HTTPException(status_code=404, detail="Analysis not found")
+    return agent.ask(question, farmer=farmer, analysis_id=analysis_id, lang=str(payload.get("lang", "en")))
+
+
+@router.get("/knowledge/search")
+def knowledge_search(q: str = Query(..., min_length=2), k: int = Query(5, ge=1, le=20)) -> dict:
+    """Retrieve passages from the bundled agricultural knowledge base, with citations."""
+    hits = retriever.search(q, k=k)
+    return {"query": q, "grounded": retriever.is_grounded(hits), "passages": [h.to_json() for h in hits]}
+
+
 @router.get("/geo/lookup")
 def geo_lookup(lat: float = Query(..., ge=22, le=32), lon: float = Query(..., ge=24, le=37), soilgrids: bool = False) -> dict:
     """Quick facts for a map click: region, which data would be used, a one-year climate summary."""
@@ -99,3 +128,9 @@ def geo_lookup(lat: float = Query(..., ge=22, le=32), lon: float = Query(..., ge
     if soilgrids:
         out["soilgrids"] = fetch_soilgrids(lat, lon)
     return out
+
+
+@router.get("/telemetry/meteomatics")
+async def get_meteomatics_telemetry(lat: float = Query(..., ge=22, le=32), lon: float = Query(..., ge=24, le=37)) -> dict:
+    """Fetch high-resolution downscaled meteorological and multi-depth soil moisture data from Meteomatics."""
+    return await meteomatics_service.fetch_telemetry(lat, lon)

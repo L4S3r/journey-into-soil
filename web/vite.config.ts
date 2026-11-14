@@ -6,6 +6,6 @@ export default defineConfig({
   server: { port: 5173, proxy: { "/api": "http://localhost:8000" } },
   build: {
     chunkSizeWarningLimit: 1800,
-    rollupOptions: { output: { manualChunks: { babylon: ["@babylonjs/core"], maplibre: ["maplibre-gl"] } } },
+    rollupOptions: { output: { manualChunks: { three: ["three"], maplibre: ["maplibre-gl"] } } },
   },
 });

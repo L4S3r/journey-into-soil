@@ -25,25 +25,74 @@ export function NasaPanel({ result }: { result: AnalysisResult }) {
 
 export function LayerTable({ result }: { result: AnalysisResult }) {
   const { t } = useTranslation();
-  const { lang } = useStore();
+  const { lang, focusedLayer, setFocusedLayer } = useStore();
   return (
-    <section className="panel">
-      <h3>{t("ui.layers_title")}</h3>
+    <section className="panel layer-table-panel">
+      <div className="panel-header-row" style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBlockEnd: "8px" }}>
+        <h3 style={{ margin: 0 }}>{t("ui.layers_title")}</h3>
+        {focusedLayer !== null && (
+          <button
+            type="button"
+            className="ghost btn-sm reset-focus-btn"
+            onClick={() => setFocusedLayer(null)}
+            title={t("ui.reset_focus")}
+          >
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" style={{ inlineSize: 13, blockSize: 13, marginInlineEnd: 4, verticalAlign: "-2px" }}>
+              <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8" />
+              <path d="M3 3v5h5" />
+            </svg>
+            <span>{t("ui.reset_focus")}</span>
+          </button>
+        )}
+      </div>
       <div className="table-wrap">
         <table>
           <thead>
             <tr><th>{t("ui.depth")}</th><th>{t("ui.layer_texture")}</th><th>{t("ui.om")}</th><th>{t("ui.ece")}</th><th>{t("ui.data")}</th></tr>
           </thead>
           <tbody>
-            {result.layers.map((l, i) => (
-              <tr key={i}>
-                <td>{fmt(lang, l.top_cm)}–{fmt(lang, l.bottom_cm)} cm</td>
-                <td>{t(l.name_key)}</td>
-                <td>{fmt(lang, l.om, 1)}%</td>
-                <td>{fmt(lang, l.ec, 1)}</td>
-                <td><span className={`badge conf-${l.confidence}`}>{t(`ui.level_${l.confidence}`)}</span></td>
-              </tr>
-            ))}
+            {result.layers.map((l, i) => {
+              const isFocused = focusedLayer === i;
+              return (
+                <tr
+                  key={i}
+                  className={`layer-row ${isFocused ? "focused" : ""}`}
+                  onClick={() => {
+                    const next = isFocused ? null : i;
+                    setFocusedLayer(next);
+                    const sceneEl = document.querySelector(".scene-container");
+                    if (sceneEl) {
+                      sceneEl.scrollIntoView({ behavior: "smooth", block: "center" });
+                    }
+                  }}
+                  role="button"
+                  tabIndex={0}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" || e.key === " ") {
+                      e.preventDefault();
+                      setFocusedLayer(isFocused ? null : i);
+                    }
+                  }}
+                  aria-pressed={isFocused}
+                  title={t("ui.focus_in_3d")}
+                  style={{ cursor: "pointer" }}
+                >
+                  <td className="layer-depth-cell">
+                    <svg className="layer-zoom-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true" style={{ inlineSize: 12, blockSize: 12, marginInlineEnd: 6, verticalAlign: "-1px", opacity: isFocused ? 1 : 0.6 }}>
+                      <circle cx="11" cy="11" r="8" />
+                      <line x1="21" y1="21" x2="16.65" y2="16.65" />
+                      <line x1="11" y1="8" x2="11" y2="14" />
+                      <line x1="8" y1="11" x2="14" y2="11" />
+                    </svg>
+                    <span>{fmt(lang, l.top_cm)}–{fmt(lang, l.bottom_cm)} cm</span>
+                  </td>
+                  <td>{t(l.name_key)}</td>
+                  <td>{fmt(lang, l.om, 1)}%</td>
+                  <td>{fmt(lang, l.ec, 1)}</td>
+                  <td><span className={`badge conf-${l.confidence}`}>{t(`ui.level_${l.confidence}`)}</span></td>
+                </tr>
+              );
+            })}
           </tbody>
         </table>
       </div>
