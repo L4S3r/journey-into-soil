@@ -46,39 +46,6 @@ const GOVERNORATES: Governorate[] = [
   { id: "red_sea", name_en: "Red Sea", name_ar: "البحر الأحمر", zone: "desert", x: 74.3, y: 57.3, align: "right", soil_en: "Arid Coastal Gravel", soil_ar: "حصوية ساحلية جافة", et0: "6.3 mm/d" }
 ];
 
-const CROP_TALK_DEMOS = {
-  q1: {
-    en: {
-      user: "Why was chickpea recommended after wheat in Beheira with 2.8 dS/m canal water?",
-      ai: "Agronomic rationale: In Beheira's clay-loam soil, back-to-back cereal crops heavily exhaust available root-zone nitrogen. Chickpea fixes atmospheric nitrogen (approx. 40–60 kg N/ha), revitalizing soil biology.\n\nSalinity buffer: Chickpea handles moderate root ECe thresholds up to 1.7 dS/m. With 2.8 dS/m irrigation water, our FAO-56 simulation mandates a 12% leaching fraction during winter rains to flush accumulated salts below the 45 cm root perimeter."
-    },
-    ar: {
-      user: "لماذا تم ترشيح محصول الحمص بعد القمح في البحيرة مع ملوحة مياه 2.8 ديسيمنز؟",
-      ai: "الأساس الزراعي: في أراضي البحيرة الطميية، يؤدي تكرار زراعة الحبوب إلى استنزاف نيتروجين منطقة الجذور. يثبت الحمص النيتروجين الجوي بمعدل 40-60 كجم/هكتار مما يستعيد خصوبة التربة.\n\nمقاومة الملوحة: يتحمل الحمص ملوحة جذور حتى 1.7 ديسيمنز/م. ولمياه ري بملوحة 2.8، توصي محاكاة FAO-56 بنسبة غسيل 12% مع أمطار الشتاء لتصريف الأملاح تحت عمق 45 سم."
-    }
-  },
-  q2: {
-    en: {
-      user: "How do I manage high water salinity (2.8 dS/m) without burning sensitive crops?",
-      ai: "Leaching fraction protocol: Calculate leaching requirement: LR = ECw / (5 * ECe_target - ECw). For moderate crops, apply an extra 15% water depth during pre-sowing irrigation.\n\nBed morphology: Plant seeds on the shoulder of double-row furrows rather than the top ridge, where evaporating salts concentrate heavily."
-    },
-    ar: {
-      user: "كيف أدير ملوحة مياه ري مرتفعة (2.8 ديسيمنز) لتجنب حرق المحاصيل الحساسة؟",
-      ai: "معادلة نسبة الغسيل: يتم حساب احتياج الغسيل (LR = ECw / (5 * ECe - ECw)). للمحاصيل متوسطة التحمل، أضف 15% زيادة في عمق ريّة الزراعة.\n\nهندسة الخطوط: ازرع البذور على أكتاف المصاطب بدلاً من قمة الخط حيث تتجمع الأملاح المتبخرة بكثافة شديدة."
-    }
-  },
-  q3: {
-    en: {
-      user: "How do NASA POWER daily streams improve my farm's irrigation scheduling?",
-      ai: "Real-time evaporative demand: NASA POWER delivers daily solar irradiance (ALLSKY_SFC_SW_DWN), vapor pressure deficit, and wind speed. Our engine computes daily FAO-56 Penman-Monteith reference ET0.\n\nRoot-zone balance: Instead of fixed interval watering, irrigation intervals flex with actual atmospheric thirst, conserving 18–25% canal water across Egyptian summer cycles."
-    },
-    ar: {
-      user: "كيف تسهم بيانات NASA POWER اليومية في ضبط مواعيد ري حقلي بدقة؟",
-      ai: "حساب الطلب التبخري الفعلي: توفر ناسا بيانات الإشعاع الشمسي اليومي، والرطوبة النسبية، وسرعة الرياح. يحسب محركنا التبخر-نتح المرجعي اليومي بدقة وفق معادلة بينمان-مونتيث.\n\nميزان منطقة الجذور: بدلاً من الري بمواعيد ثابتة، يتكيف جدول الري مع الاحتياج الجوي الفعلي، مما يوفر 18–25% من مياه الترع صيفاً."
-    }
-  }
-};
-
 interface LandingPageProps {
   onStartSimulation: () => void;
 }
@@ -95,12 +62,6 @@ export function LandingPage({ onStartSimulation }: LandingPageProps) {
   // Map state
   const [activeGovId, setActiveGovId] = useState<string>("beheira");
   const [selectedZone, setSelectedZone] = useState<"all" | "delta" | "canal" | "upper" | "desert">("all");
-
-  // Crop talk active demo
-  const [activePromptId, setActivePromptId] = useState<"q1" | "q2" | "q3">("q1");
-  const [customQuestion, setCustomQuestion] = useState("");
-  const [customAnswer, setCustomAnswer] = useState<string | null>(null);
-  const [isAsking, setIsAsking] = useState(false);
 
   // Toast notification
   const [toastText, setToastText] = useState<string | null>(null);
@@ -129,28 +90,6 @@ export function LandingPage({ onStartSimulation }: LandingPageProps) {
     ? GOVERNORATES
     : GOVERNORATES.filter((g) => g.zone === selectedZone);
 
-  // Handle Ask in CropTalk
-  const handleAsk = async (e: React.FormEvent) => {
-    e.preventDefault();
-    const q = customQuestion.trim();
-    if (!q || isAsking) return;
-
-    setIsAsking(true);
-    try {
-      const res = await api.ask(q);
-      setCustomAnswer(res.answer.text);
-      showToast(isAr ? "تم تحديث استفسار حديث المحصول" : "Crop Talk response received");
-    } catch {
-      setCustomAnswer(
-        isAr
-          ? "الاستشارة الذكية: يوصى بمراجعة تحليل التربة الميداني والتأكد من شبكة الصرف الزراعي."
-          : "Agronomic advisory: Verify local drainage capacity and consult extension agent for field validation."
-      );
-    } finally {
-      setIsAsking(false);
-    }
-  };
-
   // Authenticate user with 1-tap or custom email
   const handleAuthenticate = (email: string) => {
     setUserEmail(email);
@@ -163,8 +102,6 @@ export function LandingPage({ onStartSimulation }: LandingPageProps) {
     setUserEmail(null);
     showToast(isAr ? "تم تسجيل الخروج. أضف بريدك الإلكتروني للوصول لأدوات المحاكاة." : "Signed out. Add an email to access simulation tools.");
   };
-
-  const promptData = CROP_TALK_DEMOS[activePromptId][isAr ? "ar" : "en"];
 
   return (
     <div className={`min-h-screen relative bg-[var(--astryx-color-bg)] text-[var(--astryx-color-text-primary)] antialiased transition-colors duration-300 font-sans ${theme === "dark" ? "dark" : ""}`} dir={isAr ? "rtl" : "ltr"}>
@@ -754,7 +691,7 @@ export function LandingPage({ onStartSimulation }: LandingPageProps) {
         </section>
 
         {/* ==========================================================================
-             6. CROP TALK: PLANT A QUESTION, GROW AN ANSWER (ASTRYX DIALOGUE SHOWCASE)
+             6. CROP TALK (SECTION 4)
              ========================================================================== */}
         <section id="crop-talk" className="py-16 sm:py-24 border-t border-[var(--astryx-color-border-subtle)]">
           <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -764,7 +701,7 @@ export function LandingPage({ onStartSimulation }: LandingPageProps) {
 
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
               
-              {/* Chatbot Visibility Spotlight */}
+              {/* Chatbot Visibility Spotlight (Beside Chatbot Box) */}
               <div className="lg:col-span-5 space-y-4 text-start">
                 <div className="w-12 h-12 rounded-2xl bg-emerald-500/15 text-emerald-500 flex items-center justify-center shadow-sm border border-emerald-500/20">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="24" height="24">
@@ -781,48 +718,6 @@ export function LandingPage({ onStartSimulation }: LandingPageProps) {
                     ? "يمكن لكروبي الإجابة ومناقشة أي استفسار متعلق بالمحاكاة أو التوصيات الزراعية."
                     : "Cropy can answer questions and talk about anything related to the simulation or recommendations."}
                 </p>
-
-                {/* Sample Prompt Selector Buttons */}
-                <div className="pt-2 space-y-2">
-                  <span className="text-xs font-bold font-mono uppercase tracking-wider text-[var(--astryx-color-text-tertiary)] block">
-                    {isAr ? "استفسارات نموذجية من المزارعين:" : "Sample Farmer Inquiries:"}
-                  </span>
-                  <div className="flex flex-col gap-2">
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setActivePromptId("q1");
-                        setCustomAnswer(null);
-                        showToast(isAr ? "تم تحديث استفسار حديث المحصول" : "Crop Talk inquiry updated");
-                      }}
-                      className={`px-3.5 py-2 rounded-xl text-xs font-bold border transition text-start ${activePromptId === "q1" ? "bg-[var(--astryx-color-primary)] text-white border-[var(--astryx-color-primary)] shadow-md" : "bg-[var(--astryx-color-surface-subtle)] text-[var(--astryx-color-text-secondary)] border-[var(--astryx-color-border)]"}`}
-                    >
-                      🌱 {isAr ? "لماذا الحمص بعد القمح بالبحيرة؟" : "Chickpea after wheat in Beheira?"}
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setActivePromptId("q2");
-                        setCustomAnswer(null);
-                        showToast(isAr ? "تم تحديث استفسار حديث المحصول" : "Crop Talk inquiry updated");
-                      }}
-                      className={`px-3.5 py-2 rounded-xl text-xs font-bold border transition text-start ${activePromptId === "q2" ? "bg-[var(--astryx-color-primary)] text-white border-[var(--astryx-color-primary)] shadow-md" : "bg-[var(--astryx-color-surface-subtle)] text-[var(--astryx-color-text-secondary)] border-[var(--astryx-color-border)]"}`}
-                    >
-                      💧 {isAr ? "كيف أتعامل مع ملوحة ري 2.8 ديسيمنز؟" : "Managing 2.8 dS/m water salinity?"}
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setActivePromptId("q3");
-                        setCustomAnswer(null);
-                        showToast(isAr ? "تم تحديث استفسار حديث المحصول" : "Crop Talk inquiry updated");
-                      }}
-                      className={`px-3.5 py-2 rounded-xl text-xs font-bold border transition text-start ${activePromptId === "q3" ? "bg-[var(--astryx-color-primary)] text-white border-[var(--astryx-color-primary)] shadow-md" : "bg-[var(--astryx-color-surface-subtle)] text-[var(--astryx-color-text-secondary)] border-[var(--astryx-color-border)]"}`}
-                    >
-                      🛰️ {isAr ? "كيف تساعدني بيانات أقمار ناسا؟" : "How NASA POWER helps my field?"}
-                    </button>
-                  </div>
-                </div>
               </div>
 
               {/* Interactive Dialogue Showcase UI */}
@@ -840,7 +735,7 @@ export function LandingPage({ onStartSimulation }: LandingPageProps) {
                       </div>
                       <div className="text-start">
                         <h3 className="text-sm font-bold text-[var(--astryx-color-text-primary)]">
-                          {isAr ? "cropy the chatbot" : "cropy the chatbot"}
+                          cropy the chatbot
                         </h3>
                         <p className="text-[11px] text-[var(--astryx-color-text-tertiary)]">
                           {isAr ? "معاير ببيانات ناسا والتربة المصرية" : "Calibrated with Egypt SoilGrids & NASA Data"}
@@ -856,8 +751,10 @@ export function LandingPage({ onStartSimulation }: LandingPageProps) {
                   <div className="p-5 space-y-4 max-h-[380px] overflow-y-auto">
                     {/* User Message */}
                     <div className="flex items-start gap-3 justify-end">
-                      <div className="astryx-chat-bubble-user p-3.5 rounded-2xl rounded-tr-none text-xs sm:text-sm max-w-md shadow-sm text-start">
-                        {customQuestion && customAnswer ? customQuestion : promptData.user}
+                      <div id="chatUserMsg" className="astryx-chat-bubble-user p-3.5 rounded-2xl rounded-tr-none text-xs sm:text-sm max-w-md shadow-sm text-start">
+                        {isAr
+                          ? "لماذا تم ترشيح محصول الحمص بعد القمح في البحيرة مع ملوحة مياه 2.8 ديسيمنز؟"
+                          : "Why was chickpea recommended after wheat in Beheira with 2.8 dS/m canal water?"}
                       </div>
                       <div className="w-8 h-8 rounded-full bg-[var(--astryx-color-surface-subtle)] border border-[var(--astryx-color-border)] flex items-center justify-center text-xs font-bold shrink-0">
                         👨‍🌾
@@ -869,44 +766,65 @@ export function LandingPage({ onStartSimulation }: LandingPageProps) {
                       <div className="w-8 h-8 rounded-full bg-[var(--astryx-color-primary-subtle)] text-[var(--astryx-color-primary)] flex items-center justify-center text-xs font-bold shrink-0">
                         🌱
                       </div>
-                      <div className="astryx-chat-bubble-ai p-3.5 rounded-2xl rounded-tl-none text-xs sm:text-sm max-w-lg space-y-2 shadow-sm leading-relaxed text-start">
-                        <p className="whitespace-pre-line">
-                          {customAnswer || promptData.ai}
-                        </p>
-                        <div className="pt-1 text-[11px] font-mono text-[var(--astryx-color-text-tertiary)]">
-                          {isAr
-                            ? "ملاحظة إرشادية: تحقق دائماً من قدرة الصرف المحلي قبل بدء الزراعة."
-                            : "Advisory note: Always verify local drainage capacity before planting."}
-                        </div>
+                      <div id="chatAiMsg" className="astryx-chat-bubble-ai p-3.5 rounded-2xl rounded-tl-none text-xs sm:text-sm max-w-lg space-y-2 shadow-sm leading-relaxed text-start">
+                        {isAr ? (
+                          <>
+                            <p>
+                              <strong>الأساس الزراعي:</strong> في أراضي البحيرة الطميية، يؤدي تكرار زراعة الحبوب إلى استنزاف نيتروجين منطقة الجذور. يثبت الحمص النيتروجين الجوي بمعدل 40–60 كجم/هكتار مما يستعيد خصوبة التربة.
+                            </p>
+                            <p>
+                              <strong>مقاومة الملوحة:</strong> يتحمل الحمص ملوحة جذور حتى 1.7 ديسيمنز/م. ولمياه ري بملوحة 2.8، توصي محاكاة FAO-56 بنسبة غسيل 12% مع أمطار الشتاء لتصريف الأملاح تحت عمق 45 سم.
+                            </p>
+                            <div className="pt-1 text-[11px] font-mono text-[var(--astryx-color-text-tertiary)]">
+                              ملاحظة إرشادية: تحقق دائماً من قدرة الصرف المحلي قبل بدء الزراعة.
+                            </div>
+                          </>
+                        ) : (
+                          <>
+                            <p>
+                              <strong>Agronomic rationale:</strong> In Beheira's clay-loam soil, back-to-back cereal crops heavily exhaust available root-zone nitrogen. Chickpea fixes atmospheric nitrogen (approx. 40–60 kg N/ha), revitalizing soil biology.
+                            </p>
+                            <p>
+                              <strong>Salinity buffer:</strong> Chickpea handles moderate root ECe thresholds up to 1.7 dS/m. With 2.8 dS/m irrigation water, our FAO-56 simulation mandates a 12% leaching fraction during winter rains to flush accumulated salts below the 45 cm root perimeter.
+                            </p>
+                            <div className="pt-1 text-[11px] font-mono text-[var(--astryx-color-text-tertiary)]">
+                              Advisory note: Always verify local drainage capacity before planting.
+                            </div>
+                          </>
+                        )}
                       </div>
                     </div>
                   </div>
 
-                  {/* Interactive Prompt Input Bar */}
-                  <form onSubmit={handleAsk} className="p-3 border-t border-[var(--astryx-color-border-subtle)] bg-[var(--astryx-color-surface-subtle)]/50 flex items-center gap-2">
+                  {/* Interactive Prompt Input Bar Mockup */}
+                  <div
+                    onClick={() => {
+                      if (userEmail) {
+                        window.scrollTo({ top: 0, behavior: "smooth" });
+                      } else {
+                        setAuthModalOpen(true);
+                      }
+                    }}
+                    className="p-3 border-t border-[var(--astryx-color-border-subtle)] bg-[var(--astryx-color-surface-subtle)]/50 flex items-center gap-2 cursor-pointer"
+                  >
                     <input
+                      id="chatInputMock"
                       type="text"
-                      value={customQuestion}
-                      onChange={(e) => setCustomQuestion(e.target.value)}
-                      placeholder={
+                      readOnly
+                      value={
                         isAr
                           ? "اسأل كروبي (cropy the chatbot) عن تربتك أو محاصيلك أو الري..."
                           : "Ask cropy the chatbot about your soil, crops, or irrigation..."
                       }
-                      className="flex-1 bg-[var(--astryx-color-surface)] border border-[var(--astryx-color-border)] rounded-xl px-3.5 py-2 text-xs text-[var(--astryx-color-text-secondary)] focus:outline-none focus:ring-1 focus:ring-[var(--astryx-color-primary)]"
+                      className="flex-1 bg-[var(--astryx-color-surface)] border border-[var(--astryx-color-border)] rounded-xl px-3.5 py-2 text-xs text-[var(--astryx-color-text-secondary)] focus:outline-none select-none cursor-pointer"
                     />
-                    <button
-                      type="submit"
-                      disabled={isAsking || !customQuestion.trim()}
-                      aria-label="Send"
-                      className="astryx-btn astryx-btn--primary p-2 rounded-xl"
-                    >
-                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="16" height="16">
+                    <button type="button" aria-label="Send" className="astryx-btn astryx-btn--primary p-2 rounded-xl">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="14" height="14">
                         <line x1="22" y1="2" x2="11" y2="13" />
                         <polygon points="22 2 15 22 11 13 2 9 22 2" />
                       </svg>
                     </button>
-                  </form>
+                  </div>
 
                 </div>
               </div>
