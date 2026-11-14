@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { SimulationWizard } from "./features/inputs/SimulationWizard";
+import { TopNavBar } from "./features/navigation/TopNavBar";
 import { AuthModal } from "./features/landing/AuthModal";
 import { LandingPage } from "./features/landing/LandingPage";
 import { NasaTelemetryModal } from "./features/landing/NasaTelemetryModal";
@@ -27,84 +28,7 @@ function parseAnalysisId(): string | null {
   return null;
 }
 
-function Header({ onBackToLanding }: { onBackToLanding?: () => void }) {
-  const { t } = useTranslation();
-  const { lang, setLang, theme, setTheme, quality, setQuality, result, userEmail, setAuthModalOpen, setUserEmail } = useStore();
 
-  return (
-    <header className="top">
-      <div className="brand">
-        <img
-          src="/the_shifters_logo_transparent.png"
-          alt="The Shifters"
-          className="logo"
-        />
-        <div>
-          <h1>{t("app.title")}</h1>
-          <p>{t("app.tagline")}</p>
-        </div>
-      </div>
-
-      {onBackToLanding && (
-        <button
-          type="button"
-          onClick={onBackToLanding}
-          className="ghost"
-          style={{ display: "inline-flex", alignItems: "center", gap: 6, fontWeight: 700 }}
-        >
-          <span style={{ fontSize: "14px" }}>←</span>
-          <span>{lang === "ar" ? "العودة للرئيسية" : "Back to Overview"}</span>
-        </button>
-      )}
-
-      <div className="tools">
-        {result && (
-          <select aria-label={t("ui.quality")} value={quality} onChange={(e) => setQuality(e.target.value as typeof quality)}>
-            {["auto", "high", "medium", "low"].map((q) => <option key={q} value={q}>{t(`ui.q_${q}`)}</option>)}
-          </select>
-        )}
-
-        {userEmail ? (
-          <div className="astryx-user-badge">
-            <span className="astryx-user-dot" />
-            <span className="astryx-user-email">{userEmail.split("@")[0]}</span>
-            <button
-              type="button"
-              onClick={() => setUserEmail(null)}
-              className="astryx-btn-signout"
-              title={t("landing.btn_sign_out", "Sign Out")}
-            >
-              ✕
-            </button>
-          </div>
-        ) : (
-          <button
-            type="button"
-            onClick={() => setAuthModalOpen(true)}
-            className="ghost"
-          >
-            {t("landing.sign_in", "Sign In")}
-          </button>
-        )}
-
-        <button
-          className="ghost"
-          onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-          aria-label={theme === "dark" ? t("ui.light") : t("ui.dark")}
-        >
-          {theme === "dark" ? t("ui.light") : t("ui.dark")}
-        </button>
-
-        <button
-          className="ghost"
-          onClick={() => setLang(lang === "ar" ? "en" : "ar")}
-        >
-          {lang === "ar" ? "English" : "العربية"}
-        </button>
-      </div>
-    </header>
-  );
-}
 
 function Disclaimer() {
   const { t } = useTranslation();
@@ -147,32 +71,33 @@ function Footer() {
 
 function SimulatorView({ onBack }: { onBack: () => void }) {
   const { lang } = useStore();
+  const isAr = lang === "ar";
 
   return (
-    <main className="landing" id="field-simulator" style={{ display: "block", maxWidth: 1120, margin: "0 auto", padding: "1rem" }}>
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1rem" }}>
+    <main className="landing" id="field-simulator" style={{ display: "block", maxWidth: 1140, margin: "0 auto", padding: "1rem" }}>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "0.5rem" }}>
         <button
           type="button"
           onClick={onBack}
-          className="ghost"
-          style={{ display: "inline-flex", alignItems: "center", gap: 8, fontWeight: 700 }}
+          className="astryx-btn astryx-btn--secondary"
+          style={{ display: "inline-flex", alignItems: "center", gap: 8, fontWeight: 700, padding: "6px 14px", minHeight: 38 }}
         >
           <svg
             viewBox="0 0 24 24"
-            width="16"
-            height="16"
+            width="15"
+            height="15"
             fill="none"
             stroke="currentColor"
             strokeWidth="2.5"
             strokeLinecap="round"
             strokeLinejoin="round"
             aria-hidden="true"
-            style={{ transform: lang === "ar" ? "rotate(180deg)" : "none" }}
+            style={{ transform: isAr ? "rotate(180deg)" : "none" }}
           >
             <line x1="19" y1="12" x2="5" y2="12" />
             <polyline points="12 19 5 12 12 5" />
           </svg>
-          <span>{lang === "ar" ? "العودة للرئيسية" : "Back to Overview"}</span>
+          <span>{isAr ? "العودة للرئيسية" : "Back to Overview"}</span>
         </button>
       </div>
 
@@ -287,7 +212,7 @@ export default function App() {
   if (result) {
     return (
       <>
-        <Header onBackToLanding={() => { reset(); setShowSimulator(false); }} />
+        <TopNavBar onBackToLanding={() => { reset(); setShowSimulator(false); }} currentView="results" />
         <Disclaimer />
         <Results />
         <Footer />
@@ -301,11 +226,13 @@ export default function App() {
   if (showSimulator) {
     return (
       <>
-        <Header onBackToLanding={() => setShowSimulator(false)} />
+        <TopNavBar onBackToLanding={() => setShowSimulator(false)} currentView="simulator" />
         <Disclaimer />
         <SimulatorView onBack={() => setShowSimulator(false)} />
         <Footer />
         <AuthModal />
+        <PdfReportModal />
+        <NasaTelemetryModal />
       </>
     );
   }
