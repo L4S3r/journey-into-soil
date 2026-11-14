@@ -1,3 +1,336 @@
+
+    @layer astryx.tokens, astryx.base, astryx.components, astryx.utilities;
+
+    @layer astryx.tokens {
+      /* Astryx Design Tokens: Global / Light Mode */
+      :root, [data-theme="light"] {
+        --astryx-theme-name: "matcha-stone-light";
+
+        /* Surfaces */
+        --astryx-color-bg: #fbf9f5;
+        --astryx-color-bg-subtle: #f3efe8;
+        --astryx-color-surface: #ffffff;
+        --astryx-color-surface-subtle: #f7f4ee;
+        --astryx-color-surface-raised: #ffffff;
+        --astryx-color-surface-overlay: rgba(255, 255, 255, 0.88);
+        --astryx-color-surface-contrast: #151a17;
+
+        /* Typography */
+        --astryx-color-text-primary: #151a17;
+        --astryx-color-text-secondary: #4a544e;
+        --astryx-color-text-tertiary: #718076;
+        --astryx-color-text-muted: #95a399;
+        --astryx-color-text-inverse: #fbf9f5;
+
+        /* Brand / Primary: Astryx Botanical Matcha */
+        --astryx-color-primary: #1b4332;
+        --astryx-color-primary-hover: #2d6a4f;
+        --astryx-color-primary-active: #143526;
+        --astryx-color-primary-subtle: rgba(45, 106, 79, 0.1);
+        --astryx-color-primary-border: rgba(45, 106, 79, 0.25);
+        --astryx-color-primary-text: #ffffff;
+
+        /* Brand Accent: Solar Amber / Harvest Gold */
+        --astryx-color-accent: #d97706;
+        --astryx-color-accent-hover: #b45309;
+        --astryx-color-accent-subtle: rgba(217, 119, 6, 0.12);
+        --astryx-color-accent-border: rgba(217, 119, 6, 0.32);
+
+        /* Borders */
+        --astryx-color-border: rgba(21, 26, 23, 0.12);
+        --astryx-color-border-subtle: rgba(21, 26, 23, 0.06);
+        --astryx-color-border-hover: rgba(21, 26, 23, 0.22);
+        --astryx-color-border-focus: #2d6a4f;
+
+        /* Semantic Status */
+        --astryx-color-status-success: #10b981;
+        --astryx-color-status-warning: #f59e0b;
+        --astryx-color-status-error: #ef4444;
+        --astryx-color-status-info: #0284c7;
+
+        /* Shadows */
+        --astryx-shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.04);
+        --astryx-shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.04);
+        --astryx-shadow-md: 0 4px 10px -2px rgba(0, 0, 0, 0.08), 0 2px 4px -2px rgba(0, 0, 0, 0.04);
+        --astryx-shadow-lg: 0 12px 24px -4px rgba(0, 0, 0, 0.09), 0 4px 8px -2px rgba(0, 0, 0, 0.04);
+        --astryx-shadow-xl: 0 24px 36px -8px rgba(0, 0, 0, 0.12), 0 8px 16px -4px rgba(0, 0, 0, 0.05);
+        --astryx-shadow-glow: 0 0 24px rgba(45, 106, 79, 0.22);
+
+        --astryx-grain-opacity: 0.035;
+      }
+
+      /* Astryx Design Tokens: Dark Mode (Obsidian Root Zone & Luminous Matcha) */
+      [data-theme="dark"], .dark {
+        --astryx-theme-name: "matcha-stone-dark";
+
+        /* Surfaces */
+        --astryx-color-bg: #0b0e0c;
+        --astryx-color-bg-subtle: #121714;
+        --astryx-color-surface: #151b17;
+        --astryx-color-surface-subtle: #1b231e;
+        --astryx-color-surface-raised: #222b25;
+        --astryx-color-surface-overlay: rgba(21, 27, 23, 0.88);
+        --astryx-color-surface-contrast: #fbf9f5;
+
+        /* Typography */
+        --astryx-color-text-primary: #f2f6f4;
+        --astryx-color-text-secondary: #a7b5ad;
+        --astryx-color-text-tertiary: #6e7f74;
+        --astryx-color-text-muted: #49574e;
+        --astryx-color-text-inverse: #0b0e0c;
+
+        /* Brand / Primary: Astryx Luminous Matcha */
+        --astryx-color-primary: #52b788;
+        --astryx-color-primary-hover: #74c69d;
+        --astryx-color-primary-active: #40916c;
+        --astryx-color-primary-subtle: rgba(82, 183, 136, 0.16);
+        --astryx-color-primary-border: rgba(82, 183, 136, 0.35);
+        --astryx-color-primary-text: #0b0e0c;
+
+        /* Brand Accent: Solar Flare Amber */
+        --astryx-color-accent: #f59e0b;
+        --astryx-color-accent-hover: #fbbf24;
+        --astryx-color-accent-subtle: rgba(245, 158, 11, 0.18);
+        --astryx-color-accent-border: rgba(245, 158, 11, 0.38);
+
+        /* Borders */
+        --astryx-color-border: rgba(255, 255, 255, 0.08);
+        --astryx-color-border-subtle: rgba(255, 255, 255, 0.05);
+        --astryx-color-border-hover: rgba(255, 255, 255, 0.18);
+        --astryx-color-border-focus: #52b788;
+
+        /* Semantic Status */
+        --astryx-color-status-success: #34d399;
+        --astryx-color-status-warning: #fbbf24;
+        --astryx-color-status-error: #f87171;
+        --astryx-color-status-info: #38bdf8;
+
+        /* Shadows */
+        --astryx-shadow-xs: 0 1px 2px rgba(0, 0, 0, 0.3);
+        --astryx-shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.4), 0 1px 2px rgba(0, 0, 0, 0.3);
+        --astryx-shadow-md: 0 4px 12px -2px rgba(0, 0, 0, 0.5), 0 2px 4px -2px rgba(0, 0, 0, 0.35);
+        --astryx-shadow-lg: 0 14px 24px -4px rgba(0, 0, 0, 0.65), 0 4px 8px -2px rgba(0, 0, 0, 0.4);
+        --astryx-shadow-xl: 0 28px 42px -8px rgba(0, 0, 0, 0.75), 0 8px 16px -4px rgba(0, 0, 0, 0.5);
+        --astryx-shadow-glow: 0 0 32px rgba(82, 183, 136, 0.28);
+
+        --astryx-grain-opacity: 0.025;
+      }
+
+      /* Layout, Radii, Typography, Durations */
+      :root {
+        --astryx-radius-xs: 4px;
+        --astryx-radius-sm: 6px;
+        --astryx-radius-md: 10px;
+        --astryx-radius-lg: 16px;
+        --astryx-radius-xl: 22px;
+        --astryx-radius-2xl: 30px;
+        --astryx-radius-full: 9999px;
+
+        --astryx-font-sans: 'Inter', 'Cairo', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        --astryx-font-arabic: 'Cairo', 'Inter', sans-serif;
+        --astryx-font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, monospace;
+
+        --astryx-duration-fast: 150ms;
+        --astryx-duration-normal: 250ms;
+        --astryx-duration-slow: 400ms;
+        --astryx-ease-default: cubic-bezier(0.16, 1, 0.3, 1);
+      }
+    }
+
+    @layer astryx.base {
+      body {
+        background-color: var(--astryx-color-bg);
+        color: var(--astryx-color-text-primary);
+        font-family: var(--astryx-font-sans);
+        transition: background-color var(--astryx-duration-normal) var(--astryx-ease-default),
+                    color var(--astryx-duration-normal) var(--astryx-ease-default);
+      }
+
+      /* Subtle tactile grain */
+      .astryx-grain-bg {
+        background-image: radial-gradient(rgba(0, 0, 0, 0.07) 1px, transparent 0);
+        background-size: 24px 24px;
+      }
+      .dark .astryx-grain-bg {
+        background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 0);
+      }
+
+      /* Custom Scrollbar */
+      ::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+      }
+      ::-webkit-scrollbar-track {
+        background: var(--astryx-color-bg);
+      }
+      ::-webkit-scrollbar-thumb {
+        background: var(--astryx-color-surface-raised);
+        border: 2px solid var(--astryx-color-bg);
+        border-radius: var(--astryx-radius-full);
+      }
+      ::-webkit-scrollbar-thumb:hover {
+        background: var(--astryx-color-text-tertiary);
+      }
+    }
+
+    @layer astryx.components {
+      /* Astryx Card Component */
+      .astryx-card {
+        background-color: var(--astryx-color-surface);
+        border: 1px solid var(--astryx-color-border);
+        border-radius: var(--astryx-radius-2xl);
+        box-shadow: var(--astryx-shadow-md);
+        transition: transform var(--astryx-duration-normal) var(--astryx-ease-default),
+                    box-shadow var(--astryx-duration-normal) var(--astryx-ease-default),
+                    border-color var(--astryx-duration-normal) var(--astryx-ease-default);
+      }
+      .astryx-card--interactive:hover {
+        transform: translateY(-3px);
+        border-color: var(--astryx-color-border-hover);
+        box-shadow: var(--astryx-shadow-lg);
+      }
+
+      /* Astryx Button Component */
+      .astryx-btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        font-weight: 600;
+        border-radius: var(--astryx-radius-xl);
+        transition: all var(--astryx-duration-fast) var(--astryx-ease-default);
+        cursor: pointer;
+        user-select: none;
+      }
+      .astryx-btn:active {
+        transform: scale(0.98);
+      }
+
+      .astryx-btn--primary {
+        background-color: var(--astryx-color-primary);
+        color: var(--astryx-color-primary-text);
+        box-shadow: var(--astryx-shadow-sm);
+        border: 1px solid transparent;
+      }
+      .astryx-btn--primary:hover {
+        background-color: var(--astryx-color-primary-hover);
+        box-shadow: var(--astryx-shadow-glow);
+      }
+
+      .astryx-btn--secondary {
+        background-color: var(--astryx-color-surface-subtle);
+        color: var(--astryx-color-text-primary);
+        border: 1px solid var(--astryx-color-border);
+        box-shadow: var(--astryx-shadow-xs);
+      }
+      .astryx-btn--secondary:hover {
+        background-color: var(--astryx-color-surface-raised);
+        border-color: var(--astryx-color-border-hover);
+      }
+
+      .astryx-btn--ghost {
+        background-color: transparent;
+        color: var(--astryx-color-text-secondary);
+        border: 1px solid transparent;
+      }
+      .astryx-btn--ghost:hover {
+        background-color: var(--astryx-color-surface-subtle);
+        color: var(--astryx-color-text-primary);
+      }
+
+      /* Astryx Badge Component */
+      .astryx-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.375rem;
+        padding: 0.25rem 0.75rem;
+        border-radius: var(--astryx-radius-full);
+        font-size: 0.75rem;
+        font-weight: 600;
+        line-height: 1rem;
+        letter-spacing: 0.01em;
+        border: 1px solid transparent;
+      }
+
+      .astryx-badge--matcha {
+        background-color: var(--astryx-color-primary-subtle);
+        color: var(--astryx-color-primary);
+        border-color: var(--astryx-color-primary-border);
+      }
+      .dark .astryx-badge--matcha {
+        color: var(--astryx-color-primary);
+      }
+
+      .astryx-badge--accent {
+        background-color: var(--astryx-color-accent-subtle);
+        color: var(--astryx-color-accent);
+        border-color: var(--astryx-color-accent-border);
+      }
+
+      .astryx-badge--neutral {
+        background-color: var(--astryx-color-surface-subtle);
+        color: var(--astryx-color-text-secondary);
+        border-color: var(--astryx-color-border);
+      }
+
+      /* Pin Beacon Animation */
+      @keyframes astryxBeacon {
+        0% { transform: scale(0.6); opacity: 0.95; }
+        70% { transform: scale(2.3); opacity: 0; }
+        100% { transform: scale(0.6); opacity: 0; }
+      }
+      .astryx-pin-beacon {
+        animation: astryxBeacon 2.4s infinite ease-out;
+      }
+
+      /* Map strictly LTR */
+      .map-lock-ltr {
+        direction: ltr !important;
+      }
+
+      /* Governorates interactive markers */
+      .gov-marker {
+        transform: translate(-50%, -50%);
+        transition: z-index 0.2s ease;
+      }
+      .gov-marker:hover,
+      .gov-marker.active,
+      .gov-marker:focus-visible {
+        z-index: 50;
+      }
+      .gov-marker:hover .pin-dot,
+      .gov-marker.active .pin-dot,
+      .gov-marker:focus-visible .pin-dot {
+        transform: scale(1.4);
+        background-color: #ef4444;
+        border-color: #ffd54a;
+        box-shadow: 0 0 16px rgba(255, 213, 74, 0.95), 0 0 8px #ef4444;
+      }
+      .gov-marker .pin-badge {
+        transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      .gov-marker:hover .pin-badge,
+      .gov-marker.active .pin-badge,
+      .gov-marker:focus-visible .pin-badge {
+        background-color: #991b1b;
+        border-color: #ffd54a;
+        box-shadow: 0 0 14px rgba(255, 213, 74, 0.85), 0 4px 12px rgba(0, 0, 0, 0.6);
+      }
+
+      /* Crop Talk Mock Chat Bubble */
+      .astryx-chat-bubble-user {
+        background-color: var(--astryx-color-primary-subtle);
+        border: 1px solid var(--astryx-color-primary-border);
+        color: var(--astryx-color-text-primary);
+      }
+      .astryx-chat-bubble-ai {
+        background-color: var(--astryx-color-surface-subtle);
+        border: 1px solid var(--astryx-color-border);
+        color: var(--astryx-color-text-primary);
+      }
+    }
+  
+
 /* ==========================================================================
    ASTRYX META DESIGN SYSTEM SPECIFICATION (Matcha + Stone / Soil Earth Theme)
    ========================================================================== */

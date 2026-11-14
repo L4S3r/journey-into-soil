@@ -4,13 +4,9 @@ import { api } from "./api/client";
 import { FieldForm } from "./features/inputs/FieldForm";
 import { FieldMap } from "./features/map/FieldMap";
 import { AuthModal } from "./features/landing/AuthModal";
-import { BattlefieldSection } from "./features/landing/BattlefieldSection";
-import { CropTalkSection } from "./features/landing/CropTalkSection";
-import { EgyptReliefMap } from "./features/landing/EgyptReliefMap";
-import { HeroSection } from "./features/landing/HeroSection";
+import { LandingPage } from "./features/landing/LandingPage";
 import { NasaTelemetryModal } from "./features/landing/NasaTelemetryModal";
 import { PdfReportModal } from "./features/landing/PdfReportModal";
-import { WorkflowSection } from "./features/landing/WorkflowSection";
 import { AgentPanel } from "./features/results/AgentPanel";
 import { EvidencePanel } from "./features/results/EvidencePanel";
 import { NasaVsModelPanel, NdviTimelinePanel } from "./features/results/NasaEvidence";
@@ -34,7 +30,7 @@ function parseAnalysisId(): string | null {
   return null;
 }
 
-function Header() {
+function Header({ onBackToLanding }: { onBackToLanding?: () => void }) {
   const { t } = useTranslation();
   const { lang, setLang, theme, setTheme, quality, setQuality, result, userEmail, setAuthModalOpen, setUserEmail } = useStore();
 
@@ -52,14 +48,16 @@ function Header() {
         </div>
       </div>
 
-      {!result && (
-        <nav className="nav-links" aria-label="Page navigation">
-          <a href="#how-it-works">{t("landing.nav_how", "How It Works")}</a>
-          <a href="#battlefield">{t("landing.nav_battlefield", "NASA vs Root Zone")}</a>
-          <a href="#crop-talk">{t("landing.nav_crop_talk", "Crop Talk AI")}</a>
-          <a href="#map-section">{t("landing.nav_map", "Egypt Map")}</a>
-          <a href="#field-simulator">{t("landing.nav_simulator", "Field Simulator")}</a>
-        </nav>
+      {onBackToLanding && (
+        <button
+          type="button"
+          onClick={onBackToLanding}
+          className="ghost"
+          style={{ display: "inline-flex", alignItems: "center", gap: 6, fontWeight: 700 }}
+        >
+          <span style={{ fontSize: "14px" }}>←</span>
+          <span>{lang === "ar" ? "العودة للرئيسية" : "Back to Overview"}</span>
+        </button>
       )}
 
       <div className="tools">
@@ -150,7 +148,7 @@ function Footer() {
   );
 }
 
-function Landing() {
+function SimulatorView({ onBack }: { onBack: () => void }) {
   const { t } = useTranslation();
   const { analyze, loadSample, openDemoSite, applySite, loading, error, lang } = useStore();
   const [sites, setSites] = useState<DemoSite[]>([]);
@@ -160,124 +158,107 @@ function Landing() {
     api.demoSites().then(setSites).catch(() => setSites([]));
   }, []);
 
-  const scrollToMap = () => {
-    document.getElementById("map-section")?.scrollIntoView({ behavior: "smooth" });
-  };
-
-  const scrollToForm = () => {
-    document.getElementById("field-simulator")?.scrollIntoView({ behavior: "smooth" });
-  };
-
   return (
-    <div className="astryx-landing-wrapper">
-      {/* 1. Hero Section */}
-      <HeroSection
-        onScrollToMap={scrollToMap}
-        onScrollToForm={scrollToForm}
-      />
+    <main className="landing" id="field-simulator">
+      <div style={{ gridColumn: "1 / -1", display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "0.5rem" }}>
+        <button
+          type="button"
+          onClick={onBack}
+          className="ghost"
+          style={{ display: "inline-flex", alignItems: "center", gap: 8, fontWeight: 700 }}
+        >
+          <span style={{ fontSize: "14px" }}>←</span>
+          <span>{lang === "ar" ? "العودة للرئيسية" : "Back to Overview"}</span>
+        </button>
+      </div>
 
-      {/* 2. Workflow / 3-Act Pipeline Section */}
-      <WorkflowSection />
+      <section className="panel" id="field-inputs">
+        <h2>{t("ui.step_field")}</h2>
+        
+        <div className="picker-tabs" role="tablist" aria-label={t("ui.step_field")}>
+          <button
+            type="button"
+            role="tab"
+            aria-selected={pickerMode === "demo"}
+            className={`chip ${pickerMode === "demo" ? "primary" : ""}`}
+            onClick={() => setPickerMode("demo")}
+          >
+            {t("ui.demo_sites")}
+          </button>
+          <button
+            type="button"
+            role="tab"
+            aria-selected={pickerMode === "custom"}
+            className={`chip ${pickerMode === "custom" ? "primary" : ""}`}
+            onClick={() => setPickerMode("custom")}
+          >
+            {t("ui.click_own_field")}
+          </button>
+        </div>
 
-      {/* 3. NASA Satellite vs Root-Zone Soil Physics Battlefield */}
-      <BattlefieldSection />
-
-      {/* 4. Crop Talk AI Dialogue Box */}
-      <CropTalkSection />
-
-      {/* 5. Interactive 27 Governorates Agroclimatology Relief Map */}
-      <EgyptReliefMap />
-
-      {/* 6. Interactive Field Simulator Section */}
-      <main className="landing" id="field-simulator">
-        <section className="panel" id="field-inputs">
-          <h2>{t("ui.step_field")}</h2>
-          
-          <div className="picker-tabs" role="tablist" aria-label={t("ui.step_field")}>
-            <button
-              type="button"
-              role="tab"
-              aria-selected={pickerMode === "demo"}
-              className={`chip ${pickerMode === "demo" ? "primary" : ""}`}
-              onClick={() => setPickerMode("demo")}
-            >
-              {t("ui.demo_sites")}
-            </button>
-            <button
-              type="button"
-              role="tab"
-              aria-selected={pickerMode === "custom"}
-              className={`chip ${pickerMode === "custom" ? "primary" : ""}`}
-              onClick={() => setPickerMode("custom")}
-            >
-              {t("ui.click_own_field")}
-            </button>
-          </div>
-
-          {pickerMode === "demo" && sites.length > 0 && (
-            <div className="demo-picker">
-              <p className="hint">{t("ui.demo_sites_intro")}</p>
-              <div className="demo-cards" aria-label={t("ui.demo_sites")}>
-                {sites.map((s) => (
-                  <div key={s.id} className="demo-card">
-                    <div>
-                      <h4>{lang === "ar" ? s.name_ar : s.name_en}</h4>
-                      <span className="badge">{t(`ui.region.${s.region}`)}</span>
-                    </div>
-                    <div className="demo-card-actions">
-                      <button
-                        type="button"
-                        className="primary"
-                        disabled={loading}
-                        onClick={() => void openDemoSite(s)}
-                      >
-                        {t("ui.open_demo_result")}
-                      </button>
-                      <button
-                        type="button"
-                        className="ghost"
-                        disabled={loading}
-                        onClick={() => {
-                          applySite(s);
-                          setPickerMode("custom");
-                        }}
-                      >
-                        {t("ui.edit")}
-                      </button>
-                    </div>
+        {pickerMode === "demo" && sites.length > 0 && (
+          <div className="demo-picker">
+            <p className="hint">{t("ui.demo_sites_intro")}</p>
+            <div className="demo-cards" aria-label={t("ui.demo_sites")}>
+              {sites.map((s) => (
+                <div key={s.id} className="demo-card">
+                  <div>
+                    <h4>{lang === "ar" ? s.name_ar : s.name_en}</h4>
+                    <span className="badge">{t(`ui.region.${s.region}`)}</span>
                   </div>
-                ))}
-              </div>
+                  <div className="demo-card-actions">
+                    <button
+                      type="button"
+                      className="primary"
+                      disabled={loading}
+                      onClick={() => void openDemoSite(s)}
+                    >
+                      {t("ui.open_demo_result")}
+                    </button>
+                    <button
+                      type="button"
+                      className="ghost"
+                      disabled={loading}
+                      onClick={() => {
+                        applySite(s);
+                        setPickerMode("custom");
+                      }}
+                    >
+                      {t("ui.edit")}
+                    </button>
+                  </div>
+                </div>
+              ))}
             </div>
-          )}
-
-          {(pickerMode === "custom" || sites.length === 0) && (
-            <div className="custom-field">
-              <p className="hint">{t("ui.or_custom_field")}</p>
-              <FieldMap />
-            </div>
-          )}
-        </section>
-
-        <section className="panel">
-          <h2>{t("ui.step_inputs")}</h2>
-          <FieldForm />
-          <div className="actions">
-            <button className="primary" disabled={loading} onClick={() => void analyze()}>
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true" style={{ inlineSize: 18, blockSize: 18, marginInlineEnd: 8, verticalAlign: "middle" }}>
-                <circle cx="12" cy="12" r="10" />
-                <line x1="12" y1="2" x2="12" y2="22" />
-                <line x1="2" y1="12" x2="22" y2="12" />
-                <circle cx="12" cy="12" r="4" />
-              </svg>
-              <span>{loading ? t("ui.analyzing") : t("ui.analyze_soil_core")}</span>
-            </button>
-            <button className="ghost" disabled={loading} onClick={() => void loadSample()}>{t("ui.sample")}</button>
           </div>
-          {error && <p className="error" role="alert">{t("ui.error")} {error}</p>}
-        </section>
-      </main>
-    </div>
+        )}
+
+        {(pickerMode === "custom" || sites.length === 0) && (
+          <div className="custom-field">
+            <p className="hint">{t("ui.or_custom_field")}</p>
+            <FieldMap />
+          </div>
+        )}
+      </section>
+
+      <section className="panel">
+        <h2>{t("ui.step_inputs")}</h2>
+        <FieldForm />
+        <div className="actions">
+          <button className="primary" disabled={loading} onClick={() => void analyze()}>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true" style={{ inlineSize: 18, blockSize: 18, marginInlineEnd: 8, verticalAlign: "middle" }}>
+              <circle cx="12" cy="12" r="10" />
+              <line x1="12" y1="2" x2="12" y2="22" />
+              <line x1="2" y1="12" x2="22" y2="12" />
+              <circle cx="12" cy="12" r="4" />
+            </svg>
+            <span>{loading ? t("ui.analyzing") : t("ui.analyze_soil_core")}</span>
+          </button>
+          <button className="ghost" disabled={loading} onClick={() => void loadSample()}>{t("ui.sample")}</button>
+        </div>
+        {error && <p className="error" role="alert">{t("ui.error")} {error}</p>}
+      </section>
+    </main>
   );
 }
 
@@ -346,6 +327,7 @@ function Results() {
 
 export default function App() {
   const { lang, theme, result, loadAnalysis, reset } = useStore();
+  const [showSimulator, setShowSimulator] = useState(false);
 
   useEffect(() => {
     void i18n.changeLanguage(lang);
@@ -374,15 +356,31 @@ export default function App() {
     return () => window.removeEventListener("popstate", onPopState);
   }, [loadAnalysis, reset]);
 
-  return (
-    <>
-      <Header />
-      <Disclaimer />
-      {result ? <Results /> : <Landing />}
-      <Footer />
-      <AuthModal />
-      <PdfReportModal />
-      <NasaTelemetryModal />
-    </>
-  );
+  if (result) {
+    return (
+      <>
+        <Header onBackToLanding={() => { reset(); setShowSimulator(false); }} />
+        <Disclaimer />
+        <Results />
+        <Footer />
+        <AuthModal />
+        <PdfReportModal />
+        <NasaTelemetryModal />
+      </>
+    );
+  }
+
+  if (showSimulator) {
+    return (
+      <>
+        <Header onBackToLanding={() => setShowSimulator(false)} />
+        <Disclaimer />
+        <SimulatorView onBack={() => setShowSimulator(false)} />
+        <Footer />
+        <AuthModal />
+      </>
+    );
+  }
+
+  return <LandingPage onStartSimulation={() => setShowSimulator(true)} />;
 }
