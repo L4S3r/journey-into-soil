@@ -694,139 +694,101 @@ export class SceneController {
   private buildRootSystem(): THREE.Group {
     const rootGrp = new THREE.Group();
     const rootMat = new THREE.MeshStandardMaterial({
-      color: 0xfdf7ee,
-      roughness: 0.65,
+      color: 0xfdf8f0,
+      roughness: 0.68,
       metalness: 0.04,
       polygonOffset: true,
       polygonOffsetFactor: -2,
       polygonOffsetUnits: -2,
     });
 
-    // 15 Plant Root Clusters distributed along the front cutaway face (X = -24m to +24m)
-    // Directly aligning with the crop plants growing along the topsoil edge
-    const plantXPositions = [
-      -24.0, -20.5, -17.0, -13.5, -10.0, -6.5, -3.2, 0, 3.2, 6.5, 10.0, 13.5, 17.0, 20.5, 24.0,
+    // Clean classic root model distributed across the cutaway edge beneath crops
+    const plantPositions = [-21.0, -14.0, -7.0, 0, 7.0, 14.0, 21.0];
+
+    // Substantially increased Layer 1 lateral feeder roots (16 dense branches)
+    const layer1Laterals = [
+      { y: -0.14, len: 1.15, rotZ: 0.72, thick: 0.048 },
+      { y: -0.20, len: 1.05, rotZ: -0.70, thick: 0.048 },
+      { y: -0.28, len: 1.25, rotZ: 0.68, thick: 0.046 },
+      { y: -0.36, len: 1.18, rotZ: -0.66, thick: 0.046 },
+      { y: -0.44, len: 1.40, rotZ: 0.65, thick: 0.045 },
+      { y: -0.52, len: 1.30, rotZ: -0.62, thick: 0.045 },
+      { y: -0.62, len: 1.50, rotZ: 0.61, thick: 0.044 },
+      { y: -0.70, len: 1.35, rotZ: -0.59, thick: 0.044 },
+      { y: -0.80, len: 1.55, rotZ: 0.58, thick: 0.042 },
+      { y: -0.88, len: 1.42, rotZ: -0.56, thick: 0.042 },
+      { y: -0.98, len: 1.48, rotZ: 0.55, thick: 0.040 },
+      { y: -1.06, len: 1.38, rotZ: -0.53, thick: 0.040 },
+      { y: -1.16, len: 1.35, rotZ: 0.50, thick: 0.038 },
+      { y: -1.24, len: 1.28, rotZ: -0.48, thick: 0.038 },
+      { y: -1.32, len: 1.22, rotZ: 0.46, thick: 0.036 },
+      { y: -1.40, len: 1.18, rotZ: -0.44, thick: 0.036 },
     ];
 
-    plantXPositions.forEach((posX, plantIdx) => {
-      const isAnchor = plantIdx % 3 === 1 || posX === 0;
-      const plantScale = 0.88 + ((plantIdx * 17) % 7) * 0.04;
+    // Deeper subsoil lateral roots for Layers 2 and 3 (from classic model)
+    const deepLaterals = [
+      { y: -1.70, len: 1.50, rotZ: 0.48, thick: 0.035 },
+      { y: -1.90, len: 1.40, rotZ: -0.50, thick: 0.035 },
+      { y: -2.60, len: 1.20, rotZ: 0.38, thick: 0.030 },
+      { y: -2.80, len: 1.10, rotZ: -0.42, thick: 0.030 },
+      { y: -3.40, len: 0.80, rotZ: 0.28, thick: 0.020 },
+      { y: -3.60, len: 0.75, rotZ: -0.32, thick: 0.020 },
+    ];
 
-      // 1. Central primary descending taproot in Layer 1 (y = 0 to -1.45)
-      const tapLen = 1.38 * plantScale;
-      const tapGeo = new THREE.CylinderGeometry(0.075 * plantScale, 0.045 * plantScale, tapLen, 6);
-      tapGeo.translate(0, -tapLen / 2, 0);
-      const tapMesh = new THREE.Mesh(tapGeo, rootMat);
-      tapMesh.position.set(posX, 0, 0);
-      rootGrp.add(tapMesh);
+    plantPositions.forEach((posX, idx) => {
+      const isAnchor = posX === 0 || Math.abs(posX) === 14.0;
+      const pScale = 0.90 + ((idx * 13) % 5) * 0.05;
 
-      // 2. Crown Root Whorls & Brace Roots radiating left and right from the base
-      const crownRoots = [
-        { y: -0.06, len: 1.35 * plantScale, rotZ: 1.10, thick: 0.048 * plantScale },
-        { y: -0.10, len: 1.65 * plantScale, rotZ: 0.90, thick: 0.050 * plantScale },
-        { y: -0.16, len: 1.85 * plantScale, rotZ: 0.78, thick: 0.048 * plantScale },
-        { y: -0.22, len: 1.50 * plantScale, rotZ: 0.84, thick: 0.044 * plantScale },
+      // 1. Primary vertical taproot segment in Layer 1
+      const seg1 = new THREE.Mesh(
+        new THREE.CylinderGeometry(0.09 * pScale, 0.07 * pScale, 1.4 * pScale, 7),
+        rootMat
+      );
+      seg1.position.set(posX, -0.7 * pScale, 0);
+      rootGrp.add(seg1);
 
-        { y: -0.07, len: 1.40 * plantScale, rotZ: -1.08, thick: 0.048 * plantScale },
-        { y: -0.11, len: 1.70 * plantScale, rotZ: -0.88, thick: 0.050 * plantScale },
-        { y: -0.17, len: 1.90 * plantScale, rotZ: -0.76, thick: 0.048 * plantScale },
-        { y: -0.23, len: 1.55 * plantScale, rotZ: -0.82, thick: 0.044 * plantScale },
-      ];
-
-      // 3. Dense Lateral Feeder Roots in Layer 1 (y = -0.28 to -1.35)
-      const laterals = [
-        { y: -0.34, len: 1.80 * plantScale, rotZ: 0.65, thick: 0.044 * plantScale },
-        { y: -0.42, len: 2.10 * plantScale, rotZ: -0.62, thick: 0.044 * plantScale },
-        { y: -0.52, len: 2.25 * plantScale, rotZ: 0.58, thick: 0.042 * plantScale },
-        { y: -0.62, len: 1.95 * plantScale, rotZ: -0.59, thick: 0.042 * plantScale },
-        { y: -0.74, len: 2.30 * plantScale, rotZ: 0.52, thick: 0.040 * plantScale },
-        { y: -0.86, len: 2.05 * plantScale, rotZ: -0.54, thick: 0.038 * plantScale },
-        { y: -0.98, len: 1.85 * plantScale, rotZ: 0.48, thick: 0.036 * plantScale },
-        { y: -1.12, len: 1.70 * plantScale, rotZ: -0.46, thick: 0.034 * plantScale },
-        { y: -1.26, len: 1.55 * plantScale, rotZ: 0.42, thick: 0.032 * plantScale },
-      ];
-
-      const allRoots = [...crownRoots, ...laterals];
-
-      allRoots.forEach((lat) => {
-        const g = new THREE.CylinderGeometry(lat.thick, lat.thick * 0.28, lat.len, 5);
-        g.translate(0, -lat.len / 2, 0);
+      // 2. Densely populated Layer 1 lateral feeder roots
+      layer1Laterals.forEach((lat) => {
+        const latLen = lat.len * pScale;
+        const latThick = lat.thick * pScale;
+        const g = new THREE.CylinderGeometry(latThick, latThick * 0.3, latLen, 5);
+        g.translate(0, -latLen / 2, 0);
         const m = new THREE.Mesh(g, rootMat);
-        m.position.set(posX, lat.y, 0);
+        m.position.set(posX, lat.y * pScale, 0);
         m.rotation.z = lat.rotZ;
         rootGrp.add(m);
-
-        // 2 secondary fine rootlets branching off along each root
-        [0.45, 0.80].forEach((frac, sIdx) => {
-          const dist = lat.len * frac;
-          const px = posX - Math.sin(lat.rotZ) * dist;
-          const py = lat.y - Math.cos(lat.rotZ) * dist;
-
-          const secLen = (0.42 + sIdx * 0.15) * plantScale;
-          const secAngle = lat.rotZ + (sIdx % 2 === 0 ? 0.38 : -0.38);
-          const secThick = lat.thick * 0.45;
-
-          const sg = new THREE.CylinderGeometry(secThick, secThick * 0.25, secLen, 4);
-          sg.translate(0, -secLen / 2, 0);
-          const sm = new THREE.Mesh(sg, rootMat);
-          sm.position.set(px, py, 0.01);
-          sm.rotation.z = secAngle;
-          rootGrp.add(sm);
-        });
       });
 
-      // 4. Subsoil Taproots for Anchor Plants (Layers 2 and 3)
+      // 3. Deeper subterranean taproots & laterals for anchor plants (Layers 2 & 3)
       if (isAnchor) {
-        const seg2Len = 1.55;
         const seg2 = new THREE.Mesh(
-          new THREE.CylinderGeometry(0.065 * plantScale, 0.040 * plantScale, seg2Len, 6),
+          new THREE.CylinderGeometry(0.07 * pScale, 0.05 * pScale, 1.6, 7),
           rootMat
         );
-        seg2.position.set(posX + 0.03, -2.1, 0);
-        seg2.rotation.z = -0.04;
+        seg2.position.set(posX + 0.04, -2.1, 0);
+        seg2.rotation.z = -0.05;
         rootGrp.add(seg2);
 
-        const seg3Len = 1.65;
         const seg3 = new THREE.Mesh(
-          new THREE.CylinderGeometry(0.040 * plantScale, 0.020 * plantScale, seg3Len, 5),
+          new THREE.CylinderGeometry(0.05 * pScale, 0.02 * pScale, 1.8, 6),
           rootMat
         );
-        seg3.position.set(posX + 0.01, -3.6, 0);
-        seg3.rotation.z = 0.03;
+        seg3.position.set(posX + 0.02, -3.7, 0);
+        seg3.rotation.z = 0.04;
         rootGrp.add(seg3);
 
-        // Deep laterals in Layer 2 & 3
-        const deepLaterals = [
-          { y: -1.75, len: 1.45 * plantScale, rotZ: 0.42, thick: 0.032 * plantScale },
-          { y: -1.95, len: 1.35 * plantScale, rotZ: -0.45, thick: 0.032 * plantScale },
-          { y: -2.65, len: 1.15 * plantScale, rotZ: 0.35, thick: 0.028 * plantScale },
-          { y: -2.85, len: 1.05 * plantScale, rotZ: -0.38, thick: 0.028 * plantScale },
-        ];
-
-        deepLaterals.forEach((dLat) => {
-          const dg = new THREE.CylinderGeometry(dLat.thick, dLat.thick * 0.3, dLat.len, 5);
-          dg.translate(0, -dLat.len / 2, 0);
+        deepLaterals.forEach((lat) => {
+          const latLen = lat.len * pScale;
+          const latThick = lat.thick * pScale;
+          const dg = new THREE.CylinderGeometry(latThick, latThick * 0.3, latLen, 5);
+          dg.translate(0, -latLen / 2, 0);
           const dm = new THREE.Mesh(dg, rootMat);
-          dm.position.set(posX, dLat.y, 0);
-          dm.rotation.z = dLat.rotZ;
+          dm.position.set(posX, lat.y, 0);
+          dm.rotation.z = lat.rotZ;
           rootGrp.add(dm);
         });
       }
     });
-
-    // 5. Connecting Horizontal Fibrous Rhizosphere Mesh between plants in upper Layer 1 (y = -0.15 to -0.65)
-    for (let c = 0; c < 28; c++) {
-      const cx = -23.5 + c * 1.7;
-      const cy = -0.15 - ((c * 7) % 5) * 0.10;
-      const cLen = 1.45 + ((c * 3) % 4) * 0.25;
-      const cAngle = (c % 2 === 0 ? 1 : -1) * 0.75 + Math.sin(c) * 0.15;
-      const cg = new THREE.CylinderGeometry(0.028, 0.012, cLen, 4);
-      cg.translate(0, -cLen / 2, 0);
-      const cm = new THREE.Mesh(cg, rootMat);
-      cm.position.set(cx, cy, 0.015);
-      cm.rotation.z = cAngle;
-      rootGrp.add(cm);
-    }
 
     return rootGrp;
   }
