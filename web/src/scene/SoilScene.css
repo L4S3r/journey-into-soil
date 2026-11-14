@@ -135,8 +135,38 @@
   color: #10b981;
 }
 
+.telemetry-chip.interactive {
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  padding: 2px 7px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font: inherit;
+}
+
+.telemetry-chip.interactive:hover {
+  background: rgba(16, 185, 129, 0.14);
+  border-color: rgba(16, 185, 129, 0.35);
+}
+
 :root:not([data-theme="dark"]) .telemetry-chip.crop {
   color: #15803d;
+}
+
+:root:not([data-theme="dark"]) .telemetry-chip.interactive:hover {
+  background: rgba(21, 128, 61, 0.12);
+  border-color: rgba(21, 128, 61, 0.32);
+}
+
+.crop-toggle-icon {
+  opacity: 0.65;
+  transition: transform 0.2s ease;
+}
+
+.telemetry-chip.interactive:hover .crop-toggle-icon {
+  opacity: 1;
+  transform: translateY(1px);
 }
 
 .telemetry-chip.date {

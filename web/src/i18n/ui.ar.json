@@ -439,5 +439,6 @@
   "ui.timeline_reset": "إعادة للبداية",
   "ui.horizon_inspector": "فاحص طبقات التربة",
   "ui.close_inspector": "إغلاق الفاحص",
-  "ui.toggle_atmosphere": "البيانات الجوية الحية"
+  "ui.toggle_atmosphere": "البيانات الجوية الحية",
+  "ui.crop_toggle": "تبديل معاينة المحصول (قمح / ذرة)"
 }

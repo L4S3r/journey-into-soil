@@ -439,5 +439,6 @@
   "ui.timeline_reset": "Reset to Start",
   "ui.horizon_inspector": "Horizon Inspector",
   "ui.close_inspector": "Close Inspector",
-  "ui.toggle_atmosphere": "Atmospheric Telemetry"
+  "ui.toggle_atmosphere": "Atmospheric Telemetry",
+  "ui.crop_toggle": "Switch crop preview (Wheat / Maize)"
 }

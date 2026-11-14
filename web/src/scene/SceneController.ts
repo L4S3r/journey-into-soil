@@ -43,6 +43,11 @@ export class SceneController {
   private weatherMode: WeatherMode = "auto";
   private saltCrustMesh!: THREE.Mesh;
   private rootGroup!: THREE.Group;
+  private fieldWheatGroup!: THREE.Group;
+  private fieldMaizeGroup!: THREE.Group;
+  private cutawayWheatGroup!: THREE.Group;
+  private cutawayMaizeGroup!: THREE.Group;
+  private cropOverride: "wheat" | "maize" | null = null;
   private burst!: THREE.Points;
   private burstV!: Float32Array;
   private bst = -1;
@@ -183,7 +188,13 @@ export class SceneController {
     });
 
     // Plant subtle surface vegetation along the cutaway top edge for Act 2/3
-    this.plantField(this.slabs[0].g, -28, 28, -20, 0, 0.65, 0.55, HT[0] / 2);
+    this.cutawayWheatGroup = new THREE.Group();
+    this.cutawayMaizeGroup = new THREE.Group();
+    this.cutawayMaizeGroup.visible = false;
+    this.slabs[0].g.add(this.cutawayWheatGroup);
+    this.slabs[0].g.add(this.cutawayMaizeGroup);
+    this.plantWheatField(this.cutawayWheatGroup, -28, 28, -20, 0, 0.65, 0.55, HT[0] / 2);
+    this.plantMaizeField(this.cutawayMaizeGroup, -28, 28, -20, 0, 0.95, 0.85, HT[0] / 2);
 
     // Surface Salinity Crust Mesh on Slab 0 (topsoil)
     const saltGeo = new THREE.PlaneGeometry(SW * 0.98, DEP * 0.98);
@@ -222,12 +233,19 @@ export class SceneController {
     this.fieldGroup.add(fieldGround);
 
     // Instanced lush agricultural crops across Egyptian farm with central pasture clearing for cattle
-    this.plantField(this.fieldGroup, -26, 26, -52, 14, 0.55, 0.45, 0, {
+    this.fieldWheatGroup = new THREE.Group();
+    this.fieldMaizeGroup = new THREE.Group();
+    this.fieldMaizeGroup.visible = false;
+    this.fieldGroup.add(this.fieldWheatGroup);
+    this.fieldGroup.add(this.fieldMaizeGroup);
+    const pastureExclude = {
       x0: -6.5,
       x1: 6.5,
       z0: -15.0,
       z1: -7.0,
-    });
+    };
+    this.plantWheatField(this.fieldWheatGroup, -26, 26, -52, 14, 0.55, 0.45, 0, pastureExclude);
+    this.plantMaizeField(this.fieldMaizeGroup, -26, 26, -52, 14, 0.90, 0.80, 0, pastureExclude);
 
     // Date Palm tree windbreaks (authentic Egyptian Nile Delta farm shelterbelts)
     this.plantDatePalms();
@@ -308,7 +326,133 @@ export class SceneController {
     this.canvas.addEventListener("pointercancel", this.pointerUpHandler);
   }
 
-  private plantField(
+  private mergeGeometries(geos: THREE.BufferGeometry[]): THREE.BufferGeometry {
+    const posList: number[] = [];
+    const indexList: number[] = [];
+    let vertOffset = 0;
+
+    for (const g of geos) {
+      const p = g.getAttribute("position");
+      if (!p) continue;
+      for (let i = 0; i < p.count; i++) {
+        posList.push(p.getX(i), p.getY(i), p.getZ(i));
+      }
+      if (g.index) {
+        for (let i = 0; i < g.index.count; i++) {
+          indexList.push(g.index.getX(i) + vertOffset);
+        }
+      } else {
+        for (let i = 0; i < p.count; i++) {
+          indexList.push(vertOffset + i);
+        }
+      }
+      vertOffset += p.count;
+    }
+
+    const merged = new THREE.BufferGeometry();
+    merged.setAttribute("position", new THREE.Float32BufferAttribute(posList, 3));
+    merged.setIndex(indexList);
+    merged.computeVertexNormals();
+    return merged;
+  }
+
+  private createMaizeLeavesGeometry(): THREE.BufferGeometry {
+    // 4 alternating broad arching leaves (lanceolate blades) with natural drooping curve
+    const leafSpecs = [
+      { y: 0.65, yaw: 0.1, len: 1.15, width: 0.24, arch: 0.35, droop: 0.55 },
+      { y: 0.95, yaw: Math.PI * 0.92, len: 1.20, width: 0.26, arch: 0.38, droop: 0.58 },
+      { y: 1.35, yaw: 0.38, len: 1.05, width: 0.22, arch: 0.32, droop: 0.50 },
+      { y: 1.70, yaw: Math.PI * 1.08, len: 0.90, width: 0.20, arch: 0.28, droop: 0.42 },
+    ];
+
+    const positions: number[] = [];
+    const indices: number[] = [];
+    const segs = 7;
+
+    leafSpecs.forEach((spec) => {
+      const baseIdx = positions.length / 3;
+      const cosY = Math.cos(spec.yaw);
+      const sinY = Math.sin(spec.yaw);
+
+      for (let s = 0; s <= segs; s++) {
+        const u = s / segs;
+        const w = spec.width * Math.sin(Math.PI * Math.max(0.05, u)) ** 0.65;
+        const leafY = spec.y + Math.sin(Math.PI * u * 0.55) * spec.arch - u * u * spec.droop;
+        const forwardDist = u * spec.len;
+
+        const xOffset = forwardDist * sinY;
+        const zOffset = forwardDist * cosY;
+
+        const perpX = cosY * (w * 0.5);
+        const perpZ = -sinY * (w * 0.5);
+
+        // 1. Left edge
+        positions.push(xOffset - perpX, leafY + 0.02 * (1 - u), zOffset - perpZ);
+        // 2. Center spine
+        positions.push(xOffset, leafY, zOffset);
+        // 3. Right edge
+        positions.push(xOffset + perpX, leafY + 0.02 * (1 - u), zOffset + perpZ);
+      }
+
+      for (let s = 0; s < segs; s++) {
+        const row1 = baseIdx + s * 3;
+        const row2 = baseIdx + (s + 1) * 3;
+
+        indices.push(row1, row2, row1 + 1);
+        indices.push(row1 + 1, row2, row2 + 1);
+
+        indices.push(row1 + 1, row2 + 1, row1 + 2);
+        indices.push(row1 + 2, row2 + 1, row2 + 2);
+      }
+    });
+
+    const geo = new THREE.BufferGeometry();
+    geo.setAttribute("position", new THREE.Float32BufferAttribute(positions, 3));
+    geo.setIndex(indices);
+    geo.computeVertexNormals();
+    return geo;
+  }
+
+  private createMaizeTasselGeometry(): THREE.BufferGeometry {
+    const geos: THREE.BufferGeometry[] = [];
+
+    // 1. Apex golden tassel (male inflorescence) at y = 2.38 - 2.85
+    const spikeAngles = [
+      { rad: 0, pitch: 0.12, len: 0.48 },
+      { rad: 1.25, pitch: 0.22, len: 0.42 },
+      { rad: 2.50, pitch: 0.20, len: 0.44 },
+      { rad: 3.75, pitch: 0.24, len: 0.40 },
+      { rad: 5.00, pitch: 0.18, len: 0.45 },
+    ];
+    spikeAngles.forEach((sp) => {
+      const g = new THREE.ConeGeometry(0.022, sp.len, 4);
+      g.translate(0, sp.len / 2, 0);
+      g.rotateZ(sp.pitch);
+      g.rotateY(sp.rad);
+      g.translate(0, 2.38, 0);
+      geos.push(g);
+    });
+
+    // 2. Husked Ear of corn (cob) at mid-stalk (y = 1.05 - 1.35)
+    const earGeo = new THREE.CylinderGeometry(0.065, 0.08, 0.38, 6);
+    earGeo.translate(0, 0.19, 0);
+    earGeo.rotateZ(-0.42);
+    earGeo.rotateY(0.7);
+    earGeo.translate(0.07, 1.05, 0.05);
+    geos.push(earGeo);
+
+    // 3. Golden silk tassel at the tip of the ear
+    const silkGeo = new THREE.ConeGeometry(0.025, 0.14, 4);
+    silkGeo.translate(0, 0.07, 0);
+    silkGeo.rotateZ(-0.42);
+    silkGeo.rotateY(0.7);
+    silkGeo.translate(0.18, 1.28, 0.12);
+    geos.push(silkGeo);
+
+    return this.mergeGeometries(geos);
+  }
+
+  private plantWheatField(
     parent: THREE.Object3D,
     x0: number,
     x1: number,
@@ -404,20 +548,163 @@ export class SceneController {
     }
   }
 
+  private plantMaizeField(
+    parent: THREE.Object3D,
+    x0: number,
+    x1: number,
+    z0: number,
+    z1: number,
+    dx: number,
+    dz: number,
+    y: number,
+    excludeZone?: { x0: number; x1: number; z0: number; z1: number }
+  ): void {
+    const nx = Math.floor((x1 - x0) / dx) + 1;
+    const nz = Math.floor((z1 - z0) / dz) + 1;
+    const n = nx * nz;
+
+    const stalkMat = new THREE.MeshStandardMaterial({
+      roughness: 0.75,
+      side: THREE.DoubleSide,
+    });
+    const leafMat = new THREE.MeshStandardMaterial({
+      roughness: 0.68,
+      side: THREE.DoubleSide,
+    });
+    const tasselMat = new THREE.MeshStandardMaterial({
+      roughness: 0.65,
+      side: THREE.DoubleSide,
+    });
+
+    const addSway = (mat: THREE.MeshStandardMaterial, mult: number) => {
+      mat.onBeforeCompile = (s) => {
+        s.uniforms.uTime = this.swayU;
+        s.vertexShader =
+          "uniform float uTime;\n" +
+          s.vertexShader.replace(
+            "#include <begin_vertex>",
+            `#include <begin_vertex>\ntransformed.x += sin(uTime * 1.5 + instanceMatrix[3][0] * 0.5 + instanceMatrix[3][2] * 0.3) * ${mult} * (position.y / 2.4);\ntransformed.z += cos(uTime * 1.2 + instanceMatrix[3][0] * 0.4 + instanceMatrix[3][2] * 0.3) * (${mult} * 0.4) * (position.y / 2.4);`
+          );
+      };
+    };
+
+    addSway(stalkMat, 0.07);
+    addSway(leafMat, 0.14);
+    addSway(tasselMat, 0.10);
+
+    // Stalk Geometry: main culm + node collars
+    const mainCulm = new THREE.CylinderGeometry(0.065, 0.09, 2.35, 6);
+    mainCulm.translate(0, 1.175, 0);
+    const node1 = new THREE.CylinderGeometry(0.082, 0.082, 0.04, 6);
+    node1.translate(0, 0.65, 0);
+    const node2 = new THREE.CylinderGeometry(0.076, 0.076, 0.04, 6);
+    node2.translate(0, 1.05, 0);
+    const node3 = new THREE.CylinderGeometry(0.070, 0.070, 0.04, 6);
+    node3.translate(0, 1.45, 0);
+    const stalkGeo = this.mergeGeometries([mainCulm, node1, node2, node3]);
+
+    const leavesGeo = this.createMaizeLeavesGeometry();
+    const tasselGeo = this.createMaizeTasselGeometry();
+
+    const culmMesh = new THREE.InstancedMesh(stalkGeo, stalkMat, n);
+    const leavesMesh = new THREE.InstancedMesh(leavesGeo, leafMat, n);
+    const tasselMesh = new THREE.InstancedMesh(tasselGeo, tasselMat, n);
+
+    const d = new THREE.Object3D();
+    const stalkCol = new THREE.Color();
+    const leafCol = new THREE.Color();
+    const tasselCol = new THREE.Color();
+    d.rotation.order = "YXZ";
+
+    let q = 0;
+    for (let i = 0; i < nx; i++) {
+      for (let j = 0; j < nz; j++) {
+        const jitterX = (Math.random() - 0.5) * dx * 0.65;
+        const jitterZ = (Math.random() - 0.5) * dz * 0.65;
+        const posX = x0 + i * dx + jitterX;
+        const posZ = z0 + j * dz + jitterZ;
+
+        if (
+          excludeZone &&
+          posX >= excludeZone.x0 &&
+          posX <= excludeZone.x1 &&
+          posZ >= excludeZone.z0 &&
+          posZ <= excludeZone.z1
+        ) {
+          d.scale.set(0, 0, 0);
+          d.position.set(posX, y, posZ);
+          d.updateMatrix();
+          culmMesh.setMatrixAt(q, d.matrix);
+          leavesMesh.setMatrixAt(q, d.matrix);
+          tasselMesh.setMatrixAt(q, d.matrix);
+          q++;
+          continue;
+        }
+
+        d.position.set(posX, y, posZ);
+        d.rotation.set(
+          (Math.random() - 0.5) * 0.07,
+          Math.random() * Math.PI * 2,
+          (Math.random() - 0.5) * 0.07
+        );
+        const stalkScale = 0.92 + Math.random() * 0.22;
+        d.scale.set(stalkScale, stalkScale * (0.95 + Math.random() * 0.15), stalkScale);
+        d.updateMatrix();
+
+        culmMesh.setMatrixAt(q, d.matrix);
+        leavesMesh.setMatrixAt(q, d.matrix);
+        tasselMesh.setMatrixAt(q, d.matrix);
+
+        // Rich vegetative maize colors
+        stalkCol.setHSL(
+          0.25 + Math.random() * 0.03,
+          0.62 + Math.random() * 0.12,
+          0.21 + Math.random() * 0.06
+        );
+        leafCol.setHSL(
+          0.26 + Math.random() * 0.03,
+          0.68 + Math.random() * 0.14,
+          0.20 + Math.random() * 0.05
+        );
+        tasselCol.setHSL(
+          0.12 + Math.random() * 0.04,
+          0.78 + Math.random() * 0.14,
+          0.52 + Math.random() * 0.08
+        );
+
+        culmMesh.setColorAt(q, stalkCol);
+        leavesMesh.setColorAt(q, leafCol);
+        tasselMesh.setColorAt(q, tasselCol);
+        q++;
+      }
+    }
+
+    culmMesh.count = q;
+    culmMesh.frustumCulled = false;
+    leavesMesh.count = q;
+    leavesMesh.frustumCulled = false;
+    tasselMesh.count = q;
+    tasselMesh.frustumCulled = false;
+
+    parent.add(culmMesh);
+    parent.add(leavesMesh);
+    parent.add(tasselMesh);
+  }
+
   private buildRootSystem(): THREE.Group {
     const rootGrp = new THREE.Group();
     const rootMat = new THREE.MeshStandardMaterial({
-      color: 0xf3ede2,
-      roughness: 0.75,
-      metalness: 0.08,
+      color: 0xf5efe6,
+      roughness: 0.72,
+      metalness: 0.06,
     });
 
-    // Main primary taproot (descending vertically along the cutaway face)
-    const seg1 = new THREE.Mesh(new THREE.CylinderGeometry(0.09, 0.07, 1.4, 7), rootMat);
-    seg1.position.y = -0.7;
+    // 1. Primary Central Taproot (descending vertically along the cutaway face)
+    const seg1 = new THREE.Mesh(new THREE.CylinderGeometry(0.10, 0.08, 1.45, 7), rootMat);
+    seg1.position.y = -0.725;
     rootGrp.add(seg1);
 
-    const seg2 = new THREE.Mesh(new THREE.CylinderGeometry(0.07, 0.05, 1.6, 7), rootMat);
+    const seg2 = new THREE.Mesh(new THREE.CylinderGeometry(0.08, 0.05, 1.6, 7), rootMat);
     seg2.position.set(0.04, -2.1, 0);
     seg2.rotation.z = -0.05;
     rootGrp.add(seg2);
@@ -427,21 +714,99 @@ export class SceneController {
     seg3.rotation.z = 0.04;
     rootGrp.add(seg3);
 
-    // Lateral feeder roots branching outward
-    const lateralData = [
-      { y: -0.4, len: 1.1, rotZ: 0.65, thick: 0.045 },
-      { y: -0.5, len: 0.95, rotZ: -0.62, thick: 0.045 },
-      { y: -0.9, len: 1.4, rotZ: 0.58, thick: 0.04 },
-      { y: -1.1, len: 1.3, rotZ: -0.55, thick: 0.04 },
-      { y: -1.7, len: 1.5, rotZ: 0.48, thick: 0.035 },
-      { y: -1.9, len: 1.4, rotZ: -0.5, thick: 0.035 },
-      { y: -2.6, len: 1.2, rotZ: 0.38, thick: 0.03 },
-      { y: -2.8, len: 1.1, rotZ: -0.42, thick: 0.03 },
-      { y: -3.4, len: 0.8, rotZ: 0.28, thick: 0.02 },
-      { y: -3.6, len: 0.75, rotZ: -0.32, thick: 0.02 },
+    // 2. LAYER 1: Crown Root Whorls & Adventitious Brace Roots (y = -0.05 to -0.32)
+    // Dense radiating cluster emerging just below the soil surface
+    const crownRoots = [
+      { y: -0.05, len: 1.25, rotZ: 1.15, rotX: 0.12, thick: 0.046 },
+      { y: -0.08, len: 1.55, rotZ: 0.95, rotX: -0.18, thick: 0.048 },
+      { y: -0.12, len: 1.95, rotZ: 0.80, rotX: 0.10, thick: 0.050 },
+      { y: -0.16, len: 2.25, rotZ: 0.72, rotX: -0.14, thick: 0.048 },
+      { y: -0.22, len: 1.80, rotZ: 0.85, rotX: 0.22, thick: 0.044 },
+      { y: -0.28, len: 1.60, rotZ: 0.76, rotX: -0.10, thick: 0.042 },
+
+      { y: -0.06, len: 1.30, rotZ: -1.12, rotX: -0.14, thick: 0.046 },
+      { y: -0.09, len: 1.60, rotZ: -0.92, rotX: 0.16, thick: 0.048 },
+      { y: -0.13, len: 2.05, rotZ: -0.78, rotX: -0.12, thick: 0.050 },
+      { y: -0.18, len: 2.30, rotZ: -0.70, rotX: 0.15, thick: 0.048 },
+      { y: -0.24, len: 1.75, rotZ: -0.82, rotX: -0.20, thick: 0.044 },
+      { y: -0.30, len: 1.65, rotZ: -0.74, rotX: 0.12, thick: 0.042 },
     ];
 
-    lateralData.forEach((lat) => {
+    // 3. LAYER 1: Dense Mid-Horizon Lateral Feeder Roots (y = -0.34 to -1.40)
+    const layer1Laterals = [
+      { y: -0.36, len: 2.10, rotZ: 0.66, rotX: 0.08, thick: 0.044 },
+      { y: -0.42, len: 2.40, rotZ: -0.64, rotX: -0.10, thick: 0.044 },
+      { y: -0.50, len: 2.55, rotZ: 0.60, rotX: 0.12, thick: 0.042 },
+      { y: -0.56, len: 2.25, rotZ: -0.62, rotX: -0.08, thick: 0.042 },
+      { y: -0.64, len: 2.70, rotZ: 0.56, rotX: 0.15, thick: 0.042 },
+      { y: -0.70, len: 2.45, rotZ: -0.58, rotX: -0.12, thick: 0.040 },
+      { y: -0.78, len: 2.60, rotZ: 0.52, rotX: 0.10, thick: 0.040 },
+      { y: -0.86, len: 2.30, rotZ: -0.54, rotX: -0.14, thick: 0.038 },
+      { y: -0.94, len: 2.15, rotZ: 0.50, rotX: 0.08, thick: 0.038 },
+      { y: -1.02, len: 2.25, rotZ: -0.49, rotX: -0.10, thick: 0.036 },
+      { y: -1.10, len: 1.95, rotZ: 0.46, rotX: 0.12, thick: 0.036 },
+      { y: -1.18, len: 2.05, rotZ: -0.45, rotX: -0.08, thick: 0.034 },
+      { y: -1.26, len: 1.80, rotZ: 0.43, rotX: 0.06, thick: 0.034 },
+      { y: -1.34, len: 1.85, rotZ: -0.42, rotX: -0.06, thick: 0.032 },
+      { y: -1.40, len: 1.65, rotZ: 0.40, rotX: 0.08, thick: 0.032 },
+    ];
+
+    const allLayer1Roots = [...crownRoots, ...layer1Laterals];
+
+    allLayer1Roots.forEach((lat) => {
+      const g = new THREE.CylinderGeometry(lat.thick, lat.thick * 0.28, lat.len, 5);
+      g.translate(0, -lat.len / 2, 0);
+      const m = new THREE.Mesh(g, rootMat);
+      m.position.set(0, lat.y, 0);
+      m.rotation.z = lat.rotZ;
+      if (lat.rotX) m.rotation.x = lat.rotX;
+      rootGrp.add(m);
+
+      // Attach 2 secondary fine rootlets branching off along each Layer 1 root
+      [0.42, 0.78].forEach((frac, sIdx) => {
+        const dist = lat.len * frac;
+        const px = -Math.sin(lat.rotZ) * dist;
+        const py = lat.y - Math.cos(lat.rotZ) * dist;
+        const pz = lat.rotX ? Math.sin(lat.rotX) * dist : 0;
+
+        const secLen = 0.45 + (sIdx + 1) * 0.12;
+        const secAngle = lat.rotZ + (sIdx % 2 === 0 ? 0.38 : -0.38);
+        const secThick = lat.thick * 0.42;
+
+        const sg = new THREE.CylinderGeometry(secThick, secThick * 0.25, secLen, 4);
+        sg.translate(0, -secLen / 2, 0);
+        const sm = new THREE.Mesh(sg, rootMat);
+        sm.position.set(px, py, pz);
+        sm.rotation.z = secAngle;
+        if (lat.rotX) sm.rotation.x = lat.rotX * 0.8;
+        rootGrp.add(sm);
+      });
+    });
+
+    // 4. Fine Root Tufts in Upper Topsoil (0 to 12 cm, y = -0.04 to -0.30)
+    for (let f = 0; f < 10; f++) {
+      const fy = -0.05 - (f / 10) * 0.25;
+      const fAngle = (f % 2 === 0 ? 1 : -1) * (0.85 + Math.sin(f) * 0.25);
+      const fLen = 0.75 + Math.cos(f) * 0.2;
+      const fg = new THREE.CylinderGeometry(0.024, 0.008, fLen, 4);
+      fg.translate(0, -fLen / 2, 0);
+      const fm = new THREE.Mesh(fg, rootMat);
+      fm.position.set(0, fy, Math.sin(f * 2) * 0.08);
+      fm.rotation.z = fAngle;
+      rootGrp.add(fm);
+    }
+
+    // 5. DEEPER SUBTERRANEAN LAYERS (Layers 2, 3, 4 - Below y = -1.45)
+    const deepLaterals = [
+      { y: -1.75, len: 1.55, rotZ: 0.45, thick: 0.034 },
+      { y: -1.95, len: 1.45, rotZ: -0.48, thick: 0.034 },
+      { y: -2.65, len: 1.25, rotZ: 0.36, thick: 0.030 },
+      { y: -2.85, len: 1.15, rotZ: -0.40, thick: 0.030 },
+      { y: -3.45, len: 0.85, rotZ: 0.26, thick: 0.022 },
+      { y: -3.65, len: 0.80, rotZ: -0.30, thick: 0.022 },
+    ];
+
+    deepLaterals.forEach((lat) => {
       const g = new THREE.CylinderGeometry(lat.thick, lat.thick * 0.3, lat.len, 5);
       g.translate(0, -lat.len / 2, 0);
       const m = new THREE.Mesh(g, rootMat);
@@ -1044,6 +1409,44 @@ export class SceneController {
       const rootSpreadScale = Math.max(0.4, Math.min(1.4, 0.5 + rootCm / 120));
       this.rootGroup.scale.set(rootSpreadScale, rootDepthScale, rootSpreadScale);
     }
+
+    // 5. Modulate Crop Variety & Phenology Scaling (Wheat vs Maize)
+    const cropIdx = strat?.sim?.crop_idx?.[day] ?? -1;
+    const simulatedCrop = cropIdx >= 0 ? strat?.seasons?.[cropIdx]?.crop : null;
+    const activeCrop = this.cropOverride || simulatedCrop;
+    const canopy = strat?.sim?.canopy?.[day] ?? 0;
+
+    const isMaize = activeCrop === "maize";
+    const isWheat = activeCrop === "wheat" || (activeCrop !== "maize" && activeCrop !== null);
+
+    if (isMaize) {
+      if (this.fieldMaizeGroup) this.fieldMaizeGroup.visible = true;
+      if (this.fieldWheatGroup) this.fieldWheatGroup.visible = false;
+      if (this.cutawayMaizeGroup) this.cutawayMaizeGroup.visible = true;
+      if (this.cutawayWheatGroup) this.cutawayWheatGroup.visible = false;
+
+      const scaleY = Math.max(0.18, canopy);
+      this.fieldMaizeGroup?.scale.set(1, scaleY, 1);
+      this.cutawayMaizeGroup?.scale.set(1, scaleY, 1);
+    } else if (isWheat) {
+      if (this.fieldWheatGroup) this.fieldWheatGroup.visible = true;
+      if (this.fieldMaizeGroup) this.fieldMaizeGroup.visible = false;
+      if (this.cutawayWheatGroup) this.cutawayWheatGroup.visible = true;
+      if (this.cutawayMaizeGroup) this.cutawayMaizeGroup.visible = false;
+
+      const scaleY = Math.max(0.15, canopy);
+      this.fieldWheatGroup?.scale.set(1, scaleY, 1);
+      this.cutawayWheatGroup?.scale.set(1, scaleY, 1);
+    } else {
+      // Fallow / bare ground: show low stubble
+      if (this.fieldWheatGroup) this.fieldWheatGroup.visible = true;
+      if (this.fieldMaizeGroup) this.fieldMaizeGroup.visible = false;
+      if (this.cutawayWheatGroup) this.cutawayWheatGroup.visible = true;
+      if (this.cutawayMaizeGroup) this.cutawayMaizeGroup.visible = false;
+
+      this.fieldWheatGroup?.scale.set(1, 0.08, 1);
+      this.cutawayWheatGroup?.scale.set(1, 0.08, 1);
+    }
   }
 
   public setTheme(theme: "light" | "dark"): void {
@@ -1272,7 +1675,8 @@ export class SceneController {
     const day = Math.min(Math.floor(this.dayT * totalDays), totalDays - 1);
 
     const cropIdx = strat.sim?.crop_idx?.[day] ?? -1;
-    const activeCrop = cropIdx >= 0 ? strat.seasons[cropIdx]?.crop : null;
+    const simulatedCrop = cropIdx >= 0 ? strat.seasons[cropIdx]?.crop : null;
+    const activeCrop = this.cropOverride || simulatedCrop;
     const activeSeason = cropIdx >= 0 ? strat.seasons[cropIdx]?.season : null;
 
     const rootCm = strat.sim?.root_cm?.[day] ?? 0;
@@ -1316,6 +1720,16 @@ export class SceneController {
 
   public setOnDiveProgress(cb: (key: string | null, canSkip: boolean) => void): void {
     this.onDiveProgressCb = cb;
+  }
+
+  public setCropOverride(crop: "wheat" | "maize" | null): void {
+    this.cropOverride = crop;
+    this.updateSoilVisuals();
+    this.emitTelemetry();
+  }
+
+  public getCropOverride(): "wheat" | "maize" | null {
+    return this.cropOverride;
   }
 
   public dispose(): void {
