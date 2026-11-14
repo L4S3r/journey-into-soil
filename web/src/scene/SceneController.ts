@@ -691,104 +691,181 @@ export class SceneController {
     parent.add(tasselMesh);
   }
 
+  private createTaperedTubeGeometry(
+    points: THREE.Vector3[],
+    radiusAt: (t: number) => number,
+    radialSegments = 6
+  ): THREE.BufferGeometry {
+    if (points.length < 2) return new THREE.BufferGeometry();
+    const positions: number[] = [];
+    const normals: number[] = [];
+    const indices: number[] = [];
+
+    const nPts = points.length;
+    let prevNormal = new THREE.Vector3(0, 0, 1);
+
+    for (let i = 0; i < nPts; i++) {
+      const t = i / (nPts - 1);
+      const r = Math.max(0.002, radiusAt(t));
+      const p = points[i];
+
+      const tangent = new THREE.Vector3();
+      if (i === 0) {
+        tangent.subVectors(points[1], points[0]).normalize();
+      } else if (i === nPts - 1) {
+        tangent.subVectors(points[nPts - 1], points[nPts - 2]).normalize();
+      } else {
+        tangent.subVectors(points[i + 1], points[i - 1]).normalize();
+      }
+
+      let normal = new THREE.Vector3().crossVectors(tangent, prevNormal).normalize();
+      if (normal.lengthSq() < 0.01) {
+        normal = new THREE.Vector3().crossVectors(tangent, new THREE.Vector3(0, 1, 0)).normalize();
+      }
+      const binormal = new THREE.Vector3().crossVectors(tangent, normal).normalize();
+      prevNormal = binormal;
+
+      for (let j = 0; j <= radialSegments; j++) {
+        const theta = (j / radialSegments) * Math.PI * 2;
+        const cos = Math.cos(theta);
+        const sin = Math.sin(theta);
+
+        const nX = normal.x * cos + binormal.x * sin;
+        const nY = normal.y * cos + binormal.y * sin;
+        const nZ = normal.z * cos + binormal.z * sin;
+
+        positions.push(p.x + nX * r, p.y + nY * r, p.z + nZ * r);
+        normals.push(nX, nY, nZ);
+      }
+    }
+
+    for (let i = 0; i < nPts - 1; i++) {
+      const ring1 = i * (radialSegments + 1);
+      const ring2 = (i + 1) * (radialSegments + 1);
+
+      for (let j = 0; j < radialSegments; j++) {
+        const a = ring1 + j;
+        const b = ring2 + j;
+        const c = ring2 + j + 1;
+        const d = ring1 + j + 1;
+
+        indices.push(a, b, d);
+        indices.push(b, c, d);
+      }
+    }
+
+    const geo = new THREE.BufferGeometry();
+    geo.setAttribute("position", new THREE.Float32BufferAttribute(positions, 3));
+    geo.setAttribute("normal", new THREE.Float32BufferAttribute(normals, 3));
+    geo.setIndex(indices);
+    return geo;
+  }
+
   private buildRootSystem(): THREE.Group {
     const rootGrp = new THREE.Group();
     const rootMat = new THREE.MeshStandardMaterial({
-      color: 0xfdf8f0,
-      roughness: 0.68,
+      color: 0xede4d3, // authentic botanical ivory/cream root tissue
+      roughness: 0.62,
       metalness: 0.04,
       polygonOffset: true,
       polygonOffsetFactor: -2,
       polygonOffsetUnits: -2,
     });
 
-    // Clean classic root model distributed across the cutaway edge beneath crops
-    const plantPositions = [-21.0, -14.0, -7.0, 0, 7.0, 14.0, 21.0];
+    const allGeos: THREE.BufferGeometry[] = [];
 
-    // Substantially increased Layer 1 lateral feeder roots (16 dense branches)
-    const layer1Laterals = [
-      { y: -0.14, len: 1.15, rotZ: 0.72, thick: 0.048 },
-      { y: -0.20, len: 1.05, rotZ: -0.70, thick: 0.048 },
-      { y: -0.28, len: 1.25, rotZ: 0.68, thick: 0.046 },
-      { y: -0.36, len: 1.18, rotZ: -0.66, thick: 0.046 },
-      { y: -0.44, len: 1.40, rotZ: 0.65, thick: 0.045 },
-      { y: -0.52, len: 1.30, rotZ: -0.62, thick: 0.045 },
-      { y: -0.62, len: 1.50, rotZ: 0.61, thick: 0.044 },
-      { y: -0.70, len: 1.35, rotZ: -0.59, thick: 0.044 },
-      { y: -0.80, len: 1.55, rotZ: 0.58, thick: 0.042 },
-      { y: -0.88, len: 1.42, rotZ: -0.56, thick: 0.042 },
-      { y: -0.98, len: 1.48, rotZ: 0.55, thick: 0.040 },
-      { y: -1.06, len: 1.38, rotZ: -0.53, thick: 0.040 },
-      { y: -1.16, len: 1.35, rotZ: 0.50, thick: 0.038 },
-      { y: -1.24, len: 1.28, rotZ: -0.48, thick: 0.038 },
-      { y: -1.32, len: 1.22, rotZ: 0.46, thick: 0.036 },
-      { y: -1.40, len: 1.18, rotZ: -0.44, thick: 0.036 },
-    ];
-
-    // Deeper subsoil lateral roots for Layers 2 and 3 (from classic model)
-    const deepLaterals = [
-      { y: -1.70, len: 1.50, rotZ: 0.48, thick: 0.035 },
-      { y: -1.90, len: 1.40, rotZ: -0.50, thick: 0.035 },
-      { y: -2.60, len: 1.20, rotZ: 0.38, thick: 0.030 },
-      { y: -2.80, len: 1.10, rotZ: -0.42, thick: 0.030 },
-      { y: -3.40, len: 0.80, rotZ: 0.28, thick: 0.020 },
-      { y: -3.60, len: 0.75, rotZ: -0.32, thick: 0.020 },
-    ];
+    // Multi-plant root rhizosphere distributed across the cutaway edge beneath crops
+    const plantPositions = [-22.0, -16.5, -11.0, -5.5, 0, 5.5, 11.0, 16.5, 22.0];
 
     plantPositions.forEach((posX, idx) => {
-      const isAnchor = posX === 0 || Math.abs(posX) === 14.0;
-      const pScale = 0.90 + ((idx * 13) % 5) * 0.05;
+      const isAnchor = posX === 0 || Math.abs(posX) === 11.0;
+      const pScale = 0.92 + ((idx * 7) % 5) * 0.04;
+      const rootsPerPlant = isAnchor ? 8 : 6;
 
-      // 1. Primary vertical taproot segment in Layer 1
-      const seg1 = new THREE.Mesh(
-        new THREE.CylinderGeometry(0.09 * pScale, 0.07 * pScale, 1.4 * pScale, 7),
-        rootMat
-      );
-      seg1.position.set(posX, -0.7 * pScale, 0);
-      rootGrp.add(seg1);
+      // 1. Coronal & seminal fibrous root strands fanning downward and laterally
+      for (let rIdx = 0; rIdx < rootsPerPlant; rIdx++) {
+        const spread = (rIdx / (rootsPerPlant - 1) - 0.5) * (0.82 + (pScale - 1) * 0.2);
+        const depth = (isAnchor ? 3.65 : 2.15) * (0.68 + (1 - Math.abs(spread) * 0.45) * 0.32) * pScale;
+        const pts: THREE.Vector3[] = [];
+        const steps = 18;
 
-      // 2. Densely populated Layer 1 lateral feeder roots
-      layer1Laterals.forEach((lat) => {
-        const latLen = lat.len * pScale;
-        const latThick = lat.thick * pScale;
-        const g = new THREE.CylinderGeometry(latThick, latThick * 0.3, latLen, 5);
-        g.translate(0, -latLen / 2, 0);
-        const m = new THREE.Mesh(g, rootMat);
-        m.position.set(posX, lat.y * pScale, 0);
-        m.rotation.z = lat.rotZ;
-        rootGrp.add(m);
-      });
+        for (let s = 0; s <= steps; s++) {
+          const frac = s / steps;
+          const y = -frac * depth;
+          const meander = Math.sin(s * 0.82 + posX * 1.5 + rIdx * 2.1) * 0.042;
+          const x = posX + spread * Math.pow(frac, 0.75) * 1.35 + meander;
+          const z = Math.sin(s * 1.1 + rIdx * 1.3) * 0.02;
+          pts.push(new THREE.Vector3(x, y, z));
+        }
 
-      // 3. Deeper subterranean taproots & laterals for anchor plants (Layers 2 & 3)
-      if (isAnchor) {
-        const seg2 = new THREE.Mesh(
-          new THREE.CylinderGeometry(0.07 * pScale, 0.05 * pScale, 1.6, 7),
-          rootMat
+        const strandGeo = this.createTaperedTubeGeometry(
+          pts,
+          (t) => (0.042 * (1 - t * 0.72) + 0.010) * pScale,
+          6
         );
-        seg2.position.set(posX + 0.04, -2.1, 0);
-        seg2.rotation.z = -0.05;
-        rootGrp.add(seg2);
+        allGeos.push(strandGeo);
 
-        const seg3 = new THREE.Mesh(
-          new THREE.CylinderGeometry(0.05 * pScale, 0.02 * pScale, 1.8, 6),
-          rootMat
+        // 2. Fine lateral feeder rootlets branching off in Layer 0 and Layer 1
+        const branchCount = isAnchor ? 3 : 2;
+        for (let b = 0; b < branchCount; b++) {
+          const fromStep = 4 + b * 4;
+          if (fromStep >= pts.length) continue;
+          const from = pts[fromStep];
+          const bDir = (b % 2 === 0 ? 1 : -1) * (0.55 + ((rIdx * 3 + b) % 4) * 0.1);
+          const bLen = (0.55 + ((rIdx * 5 + b) % 4) * 0.12) * pScale;
+          const bpts: THREE.Vector3[] = [];
+          const bsteps = 8;
+
+          for (let bs = 0; bs <= bsteps; bs++) {
+            const bfrac = bs / bsteps;
+            const bx = from.x + bDir * Math.sin(bfrac * Math.PI * 0.5) * bLen;
+            const by = from.y - bfrac * (0.22 + bLen * 0.32);
+            const bz = from.z + Math.sin(bfrac * 2) * 0.01;
+            bpts.push(new THREE.Vector3(bx, by, bz));
+          }
+
+          const branchGeo = this.createTaperedTubeGeometry(
+            bpts,
+            (t) => (0.018 * (1 - t * 0.65) + 0.006) * pScale,
+            5
+          );
+          allGeos.push(branchGeo);
+        }
+      }
+
+      // 3. Dense upper root hairs in topmost topsoil (0-15 cm, y = -0.04 to -0.35)
+      for (let f = 0; f < 4; f++) {
+        const fy0 = -0.05 - f * 0.07;
+        const fDir = (f % 2 === 0 ? 1 : -1) * (0.42 + (f % 3) * 0.1);
+        const fpts: THREE.Vector3[] = [];
+        const fsteps = 6;
+
+        for (let fs = 0; fs <= fsteps; fs++) {
+          const ffrac = fs / fsteps;
+          fpts.push(
+            new THREE.Vector3(
+              posX + fDir * ffrac * 0.65,
+              fy0 - ffrac * 0.18,
+              Math.sin(fs) * 0.01
+            )
+          );
+        }
+
+        allGeos.push(
+          this.createTaperedTubeGeometry(
+            fpts,
+            (t) => (0.015 * (1 - t * 0.6) + 0.005) * pScale,
+            4
+          )
         );
-        seg3.position.set(posX + 0.02, -3.7, 0);
-        seg3.rotation.z = 0.04;
-        rootGrp.add(seg3);
-
-        deepLaterals.forEach((lat) => {
-          const latLen = lat.len * pScale;
-          const latThick = lat.thick * pScale;
-          const dg = new THREE.CylinderGeometry(latThick, latThick * 0.3, latLen, 5);
-          dg.translate(0, -latLen / 2, 0);
-          const dm = new THREE.Mesh(dg, rootMat);
-          dm.position.set(posX, lat.y, 0);
-          dm.rotation.z = lat.rotZ;
-          rootGrp.add(dm);
-        });
       }
     });
+
+    if (allGeos.length > 0) {
+      const mergedGeo = this.mergeGeometries(allGeos);
+      const rootMesh = new THREE.Mesh(mergedGeo, rootMat);
+      rootGrp.add(rootMesh);
+    }
 
     return rootGrp;
   }
