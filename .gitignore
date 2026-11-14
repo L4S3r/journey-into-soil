@@ -15,4 +15,6 @@ powershell.bat
 
 # local secrets and run logs
 .env.*
+!.env.example
+!web/.env.example
 logs/

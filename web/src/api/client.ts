@@ -1,6 +1,11 @@
 import type { AgentAnswer, AnalysisRequest, AnalysisResult, CropInfo, DemoSite } from "../scene/types";
 
-const BASE = "/api/v1";
+const RAW_BASE = (import.meta.env.VITE_API_BASE_URL || import.meta.env.VITE_API_URL || "").trim().replace(/\/+$/, "");
+const BASE = RAW_BASE
+  ? RAW_BASE.endsWith("/api/v1")
+    ? RAW_BASE
+    : `${RAW_BASE}/api/v1`
+  : "/api/v1";
 
 export const DEFAULT_DEMO_SITES: DemoSite[] = [
   {
