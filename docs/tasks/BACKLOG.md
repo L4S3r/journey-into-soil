@@ -8,7 +8,7 @@
 - [x] B5 (rotation-engine + experts) Review packet prepared (`knowledge/review/`); awaiting expert review and signoff before changing any `reviewed:false` crop params. Add a source per approved value.
 - [x] B6 (frontend) Shareable link route `/a/:id`, copy button, load via GET /analyses/{id}.
 - [x] B7 (frontend) Demo-site picker on landing (from /demo-sites) + "use my own field" map click.
-- [ ] B8 (devops) Deploy on OCI: check ports (`ss -tlnp`), Caddy vhost, HTTPS, `docker compose up -d --build` on arm64, smoke test.
+- [x] B8 (devops) Deploy on OCI: Cloudflare Tunnel, Docker Compose up on ARM64, single-origin proxy + api subdomains, live smoke test passed.
 - [ ] B9 (docs-pitch) Submission text, 30-60 s video script, AI-use disclosure (`docs/pitch/`).
 - [ ] B10 (reviewer) Challenge checklist pass (`docs/challenge-checklist.md`).
 

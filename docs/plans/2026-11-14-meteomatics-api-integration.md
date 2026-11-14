@@ -41,8 +41,8 @@ In this project, Meteomatics provides:
 - In `web/src/features/landing/NasaTelemetryModal.tsx`, add a 5th card or telemetry lane displaying the Meteomatics downscaled high-resolution soil moisture & weather stream alongside NASA SMAP and NASA POWER.
 
 ## 3. Definition of Done
-1. `pytest api/tests -q` passes (including new `api/tests/test_meteomatics.py`).
-2. `ruff check api` passes.
-3. `npm run typecheck` and `npm run build` pass in `web`.
-4. `python scripts/check_i18n.py` passes.
-5. Deployed & verified live on OCI instance.
+1. `pytest api/tests -q` passes (including new `api/tests/test_meteomatics.py`) - **DONE (117 tests passing)**.
+2. `ruff check api` passes - **DONE (Clean)**.
+3. `npm run typecheck` and `npm run build` pass in `web` - **DONE (TypeScript clean, Vite build successful)**.
+4. `python scripts/check_i18n.py` passes - **DONE (159 engine keys, 355 UI keys in parity)**.
+5. Deployed & verified live on OCI instance - **DONE (`https://theshifters.l4s3r.site/api/v1/telemetry/meteomatics` & `https://theshifters-api.l4s3r.site` verified 200 OK)**.
