@@ -28,7 +28,7 @@ import yaml
 ROOT = Path(__file__).resolve().parents[1]
 if str(ROOT / "api") not in sys.path:
     sys.path.insert(0, str(ROOT / "api"))
-from app.services.soil import parse_soilgrids
+from app.services.soil import parse_soilgrids  # noqa: E402
 
 # POWER parameter -> pack key
 PARAMS = {

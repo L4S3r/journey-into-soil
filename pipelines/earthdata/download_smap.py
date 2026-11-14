@@ -1,10 +1,8 @@
-
 import argparse
 import os
 from pathlib import Path
 
 import earthaccess
-
 
 ROOT = Path(__file__).resolve().parents[2]
 ENV_FILE = ROOT / ".env"
@@ -91,4 +89,4 @@ if __name__ == "__main__":
         main()
     except Exception as error:
         print(f"ERROR: {error}")
-        raise SystemExit(1)
+        raise SystemExit(1) from error

@@ -13,17 +13,16 @@ from __future__ import annotations
 
 import json
 import sys
-from datetime import date
 from pathlib import Path
+
+import yaml
 
 # Ensure project root on sys.path
 ROOT = Path(__file__).resolve().parents[2]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-from pipelines.smap.process import extract_smap_granule, build_smap_pack, pack_to_dict  # noqa: E402
-
-import yaml
+from pipelines.smap.process import build_smap_pack, extract_smap_granule, pack_to_dict  # noqa: E402
 
 # Demo site definitions (knowledge/demo_sites.yaml)
 SITES: dict[str, dict] = {}

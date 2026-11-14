@@ -36,7 +36,8 @@ if str(ROOT) not in sys.path:
 
 from pipelines.ndvi.process import site_section as ndvi_section  # noqa: E402
 from pipelines.ndvi.timeline import crop_calendar, timeline_check  # noqa: E402
-from pipelines.smap.process import SmapObservation, site_section as smap_section  # noqa: E402
+from pipelines.smap.process import SmapObservation  # noqa: E402
+from pipelines.smap.process import site_section as smap_section  # noqa: E402
 
 PACK_DIR = ROOT / "data" / "packs" / "demo_sites"
 SMAP_OBS = ROOT / "data" / "raw" / "smap" / "observations.json"
@@ -99,8 +100,9 @@ def build_site(site: dict, smap_raw: list[dict], ndvi_raw: list[dict], crops: di
 
     ndvi_obs = []
     if ndvi_raw:
-        from pipelines.ndvi.process import NdviObservation
         from datetime import date as _date
+
+        from pipelines.ndvi.process import NdviObservation
 
         for item in ndvi_raw:
             ndvi_obs.append(

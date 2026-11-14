@@ -10,10 +10,6 @@ from pathlib import Path
 import httpx
 import yaml
 
-ROOT = Path(__file__).resolve().parents[1]
-if str(ROOT) not in sys.path:
-    sys.path.insert(0, str(ROOT))
-
 from pipelines.neighbour_search import (
     SEARCH_OFFSETS,
     SOIL_URL,
@@ -21,6 +17,10 @@ from pipelines.neighbour_search import (
     haversine_km,
     is_soil_complete,
 )
+
+ROOT = Path(__file__).resolve().parents[1]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
 
 ALREADY_VALID = {"beheira", "new_valley", "nubaria", "port_said", "qalyubia", "south_sinai"}
 MAX_REQUESTS = 150
