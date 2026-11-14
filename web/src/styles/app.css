@@ -163,8 +163,8 @@ input[type="range"] { inline-size: 100%; accent-color: var(--accent); cursor: po
 .disclaimer p { margin: 2px 0; }
 .disclaimer p + p { color: var(--bad); font-weight: 600; }
 
-/* Main Layout */
-main {
+/* Main Layout for Simulator & Results */
+main.landing, main.results {
   padding: var(--gutter);
   max-inline-size: 1320px;
   margin-inline: auto;
@@ -321,10 +321,10 @@ legend { padding-inline: 8px; font-weight: 700; font-size: 0.95rem; color: var(-
 .legend i.hatch { block-size: 12px; background: repeating-linear-gradient(45deg, var(--bare-bg), var(--bare-bg) 3px, var(--bare-line) 3px, var(--bare-line) 5px); }
 .day-readout { margin: 6px 0 0; font-size: .92rem; font-family: var(--astryx-font-mono); }
 
-/* Grid and Panels */
-.grid { display: grid; grid-template-columns: 1fr; gap: var(--gutter); align-items: start; }
+/* Grid and Panels (Scoped to Results View to avoid collision with Tailwind .grid) */
+main.results > .grid { display: grid; grid-template-columns: 1fr; gap: var(--gutter); align-items: start; }
 @media (min-width: 992px) {
-  .grid { grid-template-columns: 1.25fr 1fr; }
+  main.results > .grid { grid-template-columns: 1.25fr 1fr; }
 }
 .side { display: grid; gap: var(--gutter); }
 .evidence { display: grid; gap: 14px; }

@@ -360,7 +360,7 @@ export function LandingPage({ onStartSimulation }: LandingPageProps) {
                 </button>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-5 sm:gap-6 w-full max-w-4xl mx-auto">
+              <div className="grid grid-cols-1 md:grid-cols-3 astryx-three-col-pipeline gap-5 sm:gap-6 w-full max-w-4xl mx-auto">
                 
                 {/* BUTTON 1: "start the journey simulation" */}
                 <button
@@ -420,7 +420,7 @@ export function LandingPage({ onStartSimulation }: LandingPageProps) {
 
           {/* Bottom Edge Stats Cards Strip */}
           <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-8 pt-4">
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+            <div className="grid grid-cols-2 lg:grid-cols-4 astryx-four-col-pipeline gap-3 sm:gap-4">
               
               <div className="p-3.5 sm:p-4 rounded-2xl bg-white/90 dark:bg-[#151b17]/90 border border-neutral-200/80 dark:border-white/10 backdrop-blur-md shadow-md text-start">
                 <div className="text-xl sm:text-2xl font-black text-[var(--astryx-color-primary)] font-mono">
@@ -485,7 +485,7 @@ export function LandingPage({ onStartSimulation }: LandingPageProps) {
               {/* Connecting dashed line across desktop */}
               <div className="hidden lg:block absolute top-10 inset-x-14 h-0.5 border-t-2 border-dashed border-[var(--astryx-color-border)] z-0" aria-hidden="true" />
 
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6 relative z-10">
+              <div className="grid grid-cols-1 md:grid-cols-3 astryx-three-col-pipeline gap-6 relative z-10">
                 
                 {/* Step 1 */}
                 <div className="group astryx-card astryx-card--interactive p-3 sm:p-3.5 flex flex-col justify-between relative overflow-hidden min-h-[480px] sm:min-h-[520px]">
@@ -612,7 +612,7 @@ export function LandingPage({ onStartSimulation }: LandingPageProps) {
             </div>
 
             {/* 3 Battlefield Threat Cards */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 text-start">
+            <div className="grid grid-cols-1 md:grid-cols-3 astryx-three-col-pipeline gap-6 text-start">
 
               {/* Battle Card 1 */}
               <div className="astryx-card astryx-card--interactive p-6 flex flex-col justify-between backdrop-blur-md bg-[var(--astryx-color-surface)]/92 border border-[var(--astryx-color-border)] shadow-xl relative overflow-hidden group">
