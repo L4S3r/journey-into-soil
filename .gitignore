@@ -18,3 +18,8 @@ powershell.bat
 !.env.example
 !web/.env.example
 logs/
+
+# root build artifacts erroneously generated
+/index.html
+/assets/
+
