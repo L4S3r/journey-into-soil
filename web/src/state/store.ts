@@ -78,8 +78,15 @@ export const useStore = create<State>((set, get) => ({
   result: null,
   strategyId: "primary",
   dayT: 0,
-  lang: safeGet("lang") === "ar" ? "ar" : "en",
-  theme: safeGet("theme") === "dark" ? "dark" : "light",
+  lang: (safeGet("shifter_lang") || safeGet("lang")) === "ar" ? "ar" : "en",
+  theme: (() => {
+    const saved = safeGet("shifter_theme") || safeGet("theme");
+    if (saved === "light" || saved === "dark") return saved;
+    if (typeof window !== "undefined" && window.matchMedia?.("(prefers-color-scheme: dark)").matches) {
+      return "dark";
+    }
+    return "light";
+  })(),
   quality: "auto",
   loading: false,
   error: null,
@@ -192,10 +199,20 @@ export const useStore = create<State>((set, get) => ({
   setDayT: (dayT) => set({ dayT }),
   setLang: (lang) => {
     safeSet("lang", lang);
+    safeSet("shifter_lang", lang);
     set({ lang });
   },
   setTheme: (theme) => {
     safeSet("theme", theme);
+    safeSet("shifter_theme", theme);
+    if (typeof document !== "undefined") {
+      document.documentElement.dataset.theme = theme;
+      if (theme === "dark") {
+        document.documentElement.classList.add("dark");
+      } else {
+        document.documentElement.classList.remove("dark");
+      }
+    }
     set({ theme });
   },
   setQuality: (quality) => set({ quality }),

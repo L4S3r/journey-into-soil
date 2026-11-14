@@ -337,6 +337,15 @@ export default function App() {
 
   useEffect(() => {
     document.documentElement.dataset.theme = theme;
+    if (theme === "dark") {
+      document.documentElement.classList.add("dark");
+    } else {
+      document.documentElement.classList.remove("dark");
+    }
+    const metaThemeColor = document.querySelector('meta[name="theme-color"]');
+    if (metaThemeColor) {
+      metaThemeColor.setAttribute("content", theme === "dark" ? "#0b0e0c" : "#fbf9f5");
+    }
   }, [theme]);
 
   useEffect(() => {
