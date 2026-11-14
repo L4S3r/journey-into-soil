@@ -431,5 +431,13 @@
   "ui.assistant_popup_sub": "Ask me anything about your scenario",
   "ui.agent_scenario_title": "Ask AI Agronomist About This Scenario",
   "ui.agent_scenario_desc": "Questions entered here port directly into the AI chatbot, grounded in your field's soil, NASA telemetry, and crop rotation.",
-  "ui.ask_in_chatbot": "Ask in Chatbot"
+  "ui.ask_in_chatbot": "Ask in Chatbot",
+  "ui.timeline_play": "Play Simulation",
+  "ui.timeline_pause": "Pause Simulation",
+  "ui.timeline_prev_day": "Previous Day",
+  "ui.timeline_next_day": "Next Day",
+  "ui.timeline_reset": "Reset to Start",
+  "ui.horizon_inspector": "Horizon Inspector",
+  "ui.close_inspector": "Close Inspector",
+  "ui.toggle_atmosphere": "Atmospheric Telemetry"
 }

@@ -1,28 +1,42 @@
+/* Atmospheric & Sensor Telemetry HUD Popover */
+
 .weather-hud-wrap {
   position: absolute;
-  top: 76px;
-  right: 18px;
+  top: 54px;
+  right: 14px;
   z-index: 30;
   max-width: 360px;
-  width: calc(100% - 36px);
+  width: calc(100% - 28px);
   pointer-events: auto;
   font-family: inherit;
   transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  animation: hudSlideDown 0.22s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 [dir="rtl"] .weather-hud-wrap {
   right: auto;
-  left: 18px;
+  left: 14px;
+}
+
+@keyframes hudSlideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-8px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
 }
 
 .weather-hud-bar {
-  background: rgba(15, 23, 42, 0.82);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(15, 23, 42, 0.9);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.14);
   border-radius: 16px;
   padding: 12px 14px;
-  box-shadow: 0 10px 30px -8px rgba(0, 0, 0, 0.5), 0 0 1px 1px rgba(255, 255, 255, 0.08);
+  box-shadow: 0 12px 32px -6px rgba(0, 0, 0, 0.6), 0 0 1px 1px rgba(255, 255, 255, 0.08);
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -75,7 +89,7 @@
 
 .weather-beacon-label {
   font-size: 11px;
-  font-weight: 600;
+  font-weight: 700;
   letter-spacing: 0.03em;
   text-transform: uppercase;
   color: #94a3b8;
@@ -96,7 +110,7 @@
 }
 
 .weather-hud-collapse-btn:hover {
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.12);
   color: #ffffff;
 }
 
@@ -113,8 +127,8 @@
 }
 
 .weather-chip {
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.07);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 10px;
   padding: 6px 8px;
   display: flex;
@@ -124,7 +138,7 @@
 
 .weather-chip.warning {
   border-color: rgba(245, 158, 11, 0.4);
-  background: rgba(245, 158, 11, 0.08);
+  background: rgba(245, 158, 11, 0.12);
 }
 
 .weather-svg {
@@ -141,19 +155,19 @@
 .weather-chip-content {
   display: flex;
   flex-direction: column;
-  line-height: 1.15;
 }
 
 .weather-chip-val {
   font-size: 13px;
   font-weight: 700;
+  line-height: 1.15;
   color: #ffffff;
 }
 
 .weather-chip-sub {
   font-size: 10px;
   color: #94a3b8;
-  text-transform: uppercase;
+  font-weight: 500;
 }
 
 /* Grounding Simulation Switch */
@@ -161,64 +175,73 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  gap: 8px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.06);
   border-radius: 10px;
   padding: 6px 10px;
 }
 
 .weather-toggle-label {
   font-size: 11px;
-  font-weight: 500;
+  font-weight: 600;
   color: #cbd5e1;
 }
 
 .weather-toggle-btn {
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  border-radius: 20px;
-  padding: 3px 10px;
   display: flex;
   align-items: center;
   gap: 6px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 9999px;
+  padding: 3px 8px;
   cursor: pointer;
-  color: #e2e8f0;
-  font-size: 11px;
-  font-weight: 600;
   transition: all 0.2s ease;
 }
 
 .weather-toggle-btn.active {
-  background: #0284c7;
-  border-color: #38bdf8;
-  color: #ffffff;
-  box-shadow: 0 0 10px rgba(2, 132, 199, 0.4);
+  background: rgba(16, 185, 129, 0.2);
+  border-color: #10b981;
+}
+
+.weather-toggle-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
 }
 
 .toggle-switch-thumb {
-  width: 8px;
-  height: 8px;
+  width: 10px;
+  height: 10px;
   border-radius: 50%;
-  background: #cbd5e1;
+  background: #94a3b8;
+  transition: all 0.2s ease;
 }
 
 .weather-toggle-btn.active .toggle-switch-thumb {
-  background: #ffffff;
+  background: #10b981;
+  box-shadow: 0 0 6px #10b981;
 }
 
-/* 3D Atmosphere Preset Buttons */
+.toggle-text {
+  font-size: 10px;
+  font-weight: 700;
+  color: #f1f5f9;
+}
+
+/* 3D Atmospheric Preview Selector */
 .weather-hud-presets {
   display: flex;
   flex-direction: column;
-  gap: 5px;
+  gap: 6px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  padding-top: 8px;
 }
 
 .weather-presets-label {
-  font-size: 10px;
+  font-size: 11px;
   font-weight: 600;
   color: #94a3b8;
-  text-transform: uppercase;
-  letter-spacing: 0.03em;
 }
 
 .weather-preset-buttons {
@@ -229,45 +252,36 @@
 
 .weather-btn {
   background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 8px;
   padding: 6px 4px;
+  color: #94a3b8;
+  font-size: 10px;
+  font-weight: 600;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 4px;
   cursor: pointer;
-  color: #cbd5e1;
-  font-size: 10px;
-  font-weight: 600;
   transition: all 0.15s ease;
-  min-height: 44px;
+  min-height: 48px;
   justify-content: center;
 }
 
 .weather-btn:hover {
   background: rgba(255, 255, 255, 0.1);
   color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.2);
 }
 
 .weather-btn.active {
-  background: rgba(2, 132, 199, 0.25);
-  border-color: #38bdf8;
-  color: #38bdf8;
-  box-shadow: 0 0 8px rgba(56, 189, 248, 0.3);
+  background: rgba(16, 185, 129, 0.25);
+  border-color: #10b981;
+  color: #ffffff;
+  box-shadow: 0 0 8px rgba(16, 185, 129, 0.3);
 }
 
 .weather-btn-svg {
-  width: 15px;
-  height: 15px;
-}
-
-@media (max-width: 640px) {
-  .weather-hud-wrap {
-    top: 70px;
-    right: 10px;
-    left: 10px;
-    width: calc(100% - 20px);
-    max-width: none;
-  }
+  width: 14px;
+  height: 14px;
 }

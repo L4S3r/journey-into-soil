@@ -431,5 +431,13 @@
   "ui.assistant_popup_sub": "اسألني أي شيء عن سيناريو حقلك",
   "ui.agent_scenario_title": "اسأل المستشار الزراعي الذكي عن هذا السيناريو",
   "ui.agent_scenario_desc": "أي سؤال تطرحه هنا ينتقل مباشرة إلى المساعد الذكي، مدعوماً ببيانات تربتك وأقمار ناسا والدورة الزراعية.",
-  "ui.ask_in_chatbot": "اسأل في المحادثة"
+  "ui.ask_in_chatbot": "اسأل في المحادثة",
+  "ui.timeline_play": "تشغيل المحاكاة",
+  "ui.timeline_pause": "إيقاف المحاكاة مؤقتاً",
+  "ui.timeline_prev_day": "اليوم السابق",
+  "ui.timeline_next_day": "اليوم التالي",
+  "ui.timeline_reset": "إعادة للبداية",
+  "ui.horizon_inspector": "فاحص طبقات التربة",
+  "ui.close_inspector": "إغلاق الفاحص",
+  "ui.toggle_atmosphere": "البيانات الجوية الحية"
 }
