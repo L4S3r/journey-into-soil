@@ -49,6 +49,10 @@ interface State {
   error: string | null;
   usingSample: boolean;
   focusedLayer: number | null;
+  userEmail: string | null;
+  authModalOpen: boolean;
+  pdfModalOpen: boolean;
+  nasaModalOpen: boolean;
   setRequest: (patch: Partial<AnalysisRequest>) => void;
   applySite: (site: DemoSite) => void;
   openDemoSite: (site: DemoSite) => Promise<void>;
@@ -58,6 +62,10 @@ interface State {
   applyScenario: (dT: number, dP: number) => Promise<void>;
   reset: () => void;
   setFocusedLayer: (idx: number | null) => void;
+  setUserEmail: (email: string | null) => void;
+  setAuthModalOpen: (open: boolean) => void;
+  setPdfModalOpen: (open: boolean) => void;
+  setNasaModalOpen: (open: boolean) => void;
   setStrategy: (id: StrategyId) => void;
   setDayT: (t: number) => void;
   setLang: (l: "en" | "ar") => void;
@@ -77,6 +85,18 @@ export const useStore = create<State>((set, get) => ({
   error: null,
   usingSample: false,
   focusedLayer: null,
+  userEmail: safeGet("shifters_farmer_email") || null,
+  authModalOpen: false,
+  pdfModalOpen: false,
+  nasaModalOpen: false,
+  setUserEmail: (userEmail) => {
+    if (userEmail) safeSet("shifters_farmer_email", userEmail);
+    else try { localStorage.removeItem("shifters_farmer_email"); } catch {}
+    set({ userEmail });
+  },
+  setAuthModalOpen: (authModalOpen) => set({ authModalOpen }),
+  setPdfModalOpen: (pdfModalOpen) => set({ pdfModalOpen }),
+  setNasaModalOpen: (nasaModalOpen) => set({ nasaModalOpen }),
   setRequest: (patch) => set((s) => ({ request: { ...s.request, ...patch } })),
   applySite: (site) =>
     set((s) => ({ request: { ...s.request, ...site.preset, lat: site.lat, lon: site.lon, region: site.region } as AnalysisRequest })),

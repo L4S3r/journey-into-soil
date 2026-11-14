@@ -142,7 +142,7 @@ export const api = {
       }>(r),
     ),
   sample: () => fetch("/mock_result.json").then((r) => json<AnalysisResult>(r)),
-  ask: (question: string, farmer: AnalysisRequest, analysisId: string) =>
+  ask: (question: string, farmer?: AnalysisRequest, analysisId?: string) =>
     fetch(`${BASE}/agent/ask`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
