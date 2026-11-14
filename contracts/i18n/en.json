@@ -7,6 +7,7 @@
  "benefit.low_water": "{{crop}} has a relatively low water demand.",
  "conf.coarse_resolution": "Climate data is coarse (about {{km}} km) compared with a single field.",
  "conf.ec_estimated": "Soil salinity is estimated, not measured.",
+ "conf.high_climate_variance": "Performance varies across historical weather years (spread of {{spread}}, rank stability {{stability}}%).",
  "conf.history_short": "Fewer than three seasons of history.",
  "conf.outside_delta": "Location is outside the Nile Delta data area.",
  "conf.soil_estimated": "Organic matter or pH are estimates.",

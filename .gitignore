@@ -11,3 +11,4 @@ data/app.db
 *.sqlite
 .DS_Store
 .netrc
+powershell.bat

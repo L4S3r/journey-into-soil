@@ -7,7 +7,7 @@ from datetime import date, datetime, timedelta, timezone
 
 from .. import knowledge
 from ..schemas.request import AnalysisRequest
-from ..services.climate import get_climate
+from ..services.climate import find_pack, get_historical_climate_series
 from ..sim.runner import run_timeline
 from ..sim.types import CropSeason, DayInput
 from . import explain, filters, profile, scoring, strategies, uncertainty
@@ -15,7 +15,7 @@ from . import plan as planner
 from .generator import Cand, Ctx, enumerate_candidates, existing_candidate, select_pool
 from .validate import in_delta_box, infer_region, validate
 
-SCHEMA_VERSION = "1.0.0"
+SCHEMA_VERSION = "1.1.0"
 MAX_DAYS = 900
 
 NEEDS_LOCAL_REVIEW = ["review.irrigation_schedule", "review.variety", "review.pest_diagnosis", "review.market",
@@ -53,7 +53,7 @@ def _bare_periods(cand: Cand, dates: list[str]) -> list[dict]:
     return out
 
 
-def _strategy_json(item: dict, cand: Cand, ctx: Ctx, existing: Cand, climate, input_status, dates, req, outside_delta, hist_len) -> dict:
+def _strategy_json(item: dict, cand: Cand, ctx: Ctx, existing: Cand, climate, input_status, dates, req, outside_delta, hist_len, uncertainty_data: dict) -> dict:
     tl = cand.sim
     weights = scoring.weights_from(req.priorities)
     scores = dict(cand.scores)
@@ -81,7 +81,8 @@ def _strategy_json(item: dict, cand: Cand, ctx: Ctx, existing: Cand, climate, in
         "indicators": {"irrigation_mm": cand.metrics["irrigation_mm"], "et_mm": cand.metrics["et_mm"],
                        "bare_days": cand.metrics["bare_days"], "span_days": cand.metrics["span_days"]},
         **text,
-        "confidence": uncertainty.confidence(cand, climate.source, climate.resolution_km, input_status, outside_delta, hist_len),
+        "confidence": uncertainty.confidence(cand, climate.source, climate.resolution_km, input_status, outside_delta, hist_len, uncertainty_data),
+        "uncertainty": uncertainty_data,
         "sim": {"moisture": tl.moisture, "ece": tl.ece, "root_cm": tl.root_cm, "canopy": tl.canopy, "ks": tl.ks,
                 "irrigation_mm": tl.irrigation_mm, "crop_idx": tl.crop_idx},
     }
@@ -91,6 +92,7 @@ def _nasa_panel(climate) -> list[dict]:
     pack_products = set(getattr(climate, "products", []))
     if climate.source == "pack" and not pack_products:
         pack_products = {"power"}
+    has_soil = (climate.source == "pack" and bool(getattr(climate, "soil", None))) or ("soilgrids" in pack_products)
     return [
         {"id": "power", "name_key": "nasa.power", "role_key": "nasa.power_role",
          "status": "pack" if "power" in pack_products else ("placeholder" if climate.source == "synthetic" else "planned"),
@@ -102,16 +104,18 @@ def _nasa_panel(climate) -> list[dict]:
         {"id": "ndvi", "name_key": "nasa.ndvi", "role_key": "nasa.ndvi_role",
          "status": "pack" if "ndvi" in pack_products else "planned", "resolution_km": 0.03},
         {"id": "soilgrids", "name_key": "nasa.soilgrids", "role_key": "nasa.soilgrids_role",
-         "status": "pack" if "soilgrids" in pack_products else "planned", "resolution_km": 0.25},
+         "status": "pack" if has_soil else "planned", "resolution_km": 0.25},
     ]
 
 
 def run(req: AnalysisRequest) -> dict:
     ref = req.reference_date or date.today()
     flags, input_status, hist = validate(req)
+    pack = find_pack(req.lat, req.lon)
+    pack_soil = pack.get("soil") if pack else None
     crops = knowledge.crops()
     hist_crops = [crops[h["crop"]] for h in hist]
-    layers = profile.build_layers(req)
+    layers = profile.build_layers(req, soil=pack_soil)
     ece_est = profile.estimate_ece(req)
     status = {cid: filters.soil_water_status(c, req, ece_est) for cid, c in crops.items()}
     pest_ex = {cid for cid, c in crops.items() if filters.pest_excluded(c, req)}
@@ -134,18 +138,92 @@ def run(req: AnalysisRequest) -> dict:
                 end = max(end, slot[1])
     end = min(end + timedelta(days=1), start + timedelta(days=MAX_DAYS))
     all_dates = [start + timedelta(days=i) for i in range((end - start).days + 1)]
-    climate = get_climate(req.lat, req.lon, all_dates, req.scenario.dT, req.scenario.dP)
+    climate, hist_series, hist_years = get_historical_climate_series(
+        req.lat, req.lon, all_dates, req.scenario.dT, req.scenario.dP
+    )
     days = [DayInput(d, e, r, t) for d, e, r, t in zip(climate.dates, climate.et0, climate.rain, climate.tmax)]
 
+    sched_map = {c.key: _schedule(c, start) for c in pool}
     for c in pool:
-        c.sim = run_timeline(layers, days, _schedule(c, start), req.irrigation, req.water_ec)
+        c.sim = run_timeline(layers, days, sched_map[c.key], req.irrigation, req.water_ec)
     scoring.score_pool(pool)
 
     picked = strategies.select(pool, existing, req.priorities)
     rank = strategies.existing_rank(pool, existing, req.priorities)
     outside = not in_delta_box(req)
+
+    weights = scoring.weights_from(req.priorities)
+    ranked_baseline = sorted(pool, key=lambda c: scoring.total(c.scores, weights), reverse=True)
+    # Historical multi-year uncertainty: evaluate picked strategies + top contenders for rank stability under time budget
+    picked_cands = [item["cand"] for item in picked]
+    top_contenders = ranked_baseline[:4]
+    eval_cands_dict = {c.key: c for c in picked_cands + top_contenders}
+    eval_pool = list(eval_cands_dict.values())
+    ranked_eval_base = sorted(eval_pool, key=lambda c: scoring.total(c.scores, weights), reverse=True)
+    base_rank_map = {c.key: 1 + i for i, c in enumerate(ranked_eval_base)}
+
+    yearly_records: dict[str, list[dict[str, float]]] = {item["id"]: [] for item in picked}
+    rank_matches: dict[str, int] = {item["id"]: 0 for item in picked}
+
+    for year_days in hist_series:
+        sims_y = {}
+        metrics_y = {}
+        for c in eval_pool:
+            sim = run_timeline(layers, year_days, sched_map[c.key], req.irrigation, req.water_ec, record_daily=False)
+            sims_y[c.key] = sim
+            metrics_y[c.key] = scoring.sim_metrics(c, sim)
+        irr_list = [metrics_y[c.key]["irrigation_mm"] for c in eval_pool]
+        ipd_list = [metrics_y[c.key]["irr_per_crop_day"] for c in eval_pool]
+        stats_y = {
+            "irr_min": min(irr_list),
+            "irr_max": max(irr_list),
+            "ipd_min": min(ipd_list),
+            "ipd_max": max(ipd_list),
+        }
+        tot_scores_y = {}
+        for c in eval_pool:
+            comp_y = scoring.components(c, stats_y, metrics_y[c.key])
+            tot_scores_y[c.key] = scoring.total(comp_y, weights)
+        ranked_y = sorted(eval_pool, key=lambda c: tot_scores_y[c.key], reverse=True)
+        year_rank_map = {c.key: 1 + i for i, c in enumerate(ranked_y)}
+
+        for item in picked:
+            sid = item["id"]
+            cand = item["cand"]
+            tl_y = sims_y[cand.key]
+            seasons = tl_y.seasons
+            n_s = max(len(seasons), 1)
+            tot_irr = tl_y.totals.get("irrigation_mm", sum(s.irrigation_mm for s in seasons))
+            w_stress = sum(s.water_stress for s in seasons) / n_s
+            s_stress = sum(s.salinity_stress for s in seasons) / n_s
+            heat_d = sum(s.heat_days for s in seasons)
+            t_score = round(tot_scores_y[cand.key], 3)
+            yearly_records[sid].append({
+                "irrigation_mm": round(tot_irr, 1),
+                "water_stress": round(w_stress, 3),
+                "salinity_stress": round(s_stress, 3),
+                "heat_days": heat_d,
+                "total_score": t_score,
+            })
+            if year_rank_map[cand.key] == base_rank_map[cand.key]:
+                rank_matches[sid] += 1
+
+    uncertainty_by_id = {}
+    n_years = len(hist_years)
+    for item in picked:
+        sid = item["id"]
+        stability = round(rank_matches[sid] / n_years, 2) if n_years else 1.0
+        pcts = uncertainty.summarize_metric_distribution(yearly_records[sid])
+        uncertainty_by_id[sid] = {
+            "rank_stability": stability,
+            "years_evaluated": n_years,
+            "p10": pcts["p10"],
+            "p50": pcts["p50"],
+            "p90": pcts["p90"],
+        }
+
     strategies_json = [
-        _strategy_json(item, item["cand"], ctx, existing, climate, input_status, climate.dates, req, outside, len(hist))
+        _strategy_json(item, item["cand"], ctx, existing, climate, input_status, climate.dates, req, outside, len(hist), uncertainty_by_id[item["id"]])
         for item in picked
     ]
     disclaimers = ["disclaimer.main"] + (["disclaimer.preview_data"] if climate.source == "synthetic" else [])

@@ -48,6 +48,7 @@ def run_timeline(
     irrigation_system: str,
     ec_water: float,
     init_fraction: float = 0.7,
+    record_daily: bool = True,
 ) -> Timeline:
     n_layers = len(layers)
     theta = water_balance.initial_theta(layers, init_fraction)
@@ -66,12 +67,16 @@ def run_timeline(
     yr_sum = [0.0] * len(schedule)
     ks_sum = [0.0] * len(schedule)
 
-    moisture = [[0.0] * len(days) for _ in range(n_layers)]
-    ece_out = [[0.0] * len(days) for _ in range(n_layers)]
-    root_out = [0.0] * len(days)
-    canopy_out = [0.0] * len(days)
-    ks_out = [1.0] * len(days)
-    irr_out = [0.0] * len(days)
+    if record_daily:
+        moisture = [[0.0] * len(days) for _ in range(n_layers)]
+        ece_out = [[0.0] * len(days) for _ in range(n_layers)]
+        root_out = [0.0] * len(days)
+        canopy_out = [0.0] * len(days)
+        ks_out = [1.0] * len(days)
+        irr_out = [0.0] * len(days)
+    else:
+        moisture = ece_out = []
+        root_out = canopy_out = ks_out = irr_out = []
 
     storage_start = sum(t * layer.thickness_mm for t, layer in zip(theta, layers))
     bal = {"rain": 0.0, "irrigation_net": 0.0, "runoff": 0.0, "evaporation": 0.0, "transpiration": 0.0,
@@ -108,15 +113,16 @@ def run_timeline(
         salt_out = salinity.step(layers, salt, res.w_start, res.inflow, res.outflow, top_salt_in)
 
         ece_now = salinity.ece(layers, salt)
-        for li, layer in enumerate(layers):
-            span = layer.fc - layer.wp
-            # 0 = wilting point (or drier), 1 = field capacity, >1 = wetter than field capacity
-            moisture[li][idx] = round(max(0.0, (theta[li] - layer.wp) / span), 3)
-            ece_out[li][idx] = round(ece_now[li], 2)
-        root_out[idx] = round(root, 1)
-        canopy_out[idx] = round(canopy, 3)
-        ks_out[idx] = round(res.ks, 3)
-        irr_out[idx] = round(irr_gross, 1)
+        if record_daily:
+            for li, layer in enumerate(layers):
+                span = layer.fc - layer.wp
+                # 0 = wilting point (or drier), 1 = field capacity, >1 = wetter than field capacity
+                moisture[li][idx] = round(max(0.0, (theta[li] - layer.wp) / span), 3)
+                ece_out[li][idx] = round(ece_now[li], 2)
+            root_out[idx] = round(root, 1)
+            canopy_out[idx] = round(canopy, 3)
+            ks_out[idx] = round(res.ks, 3)
+            irr_out[idx] = round(irr_gross, 1)
 
         bal["rain"] += day.rain
         bal["irrigation_net"] += irr_net
