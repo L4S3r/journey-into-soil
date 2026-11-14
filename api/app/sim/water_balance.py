@@ -45,7 +45,16 @@ def root_zone_stats(layers: list[SoilLayer], theta: list[float], root_cm: float)
     return taw, dr
 
 
-def initial_theta(layers: list[SoilLayer], fraction: float = 0.7) -> list[float]:
+def initial_theta(
+    layers: list[SoilLayer],
+    fraction: float = 0.7,
+    layer_fractions: list[float] | None = None,
+) -> list[float]:
+    if layer_fractions is not None:
+        return [
+            layer.wp + max(0.05, min(1.0, frac)) * (layer.fc - layer.wp)
+            for layer, frac in zip(layers, layer_fractions)
+        ]
     return [layer.wp + fraction * (layer.fc - layer.wp) for layer in layers]
 
 

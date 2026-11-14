@@ -63,4 +63,5 @@ class AnalysisRequest(BaseModel):
     next_season: Season = "winter"
     priorities: Priorities = Field(default_factory=Priorities)
     scenario: Scenario = Field(default_factory=Scenario)
+    use_live_weather: bool = Field(True, description="Ground initial soil profile and stress in live weather/soil telemetry")
     reference_date: date | None = Field(None, description="planning start; defaults to today")

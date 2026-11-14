@@ -48,10 +48,11 @@ def run_timeline(
     irrigation_system: str,
     ec_water: float,
     init_fraction: float = 0.7,
+    init_fractions: list[float] | None = None,
     record_daily: bool = True,
 ) -> Timeline:
     n_layers = len(layers)
-    theta = water_balance.initial_theta(layers, init_fraction)
+    theta = water_balance.initial_theta(layers, init_fraction, layer_fractions=init_fractions)
     salt = salinity.initial_salt(layers)
     system = water_balance.IRRIGATION_SYSTEMS.get(irrigation_system)
 

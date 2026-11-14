@@ -70,6 +70,7 @@
  "flag.outside_delta": "This location is outside the Nile Delta data area; regional values are less reliable.",
  "flag.pest_unknown": "A soil-borne problem is suspected but undiagnosed, so host crops cannot be ruled out reliably.",
  "flag.ph_default": "No pH entered; a typical value for irrigated Egyptian soils is assumed.",
+ "flag.pre_sowing_deficit": "High initial soil moisture deficit ({{smd}} mm) detected from live Meteomatics observations. Consider pre-sowing irrigation to prevent seedling desiccation.",
  "flag.texture_by_feel": "Soil texture is a by-feel estimate. Confirm it with a lab texture test before commercial planting.",
  "flag.unknown_crop": "Crop \"{{crop}}\" is not in the knowledge base and was ignored.",
  "gap.crop_params_unreviewed": "Crop parameters are FAO defaults that agronomy experts have not reviewed yet.",

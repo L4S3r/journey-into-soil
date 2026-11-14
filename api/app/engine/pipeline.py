@@ -153,9 +153,34 @@ def run(req: AnalysisRequest) -> dict:
     )
     days = [DayInput(d, e, r, t) for d, e, r, t in zip(climate.dates, climate.et0, climate.rain, climate.tmax)]
 
+    init_fractions = None
+    mm_telemetry = None
+    if getattr(req, "use_live_weather", True):
+        from ..services import meteomatics
+        mm_telemetry = meteomatics.get_telemetry_sync(req.lat, req.lon)
+        params = mm_telemetry.get("parameters", {})
+        smi_5 = params.get("soil_moisture_index_5cm")
+        smi_50 = params.get("soil_moisture_index_50cm")
+        smd = params.get("soil_moisture_deficit_mm")
+
+        if smi_5 is not None and smi_50 is not None:
+            f0 = max(0.05, min(1.0, float(smi_5)))
+            f2 = max(0.05, min(1.0, float(smi_50)))
+            f1 = max(0.05, min(1.0, 0.7 * f0 + 0.3 * f2))
+            f3 = f2
+            init_fractions = [f0, f1, f2, f3]
+
+        if smd is not None and float(smd) > 50.0:
+            flags.append({
+                "field": "soil_moisture",
+                "key": "flag.pre_sowing_deficit",
+                "severity": "warn",
+                "params": {"smd": round(float(smd), 1)},
+            })
+
     sched_map = {c.key: _schedule(c, start) for c in pool}
     for c in pool:
-        c.sim = run_timeline(layers, days, sched_map[c.key], req.irrigation, req.water_ec)
+        c.sim = run_timeline(layers, days, sched_map[c.key], req.irrigation, req.water_ec, init_fractions=init_fractions)
     scoring.score_pool(pool)
 
     picked = strategies.select(pool, existing, req.priorities)
@@ -179,7 +204,7 @@ def run(req: AnalysisRequest) -> dict:
         sims_y = {}
         metrics_y = {}
         for c in eval_pool:
-            sim = run_timeline(layers, year_days, sched_map[c.key], req.irrigation, req.water_ec, record_daily=False)
+            sim = run_timeline(layers, year_days, sched_map[c.key], req.irrigation, req.water_ec, init_fractions=init_fractions, record_daily=False)
             sims_y[c.key] = sim
             metrics_y[c.key] = scoring.sim_metrics(c, sim)
         irr_list = [metrics_y[c.key]["irrigation_mm"] for c in eval_pool]
@@ -238,6 +263,8 @@ def run(req: AnalysisRequest) -> dict:
     ]
     layers_json = [profile.layer_json(layer) for layer in layers]
     nasa_evidence = nasa.build(climate.pack_path, strategies_json, climate.dates, layers_json)
+    if mm_telemetry:
+        nasa_evidence["meteomatics"] = mm_telemetry
     disclaimers = ["disclaimer.main"] + (["disclaimer.preview_data"] if climate.source == "synthetic" else [])
     return {
         "schema_version": SCHEMA_VERSION,
