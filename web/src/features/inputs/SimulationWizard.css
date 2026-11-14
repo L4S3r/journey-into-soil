@@ -1,0 +1,1120 @@
+.sim-wizard-card {
+  background: rgba(15, 23, 42, 0.78);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 20px;
+  box-shadow: 0 20px 45px -10px rgba(0, 0, 0, 0.6), 0 0 1px 1px rgba(255, 255, 255, 0.08);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  color: #f1f5f9;
+  font-family: inherit;
+  margin-block: 14px;
+}
+
+/* TOP STEPPER PROGRESS BAR */
+.sim-stepper {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  background: rgba(10, 15, 30, 0.6);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 8px 12px;
+  gap: 8px;
+}
+
+.stepper-node {
+  background: transparent;
+  border: none;
+  border-radius: 12px;
+  padding: 8px 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  text-align: start;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  color: #64748b;
+  min-height: 48px;
+}
+
+[dir="rtl"] .stepper-node {
+  text-align: right;
+}
+
+.stepper-node:hover {
+  background: rgba(255, 255, 255, 0.04);
+  color: #94a3b8;
+}
+
+.stepper-node.active {
+  background: rgba(2, 132, 199, 0.16);
+  border: 1px solid rgba(56, 189, 248, 0.35);
+  color: #ffffff;
+}
+
+.stepper-node.done {
+  color: #38bdf8;
+}
+
+.stepper-icon-wrap {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.06);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  transition: all 0.2s ease;
+}
+
+.stepper-node.active .stepper-icon-wrap {
+  background: #0284c7;
+  color: #ffffff;
+  box-shadow: 0 0 12px rgba(2, 132, 199, 0.5);
+}
+
+.stepper-node.done .stepper-icon-wrap {
+  background: rgba(16, 185, 129, 0.2);
+  color: #10b981;
+}
+
+.stepper-svg {
+  width: 17px;
+  height: 17px;
+}
+
+.stepper-check {
+  width: 16px;
+  height: 16px;
+  color: #10b981;
+}
+
+.stepper-text {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.stepper-title {
+  font-size: 13px;
+  font-weight: 700;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.stepper-sub {
+  font-size: 10px;
+  color: #64748b;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.stepper-node.active .stepper-sub {
+  color: #93c5fd;
+}
+
+/* STEP CONTENT PANE */
+.sim-step-pane {
+  padding: 20px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  min-height: 420px;
+}
+
+.sim-pane-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  padding-bottom: 14px;
+}
+
+.sim-pane-title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0 0 4px;
+}
+
+.sim-pane-desc {
+  font-size: 0.88rem;
+  color: #94a3b8;
+  margin: 0;
+}
+
+/* MODE TOGGLE */
+.sim-mode-toggle {
+  display: flex;
+  background: rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 3px;
+  gap: 4px;
+}
+
+.sim-tab-btn {
+  background: transparent;
+  border: none;
+  border-radius: 9px;
+  padding: 6px 12px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #94a3b8;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.sim-tab-btn:hover {
+  color: #ffffff;
+}
+
+.sim-tab-btn.active {
+  background: rgba(2, 132, 199, 0.35);
+  color: #ffffff;
+  border: 1px solid rgba(56, 189, 248, 0.4);
+}
+
+.btn-inline-svg {
+  width: 14px;
+  height: 14px;
+}
+
+/* STEP 1: DEMO SITES BENTO GRID */
+.sim-demo-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 12px;
+}
+
+.sim-bento-card {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 14px;
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  transition: all 0.2s ease;
+}
+
+.sim-bento-card:hover {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.18);
+  transform: translateY(-2px);
+}
+
+.sim-bento-card.selected {
+  background: rgba(2, 132, 199, 0.12);
+  border-color: #38bdf8;
+  box-shadow: 0 0 16px rgba(2, 132, 199, 0.25);
+}
+
+.bento-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.bento-badge {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 8px;
+  border-radius: 6px;
+  background: rgba(56, 189, 248, 0.15);
+  color: #38bdf8;
+  text-transform: uppercase;
+}
+
+.bento-coords {
+  font-size: 11px;
+  color: #64748b;
+  font-variant-numeric: tabular-nums;
+}
+
+.bento-card-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #ffffff;
+  margin: 0;
+}
+
+.bento-card-params {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.bento-pill {
+  font-size: 11px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 6px;
+  padding: 3px 7px;
+  color: #cbd5e1;
+}
+
+.bento-card-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: auto;
+  padding-top: 6px;
+}
+
+.sim-card-btn {
+  flex: 1;
+  border-radius: 8px;
+  padding: 8px 10px;
+  font-size: 12px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  min-height: 38px;
+}
+
+.sim-card-btn.select {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #ffffff;
+}
+
+.sim-card-btn.select:hover {
+  background: #0284c7;
+  border-color: #38bdf8;
+}
+
+.sim-bento-card.selected .sim-card-btn.select {
+  background: #0284c7;
+  border-color: #38bdf8;
+}
+
+.sim-card-btn.direct {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #94a3b8;
+}
+
+.sim-card-btn.direct:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: #ffffff;
+}
+
+.sim-custom-map-wrap {
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  min-height: 320px;
+}
+
+.sim-field-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 14px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  padding: 12px 16px;
+}
+
+.sim-input-label {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 13px;
+  color: #cbd5e1;
+}
+
+.sim-input-stepper {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.sim-input {
+  background: rgba(0, 0, 0, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 8px;
+  padding: 8px 12px;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 600;
+  width: 90px;
+}
+
+.sim-input:focus {
+  outline: none;
+  border-color: #38bdf8;
+  box-shadow: 0 0 8px rgba(56, 189, 248, 0.3);
+}
+
+.sim-input-unit {
+  font-size: 12px;
+  color: #64748b;
+}
+
+.sim-meta-chip {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: #94a3b8;
+}
+
+.meta-chip-svg {
+  width: 16px;
+  height: 16px;
+  color: #38bdf8;
+}
+
+/* STEP 2: SOIL TEXTURE CARDS */
+.sim-texture-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 12px;
+}
+
+.sim-texture-card {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 14px;
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  text-align: start;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: inherit;
+  min-height: 110px;
+}
+
+[dir="rtl"] .sim-texture-card {
+  text-align: right;
+}
+
+.sim-texture-card:hover {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.18);
+  transform: translateY(-2px);
+}
+
+.sim-texture-card.selected {
+  background: rgba(2, 132, 199, 0.14);
+  border-color: #38bdf8;
+  box-shadow: 0 0 16px rgba(2, 132, 199, 0.25);
+}
+
+.texture-card-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.texture-name {
+  font-size: 15px;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.texture-check-svg {
+  width: 18px;
+  height: 18px;
+  color: #38bdf8;
+}
+
+.texture-desc {
+  font-size: 12px;
+  color: #94a3b8;
+  line-height: 1.35;
+  margin: 0;
+  flex: 1;
+}
+
+.texture-bar-wrap {
+  height: 6px;
+  border-radius: 3px;
+  background: rgba(255, 255, 255, 0.08);
+  display: flex;
+  overflow: hidden;
+  margin-top: 4px;
+}
+
+.texture-bar.sand {
+  background: #f59e0b;
+}
+
+.texture-bar.clay {
+  background: #ef4444;
+}
+
+.texture-sub {
+  font-size: 10px;
+  color: #64748b;
+  font-variant-numeric: tabular-nums;
+}
+
+/* CHIP SELECTORS */
+.sim-selectors-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 14px;
+}
+
+.sim-selector-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.sim-selector-title {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: #94a3b8;
+}
+
+.sim-chip-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.sim-pill-btn {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  padding: 6px 14px;
+  color: #cbd5e1;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  min-height: 36px;
+}
+
+.sim-pill-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+}
+
+.sim-pill-btn.active {
+  background: #0284c7;
+  border-color: #38bdf8;
+  color: #ffffff;
+  box-shadow: 0 0 10px rgba(2, 132, 199, 0.35);
+}
+
+/* LAB ACCORDION */
+.sim-lab-accordion {
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  overflow: hidden;
+  background: rgba(0, 0, 0, 0.2);
+}
+
+.sim-lab-toggle {
+  width: 100%;
+  padding: 12px 16px;
+  background: transparent;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  color: inherit;
+  transition: all 0.15s ease;
+}
+
+.sim-lab-toggle:hover {
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.sim-lab-toggle-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-align: start;
+}
+
+[dir="rtl"] .sim-lab-toggle-left {
+  text-align: right;
+}
+
+.lab-svg {
+  width: 20px;
+  height: 20px;
+  color: #38bdf8;
+}
+
+.sim-lab-title {
+  display: block;
+  font-size: 13px;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.sim-lab-sub {
+  display: block;
+  font-size: 11px;
+  color: #64748b;
+}
+
+.lab-arrow {
+  width: 18px;
+  height: 18px;
+  color: #64748b;
+  transition: transform 0.2s ease;
+}
+
+.lab-arrow.open {
+  transform: rotate(180deg);
+}
+
+.sim-lab-inputs {
+  padding: 14px 16px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 14px;
+}
+
+.sim-lab-inputs .sim-input-label {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
+}
+
+.sim-lab-inputs .sim-input {
+  width: 100%;
+}
+
+.sim-lab-inputs small {
+  font-size: 10px;
+  color: #64748b;
+}
+
+/* STEP 3: IRRIGATION CARDS */
+.sim-irrigation-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.sim-irrigation-card {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 14px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  text-align: start;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  color: inherit;
+  min-height: 120px;
+}
+
+[dir="rtl"] .sim-irrigation-card {
+  text-align: right;
+}
+
+.sim-irrigation-card:hover {
+  background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(255, 255, 255, 0.18);
+  transform: translateY(-2px);
+}
+
+.sim-irrigation-card.selected {
+  background: rgba(2, 132, 199, 0.14);
+  border-color: #38bdf8;
+  box-shadow: 0 0 16px rgba(2, 132, 199, 0.25);
+}
+
+.irrigation-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.irrigation-name {
+  font-size: 15px;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.irrigation-eff {
+  font-size: 11px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 6px;
+  background: rgba(16, 185, 129, 0.15);
+  color: #10b981;
+}
+
+.irrigation-desc {
+  font-size: 12px;
+  color: #94a3b8;
+  line-height: 1.35;
+  margin: 0;
+  flex: 1;
+}
+
+.irrigation-badge-selected {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  color: #38bdf8;
+  margin-top: 4px;
+}
+
+/* WATER SALINITY BOX */
+.sim-salinity-box {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.salinity-box-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.salinity-box-title {
+  font-size: 13px;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.salinity-box-val {
+  font-size: 14px;
+  font-weight: 700;
+  color: #38bdf8;
+  font-variant-numeric: tabular-nums;
+}
+
+.sim-slider {
+  width: 100%;
+  accent-color: #0284c7;
+  cursor: pointer;
+  height: 6px;
+}
+
+.salinity-bracket-badge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: #cbd5e1;
+  background: rgba(0, 0, 0, 0.25);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 8px;
+  padding: 6px 10px;
+}
+
+.bracket-svg {
+  width: 15px;
+  height: 15px;
+  color: #f59e0b;
+  flex-shrink: 0;
+}
+
+/* STEP 4: SEASONS & CROPS */
+.sim-season-box {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.sim-season-btn {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  padding: 8px 14px;
+  color: #cbd5e1;
+  font-size: 13px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.sim-season-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+}
+
+.sim-season-btn.active {
+  background: #0284c7;
+  border-color: #38bdf8;
+  color: #ffffff;
+}
+
+.season-btn-svg {
+  width: 16px;
+  height: 16px;
+}
+
+/* HISTORY FLOW */
+.sim-history-flow {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.sim-history-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+}
+
+.sim-history-card {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.history-card-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.history-card-step {
+  font-size: 11px;
+  font-weight: 700;
+  color: #94a3b8;
+  text-transform: uppercase;
+}
+
+.history-card-season {
+  font-size: 11px;
+  color: #38bdf8;
+  font-weight: 600;
+}
+
+.sim-select {
+  background: rgba(0, 0, 0, 0.35);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 8px;
+  padding: 6px 10px;
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 600;
+  width: 100%;
+}
+
+.sim-select:focus {
+  outline: none;
+  border-color: #38bdf8;
+}
+
+.history-quick-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.history-quick-chip {
+  font-size: 10px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 6px;
+  padding: 2px 6px;
+  color: #94a3b8;
+  cursor: pointer;
+  transition: all 0.1s ease;
+}
+
+.history-quick-chip:hover {
+  background: rgba(255, 255, 255, 0.12);
+  color: #ffffff;
+}
+
+.history-quick-chip.active {
+  background: rgba(56, 189, 248, 0.2);
+  border-color: #38bdf8;
+  color: #38bdf8;
+}
+
+/* PRIORITIES */
+.sim-priorities-box {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 14px;
+  padding: 14px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.priorities-box-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.priorities-balance-tag {
+  font-size: 11px;
+  font-weight: 700;
+  color: #94a3b8;
+  text-transform: uppercase;
+}
+
+.prio-balance-bar {
+  height: 8px;
+  border-radius: 4px;
+  background: rgba(0, 0, 0, 0.35);
+  display: flex;
+  overflow: hidden;
+}
+
+.prio-seg.water {
+  background: #38bdf8;
+}
+.prio-seg.soil {
+  background: #10b981;
+}
+.prio-seg.income {
+  background: #f59e0b;
+}
+.prio-seg.risk {
+  background: #a855f7;
+}
+
+.prio-sliders-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 12px;
+}
+
+.prio-slider-item {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.prio-slider-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.prio-slider-label {
+  font-size: 12px;
+  font-weight: 600;
+  color: #cbd5e1;
+}
+
+.prio-slider-val {
+  font-size: 12px;
+  font-weight: 700;
+  color: #ffffff;
+  font-variant-numeric: tabular-nums;
+}
+
+/* FOOTER NAV */
+.sim-wizard-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 20px;
+  background: rgba(10, 15, 30, 0.7);
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.wizard-footer-left,
+.wizard-footer-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.wizard-nav-btn {
+  border-radius: 10px;
+  padding: 9px 18px;
+  font-size: 13px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  transition: all 0.15s ease;
+  min-height: 42px;
+}
+
+.wizard-nav-btn.back {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #cbd5e1;
+}
+
+.wizard-nav-btn.back:hover {
+  background: rgba(255, 255, 255, 0.12);
+  color: #ffffff;
+}
+
+.wizard-nav-btn.next {
+  background: #0284c7;
+  border: 1px solid #38bdf8;
+  color: #ffffff;
+  box-shadow: 0 0 14px rgba(2, 132, 199, 0.4);
+}
+
+.wizard-nav-btn.next:hover {
+  background: #0369a1;
+}
+
+.btn-nav-svg {
+  width: 15px;
+  height: 15px;
+}
+
+.wizard-sample-btn {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 10px;
+  padding: 8px 14px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #94a3b8;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.wizard-sample-btn:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: #ffffff;
+}
+
+.wizard-step-indicator {
+  font-size: 13px;
+  font-weight: 700;
+  color: #94a3b8;
+  letter-spacing: 0.05em;
+}
+
+.wizard-launch-btn {
+  background: linear-gradient(135deg, #0284c7 0%, #0ea5e9 100%);
+  border: 1px solid #7dd3fc;
+  border-radius: 10px;
+  padding: 10px 22px;
+  font-size: 14px;
+  font-weight: 700;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  box-shadow: 0 0 20px rgba(2, 132, 199, 0.5);
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  min-height: 44px;
+}
+
+.wizard-launch-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 26px rgba(2, 132, 199, 0.7);
+}
+
+.launch-svg {
+  width: 18px;
+  height: 18px;
+}
+
+.sim-error-banner {
+  margin: 12px 20px;
+  background: rgba(239, 68, 68, 0.15);
+  border: 1px solid #ef4444;
+  border-radius: 10px;
+  padding: 10px 14px;
+  color: #fca5a5;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.error-svg {
+  width: 18px;
+  height: 18px;
+  color: #ef4444;
+  flex-shrink: 0;
+}
+
+/* RESPONSIVE DESIGN */
+@media (max-width: 900px) {
+  .sim-stepper {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .sim-irrigation-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .sim-history-cards {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .sim-step-pane {
+    padding: 16px 14px;
+  }
+
+  .sim-stepper {
+    grid-template-columns: 1fr;
+  }
+
+  .stepper-sub {
+    display: none;
+  }
+
+  .sim-wizard-footer {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .wizard-footer-left,
+  .wizard-footer-right {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .wizard-launch-btn,
+  .wizard-nav-btn.next {
+    width: 100%;
+    justify-content: center;
+  }
+}

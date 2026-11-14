@@ -1,8 +1,6 @@
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { api } from "./api/client";
-import { FieldForm } from "./features/inputs/FieldForm";
-import { FieldMap } from "./features/map/FieldMap";
+import { SimulationWizard } from "./features/inputs/SimulationWizard";
 import { AuthModal } from "./features/landing/AuthModal";
 import { LandingPage } from "./features/landing/LandingPage";
 import { NasaTelemetryModal } from "./features/landing/NasaTelemetryModal";
@@ -16,7 +14,6 @@ import { Timeline } from "./features/results/Timeline";
 import i18n from "./i18n";
 import { msgText } from "./lib/msg";
 import { SoilScene } from "./scene/SoilScene";
-import type { DemoSite } from "./scene/types";
 import { useStore } from "./state/store";
 
 function parseAnalysisId(): string | null {
@@ -149,115 +146,37 @@ function Footer() {
 }
 
 function SimulatorView({ onBack }: { onBack: () => void }) {
-  const { t } = useTranslation();
-  const { analyze, loadSample, openDemoSite, applySite, loading, error, lang } = useStore();
-  const [sites, setSites] = useState<DemoSite[]>([]);
-  const [pickerMode, setPickerMode] = useState<"demo" | "custom">("demo");
-
-  useEffect(() => {
-    api.demoSites().then(setSites).catch(() => setSites([]));
-  }, []);
+  const { lang } = useStore();
 
   return (
-    <main className="landing" id="field-simulator">
-      <div style={{ gridColumn: "1 / -1", display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "0.5rem" }}>
+    <main className="landing" id="field-simulator" style={{ display: "block", maxWidth: 1120, margin: "0 auto", padding: "1rem" }}>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1rem" }}>
         <button
           type="button"
           onClick={onBack}
           className="ghost"
           style={{ display: "inline-flex", alignItems: "center", gap: 8, fontWeight: 700 }}
         >
-          <span style={{ fontSize: "14px" }}>←</span>
+          <svg
+            viewBox="0 0 24 24"
+            width="16"
+            height="16"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            aria-hidden="true"
+            style={{ transform: lang === "ar" ? "rotate(180deg)" : "none" }}
+          >
+            <line x1="19" y1="12" x2="5" y2="12" />
+            <polyline points="12 19 5 12 12 5" />
+          </svg>
           <span>{lang === "ar" ? "العودة للرئيسية" : "Back to Overview"}</span>
         </button>
       </div>
 
-      <section className="panel" id="field-inputs">
-        <h2>{t("ui.step_field")}</h2>
-        
-        <div className="picker-tabs" role="tablist" aria-label={t("ui.step_field")}>
-          <button
-            type="button"
-            role="tab"
-            aria-selected={pickerMode === "demo"}
-            className={`chip ${pickerMode === "demo" ? "primary" : ""}`}
-            onClick={() => setPickerMode("demo")}
-          >
-            {t("ui.demo_sites")}
-          </button>
-          <button
-            type="button"
-            role="tab"
-            aria-selected={pickerMode === "custom"}
-            className={`chip ${pickerMode === "custom" ? "primary" : ""}`}
-            onClick={() => setPickerMode("custom")}
-          >
-            {t("ui.click_own_field")}
-          </button>
-        </div>
-
-        {pickerMode === "demo" && sites.length > 0 && (
-          <div className="demo-picker">
-            <p className="hint">{t("ui.demo_sites_intro")}</p>
-            <div className="demo-cards" aria-label={t("ui.demo_sites")}>
-              {sites.map((s) => (
-                <div key={s.id} className="demo-card">
-                  <div>
-                    <h4>{lang === "ar" ? s.name_ar : s.name_en}</h4>
-                    <span className="badge">{t(`ui.region.${s.region}`)}</span>
-                  </div>
-                  <div className="demo-card-actions">
-                    <button
-                      type="button"
-                      className="primary"
-                      disabled={loading}
-                      onClick={() => void openDemoSite(s)}
-                    >
-                      {t("ui.open_demo_result")}
-                    </button>
-                    <button
-                      type="button"
-                      className="ghost"
-                      disabled={loading}
-                      onClick={() => {
-                        applySite(s);
-                        setPickerMode("custom");
-                      }}
-                    >
-                      {t("ui.edit")}
-                    </button>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
-
-        {(pickerMode === "custom" || sites.length === 0) && (
-          <div className="custom-field">
-            <p className="hint">{t("ui.or_custom_field")}</p>
-            <FieldMap />
-          </div>
-        )}
-      </section>
-
-      <section className="panel">
-        <h2>{t("ui.step_inputs")}</h2>
-        <FieldForm />
-        <div className="actions">
-          <button className="primary" disabled={loading} onClick={() => void analyze()}>
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true" style={{ inlineSize: 18, blockSize: 18, marginInlineEnd: 8, verticalAlign: "middle" }}>
-              <circle cx="12" cy="12" r="10" />
-              <line x1="12" y1="2" x2="12" y2="22" />
-              <line x1="2" y1="12" x2="22" y2="12" />
-              <circle cx="12" cy="12" r="4" />
-            </svg>
-            <span>{loading ? t("ui.analyzing") : t("ui.analyze_soil_core")}</span>
-          </button>
-          <button className="ghost" disabled={loading} onClick={() => void loadSample()}>{t("ui.sample")}</button>
-        </div>
-        {error && <p className="error" role="alert">{t("ui.error")} {error}</p>}
-      </section>
+      <SimulationWizard onComplete={() => window.scrollTo({ top: 0, behavior: "smooth" })} />
     </main>
   );
 }
