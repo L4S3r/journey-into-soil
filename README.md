@@ -4,6 +4,15 @@ Decision-support web application for **NASA Space Apps Challenge 2026: "Field Sh
 
 A farmer or agronomist selects a field on a map (or picks from 27 pre-calibrated demo sites across Egypt), combines NASA Earth observations with local soil data, simulates physical agro-hydrological soil dynamics (FAO-56 ET0, Saxton-Rawls pedotransfer, 4-layer soil water balance, and salinity response), evaluates historical multi-year climate uncertainty across 15 analog years (2011–2025), and dives into the soil with a 3D Babylon.js root-zone visualization to compare 3 distinct crop rotation strategies.
 
+### Live Production Deployment
+- **Web Application**: [https://theshifters.l4s3r.site/](https://theshifters.l4s3r.site/)
+- **Direct IP Mirror**: [http://158.158.34.31/](http://158.158.34.31/)
+- **API Health Endpoint**: [https://theshifters.l4s3r.site/api/v1/health](https://theshifters.l4s3r.site/api/v1/health)
+- **Interactive API Documentation (Swagger)**: [https://theshifters.l4s3r.site/docs](https://theshifters.l4s3r.site/docs)
+
+> [!NOTE]
+> **Open Access (No Sign-In Required)**: The entire platform is open for immediate evaluation by hackathon judges and agricultural stakeholders without passwords, registration, or sign-in walls.
+
 > [!IMPORTANT]
 > **Support, not replacement.** Advisory estimates only. The engine provides decision support and risk bounds, not definitive agricultural instructions or yield guarantees.
 > 
@@ -24,7 +33,7 @@ A farmer or agronomist selects a field on a map (or picks from 27 pre-calibrated
 | **Data Pipelines** | [`pipelines/`](pipelines) | NASA POWER agrometeorology fetcher, ISRIC SoilGrids extractor, NASA SMAP/NDVI processors, and automated pack compiler ([`pipelines/build_demo_packs.py`](pipelines/build_demo_packs.py)). Covered by 35 dedicated automated tests. |
 | **Contract & Schema** | [`contracts/`](contracts) | JSON Schema `1.1.0` in [`contracts/result.schema.json`](contracts/result.schema.json). Generated and validated mock result in [`contracts/mock_result.json`](contracts/mock_result.json). Full bilingual i18n parity (English LTR and Arabic RTL) enforced by [`scripts/check_i18n.py`](scripts/check_i18n.py). |
 | **3D Scene & Web UI** | [`web/`](web) | React 18 + Vite + TypeScript + Astryx design tokens. Three.js / Babylon 3D root-zone visualization decoupled cleanly through [`web/src/scene/SceneController.ts`](web/src/scene/SceneController.ts). 3-act sky-to-soil dive, dense multi-plant realistic crop root network, dynamic weather atmosphere HUD, 4-stage guided simulation wizard, executive dashboard, and MapLibre GL parcel selector. Complete RTL/LTR localization. |
-| **Deployment & Infra** | [`infra/`](infra) | Docker & Docker Compose setup supporting Linux ARM64 (OCI Ampere A1) and AMD64 with built-in healthchecks, Google OAuth backend endpoints, and Cloudflare Tunnel reverse proxy. |
+| **Deployment & Infra** | [`infra/`](infra) | Production Docker stack deployed on Microsoft Azure with Cloudflare Tunnel HTTPS termination, direct IP fallback, automated GitHub Actions CI/CD deployment pipeline, and built-in healthchecks. Fully open access with zero sign-in walls. |
 
 ---
 
