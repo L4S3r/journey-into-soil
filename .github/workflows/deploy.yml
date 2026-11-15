@@ -22,7 +22,7 @@ jobs:
           python-version: "3.12"
 
       - name: Install Python dependencies
-        run: pip install -r api/requirements.txt -r api/requirements-dev.txt
+        run: pip install -r api/requirements.txt -r api/requirements-dev.txt -r pipelines/requirements.txt
 
       - name: Run API tests & lint
         run: |
@@ -45,27 +45,33 @@ jobs:
           npm run build
 
   deploy:
-    name: Deploy to OCI Ampere A1
+    name: Deploy to Production Host
     needs: verify
     runs-on: ubuntu-latest
     steps:
-      - name: Deploy on OCI Host
+      - name: Deploy on Production Host
         uses: appleboy/ssh-action@v1.2.0
         with:
-          host: ${{ secrets.OCI_HOST }}
-          username: ${{ secrets.OCI_USER }}
-          key: ${{ secrets.OCI_SSH_KEY }}
+          host: ${{ secrets.AZURE_HOST || secrets.OCI_HOST }}
+          username: ${{ secrets.AZURE_USER || secrets.OCI_USER }}
+          key: ${{ secrets.AZURE_SSH_KEY || secrets.OCI_SSH_KEY }}
           port: 22
           script_stop: true
           script: |
             set -e
-            echo "==> Deploying Journey Into the Soil to OCI..."
+            echo "==> Deploying Journey Into the Soil..."
             cd /srv/journey-into-soil
             git fetch origin master
-            git checkout master
-            git pull origin master
+            git reset --hard origin/master
             sudo docker compose up -d --build
             echo "==> Verifying deployment health..."
-            sleep 4
-            curl -f -s http://127.0.0.1:8080/api/v1/health > /dev/null
-            echo "==> Deployment healthy!"
+            for i in $(seq 1 10); do
+              if curl -f -s http://127.0.0.1/api/v1/health > /dev/null || curl -f -s http://127.0.0.1:8080/api/v1/health > /dev/null; then
+                echo "==> Deployment healthy!"
+                exit 0
+              fi
+              echo "Waiting for service to be healthy (attempt $i/10)..."
+              sleep 3
+            done
+            echo "Health check failed after 10 attempts."
+            exit 1
