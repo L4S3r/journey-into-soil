@@ -51,14 +51,12 @@ interface LandingPageProps {
 }
 
 export function LandingPage({ onStartSimulation }: LandingPageProps) {
-  const { lang, setLang, theme, setTheme, user, setUser, userEmail, openDemoSite } = useStore();
+  const { lang, setLang, theme, setTheme, openDemoSite } = useStore();
   const isAr = lang === "ar";
 
   // Modals state
   const [pdfModalOpen, setPdfModalOpen] = useState(false);
   const [nasaModalOpen, setNasaModalOpen] = useState(false);
-  const [authModalOpen, setAuthModalOpen] = useState(false);
-  const [isAuthenticating, setIsAuthenticating] = useState(false);
 
   // Map state
   const [activeGovId, setActiveGovId] = useState<string>("beheira");
@@ -73,7 +71,6 @@ export function LandingPage({ onStartSimulation }: LandingPageProps) {
       if (e.key === "Escape") {
         setPdfModalOpen(false);
         setNasaModalOpen(false);
-        setAuthModalOpen(false);
       }
     };
     window.addEventListener("keydown", handleKeyDown);
@@ -85,95 +82,11 @@ export function LandingPage({ onStartSimulation }: LandingPageProps) {
     setTimeout(() => setToastText(null), 3200);
   };
 
-  // Listen for Google OAuth callback parameters (?code=... or ?credential=...)
-  useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    const code = params.get("code");
-    const credential = params.get("credential");
-    if (code || credential) {
-      window.history.replaceState({}, document.title, window.location.pathname);
-      setIsAuthenticating(true);
-      api
-        .exchangeGoogleAuth({
-          code: code || undefined,
-          credential: credential || undefined,
-          redirect_uri: window.location.origin,
-        })
-        .then((res) => {
-          if (res.success && res.user) {
-            setUser(res.user, res.token);
-            setAuthModalOpen(false);
-            showToast(
-              isAr
-                ? `مرحباً بعودتك ${res.user.name}! تم تسجيل الدخول بنجاح عبر Google`
-                : `Welcome back ${res.user.name}! Authenticated with Google.`,
-            );
-          }
-        })
-        .catch((err) => {
-          showToast(
-            isAr
-              ? `تعذر إتمام تسجيل الدخول عبر Google: ${err.message}`
-              : `Google sign-in failed: ${err.message}`,
-          );
-        })
-        .finally(() => {
-          setIsAuthenticating(false);
-        });
-    }
-  }, []);
-
   const activeGov = GOVERNORATES.find((g) => g.id === activeGovId) || GOVERNORATES[2];
 
   const filteredGovs = selectedZone === "all"
     ? GOVERNORATES
     : GOVERNORATES.filter((g) => g.zone === selectedZone);
-
-  // Google OAuth sign-in via backend
-  const handleGoogleSignIn = async () => {
-    setIsAuthenticating(true);
-    try {
-      const data = await api.getGoogleAuthUrl(window.location.origin);
-      if (data.configured && data.auth_url) {
-        window.location.href = data.auth_url;
-      } else {
-        const authRes = await api.exchangeGoogleAuth({
-          code: "dev_mock_oauth",
-          redirect_uri: window.location.origin,
-        });
-        if (authRes.success && authRes.user) {
-          setUser(authRes.user, authRes.token);
-          setAuthModalOpen(false);
-          showToast(
-            isAr
-              ? `مرحباً بك ${authRes.user.name}! تم تسجيل الدخول بنجاح عبر Google`
-              : `Welcome ${authRes.user.name}! Authenticated with Google.`,
-          );
-        }
-      }
-    } catch (err: any) {
-      showToast(
-        isAr
-          ? `خطأ في المصادقة: ${err.message}`
-          : `Authentication error: ${err.message}`,
-      );
-    } finally {
-      setIsAuthenticating(false);
-    }
-  };
-
-  // Sign out via backend & local state
-  const handleSignOut = async () => {
-    try {
-      await api.logout();
-    } catch {}
-    setUser(null);
-    showToast(
-      isAr
-        ? "تم تسجيل الخروج من حساب Google بنجاح."
-        : "Signed out of Google account.",
-    );
-  };
 
   return (
     <div className={`min-h-screen relative bg-[var(--astryx-color-bg)] text-[var(--astryx-color-text-primary)] antialiased transition-colors duration-300 font-sans ${theme === "dark" ? "dark" : ""}`} dir={isAr ? "rtl" : "ltr"}>
@@ -263,49 +176,6 @@ export function LandingPage({ onStartSimulation }: LandingPageProps) {
                 </svg>
               )}
             </button>
-
-            {/* Google Account / Sign-In Button in Header */}
-            {!user ? (
-              <button
-                type="button"
-                onClick={() => setAuthModalOpen(true)}
-                className="astryx-btn astryx-btn--secondary px-3.5 py-2 text-xs font-bold flex items-center gap-2 border-[var(--astryx-color-border)] hover:border-[#00a76f]/50 hover:bg-[var(--astryx-color-surface-raised)] transition-all shadow-sm"
-                title={isAr ? "تسجيل الدخول عبر Google" : "Sign in with Google"}
-              >
-                <svg className="w-4 h-4 shrink-0" viewBox="0 0 24 24">
-                  <path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.665-5.17 3.665-9.17z"/>
-                  <path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.1-6.72-4.93H1.25v3.15C3.26 21.36 7.33 24 12 24z"/>
-                  <path fill="#FBBC05" d="M5.28 14.27c-.25-.72-.38-1.49-.38-2.27s.13-1.55.38-2.27V6.58H1.25C.45 8.18 0 9.99 0 12s.45 3.82 1.25 5.42l4.03-3.15z"/>
-                  <path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.33 0 3.26 2.64 1.25 6.58l4.03 3.15c.95-2.83 3.6-4.98 6.72-4.98z"/>
-                </svg>
-                <span className="hidden sm:inline">{isAr ? "تسجيل الدخول عبر Google" : "Sign in with Google"}</span>
-              </button>
-            ) : (
-              <div className="flex items-center gap-1.5 sm:gap-2">
-                <div className="flex items-center gap-2 px-3 py-1.5 rounded-xl bg-emerald-500/10 border border-emerald-500/25 text-xs font-semibold text-emerald-700 dark:text-emerald-300">
-                  {user.picture ? (
-                    <img src={user.picture} alt={user.name} className="w-5 h-5 rounded-full object-cover" />
-                  ) : (
-                    <div className="w-5 h-5 rounded-full bg-gradient-to-tr from-[#1b4332] to-[#00a76f] text-white flex items-center justify-center text-[10px] font-bold">
-                      {(user.name || "U").charAt(0).toUpperCase()}
-                    </div>
-                  )}
-                  <span className="hidden sm:inline truncate max-w-[110px]">{user.name || user.email}</span>
-                </div>
-                <button
-                  type="button"
-                  onClick={handleSignOut}
-                  title={isAr ? "تسجيل الخروج" : "Sign Out"}
-                  className="astryx-btn astryx-btn--secondary p-2 text-xs font-bold hover:text-rose-500 hover:border-rose-500/30 transition"
-                >
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="15" height="15" className="rtl:rotate-180">
-                    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
-                    <polyline points="16 17 21 12 16 7" />
-                    <line x1="21" y1="12" x2="9" y2="12" />
-                  </svg>
-                </button>
-              </div>
-            )}
           </div>
 
         </div>
@@ -327,153 +197,87 @@ export function LandingPage({ onStartSimulation }: LandingPageProps) {
           <div className="absolute inset-0 bg-gradient-to-b from-[var(--astryx-color-bg)]/85 via-[var(--astryx-color-bg)]/70 to-[var(--astryx-color-bg)]/95 dark:from-[#0b0e0c]/85 dark:via-[#0b0e0c]/70 dark:to-[#0b0e0c]/95 backdrop-blur-[1px] pointer-events-none" />
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_transparent_20%,_var(--astryx-color-bg)_95%)] dark:bg-[radial-gradient(ellipse_at_center,_transparent_20%,_#0b0e0c_95%)] opacity-70 pointer-events-none" />
 
-          {/* 1. Hero Guest Content: Shown when user is null */}
-          {!user ? (
-            <div id="heroGuestContent" className="relative z-10 w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 pb-8 sm:pt-16 sm:pb-12 text-center flex-1 flex flex-col justify-center items-center transition-all duration-300">
-              
-              {/* Grand Unbounded Full-Screen Headline */}
-              <h1 className="text-3xl sm:text-5xl lg:text-7xl font-black tracking-tight leading-[1.15] text-[var(--astryx-color-text-primary)] max-w-5xl mx-auto drop-shadow-sm">
-                {isAr ? "حيث تلتقي بيانات الفضاء بمنطقة الجذور:" : "Where Space Data Meets the Root Zone:"} <br />
-                <span className="bg-gradient-to-r from-[#1b4332] via-[#2d6a4f] to-[#d97706] dark:from-[#52b788] dark:via-[#74c69d] dark:to-[#f59e0b] bg-clip-text text-transparent">
-                  {isAr ? "ذكاء التربة الدقيق" : "Precision Soil Intelligence"}
-                </span>
-              </h1>
-
-              {/* Subtitle */}
-              <p className="mt-6 text-base sm:text-lg lg:text-xl text-[var(--astryx-color-text-secondary)] font-medium leading-relaxed max-w-3xl mx-auto">
-                {isAr
-                  ? "نظام إرشادي قائم على فيزياء التربة يُمكّن المزارع المصري من استثمار أرصاد ناسا الفضائية، وهيدرولوجيا الطبقات، والتخطيط لدورات زراعية صامدة للملوحة."
-                  : "A physics-based agronomic advisory system empowering Egyptian farmers with NASA Earth data, multi-layer soil hydrology, and salt-resilient crop rotation planning."}
-              </p>
-
-              {/* Unified Hero Action Button (Account-Gated) */}
-              <div className="mt-8 sm:mt-12 flex items-center justify-center">
-                <button
-                  type="button"
-                  onClick={() => setAuthModalOpen(true)}
-                  className="astryx-btn px-8 sm:px-11 py-4 sm:py-5 text-base sm:text-lg font-extrabold text-white shadow-2xl hover:scale-105 active:scale-95 transition-all flex items-center gap-3.5 rounded-2xl group"
-                  style={{ backgroundColor: "#00a76f", boxShadow: "0 16px 36px -6px rgba(0, 167, 111, 0.45)" }}
-                >
-                  <div className="w-7 h-7 rounded-xl bg-white/20 flex items-center justify-center text-white shrink-0 group-hover:rotate-12 transition-transform">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" width="16" height="16">
-                      <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
-                    </svg>
-                  </div>
-                  <span>{isAr ? "حديث المحصول وتشغيل المحاكي" : "crop talk ai and launch simulation"}</span>
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" width="20" height="20" className="rtl:rotate-180 group-hover:translate-x-1.5 rtl:group-hover:-translate-x-1.5 transition-transform">
-                    <line x1="5" y1="12" x2="19" y2="12" />
-                    <polyline points="12 5 19 12 12 19" />
-                  </svg>
-                </button>
-              </div>
-
+          {/* Hero Unlocked Content: The 3 Core Action Buttons Directly Available */}
+          <div id="heroContent" className="relative z-10 w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 pb-12 sm:pt-16 sm:pb-16 text-center flex-1 flex flex-col justify-center items-center transition-all duration-300">
+            
+            {/* NASA Space Apps Badge */}
+            <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-emerald-500/15 border border-emerald-400/30 text-emerald-800 dark:text-emerald-300 text-xs sm:text-sm font-bold tracking-wide uppercase mb-6 backdrop-blur-md shadow-sm">
+              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+              <span>{isAr ? "تطبيقات الفضاء ناسا 2026 · منصة مفتوحة للتقييم" : "NASA Space Apps 2026 · Open Access Platform"}</span>
             </div>
-          ) : (
-            /* 2. Hero Authenticated Content: The Three Buttons (Unlocked after Google sign-in) */
-            <div id="heroAuthenticatedContent" className="relative z-10 w-full max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 flex-1 flex flex-col justify-center items-center text-center transition-all duration-300 pb-56 sm:pb-72">
-              
-              {/* Account Status & Navigation Header above the 3 Buttons */}
-              <div className="mb-6 sm:mb-8 flex flex-wrap items-center justify-center gap-2.5 sm:gap-3">
-                {/* Back to Overview Button */}
-                <button
-                  type="button"
-                  onClick={handleSignOut}
-                  className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-semibold bg-white/85 dark:bg-black/60 hover:bg-white dark:hover:bg-black/80 text-neutral-800 dark:text-neutral-200 border border-neutral-200 dark:border-white/10 backdrop-blur-md shadow-sm transition hover:scale-105"
-                >
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" width="14" height="14" className="rtl:rotate-180 text-[#00a76f]">
-                    <line x1="19" y1="12" x2="5" y2="12" />
-                    <polyline points="12 19 5 12 12 5" />
-                  </svg>
-                  <span>{isAr ? "العودة للرئيسية" : "Back to Overview"}</span>
-                </button>
 
-                {/* Active Google Account Badge */}
-                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-semibold bg-emerald-500/15 text-emerald-800 dark:text-emerald-300 border border-emerald-500/30 backdrop-blur-md shadow-sm">
-                  {user.picture ? (
-                    <img src={user.picture} alt={user.name} className="w-4 h-4 rounded-full object-cover" />
-                  ) : (
-                    <svg className="w-3.5 h-3.5 shrink-0" viewBox="0 0 24 24">
-                      <path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.665-5.17 3.665-9.17z"/>
-                      <path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.1-6.72-4.93H1.25v3.15C3.26 21.36 7.33 24 12 24z"/>
-                      <path fill="#FBBC05" d="M5.28 14.27c-.25-.72-.38-1.49-.38-2.27s.13-1.55.38-2.27V6.58H1.25C.45 8.18 0 9.99 0 12s.45 3.82 1.25 5.42l4.03-3.15z"/>
-                      <path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.33 0 3.26 2.64 1.25 6.58l4.03 3.15c.95-2.83 3.6-4.98 6.72-4.98z"/>
-                    </svg>
-                  )}
-                  <span>{user.name} ({user.email})</span>
+            {/* Grand Unbounded Full-Screen Headline */}
+            <h1 className="text-3xl sm:text-5xl lg:text-7xl font-black tracking-tight leading-[1.15] text-[var(--astryx-color-text-primary)] max-w-5xl mx-auto drop-shadow-sm">
+              {isAr ? "حيث تلتقي بيانات الفضاء بمنطقة الجذور:" : "Where Space Data Meets the Root Zone:"} <br />
+              <span className="bg-gradient-to-r from-[#1b4332] via-[#2d6a4f] to-[#d97706] dark:from-[#52b788] dark:via-[#74c69d] dark:to-[#f59e0b] bg-clip-text text-transparent">
+                {isAr ? "ذكاء التربة الدقيق" : "Precision Soil Intelligence"}
+              </span>
+            </h1>
+
+            {/* Subtitle */}
+            <p className="mt-6 text-base sm:text-lg lg:text-xl text-[var(--astryx-color-text-secondary)] font-medium leading-relaxed max-w-3xl mx-auto">
+              {isAr
+                ? "نظام إرشادي قائم على فيزياء التربة يُمكّن المزارع المصري من استثمار أرصاد ناسا الفضائية، وهيدرولوجيا الطبقات، والتخطيط لدورات زراعية صامدة للملوحة."
+                : "A physics-based agronomic advisory system empowering Egyptian farmers with NASA Earth data, multi-layer soil hydrology, and salt-resilient crop rotation planning."}
+            </p>
+
+            {/* The Three Core Action Buttons */}
+            <div className="mt-10 grid grid-cols-1 md:grid-cols-3 astryx-three-col-pipeline gap-4 sm:gap-6 w-full max-w-4xl mx-auto">
+              
+              {/* BUTTON 1: "start the journey simulation" */}
+              <button
+                type="button"
+                onClick={onStartSimulation}
+                className="px-6 py-5 sm:py-6 rounded-3xl text-white font-extrabold text-sm sm:text-base shadow-2xl transition-all duration-300 hover:scale-[1.03] active:scale-[0.98] flex items-center justify-center gap-3 text-center group cursor-pointer border-none"
+                style={{ background: "linear-gradient(135deg, #00a76f 0%, #1b4332 100%)", boxShadow: "0 14px 32px -4px rgba(0, 167, 111, 0.55)" }}
+              >
+                <div className="w-8 h-8 rounded-xl bg-white/20 text-white flex items-center justify-center shrink-0 shadow-inner group-hover:scale-110 transition-transform">
+                  <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16">
+                    <polygon points="5 3 19 12 5 21 5 3" />
+                  </svg>
                 </div>
+                <span>{isAr ? "تشغيل محاكاة الرحلة" : "start the journey simulation "}</span>
+              </button>
 
-                {/* Sign Out Button */}
-                <button
-                  type="button"
-                  onClick={handleSignOut}
-                  className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full text-xs font-semibold bg-rose-500/10 hover:bg-rose-500/20 text-rose-700 dark:text-rose-400 border border-rose-500/20 backdrop-blur-md transition hover:scale-105"
-                >
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="14" height="14" className="rtl:rotate-180">
-                    <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
-                    <polyline points="16 17 21 12 16 7" />
-                    <line x1="21" y1="12" x2="9" y2="12" />
+              {/* BUTTON 2: "print analysis and reccomendation PDF" */}
+              <button
+                type="button"
+                onClick={() => {
+                  setPdfModalOpen(true);
+                  showToast(isAr ? "جاري فتح تقرير التحليل والتوصيات..." : "Opening Analysis & Recommendation report...");
+                }}
+                className="px-6 py-5 sm:py-6 rounded-3xl bg-white/95 dark:bg-[#151c17]/95 hover:bg-white dark:hover:bg-white/10 text-neutral-900 dark:text-white border-2 border-emerald-500/50 hover:border-emerald-500 font-extrabold text-sm sm:text-base shadow-2xl backdrop-blur-xl transition-all duration-300 hover:scale-[1.03] active:scale-[0.98] flex items-center justify-center gap-3 text-center group cursor-pointer"
+              >
+                <div className="w-8 h-8 rounded-xl bg-emerald-500/15 text-[#00a76f] flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="16" height="16">
+                    <polyline points="6 9 6 2 18 2 18 9" />
+                    <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2" />
+                    <rect x="6" y="14" width="12" height="8" />
                   </svg>
-                  <span>{isAr ? "تسجيل الخروج" : "Sign Out"}</span>
-                </button>
-              </div>
+                </div>
+                <span>{isAr ? "طباعة تقرير التحليل والتوصيات PDF" : "print analysis and reccomendation PDF"}</span>
+              </button>
 
-              <div className="grid grid-cols-1 md:grid-cols-3 astryx-three-col-pipeline gap-5 sm:gap-6 w-full max-w-4xl mx-auto">
-                
-                {/* BUTTON 1: "start the journey simulation" */}
-                <button
-                  type="button"
-                  onClick={onStartSimulation}
-                  className="px-6 py-5 sm:py-6 rounded-3xl text-white font-extrabold text-sm sm:text-base shadow-2xl transition-all duration-300 hover:scale-[1.03] active:scale-[0.98] flex items-center justify-center gap-3 text-center group cursor-pointer border-none"
-                  style={{ background: "linear-gradient(135deg, #00a76f 0%, #1b4332 100%)", boxShadow: "0 14px 32px -4px rgba(0, 167, 111, 0.55)" }}
-                >
-                  <div className="w-8 h-8 rounded-xl bg-white/20 text-white flex items-center justify-center shrink-0 shadow-inner group-hover:scale-110 transition-transform">
-                    <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16">
-                      <polygon points="5 3 19 12 5 21 5 3" />
-                    </svg>
-                  </div>
-                  <span>{isAr ? "تشغيل محاكاة الرحلة" : "start the journey simulation "}</span>
-                </button>
-
-                {/* BUTTON 2: "print analysis and reccomendation PDF" */}
-                <button
-                  type="button"
-                  onClick={() => {
-                    setPdfModalOpen(true);
-                    showToast(isAr ? "جاري فتح تقرير التحليل والتوصيات..." : "Opening Analysis & Recommendation report...");
-                  }}
-                  className="px-6 py-5 sm:py-6 rounded-3xl bg-white/95 dark:bg-[#151c17]/95 hover:bg-white dark:hover:bg-white/10 text-neutral-900 dark:text-white border-2 border-emerald-500/50 hover:border-emerald-500 font-extrabold text-sm sm:text-base shadow-2xl backdrop-blur-xl transition-all duration-300 hover:scale-[1.03] active:scale-[0.98] flex items-center justify-center gap-3 text-center group cursor-pointer"
-                >
-                  <div className="w-8 h-8 rounded-xl bg-emerald-500/15 text-[#00a76f] flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="16" height="16">
-                      <polyline points="6 9 6 2 18 2 18 9" />
-                      <path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2" />
-                      <rect x="6" y="14" width="12" height="8" />
-                    </svg>
-                  </div>
-                  <span>{isAr ? "طباعة تقرير التحليل والتوصيات PDF" : "print analysis and reccomendation PDF"}</span>
-                </button>
-
-                {/* BUTTON 3: "comparing the data with nasa's data" */}
-                <button
-                  type="button"
-                  onClick={() => {
-                    setNasaModalOpen(true);
-                    showToast(isAr ? "تم تحميل مقارنة بيانات أقمار ناسا الفضائية." : "Loaded live NASA Earth Data comparison.");
-                  }}
-                  className="px-6 py-5 sm:py-6 rounded-3xl bg-white/95 dark:bg-[#151c17]/95 hover:bg-white dark:hover:bg-white/10 text-neutral-900 dark:text-white border-2 border-sky-500/50 hover:border-sky-500 font-extrabold text-sm sm:text-base shadow-2xl backdrop-blur-xl transition-all duration-300 hover:scale-[1.03] active:scale-[0.98] flex items-center justify-center gap-3 text-center group cursor-pointer"
-                >
-                  <div className="w-8 h-8 rounded-xl bg-sky-500/15 text-sky-500 flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="16" height="16">
-                      <path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z" />
-                    </svg>
-                  </div>
-                  <span>{isAr ? "مقارنة البيانات مع بيانات ناسا" : "comparing the data with nasa's data"}</span>
-                </button>
-
-              </div>
+              {/* BUTTON 3: "comparing the data with nasa's data" */}
+              <button
+                type="button"
+                onClick={() => {
+                  setNasaModalOpen(true);
+                  showToast(isAr ? "تم تحميل مقارنة بيانات أقمار ناسا الفضائية." : "Loaded live NASA Earth Data comparison.");
+                }}
+                className="px-6 py-5 sm:py-6 rounded-3xl bg-white/95 dark:bg-[#151c17]/95 hover:bg-white dark:hover:bg-white/10 text-neutral-900 dark:text-white border-2 border-sky-500/50 hover:border-sky-500 font-extrabold text-sm sm:text-base shadow-2xl backdrop-blur-xl transition-all duration-300 hover:scale-[1.03] active:scale-[0.98] flex items-center justify-center gap-3 text-center group cursor-pointer"
+              >
+                <div className="w-8 h-8 rounded-xl bg-sky-500/15 text-sky-500 flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="16" height="16">
+                    <path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z" />
+                  </svg>
+                </div>
+                <span>{isAr ? "مقارنة البيانات مع بيانات ناسا" : "comparing the data with nasa's data"}</span>
+              </button>
 
             </div>
-          )}
+
+          </div>
 
           {/* Bottom Edge Stats Cards Strip */}
           <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-8 pt-4">
@@ -919,11 +723,7 @@ export function LandingPage({ onStartSimulation }: LandingPageProps) {
                   {/* Interactive Prompt Input Bar Mockup */}
                   <div
                     onClick={() => {
-                      if (userEmail) {
-                        window.scrollTo({ top: 0, behavior: "smooth" });
-                      } else {
-                        setAuthModalOpen(true);
-                      }
+                      onStartSimulation();
                     }}
                     className="p-3 border-t border-[var(--astryx-color-border-subtle)] bg-[var(--astryx-color-surface-subtle)]/50 flex items-center gap-2 cursor-pointer"
                   >
@@ -1180,8 +980,8 @@ export function LandingPage({ onStartSimulation }: LandingPageProps) {
                   </h3>
                   <p className="text-xs text-neutral-500 dark:text-neutral-400 font-mono">
                     {isAr
-                      ? `تمت المعايرة ببيانات NASA POWER وقاعدة SoilGrids مصر · المستفيد: ${userEmail || "Ahmed Yasser"}`
-                      : `Calibrated via NASA POWER & Egypt SoilGrids · Beneficiary: ${userEmail || "Ahmed Yasser"}`}
+                      ? "تمت المعايرة ببيانات NASA POWER وقاعدة SoilGrids مصر · المستفيد: أحمد ياسر (فريق The Shifters)"
+                      : "Calibrated via NASA POWER & Egypt SoilGrids · Beneficiary: Ahmed Yasser (The Shifters Team)"}
                   </p>
                 </div>
               </div>
@@ -1483,90 +1283,6 @@ export function LandingPage({ onStartSimulation }: LandingPageProps) {
               >
                 {isAr ? "إغلاق والعودة" : "Close & Return"}
               </button>
-            </div>
-
-          </div>
-        </div>
-      )}
-
-      {/* ==========================================================================
-           MODAL 3: GOOGLE OAUTH SIGN-IN MODAL
-           ========================================================================== */}
-      {authModalOpen && (
-        <div
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm transition-opacity duration-300"
-          onClick={(e) => {
-            if (e.target === e.currentTarget) setAuthModalOpen(false);
-          }}
-        >
-          <div className="w-full max-w-[440px] bg-white/95 dark:bg-[#151b17]/95 border border-white/60 dark:border-white/10 rounded-[32px] shadow-2xl p-7 sm:p-10 backdrop-blur-xl text-neutral-900 dark:text-white text-center transform transition-all relative">
-            
-            {/* Close Modal Button */}
-            <button
-              type="button"
-              onClick={() => setAuthModalOpen(false)}
-              aria-label="Close modal"
-              className="absolute top-5 end-5 p-1.5 rounded-xl hover:bg-neutral-100 dark:hover:bg-white/10 text-neutral-400 hover:text-neutral-700 dark:hover:text-white transition cursor-pointer"
-            >
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" width="20" height="20">
-                <line x1="18" y1="6" x2="6" y2="18" />
-                <line x1="6" y1="6" x2="18" y2="18" />
-              </svg>
-            </button>
-
-            {/* Logo */}
-            <div className="flex flex-col items-center mb-3">
-              <div className="w-24 h-24 sm:w-28 sm:h-28 flex items-center justify-center mb-2">
-                <img src="/the_shifters_logo_transparent.png" alt="The Shifters Logo" className="w-full h-full object-contain drop-shadow-xl" />
-              </div>
-              <div className="text-[11px] font-bold uppercase tracking-widest text-[#00a76f] font-mono">
-                {isAr ? "رحلة في أعماق التربة" : "Journey into the Soil"}
-              </div>
-            </div>
-
-            {/* Title & Subtitle */}
-            <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-neutral-900 dark:text-white">
-              {isAr ? "تسجيل الدخول عبر Google" : "Sign in with Google"}
-            </h2>
-            <p className="text-xs sm:text-sm text-neutral-600 dark:text-neutral-300 mt-2 max-w-sm mx-auto leading-relaxed">
-              {isAr
-                ? "سجّل الدخول بحساب Google الخاص بك لتشغيل محاكي فيزياء التربة وأرصاد ناسا الفضائية وتقارير التوصية."
-                : "Sign in with your Google account to unlock NASA Earth data, precision soil physics simulation, and recommendation reports."}
-            </p>
-
-            {/* ONLY ACTION: Sign in with Google Button */}
-            <div className="mt-8 space-y-4">
-              <button
-                type="button"
-                onClick={handleGoogleSignIn}
-                disabled={isAuthenticating}
-                className="w-full py-4 px-6 rounded-2xl font-bold text-sm sm:text-base border border-neutral-300 dark:border-white/15 bg-white dark:bg-white/10 text-neutral-800 dark:text-white shadow-md hover:shadow-lg hover:bg-neutral-50 dark:hover:bg-white/15 transition-all duration-200 flex items-center justify-center gap-3.5 group cursor-pointer active:scale-[0.99] disabled:opacity-60"
-              >
-                {isAuthenticating ? (
-                  <svg className="animate-spin w-5 h-5 text-emerald-500" viewBox="0 0 24 24" fill="none">
-                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"></path>
-                  </svg>
-                ) : (
-                  <svg className="w-5 h-5 shrink-0 group-hover:scale-110 transition-transform" viewBox="0 0 24 24">
-                    <path fill="#4285F4" d="M23.745 12.27c0-.7-.06-1.4-.19-2.07H12v4.51h6.6c-.29 1.52-1.14 2.82-2.4 3.68v3.05h3.88c2.27-2.09 3.665-5.17 3.665-9.17z"/>
-                    <path fill="#34A853" d="M12 24c3.24 0 5.95-1.08 7.93-2.91l-3.88-3.05c-1.08.72-2.45 1.16-4.05 1.16-3.12 0-5.77-2.1-6.72-4.93H1.25v3.15C3.26 21.36 7.33 24 12 24z"/>
-                    <path fill="#FBBC05" d="M5.28 14.27c-.25-.72-.38-1.49-.38-2.27s.13-1.55.38-2.27V6.58H1.25C.45 8.18 0 9.99 0 12s.45 3.82 1.25 5.42l4.03-3.15z"/>
-                    <path fill="#EA4335" d="M12 4.75c1.77 0 3.35.61 4.6 1.8l3.42-3.42C17.95 1.19 15.24 0 12 0 7.33 0 3.26 2.64 1.25 6.58l4.03 3.15c.95-2.83 3.6-4.98 6.72-4.98z"/>
-                  </svg>
-                )}
-                <span>
-                  {isAuthenticating
-                    ? (isAr ? "جاري الاتصال بـ Google..." : "Connecting to Google...")
-                    : (isAr ? "المتابعة باستخدام حساب Google" : "Sign in with Google")}
-                </span>
-              </button>
-
-              <p className="text-[11px] text-neutral-500 dark:text-neutral-400 font-medium">
-                {isAr
-                  ? "مصادقة فورية وآمنة عبر Google OAuth بنقرة واحدة"
-                  : "Fast 1-tap Google OAuth authentication · Direct and secure"}
-              </p>
             </div>
 
           </div>

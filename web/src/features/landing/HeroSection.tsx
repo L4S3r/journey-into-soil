@@ -8,7 +8,7 @@ interface HeroSectionProps {
 
 export function HeroSection({ onScrollToMap, onScrollToForm }: HeroSectionProps) {
   const { t } = useTranslation();
-  const { userEmail, setUserEmail, setAuthModalOpen, setPdfModalOpen, setNasaModalOpen } = useStore();
+  const { setPdfModalOpen, setNasaModalOpen } = useStore();
 
   return (
     <section className="relative overflow-hidden border-b border-[var(--astryx-color-border-subtle)] rounded-3xl mb-8">
@@ -49,99 +49,64 @@ export function HeroSection({ onScrollToMap, onScrollToForm }: HeroSectionProps)
           {t("landing.hero_subtitle", "Adaptive crop rotation & root-zone hydrological simulation bridging NASA Earth observations with real soil physical strata.")}
         </p>
 
-        {/* Guest vs Authenticated Action Flow */}
-        {!userEmail ? (
-          <div className="flex flex-col sm:flex-row items-center gap-4 w-full sm:w-auto">
+        {/* Unlocked Fast Actions */}
+        <div className="flex flex-col items-center gap-6 w-full max-w-3xl bg-black/40 border border-white/15 p-6 rounded-3xl backdrop-blur-xl">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 w-full">
             <button
               type="button"
-              onClick={() => setAuthModalOpen(true)}
-              className="astryx-btn astryx-btn--accent px-8 py-4 text-base font-extrabold shadow-2xl flex items-center gap-3 w-full sm:w-auto justify-center"
+              onClick={onScrollToForm}
+              className="astryx-btn astryx-btn--accent px-4 py-3 text-xs sm:text-sm font-bold flex items-center justify-center gap-2"
             >
-              <svg className="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4" />
-                <polyline points="10 17 15 12 10 7" />
-                <line x1="15" y1="12" x2="3" y2="12" />
+              <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                <circle cx="12" cy="12" r="10" />
+                <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20" />
+                <path d="M2 12h20" />
               </svg>
-              <span>{t("landing.btn_try_croptalk", "Launch CropTalk & Soil Core")}</span>
+              <span>{t("landing.btn_explore_sim", "Start Simulation")}</span>
             </button>
 
             <button
               type="button"
-              onClick={onScrollToMap}
-              className="astryx-btn px-6 py-4 text-sm font-bold bg-white/10 hover:bg-white/20 text-white border border-white/20 backdrop-blur-md transition w-full sm:w-auto justify-center"
+              onClick={() => setPdfModalOpen(true)}
+              className="astryx-btn px-4 py-3 text-xs sm:text-sm font-bold bg-white/15 hover:bg-white/25 text-white border border-white/20 backdrop-blur-md flex items-center justify-center gap-2"
+            >
+              <svg className="w-4 h-4 text-emerald-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                <polyline points="14 2 14 8 20 8" />
+                <line x1="16" y1="13" x2="8" y2="13" />
+                <line x1="16" y1="17" x2="8" y2="17" />
+                <polyline points="10 9 9 9 8 9" />
+              </svg>
+              <span>{t("landing.btn_print_pdf", "Export PDF Report")}</span>
+            </button>
+
+            <button
+              type="button"
+              onClick={() => setNasaModalOpen(true)}
+              className="astryx-btn px-4 py-3 text-xs sm:text-sm font-bold bg-white/15 hover:bg-white/25 text-white border border-white/20 backdrop-blur-md flex items-center justify-center gap-2"
             >
               <svg className="w-4 h-4 text-amber-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21" />
-                <line x1="9" y1="3" x2="9" y2="18" />
-                <line x1="15" y1="6" x2="15" y2="21" />
+                <polygon points="12 2 2 7 12 12 22 7 12 2" />
+                <polyline points="2 17 12 22 22 17" />
+                <polyline points="2 12 12 17 22 12" />
               </svg>
-              <span>{t("landing.btn_explore_governorates", "Explore 27 Governorates")}</span>
+              <span>{t("landing.btn_compare_nasa", "Comparing with NASA Data")}</span>
             </button>
           </div>
-        ) : (
-          <div className="flex flex-col items-center gap-6 w-full max-w-2xl bg-black/40 border border-white/15 p-6 rounded-3xl backdrop-blur-xl">
-            {/* Active Farmer Indicator */}
-            <div className="flex items-center justify-between w-full border-b border-white/10 pb-4">
-              <div className="flex items-center gap-2.5">
-                <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping" />
-                <span className="text-xs sm:text-sm font-semibold text-emerald-300">
-                  {t("landing.farmer_active", "Logged in as:")} <strong className="text-white font-mono">{userEmail}</strong>
-                </span>
-              </div>
-              <button
-                type="button"
-                onClick={() => setUserEmail(null)}
-                className="text-xs text-rose-300 hover:text-rose-100 underline decoration-rose-400"
-              >
-                {t("landing.btn_sign_out", "Sign Out")}
-              </button>
-            </div>
 
-            {/* Authenticated Fast Actions */}
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 w-full">
-              <button
-                type="button"
-                onClick={onScrollToForm}
-                className="astryx-btn astryx-btn--accent px-4 py-3 text-xs sm:text-sm font-bold flex items-center justify-center gap-2"
-              >
-                <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                  <circle cx="12" cy="12" r="10" />
-                  <path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20" />
-                  <path d="M2 12h20" />
-                </svg>
-                <span>{t("landing.btn_explore_sim", "Start Simulation")}</span>
-              </button>
-
-              <button
-                type="button"
-                onClick={() => setPdfModalOpen(true)}
-                className="astryx-btn px-4 py-3 text-xs sm:text-sm font-bold bg-white/15 hover:bg-white/25 text-white border border-white/20 backdrop-blur-md flex items-center justify-center gap-2"
-              >
-                <svg className="w-4 h-4 text-emerald-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
-                  <polyline points="14 2 14 8 20 8" />
-                  <line x1="16" y1="13" x2="8" y2="13" />
-                  <line x1="16" y1="17" x2="8" y2="17" />
-                  <polyline points="10 9 9 9 8 9" />
-                </svg>
-                <span>{t("landing.btn_print_pdf", "Export PDF Report")}</span>
-              </button>
-
-              <button
-                type="button"
-                onClick={() => setNasaModalOpen(true)}
-                className="astryx-btn px-4 py-3 text-xs sm:text-sm font-bold bg-white/15 hover:bg-white/25 text-white border border-white/20 backdrop-blur-md flex items-center justify-center gap-2"
-              >
-                <svg className="w-4 h-4 text-amber-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <polygon points="12 2 2 7 12 12 22 7 12 2" />
-                  <polyline points="2 17 12 22 22 17" />
-                  <polyline points="2 12 12 17 22 12" />
-                </svg>
-                <span>{t("landing.btn_compare_nasa", "Comparing with NASA Data")}</span>
-              </button>
-            </div>
-          </div>
-        )}
+          <button
+            type="button"
+            onClick={onScrollToMap}
+            className="astryx-btn px-6 py-2.5 text-xs font-bold bg-white/10 hover:bg-white/20 text-white border border-white/20 backdrop-blur-md transition flex items-center justify-center gap-2"
+          >
+            <svg className="w-3.5 h-3.5 text-amber-300" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <polygon points="3 6 9 3 15 6 21 3 21 18 15 21 9 18 3 21" />
+              <line x1="9" y1="3" x2="9" y2="18" />
+              <line x1="15" y1="6" x2="15" y2="21" />
+            </svg>
+            <span>{t("landing.btn_explore_governorates", "Explore 27 Governorates on Map")}</span>
+          </button>
+        </div>
 
         {/* Quick Statistics Strip */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mt-12 w-full max-w-4xl">

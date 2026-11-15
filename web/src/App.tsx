@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { SimulationWizard } from "./features/inputs/SimulationWizard";
 import { TopNavBar } from "./features/navigation/TopNavBar";
-import { AuthModal } from "./features/landing/AuthModal";
 import { LandingPage } from "./features/landing/LandingPage";
 import { NasaTelemetryModal } from "./features/landing/NasaTelemetryModal";
 import { PdfReportModal } from "./features/landing/PdfReportModal";
@@ -178,7 +177,6 @@ export default function App() {
 
       {/* Global Persistent Floating AI Assistant & Modals */}
       <FloatingAssistantWidget />
-      <AuthModal />
       <PdfReportModal />
       <NasaTelemetryModal />
     </>

@@ -154,21 +154,6 @@ async function json<T>(res: Response): Promise<T> {
 }
 
 export const api = {
-  getGoogleAuthUrl: (redirectUri?: string) =>
-    fetch(`${BASE}/auth/google/url${redirectUri ? `?redirect_uri=${encodeURIComponent(redirectUri)}` : ""}`).then((r) =>
-      json<{ auth_url: string; client_id: string; configured: boolean; redirect_uri: string }>(r),
-    ),
-  exchangeGoogleAuth: (payload: { code?: string; credential?: string; redirect_uri?: string }) =>
-    fetch(`${BASE}/auth/google/callback`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(payload),
-    }).then((r) => json<AuthResponse>(r)),
-  getMe: (token: string) =>
-    fetch(`${BASE}/auth/me`, {
-      headers: { Authorization: `Bearer ${token}` },
-    }).then((r) => json<{ authenticated: boolean; user: AuthUser }>(r)),
-  logout: () => fetch(`${BASE}/auth/logout`, { method: "POST" }).then((r) => json<{ success: boolean }>(r)),
   analyze: (req: AnalysisRequest) =>
     fetch(`${BASE}/analyses`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(req) }).then(
       (r) => json<AnalysisResult>(r),
