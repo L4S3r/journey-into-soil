@@ -316,6 +316,42 @@
         border-color: #ffd54a;
         box-shadow: 0 0 14px rgba(255, 213, 74, 0.85), 0 4px 12px rgba(0, 0, 0, 0.6);
       }
+      .pin-badge--right {
+        left: 100% !important;
+        right: auto !important;
+        margin-left: 0.4rem !important;
+        margin-right: 0 !important;
+        top: 50% !important;
+        bottom: auto !important;
+        transform: translateY(-50%) !important;
+      }
+      .pin-badge--left {
+        right: 100% !important;
+        left: auto !important;
+        margin-right: 0.4rem !important;
+        margin-left: 0 !important;
+        top: 50% !important;
+        bottom: auto !important;
+        transform: translateY(-50%) !important;
+      }
+      .pin-badge--top {
+        left: 50% !important;
+        right: auto !important;
+        bottom: 100% !important;
+        top: auto !important;
+        margin-bottom: 0.4rem !important;
+        margin-top: 0 !important;
+        transform: translateX(-50%) !important;
+      }
+      .pin-badge--bottom {
+        left: 50% !important;
+        right: auto !important;
+        top: 100% !important;
+        bottom: auto !important;
+        margin-top: 0.4rem !important;
+        margin-bottom: 0 !important;
+        transform: translateX(-50%) !important;
+      }
 
       /* Crop Talk Mock Chat Bubble */
       .astryx-chat-bubble-user {
@@ -1825,31 +1861,43 @@ body {
 }
 
 .astryx-pin-label--right {
-  inset-inline-start: 100%;
-  margin-inline-start: 0.35rem;
+  left: 100%;
+  right: auto;
+  margin-left: 0.35rem;
+  margin-right: 0;
   top: 50%;
+  bottom: auto;
   transform: translateY(-50%);
 }
 
 .astryx-pin-label--left {
-  inset-inline-end: 100%;
-  margin-inline-end: 0.35rem;
+  right: 100%;
+  left: auto;
+  margin-right: 0.35rem;
+  margin-left: 0;
   top: 50%;
+  bottom: auto;
   transform: translateY(-50%);
 }
 
 .astryx-pin-label--top {
   left: 50%;
-  transform: translateX(-50%);
+  right: auto;
   bottom: 100%;
-  margin-block-end: 0.35rem;
+  top: auto;
+  margin-bottom: 0.35rem;
+  margin-top: 0;
+  transform: translateX(-50%);
 }
 
 .astryx-pin-label--bottom {
   left: 50%;
-  transform: translateX(-50%);
+  right: auto;
   top: 100%;
-  margin-block-start: 0.35rem;
+  bottom: auto;
+  margin-top: 0.35rem;
+  margin-bottom: 0;
+  transform: translateX(-50%);
 }
 
 .astryx-map-tags-section {

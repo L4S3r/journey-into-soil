@@ -22,7 +22,7 @@ const GOVERNORATES: Governorate[] = [
   { id: "beheira", name_en: "Beheira", name_ar: "البحيرة", zone: "delta", x: 41.9, y: 17.0, align: "left", soil_en: "Clay & Reclaimed Sand", soil_ar: "طميية ورملية مستصلحة", et0: "4.9 mm/d" },
   { id: "nubaria", name_en: "Nubaria", name_ar: "النوبارية", zone: "desert", x: 38.3, y: 20.5, align: "left", soil_en: "Sandy Reclaimed Loam", soil_ar: "رملية مستصلحة", et0: "5.2 mm/d" },
   { id: "kafr_el_sheikh", name_en: "Kafr El Sheikh", name_ar: "كفر الشيخ", zone: "delta", x: 46.1, y: 16.3, align: "top", soil_en: "Heavy Alluvial Clay", soil_ar: "طينية رسوبية ثقيلة", et0: "4.7 mm/d" },
-  { id: "gharbia", name_en: "Gharbia", name_ar: "الغربية", zone: "delta", x: 46.6, y: 19.3, align: "right", soil_en: "Rich Silty Clay", soil_ar: "طينية سلتية خصبة", et0: "4.8 mm/d" },
+  { id: "gharbia", name_en: "Gharbia", name_ar: "الغربية", zone: "delta", x: 46.6, y: 19.3, align: "left", soil_en: "Rich Silty Clay", soil_ar: "طينية سلتية خصبة", et0: "4.8 mm/d" },
   { id: "damietta", name_en: "Damietta", name_ar: "دمياط", zone: "delta", x: 54.2, y: 13.4, align: "top", soil_en: "Coastal Clay & Saline", soil_ar: "طينية ساحلية مالحة", et0: "4.6 mm/d" },
   { id: "dakahlia", name_en: "Dakahlia", name_ar: "الدقهلية", zone: "delta", x: 50.3, y: 17.0, align: "right", soil_en: "Deep Fertile Clay", soil_ar: "طينية رسوبية عميقة", et0: "4.8 mm/d" },
   { id: "port_said", name_en: "Port Said", name_ar: "بورسعيد", zone: "canal", x: 58.7, y: 14.8, align: "right", soil_en: "Saline Coastal Silt", soil_ar: "سلتية ساحلية مالحة", et0: "4.7 mm/d" },
@@ -41,9 +41,9 @@ const GOVERNORATES: Governorate[] = [
   { id: "luxor", name_en: "Luxor", name_ar: "الأقصر", zone: "upper", x: 61.7, y: 67.8, align: "right", soil_en: "Sandy Clay Loam", soil_ar: "طميية طينية رملية", et0: "6.6 mm/d" },
   { id: "aswan", name_en: "Aswan", name_ar: "أسوان", zone: "upper", x: 64.1, y: 83.0, align: "right", soil_en: "Coarse Loamy Sand", soil_ar: "رملية خشنة وطميية", et0: "7.1 mm/d" },
   { id: "new_valley", name_en: "New Valley", name_ar: "الوادي الجديد", zone: "desert", x: 42.4, y: 70.0, align: "left", soil_en: "Deep Oasis Sand & Clay", soil_ar: "رملية عميقة وطينية بواحات", et0: "6.8 mm/d" },
-  { id: "north_sinai", name_en: "North Sinai", name_ar: "شمال سيناء", zone: "canal", x: 70.5, y: 22.0, align: "right", soil_en: "Coastal Sand Dunes", soil_ar: "كثبان رملية ساحلية", et0: "5.1 mm/d" },
-  { id: "south_sinai", name_en: "South Sinai", name_ar: "جنوب سيناء", zone: "canal", x: 72.3, y: 41.0, align: "right", soil_en: "Wadi Gravel & Sand", soil_ar: "حصوية ورملية بالأودية", et0: "5.7 mm/d" },
-  { id: "red_sea", name_en: "Red Sea", name_ar: "البحر الأحمر", zone: "desert", x: 74.3, y: 57.3, align: "right", soil_en: "Arid Coastal Gravel", soil_ar: "حصوية ساحلية جافة", et0: "6.3 mm/d" }
+  { id: "north_sinai", name_en: "North Sinai", name_ar: "شمال سيناء", zone: "canal", x: 72.5, y: 16.5, align: "right", soil_en: "Coastal Sand Dunes", soil_ar: "كثبان رملية ساحلية", et0: "5.1 mm/d" },
+  { id: "south_sinai", name_en: "South Sinai", name_ar: "جنوب سيناء", zone: "canal", x: 71.2, y: 37.5, align: "right", soil_en: "Wadi Gravel & Sand", soil_ar: "حصوية ورملية بالأودية", et0: "5.7 mm/d" },
+  { id: "red_sea", name_en: "Red Sea", name_ar: "البحر الأحمر", zone: "desert", x: 72.8, y: 53.5, align: "right", soil_en: "Arid Coastal Gravel", soil_ar: "حصوية ساحلية جافة", et0: "6.3 mm/d" }
 ];
 
 interface LandingPageProps {
@@ -858,10 +858,10 @@ export function LandingPage({ onStartSimulation }: LandingPageProps) {
                       const isActive = gov.id === activeGovId;
                       const govName = isAr ? gov.name_ar : gov.name_en;
 
-                      let alignClass = "start-full ms-1.5 top-1/2 -translate-y-1/2";
-                      if (gov.align === "left") alignClass = "end-full me-1.5 top-1/2 -translate-y-1/2";
-                      if (gov.align === "top") alignClass = "start-1/2 -translate-x-1/2 bottom-full mb-1.5 align-top";
-                      if (gov.align === "bottom") alignClass = "start-1/2 -translate-x-1/2 top-full mt-1.5 align-bottom";
+                      let alignClass = "pin-badge--right left-full ml-2 top-1/2 -translate-y-1/2";
+                      if (gov.align === "left") alignClass = "pin-badge--left right-full mr-2 top-1/2 -translate-y-1/2";
+                      if (gov.align === "top") alignClass = "pin-badge--top left-1/2 -translate-x-1/2 bottom-full mb-2";
+                      if (gov.align === "bottom") alignClass = "pin-badge--bottom left-1/2 -translate-x-1/2 top-full mt-2";
 
                       return (
                         <div

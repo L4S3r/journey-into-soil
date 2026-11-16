@@ -24,7 +24,7 @@ export const EGYPT_GOVERNORATES: GovernorateData[] = [
   { id: "beheira", name_en: "Beheira", name_ar: "البحيرة", zone: "delta", x: 41.9, y: 17.0, align: "left", soil_en: "Clay & Reclaimed Sand", soil_ar: "طميية ورملية مستصلحة", et0: "4.9 mm/d", lat: 31.04, lon: 30.47 },
   { id: "nubaria", name_en: "Nubaria", name_ar: "النوبارية", zone: "desert", x: 38.3, y: 20.5, align: "left", soil_en: "Sandy Reclaimed Loam", soil_ar: "رملية مستصلحة", et0: "5.2 mm/d", lat: 30.67, lon: 30.07 },
   { id: "kafr_el_sheikh", name_en: "Kafr El Sheikh", name_ar: "كفر الشيخ", zone: "delta", x: 46.1, y: 16.3, align: "top", soil_en: "Heavy Alluvial Clay", soil_ar: "طينية رسوبية ثقيلة", et0: "4.7 mm/d", lat: 31.11, lon: 30.94 },
-  { id: "gharbia", name_en: "Gharbia", name_ar: "الغربية", zone: "delta", x: 46.6, y: 19.3, align: "right", soil_en: "Rich Silty Clay", soil_ar: "طينية سلتية خصبة", et0: "4.8 mm/d", lat: 30.88, lon: 31.03 },
+  { id: "gharbia", name_en: "Gharbia", name_ar: "الغربية", zone: "delta", x: 46.6, y: 19.3, align: "left", soil_en: "Rich Silty Clay", soil_ar: "طينية سلتية خصبة", et0: "4.8 mm/d", lat: 30.88, lon: 31.03 },
   { id: "damietta", name_en: "Damietta", name_ar: "دمياط", zone: "delta", x: 54.2, y: 13.4, align: "top", soil_en: "Coastal Clay & Saline", soil_ar: "طينية ساحلية مالحة", et0: "4.6 mm/d", lat: 31.42, lon: 31.81 },
   { id: "dakahlia", name_en: "Dakahlia", name_ar: "الدقهلية", zone: "delta", x: 50.3, y: 17.0, align: "right", soil_en: "Deep Fertile Clay", soil_ar: "طينية رسوبية عميقة", et0: "4.8 mm/d", lat: 31.04, lon: 31.38 },
   { id: "port_said", name_en: "Port Said", name_ar: "بورسعيد", zone: "canal", x: 58.7, y: 14.8, align: "right", soil_en: "Saline Coastal Silt", soil_ar: "سلتية ساحلية مالحة", et0: "4.7 mm/d", lat: 31.26, lon: 32.30 },
@@ -43,9 +43,9 @@ export const EGYPT_GOVERNORATES: GovernorateData[] = [
   { id: "luxor", name_en: "Luxor", name_ar: "الأقصر", zone: "upper", x: 61.7, y: 67.8, align: "right", soil_en: "Sandy Clay Loam", soil_ar: "طميية طينية رملية", et0: "6.6 mm/d", lat: 25.70, lon: 32.64 },
   { id: "aswan", name_en: "Aswan", name_ar: "أسوان", zone: "upper", x: 64.1, y: 83.0, align: "right", soil_en: "Coarse Loamy Sand", soil_ar: "رملية خشنة وطميية", et0: "7.1 mm/d", lat: 24.09, lon: 32.90 },
   { id: "new_valley", name_en: "New Valley", name_ar: "الوادي الجديد", zone: "desert", x: 42.4, y: 70.0, align: "left", soil_en: "Deep Oasis Sand & Clay", soil_ar: "رملية عميقة وطينية بواحات", et0: "6.8 mm/d", lat: 25.45, lon: 30.55 },
-  { id: "north_sinai", name_en: "North Sinai", name_ar: "شمال سيناء", zone: "canal", x: 70.5, y: 22.0, align: "right", soil_en: "Coastal Sand Dunes", soil_ar: "كثبان رملية ساحلية", et0: "5.1 mm/d", lat: 31.13, lon: 33.80 },
-  { id: "south_sinai", name_en: "South Sinai", name_ar: "جنوب سيناء", zone: "canal", x: 72.3, y: 41.0, align: "right", soil_en: "Wadi Gravel & Sand", soil_ar: "حصوية ورملية بالأودية", et0: "5.7 mm/d", lat: 28.96, lon: 33.62 },
-  { id: "red_sea", name_en: "Red Sea", name_ar: "البحر الأحمر", zone: "desert", x: 74.3, y: 57.3, align: "right", soil_en: "Arid Coastal Gravel", soil_ar: "حصوية ساحلية جافة", et0: "6.3 mm/d", lat: 27.26, lon: 33.81 },
+  { id: "north_sinai", name_en: "North Sinai", name_ar: "شمال سيناء", zone: "canal", x: 72.5, y: 16.5, align: "right", soil_en: "Coastal Sand Dunes", soil_ar: "كثبان رملية ساحلية", et0: "5.1 mm/d", lat: 31.13, lon: 33.80 },
+  { id: "south_sinai", name_en: "South Sinai", name_ar: "جنوب سيناء", zone: "canal", x: 71.2, y: 37.5, align: "right", soil_en: "Wadi Gravel & Sand", soil_ar: "حصوية ورملية بالأودية", et0: "5.7 mm/d", lat: 28.96, lon: 33.62 },
+  { id: "red_sea", name_en: "Red Sea", name_ar: "البحر الأحمر", zone: "desert", x: 72.8, y: 53.5, align: "right", soil_en: "Arid Coastal Gravel", soil_ar: "حصوية ساحلية جافة", et0: "6.3 mm/d", lat: 27.26, lon: 33.81 },
 ];
 
 export function EgyptReliefMap() {
